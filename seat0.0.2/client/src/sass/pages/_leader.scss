@@ -1,0 +1,167 @@
+.leader-chart {
+	padding: $padding-base-vertical $padding-base-horizontal;
+	border: $border-large-width solid $border-color;
+	border-top: 0;
+	.employ,
+	.car,
+	.call {
+		border-radius: $radius-small;
+		background-color: $chart-bg;
+		height: $leader-chart-height;
+	}
+	.employ {
+		width:50%;
+		border: $border-small-width solid $border-color;
+		box-sizing: border-box;
+		margin-right: $margin-large-horizontal;
+	}
+	.car {
+		flex: 2 1;
+		margin-right: $margin-base-horizontal;
+	}
+	.call {
+		flex: 2 1;
+	}
+}
+
+.leader-orders {
+	padding-top: $leader-below-padding-top;
+	border-right: $border-large-width solid $border-color;
+	padding: $leader-below-padding-top $padding-base-horizontal $padding-base-vertical ($padding-base-horizontal + $border-large-width);
+	.nav-bar {
+		padding: 0 50px;
+	}
+	.tab {
+		position:relative;
+		text-decoration: none;
+		display: block;
+		height: $leader-tab-height;
+		line-height: $leader-tab-height;
+		background-color: $btn-default-bg;
+		margin-right: $leader-tab-height;
+		i {
+			@include icon-radius() {
+				color: $btn-default-bg;
+				background-color: $btn-default-color;
+			}
+		}
+		.prepared-icon {
+			@include icon-content('\e61b');
+		}
+		.received-icon {
+			@include icon-content('\e61c');
+		}
+		.started-icon {
+			@include icon-content('\e61d');
+		}
+		.done-icon {
+			@include icon-content('\e61a');
+		}
+		.exception-icon {
+			@include icon-content('\e619');
+		}
+		b {
+			@include box-info($leader-num-height, $leader-num-height);
+			background-color: #fff;
+			border-radius: $radius-small;
+			color: $color-primary;
+			margin-left: $margin-small-horizontal;
+			font-weight: bold;
+		}
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 100%;
+			border-left: $leader-tab-height solid $btn-default-bg;
+			border-top: $leader-tab-height solid transparent;
+			z-index: $zindex-base;
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 100%;
+			border-right: $leader-tab-height solid $btn-default-bg;
+			border-top: $leader-tab-height solid transparent;
+		}
+		&.active {
+			background-color: #fff;
+			&:before {
+				border-right-color: #fff;
+			}
+			&:after {
+				border-left-color: #fff;
+			}
+			b {
+				color: #fff;
+				background-color: $color-primary;
+			}
+			i {
+				color: #fff;
+				background-color: $color-primary;
+			}
+		}
+	}
+	.orders {
+		padding: $padding-base-vertical $padding-base-horizontal;
+		background-color: #fff;
+	}
+
+	.table-wrapper {
+		height: $leader-order-height;
+	}
+
+	.input-wrap {
+		position: relative;
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 100%;
+			border-right: $input-base-height solid #fff;
+			border-bottom: $input-base-height solid transparent;
+		}
+	}
+	.search-input {
+		outline: none;
+		@include input-text();
+	}
+	.search-btn {
+		position: relative;
+		outline: none;
+		width: $width-base;
+		height:	$height-base;
+		vertical-align: baseline;
+		border-radius: 0;
+		@include icon-bg($font-large-size, $btn-default-color);
+		i {
+			@include icon-content('\e61f');
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			right: 100%;
+			border-right: $input-base-height solid $btn-default-bg;
+			border-bottom: $input-base-height solid transparent;
+		}
+		&:after {
+			content: '';
+			position: absolute;
+			top: -1px;
+			left: 100%;
+			border-left: $input-base-height solid $btn-default-bg;
+			border-top: $input-base-height solid transparent;
+		}
+		&:hover:before {
+			border-right-color: $btn-hover-bg;
+		}
+		&:hover:after {
+			border-left-color: $btn-hover-bg;
+		}
+	}
+	.search-wrap {
+		margin-top: ($leader-tab-height - $input-base-height) / 2;
+	}
+}

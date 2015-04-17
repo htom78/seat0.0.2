@@ -1,0 +1,77 @@
+.header {
+	padding: 0 $padding-base-horizontal $padding-large-vertical $padding-base-horizontal;
+	border-left: $border-large-width solid $border-color;
+	border-right: $border-large-width solid $border-color;
+	.nav {
+		width: $layout-left-width;
+		box-sizing: border-box;
+		border: $border-base-width solid $border-color;
+		border-top: 0px;
+		border-right: 0px;
+		border-bottom-left-radius: $radius-base;
+		.file-btn {
+			@include icon-content('\e604');
+		}
+
+		.file-search {
+			@include icon-content('\e603');
+		}
+	}
+
+	.call-operate {
+		flex:2 1;
+		border: $border-base-width solid $border-color;
+		border-top: 0;
+		border-right: 0;
+		.call-count {
+			font-size: 20px;
+			font-weight: bold;
+			background: $color-primary;
+			color: #fff;
+			border-radius: $radius-base;
+			@include box-info($icon-large-size, $icon-large-size);
+		}
+
+		.call-btn {
+			@include icon-content('\e605');
+		}
+
+		.transform-btn {
+			@include icon-content('\e606');
+		}
+
+		.list-btn{
+			@include icon-content('\e607');
+		}
+	}
+
+	.status {
+		border: $border-base-width solid $border-color;
+		border-top: 0px;
+		border-bottom-right-radius: $radius-base;
+		flex:2 1;
+	}
+}
+
+// info bar
+.header {
+	.info-bar {
+		margin-top: $margin-base-horizontal;
+		> div {
+			background-color: $color-primary;
+			border-radius: $radius-large;
+			line-height: $height-large;
+			color: #fff;
+			@extend %font-ms;
+			padding:0 $padding-base-horizontal;
+		}
+		.info-left {
+			width: $layout-left-width;
+			box-sizing: border-box;
+			margin-right: $margin-small-horizontal;
+		}
+		.info-right {
+			flex: 2 1;
+		}
+	}
+}

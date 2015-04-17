@@ -1,0 +1,9 @@
+@mixin form-icons() {
+	background-image: url(/static/imgs/form-icons.png);
+	background-repeat: no-repeat;
+}
+
+@mixin bg-car-status() {
+	background-image: url(/static/imgs/car-status.png);
+	background-repeat: no-repeat;
+}

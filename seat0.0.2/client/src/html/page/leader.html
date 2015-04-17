@@ -1,0 +1,93 @@
+<section class='leader-chart flex'>
+	<div class='employ'>
+	</div>
+
+	<div class='car'>
+	</div>
+
+	<div class='call'>
+		<div call-status></div>
+	</div>
+</section>
+
+<section class='leader-orders'>
+	<div class='nav-bar'>
+		<nav class='tabs'>
+			<div class='fr search-wrap'>
+				<form class='flex'>
+					<div class='input-wrap'><input type='text' class='search-input'/></div>
+					<div><button class='btn-normal search-btn'><i></i></button></div>
+				</form>
+			</div>
+			<ul class='flex'>
+				<li>
+					<a 
+					href='javascript:;' 
+					class='tab'
+					ng-class='{active: isCurrentTab("prepared")}'
+					ng-click='toggleTab("prepared")'><i class='prepared-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentTab("received")}'
+						ng-click='toggleTab("received")'><i class='received-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentTab("started")}'
+						ng-click='toggleTab("started")'><i class='started-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentTab("done")}'
+						ng-click='toggleTab("done")'><i class='done-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentTab("exception")}'
+						ng-click='toggleTab("exception")'><i class='exception-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class='orders'>
+		<div class='table-wrapper'>
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>订单编号</th>
+						<th>用车时间</th>
+						<th>乘客</th>
+						<th>乘客号码</th>
+						<th>车牌号</th>
+						<th>乘客地址</th>
+						<th>目的地</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+						<td>11</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

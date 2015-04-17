@@ -1,0 +1,10 @@
+@mixin link-variant($color) {
+	color: $color;
+
+	&[href] {
+		&:hover,
+		&:focus {
+			color: darken($color, 10%);
+		}
+	}
+}

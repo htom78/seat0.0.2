@@ -1,0 +1,83 @@
+.call-status {
+	background-color: $chart-bg;
+	border-radius: $radius-large;
+	padding: $padding-large-vertical $padding-base-horizontal;
+	font-size: $font-small-size;
+	@extend %font-ms;
+	color: $color-text;
+	.flex {
+		justify-content: space-around;
+	}
+	.legend-dot{
+		margin-right: $margin-small-horizontal;
+		&.hour {
+			background-color: $legend-hour-color;
+		}
+		&.day {
+			background-color: $legend-day-color;
+		}
+		&.predict {
+			background-color: $legend-predict-color;
+		}
+	}
+	.process {
+		position: relative;
+		background: $legend-predict-color;
+		height: $process-height;
+		margin-bottom: $margin-big-horizontal;
+		border-radius: $radius-large;
+		.current {
+			height: 100%;
+			border-radius: $radius-large 0 0 $radius-large;
+			span {
+				position: absolute;
+				color: #fff;
+				top: 50%;
+				left: 50%;
+				z-index: $zindex-base;
+				transform: translateX(-50%);
+				transform: translateY(-50%);
+			}
+		}
+		.info {
+			position: absolute;
+			text-align: center;
+			width: 100%;
+			top: 100%;
+			left: 0;
+			line-height: $process-info-height;
+			border-left: 1px solid $color-default;
+			border-right: 1px solid $color-default;
+			box-sizing: border-box;
+			&:after {
+				content: '';
+				position: absolute;
+				width: 100%;
+				height: 1px;
+				top: 50%;
+				left: 0;
+				background: $color-default;
+			}
+			span {
+				position: relative;
+				display: inline-block;
+				padding: 0 $padding-small-horizontal;
+				z-index: $zindex-base;
+				background: $chart-bg;
+				text-align: center;
+			}
+		}
+	}
+	.process-hour {
+		width: $process-hour-width;
+		.current {
+			background-color: $legend-hour-color;
+		}
+	}
+	.process-day {
+		width: $process-day-width;
+		.current {
+			background-color: $legend-day-color;
+		}
+	}
+}

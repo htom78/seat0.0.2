@@ -1,0 +1,29 @@
+.table {
+	@extend %font-ms;
+	width: 100%;
+	color: $color-text;
+	thead {
+		background: $chart-bg;
+		font-size: $font-default-size;
+		th {
+			height: $height-base;
+			text-align: center;
+			font-weight: bold;
+		}
+	}
+
+	tbody {
+		tr {
+			border-bottom: 1px dashed $color-default;
+			&:hover {
+				color: #fff;
+				background-color: $color-primary;
+			}
+		}
+		td {
+			text-align: center;
+			height: $height-base;
+		}
+	}
+
+}

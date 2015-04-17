@@ -1,0 +1,96 @@
+label {
+	display: inline-block;
+	max-width: 100%;
+}
+
+select {
+	-webkit-appearance: none;
+	@include form-icons();
+	padding:0 $select-padding-left 0 $input-padding-horizontal;
+	background-position: 100% -22px;
+}
+
+%input-default {
+	outline:none;
+	border-radius: $radius-base;
+	border:1px solid $input-border-color;
+	font-size: $font-input-size;
+	color: $input-color;
+	@extend %font-ms;
+	&:focus {
+		border-color: $color-primary;
+	}
+}
+
+.input-normal {
+	padding: $input-padding-vertical $input-padding-horizontal;
+	min-height: $input-min-height;
+	@extend %input-default;
+}
+
+.input-calendar {
+	@include form-icons();
+	background-position: 100% 7px;
+}
+
+.icon-label	{
+	background: $label-font-bg;
+	border-radius: $radius-base;
+	@include box-info($label-base-width, $label-base-height);
+	@include icon-label($icon-base-size);
+}
+
+.select-normal {
+	height: $label-base-height;
+	cursor: pointer;
+	background-color: $select-bg;
+	@extend %input-default;
+}
+
+.label-checkbox {
+	position: relative;
+	@include square($checkbox-width);
+	@include form-icons();
+	background-position: 0 -79px;
+	vertical-align:middle;
+}
+.checkbox {
+	position: absolute;
+	visibility: hidden;
+	&:checked + label.label-checkbox {
+		background-position: 0 -52px;
+	}
+}
+.prepare-checkbox {
+	position: absolute;
+	visibility: hidden;
+	&:checked + label.prepare-label {
+		background-color: $color-primary;
+	}
+}
+
+.label-radio {
+	position: relative;
+	@extend %icon-font;
+	color: $icon-base-bg;
+	vertical-align: middle;
+	overflow: hidden;
+	&:before {
+		font-size: $icon-small-size;
+	}
+
+	&.female {
+		@include icon-content('\e628');
+	}
+
+	&.male {
+		@include icon-content('\e611');
+	}
+}
+.gender-radio {
+	position: absolute;
+	visibility: hidden;
+	&:checked + label.label-radio {
+		color: $color-primary;
+	}
+}
