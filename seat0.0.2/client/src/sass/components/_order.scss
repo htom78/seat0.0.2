@@ -1,0 +1,13 @@
+.orders {
+	position: relative;
+	padding: $padding-base-vertical $padding-base-horizontal;
+	background-color: #fff;
+	.table-wrapper {
+		height: $leader-order-height;
+	}
+	.paging {
+		position: absolute;
+		bottom: $padding-base-vertical;
+		right: $padding-base-horizontal;
+	}
+}

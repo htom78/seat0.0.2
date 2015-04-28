@@ -1,0 +1,71 @@
+.login-header {
+	line-height: 106px;
+	background-color: $color-primary;
+	font-size: 24px;
+	color: #fff;
+	@extend %font-ms;
+	text-align: center;
+}
+.login-page {
+	width: 1000px;
+	height: 356px;
+	margin-top: $margin-large-vertical;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff8ee;
+	position: relative;
+	background-image: url(/static/imgs/qwe.jpg);
+	background-repeat: no-repeat;
+  	background-size: contain;
+  	background-position: 0 0;
+	.login-error {
+		margin-top: 6px;
+		line-height: 20px;
+		text-align: center;
+		background: #f00;
+		color: #fff;
+	}
+}
+
+.login-form-wrapper {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+	background-color: #fff;
+	box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+	padding: 30px 20px;
+	border-radius: $radius-base;
+}
+
+.login-form {
+	.login-input {
+		width: 100%;
+		box-sizing: border-box;
+		height: 32px;
+		width: 250px;
+	}
+	.login-btn {
+		width: 250px;
+		border: none;
+		height: 32px;
+		font-size: $font-large-size;
+		color: #fff;
+		background: $color-primary;
+		border-radius: 3px;
+	}
+	.input-wrapper {
+		margin-bottom: $margin-large-vertical;
+	}
+
+	.btn-wrapper {
+		padding-top: 60px;
+	}
+}
+
+.bottom-license {
+	font-size: 12px;
+	@extend %font-ms;
+	text-align: center;
+	color: #ccc;
+	margin-top: $margin-large-vertical;
+}
