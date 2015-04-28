@@ -18,10 +18,10 @@ describe('statistics resource', function() {
 		var callStatistics;
 		beforeEach(function() {
 				callStatistics = {"day":8,"hour":2,"last_day":20,"last_hour":5};
-				$httpBackend.when('GET', '/statis/m.htm').respond(200, callStatistics);
+				$httpBackend.when('GET', '/statis/d.htm').respond(200, callStatistics);
 			});
 		it('call status', function() {
-			$httpBackend.expect('GET', '/statis/m.htm');
+			$httpBackend.expect('GET', '/statis/d.htm');
 			statisticsResource
 				.callStatistics()
 				.then(function(response) {

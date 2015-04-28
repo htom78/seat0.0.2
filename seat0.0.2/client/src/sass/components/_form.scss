@@ -4,10 +4,6 @@ label {
 }
 
 select {
-	-webkit-appearance: none;
-	@include form-icons();
-	padding:0 $select-padding-left 0 $input-padding-horizontal;
-	background-position: 100% -22px;
 }
 
 %input-default {
@@ -45,6 +41,12 @@ select {
 	cursor: pointer;
 	background-color: $select-bg;
 	@extend %input-default;
+}
+
+.select-normal:disabled {
+	background-color: #EBEBE4;
+	color: #ccc;
+	cursor: Default;
 }
 
 .label-checkbox {

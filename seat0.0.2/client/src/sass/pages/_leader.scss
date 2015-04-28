@@ -16,10 +16,39 @@
 		margin-right: $margin-large-horizontal;
 	}
 	.car {
+		position: relative;
 		flex: 2 1;
 		margin-right: $margin-base-horizontal;
+		font-size: 12px;
+		color: $text-default-color;
+		line-height: $height-default;
+		.flex {
+			  justify-content: space-around;
+		}
+		.graph {
+			position: absolute;
+			top: 30px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
 	}
 	.call {
+		flex: 2 1;
+	}
+	.employ-chart {
+		position: relative;
+		width: 410px;
+		border-right: 2px solid #fff;
+		.graph {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+	.employ-info {
 		flex: 2 1;
 	}
 }
@@ -103,15 +132,6 @@
 			}
 		}
 	}
-	.orders {
-		padding: $padding-base-vertical $padding-base-horizontal;
-		background-color: #fff;
-	}
-
-	.table-wrapper {
-		height: $leader-order-height;
-	}
-
 	.input-wrap {
 		position: relative;
 		&:before {
@@ -164,4 +184,72 @@
 	.search-wrap {
 		margin-top: ($leader-tab-height - $input-base-height) / 2;
 	}
+
+	.table-wrapper {
+		flex: 2 1;
+	}
+
+	.map-wrapper {
+		position: relative;
+		width: 670px;
+		height: 340px;
+		background: $chart-bg;
+		margin-left: $margin-base-horizontal;
+	}
+
+	.map-close-btn {
+		position: absolute;
+		top: -12px;
+		right: -12px;
+		width: 24px;
+		height: 24px;
+		line-height: 24px;
+		text-align: center;
+		border-radius: 50%;
+		text-decoration: none;
+		z-index: 300;
+		font-size: 16px;
+		font-weight: bold;
+		@extend %font-ms;
+	}
+
+	.leader-map {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.col1 {
+		width: 5%;
+	}
+	.col2 {
+		width: 8.8%;
+	}
+	.col3 {
+		width: 11.2%;
+	}
+	.col4 {
+		width: 8.2%;
+	}
+	.col5 {
+		width: 12%;
+	}
+	.col6 {
+		width: 8.8%;
+	}
+	.col7 {
+		width: 16%;
+	}
+	.col8 {
+		width: 16%;
+	}
+	.col9 {
+		width: 7%;
+	}
+	.col10 {
+		width: 7%;
+	}
+
 }

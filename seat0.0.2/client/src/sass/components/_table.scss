@@ -2,9 +2,10 @@
 	@extend %font-ms;
 	width: 100%;
 	color: $color-text;
+	font-size: $font-small-size;
+	table-layout: fixed;
 	thead {
 		background: $chart-bg;
-		font-size: $font-default-size;
 		th {
 			height: $height-base;
 			text-align: center;
@@ -13,12 +14,15 @@
 	}
 
 	tbody {
+		background-color: $bg-body;
 		tr {
 			border-bottom: 1px dashed $color-default;
-			&:hover {
+			&:hover,
+			&.active {
 				color: #fff;
 				background-color: $color-primary;
 			}
+
 		}
 		td {
 			text-align: center;

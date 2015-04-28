@@ -28,9 +28,17 @@
 @import './components/global';
 @import './components/call-chart';
 @import './components/table';
+@import './components/pagination';
+@import './components/order';
+@import './components/order-step';
+@import './components/assign-dialog';
+@import './components/address-list';
+@import './components/map-dialog';
+
 
 //utils
 @import './helpers/utils';
+@import './helpers/global';
 
 //layout
 @import './layout/header';
@@ -38,6 +46,8 @@
 //pages
 @import './pages/seat';
 @import './pages/leader';
+@import './pages/search';
+@import './pages/login';
 
 
 

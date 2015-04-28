@@ -42,7 +42,7 @@
 		.info {
 			@extend %font-ms;
 			color: $color-text;
-			font-size: $font-default-size;
+			font-size: 12px;
 		}
 		.info-item{
 			display: inline-block;
@@ -82,6 +82,9 @@
 	}
 	.large-width {
 		width: $input-large-width;
+	}
+	.clickable {
+		background-color: $color-primary;
 	}
 }
 
@@ -136,6 +139,10 @@
 		@include icon-content('\e624');
 	}
 
+	.count-label i {
+		@include icon-content('\e62b');
+	}
+
 	.btn-normal{
 		width: $btn-large-width;
 		height: $label-base-height;
@@ -155,7 +162,10 @@
 	}
 
 	.timer-select {
-		width: 63px;
+		width: 44px;
+	}
+	.input-calendar {
+		width: 150px;
 	}
 
 	.auto-call-label,
@@ -273,6 +283,7 @@
 			@include box-info(90px, 40px);
 			text-decoration: none;
 			color: $color-default;
+			font-size: 14px;
 			&.active {
 				background-color: $bg-body;
 			}
@@ -282,7 +293,12 @@
 					color: $btn-default-color;
 					background-color: $btn-default-bg;
 				}
-				@include icon-content('\e61a');
+				&.normal {
+					@include icon-content('\e61a');
+				}
+				&.error {
+					@include icon-content('\e619');
+				}
 			}
 		}
 
@@ -295,6 +311,9 @@
 			vertical-align: baseline;
 			border-radius: 0;
 			@include icon-bg($font-large-size, $btn-default-color);
+			i {
+				@include icon-content('\e61f');
+			}
 		}
 		.search-select {
 			border: 0;

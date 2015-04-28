@@ -17,11 +17,11 @@ describe('service statistics', function() {
 		var status;
 		beforeEach(function() {
 			status = {"day":8,"hour":2,"last_day":20,"last_hour":5};
-			$httpBackend.when('GET', '/statis/m.htm').respond(200, status);
+			$httpBackend.when('GET', '/statis/d.htm').respond(200, status);
 		});
 
 		it('query ok', function() {
-			$httpBackend.expect('GET', '/statis/m.htm');
+			$httpBackend.expect('GET', '/statis/d.htm');
 			statisticsService
 				.callStatistics()
 				.then(function(data) {
@@ -35,11 +35,11 @@ describe('service statistics', function() {
 	
 	describe('query call statistics fail', function() {
 		beforeEach(function() {
-			$httpBackend.when('GET', '/statis/m.htm').respond(500, {state: 'error'});
+			$httpBackend.when('GET', '/statis/d.htm').respond(500, {state: 'error'});
 		});
 
 		it('query fail', function() {
-			$httpBackend.expect('GET', '/statis/m.htm');
+			$httpBackend.expect('GET', '/statis/d.htm');
 			statisticsService
 				.callStatistics()
 				.then(function(data) {

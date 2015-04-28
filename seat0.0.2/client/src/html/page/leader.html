@@ -1,8 +1,24 @@
 <section class='leader-chart flex'>
-	<div class='employ'>
+	<div class='employ flex'>
+		<div class='employ-chart'>
+			<div chart-employ class='graph' employ-data='employChart'>
+			</div>
+		</div>
+		<div class='employ-info'>
+		</div>
 	</div>
 
 	<div class='car'>
+		<div>
+			<ul class='flex'>
+				<li><i></i><span>未登录车/停运</span></li>
+				<li><i></i><span>空车</span></li>
+				<li><i></i><span>重车</span></li>
+				<li><i></i><span>任务车</span></li>
+			</ul>
+		</div>
+		<div class='graph' chart-car car-data='carChart'>
+		</div>
 	</div>
 
 	<div class='call'>
@@ -14,8 +30,12 @@
 	<div class='nav-bar'>
 		<nav class='tabs'>
 			<div class='fr search-wrap'>
-				<form class='flex'>
-					<div class='input-wrap'><input type='text' class='search-input'/></div>
+				<form class='flex' ng-submit='searchOrder()'>
+					<div class='input-wrap'><input 
+												type='text' 
+												class='search-input' 
+												ng-required='true'
+												ng-model='words'/></div>
 					<div><button class='btn-normal search-btn'><i></i></button></div>
 				</form>
 			</div>
@@ -25,42 +45,54 @@
 					href='javascript:;' 
 					class='tab'
 					ng-class='{active: isCurrentTab("prepared")}'
-					ng-click='toggleTab("prepared")'><i class='prepared-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+					ng-click='toggleTab("prepared")'><i class='prepared-icon'></i><span><b>{{tabsCount.prepared[0]}}</b><b>{{tabsCount.prepared[1]}}</b><b>{{tabsCount.prepared[2]}}</b></span></a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("received")}'
-						ng-click='toggleTab("received")'><i class='received-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+						ng-click='toggleTab("received")'><i class='received-icon'></i><span><b>{{tabsCount.received[0]}}</b><b>{{tabsCount.received[1]}}</b><b>{{tabsCount.received[2]}}</b></span></a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("started")}'
-						ng-click='toggleTab("started")'><i class='started-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+						ng-click='toggleTab("started")'><i class='started-icon'></i><span><b>{{tabsCount.started[0]}}</b><b>{{tabsCount.started[1]}}</b><b>{{tabsCount.started[2]}}</b></span></a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("done")}'
-						ng-click='toggleTab("done")'><i class='done-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+						ng-click='toggleTab("done")'><i class='done-icon'></i><span><b>{{tabsCount.done[0]}}</b><b>{{tabsCount.done[1]}}</b><b>{{tabsCount.done[2]}}</b></span></a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("exception")}'
-						ng-click='toggleTab("exception")'><i class='exception-icon'></i><span><b>2</b><b>3</b><b>1</b></span></a>
+						ng-click='toggleTab("exception")'><i class='exception-icon'></i><span><b>{{tabsCount.exception[0]}}</b><b>{{tabsCount.exception[1]}}</b><b>{{tabsCount.exception[2]}}</b></span></a>
 				</li>
 			</ul>
 		</nav>
 	</div>
-	<div class='orders'>
+	<div class='orders flex'>
 		<div class='table-wrapper'>
 			<table class='table'>
+				<colgroup>
+					<col class='col1'>
+					<col class='col2'>
+					<col class='col3'>
+					<col class='col4'>
+					<col class='col5'>
+					<col class='col6'>
+					<col class='col7'>
+					<col class='col8'>
+					<col class='col9'>
+					<col class='col10'>
+				</colgroup>
 				<thead>
 					<tr>
 						<th>NO</th>
@@ -71,23 +103,43 @@
 						<th>车牌号</th>
 						<th>乘客地址</th>
 						<th>目的地</th>
+						<th>类型</th>
 						<th>状态</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
-						<td>11</td>
+					<tr 
+						ng-repeat='item in orders' 
+						order-step='item' 
+						show-info='showInfo(sn, pos)'
+						map-show='mapShow'
+						ng-class='{active: isCurrentItem(item)}'>
+						<td>{{$index + 1}}</td>
+						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
+						<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+						<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
+						<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
+						<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
+						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
+						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+						<td class='ellipsis'>{{item.uType}}</td>
+						<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<div class='map-wrapper' ng-show='mapShow'>
+			<a 
+				href='javascript:;' 
+				class='btn-bg-icon map-close-btn'
+				ng-click='closeMapView()'>X</a>
+			<div class='leader-map' leader-map></div>	
+		</div>
+		<div class='paging' ng-show='numItems > 10'>
+			<pagination 
+				num-items='numItems' 
+				current-page='search.currentPage'
+				on-select-page='onSelectPage(page)'></pagination>
 		</div>
 	</div>
 </section>

@@ -2,7 +2,8 @@ var Order = require('../models/order');
 var request = require('request');
 var request = request.defaults({jar: true});
 var j = request.jar();
-
+var cookie = request.cookie('JSESSIONID=1cb9yz3acmyud1bygihbl1zwqk');
+j.setCookie(cookie, 'http://localhost:8080');
 
 //新建订单
 exports.call = function(req, res) {
@@ -33,10 +34,28 @@ exports.call = function(req, res) {
 //简单查询订单
 exports.search = function(req, res) {
 	var url = 'http://localhost:8080' + req.url;
-	var cookie = request.cookie('JSESSIONID=khm6s07294fx14wbk1i2yqt62');
-	j.setCookie(cookie, url);
 	request({url: url, jar: j}, function(err, response, body) {
 		res.json(JSON.parse(body));
 	});
-	//res.json({'total': 301, list: [{id: 1}, {id: 2}]});
+};
+
+exports.searchMore = function(req, res) {
+	var url = 'http://localhost:8080' + req.url;
+	request({url: url, jar: j}, function(err, response, body) {
+		res.json(JSON.parse(body));
+	});
+};
+
+exports.stepInfo = function(req, res) {
+	var url = 'http://localhost:8080' + req.url;
+	request({url: url, jar: j}, function(err, response, body) {
+		res.json(JSON.parse(body));
+	});
+};
+
+exports.assign = function(req, res) {
+	var url = 'http://localhost:8080' + req.url;
+	request({url: url, jar: j}, function(err, response, body) {
+		res.json(JSON.parse(body));
+	});
 };

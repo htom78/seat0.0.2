@@ -2,7 +2,8 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		distdir: 'dist',
+		//distdir: 'E:/work/aladdin-seat/src/main/webapp/static',
+		distdir: '/dist',
 		src: {
 			html: 'src/html/**/*.html',
 			js: 'src/js/**/*.js'	
@@ -18,11 +19,11 @@ module.exports = function(grunt) {
 			},
 			angular: {
 				src: ['bower_components/angular/angular.js', 'bower_components/angular-route/angular-route.js'],
-				dest: '<%= distdir %>/angular.js'
+				dest: '<%= distdir %>/js/angular.js'
 			},
 			jquery: {
 				src: ['bower_components/jquery/dist/jquery.js'],
-				dest: '<%= distdir %>/jquery.js'
+				dest: '<%= distdir %>/js/jquery.js'
 			}	
 		},
 		copy: {
@@ -38,7 +39,7 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				files: {
-					'<%= distdir %>/<%= pkg.name %>.css': 'src/sass/index.scss'	
+					'<%= distdir %>/css/<%= pkg.name %>.css': 'src/sass/index.scss'	
 				}	
 			}
 		},
@@ -55,7 +56,7 @@ module.exports = function(grunt) {
 		browserify: {
 			dist: {
 				files: {
-					'<%= distdir %>/<%= pkg.name %>.js': ['src/js/index.js']
+					'<%= distdir %>/js/<%= pkg.name %>.js': ['src/js/index.js']
 				}
 			}
 		},
@@ -93,6 +94,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-karma');
 
 	grunt.registerTask('default', ['jshint', 'build']);
-	grunt.registerTask('build', ['clean', 'concat', 'sass', 'html2js', 'copy:assets', 'browserify']);
+	grunt.registerTask('build', ['concat', 'sass', 'html2js', 'copy:assets', 'browserify']);
 	grunt.registerTask('test-watch', ['karma:unit']);
 };

@@ -46,5 +46,49 @@ describe('order service', function() {
 		});
 	});
 
+	describe('query more', function() {
+		var orders;
+		beforeEach(function() {
+			orders = {'total': 301, list: [{id: 1}, {id: 2}]};
+			$httpBackend
+				.when('GET', '/search/more.htm?beginTime=&callType=0&endTime=&k=&page=1&pagesize=10&status=-1')
+				.respond(200, orders);
+		});
+		
+		it('ok', function() {
+			var queryData = {
+				status: -1,
+				k: '',
+				callType: 0,
+				currentPage: 1
+			};
+			$httpBackend.expect('GET', '/search/more.htm?beginTime=&callType=0&endTime=&k=&page=1&pagesize=10&status=-1');
+			orderService
+				.queryMore(queryData)
+				.then(function(response) {
+					orders.list.total = orders.total;
+					expect(response).toEqual(orders.list);
+				});
+			$httpBackend.flush();
+		});
+
+	});
+
+	describe('cancel order', function() {
+		beforeEach(function() {
+			$httpBackend.when('GET', '/cancel/1.htm?sn=IC09BD2BC8').respond(200, {state: 'ok'});
+		});
+
+		it('ok', function() {
+			$httpBackend.expect('GET', '/cancel/1.htm?sn=IC09BD2BC8');
+			orderService
+				.cancelOrder('IC09BD2BC8')
+				.then(function(response) {
+					expect(response).toEqual({state: 'ok'});
+				});
+			$httpBackend.flush();
+		});
+	});
+
 
 });

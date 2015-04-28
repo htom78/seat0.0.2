@@ -1,12 +1,12 @@
 {
-  "name": "seat",
+  "name": "seat2",
   "version": "0.0.2",
   "dependencies": {
     "angular": "latest",
     "jquery": "latest",
-	"angular-route": "latest"
+	  "angular-route": "latest"
   },
   "devDependencies": {
-    "angular-mocks": "latest",
+    "angular-mocks": "latest"
   }
 }

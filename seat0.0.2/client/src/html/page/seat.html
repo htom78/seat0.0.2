@@ -1,15 +1,15 @@
 
 <section class='seat-above flex'>
 
-	<div class='seat-top-left'>
+	<div class='seat-top-left' listen-call>
 		<div class='chart'>
 			<div class='info'>
 				<div class='justify'>
-					<span  class='info-item'><i class='custom-type'></i>普通客户</span>
-					<span class='info-item'><i class='timer'></i>2014-12-12 12:12</span>
+					<span  class='info-item'><i class='custom-type'></i>{{user.rank}}</span>
+					<span class='info-item'><i class='timer'></i>{{user.timeCreated}}</span>
 				</div>
 				<div class='justify'>
-					<span class='info-item'><i class='serial'></i>111111</span>
+					<span class='info-item'><i class='serial'></i>{{user.orderNumber}}</span>
 					<span class='info-item'>
 						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
 						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
@@ -23,7 +23,11 @@
 			<ul class='seat-field1'>
 				<li>
 					<label class='icon-label calling-label'><i></i></label>
-					<input type='text' class='input-normal' disabled='disabled'/>
+					<input 
+						type='text' 
+						class='input-normal' 
+						disabled='disabled'
+						ng-model='order.callingTel'/>
 					<input type='checkbox' class='checkbox' id='autoCall'/>
 					<label class='label-checkbox' for='autoCall'></label>
 					<label class='auto-call-label' for='autoCall'>自动回拨</label>
@@ -34,7 +38,8 @@
 						type='text' 
 						class='input-normal' 
 						ng-required='true'
-						ng-model='order.actualTel'/>
+						ng-model='order.actualTel'
+						ng-pattern='/1\d{10}/'/>
 				</li>
 				<li>
 					<label class='icon-label username-label'><i></i></label>
@@ -43,15 +48,14 @@
 						class='input-normal'
 						ng-required='true'
 						ng-model='order.fullName'
-						placeholder='请输入用户姓名'/>
+						placeholder='用户姓名'/>
 					<input 
 						type='radio' 
 						name='gender' 
 						class='gender-radio' 
 						id='femaleRadio'
 						ng-model='order.gender'
-						value='1'
-						ng-init='order.gender=1'/>
+						value='1'/>
 					<label class='label-radio female' for='femaleRadio'></label>
 					<input 
 						type='radio' 
@@ -67,9 +71,12 @@
 					<input 
 						type='text' 
 						class='input-normal long-width'
+						id='startInput'
 						ng-required='true'
 						ng-model='order.start'
-						placeholder='请输入出发位置'/>
+						placeholder='出发位置'
+						words-place='order.start'
+						start-list='order.startList'/>
 				</li>
 				<li>
 					<label class='icon-label around-label'><i></i></label>
@@ -77,7 +84,7 @@
 						type='text' 
 						class='input-normal long-width'
 						ng-model='order.aroundRoadName'
-						placeholder='请输入周围道路名称'/>
+						placeholder='周围道路名称'/>
 				</li>
 			</ul>
 			<ul>
@@ -96,24 +103,36 @@
 					</span>
 					<label class='icon-label destination-label'><i></i></label>
 					<input 
-						type='text' 
+						list='orderDestination' 
 						class='input-normal long-width'
 						ng-model='order.end'
-						placeholder='请输入目的地'/>
+						ng-required='true'
+						placeholder='目的地'/>
+					<datalist id='orderDestination'>
+						<option  ng-repeat='item in order.destinationList' value='{{item}}'>
+					</datalist>
 				</li>
 				<li>
-					<input type='checkbox' id='prepareSelect' class='prepare-checkbox'/>
+					<input 
+						type='checkbox' 
+						id='prepareSelect' 
+						class='prepare-checkbox'
+						ng-model='preparalbe'/>
 					<label class='icon-label prepare-label' for='prepareSelect'><i></i></label>
-					<input type='text' class='input-normal input-calendar'/>
-					<select class='select-normal timer-select'>
+					<input type='text' class='input-normal input-calendar'  ng-disabled='!preparalbe'/>
+					<select class='select-normal timer-select' ng-disabled='!preparalbe'>
 						<option>10</option>
 					</select>
-					<select class='select-normal timer-select'>
+					<select class='select-normal timer-select' ng-disabled='!preparalbe'>
 						<option>36</option>
 					</select>
-					<input type='checkbox' class='checkbox' id='autoDate'/>
-					<label class='label-checkbox' for='autoDate'></label>
-					<label class='auto-checked-label' for='autoDate'>自动</label>
+					<label class='icon-label count-label'><i></i></label>
+					<input 
+						type='text'
+						class='input-normal long-width'
+						ng-model='callCarCount'
+						placeholder='叫车数'/>
+
 				</li>
 				<li>
 					<label class='icon-label remark-label'><i></i></label>
@@ -121,12 +140,12 @@
 						type='text' 
 						class='input-normal large-width'
 						ng-model='order.remark'
-						placeholder='请输入附加信息'/>
+						placeholder='附加信息'/>
 				</il>
 			</ul>
 			<div class='btns text-center'>
-				<button class='btn-normal'>保存</button>
-				<a href='javascript:;' class='btn-normal'>取消</a>
+				<button class='btn-normal' ng-class='{clickable: newOrder.$valid}'>保存</button>
+				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>
 				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>
 			</div>
 		</form>
@@ -191,12 +210,12 @@
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: !isCurrentTab("exception")}'
-						ng-click='toggleTab("prepared")'><i></i>({{normalTotal}})</a></li>
+						ng-click='toggleTab("prepared")'><i class='normal'></i>({{normalTotal}})</a></li>
 				<li><a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("exception")}'
-						ng-click='toggleTab("exception")'><i></i>({{errorTotal}})</a></li>
+						ng-click='toggleTab("exception")'><i class='error'></i>({{errorTotal}})</a></li>
 			</ul>
 			<div class='fr'>
 				<form ng-submit='search()'>
@@ -256,11 +275,11 @@
 					<tbody>
 						<tr ng-repeat='item in orders' ng-if='$index < 6'>
 							<td>{{$index + 1}}</td>
-							<td>{{item.sn}}</td>
-							<td>{{item.timeCreated}}</td>
-							<td>{{item.user}}</td>
-							<td>{{item.contactPhone}}</td>
-							<td>{{item.vehicleNumber}}</td>
+							<td class='ellipsis'>{{item.sn}}</td>
+							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+							<td class='ellipsis'>{{item.user}}</td>
+							<td class='ellipsis'>{{item.contactPhone}}</td>
+							<td class='ellipsis'>{{item.vehicleNumber}}</td>
 							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
 							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
 							<td ng-if='isCurrentTab("exception")'>{{item.statusName}}</td>

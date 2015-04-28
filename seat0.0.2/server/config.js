@@ -2,7 +2,7 @@ var path = require('path');
 var dist = path.resolve(__dirname, '../client/dist');
 module.exports = {
 	server: {
-		listenPort: 8890,
+		listenPort: 8810,
 		distFolder: dist,
 		staticUrl: '/static',
 		sass: path.resolve(__dirname, '../client/src/sass'),
