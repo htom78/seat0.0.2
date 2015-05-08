@@ -3,7 +3,7 @@ var resources = require('./index');
 var userResource = function($http) {
 	return {
 		getUserInfoToMobile: function(mobile) {
-			var url = '/statis/m.htm';
+			var url = window.appRoot + '/statis/m.htm';
 			return $http
 						.get(url, {
 							params: {

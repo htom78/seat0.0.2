@@ -240,7 +240,7 @@
 					<ul>
 						<li><a 
 								href='javascript:;' 
-								ng-class='{active: isCurrentTab("prepared")}'
+								ng-class='{active: isCurrentTab("prepared"), "add-tab": isAddTab("prepared")}'
 								ng-click='toggleTab("prepared")'>调派中</a></li>
 						<li><a 
 								href='javascript:;' 

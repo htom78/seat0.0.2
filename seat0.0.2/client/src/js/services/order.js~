@@ -66,7 +66,7 @@ var orderService = function(orderResource, mapService, $q) {
 							if (parseInt(response.status) === 0 &&
 								response.sn && 
 								response.sn.length > 2) {
-								defer.resolve(response.sn);	
+								defer.resolve();	
 							} else {
 								defer.reject(response.code);	
 							}

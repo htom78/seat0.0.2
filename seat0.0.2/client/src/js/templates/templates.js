@@ -114,9 +114,9 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "<section class='flex'>\n" +
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
-    "			<li><a href='/' class='btn-icon-large file-btn'></a></li>\n" +
-    "			<li><a href='/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
-    "			<li><a href='/searchMore.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large file-search'></a></li>\n" +
     "		</ul>\n" +
     "	</nav>\n" +
     "\n" +
@@ -129,7 +129,38 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		</ul>\n" +
     "	</div>\n" +
     "\n" +
-    "	<div class='status'>\n" +
+    "	<div class='status flex'>\n" +
+    "		<ul class='flex'>\n" +
+    "			<li><a href='javascript:;' class='sign-in' \n" +
+    "				ng-class='{active: isSignIn()}' \n" +
+    "				ng-click='toggleSign(\"signIn\")'\n" +
+    "				title='签入'></a></li>\n" +
+    "			<li><a href='javascript:;' class='sign-out' \n" +
+    "				ng-class='{active: !isSignIn()}' \n" +
+    "				ng-click='toggleSign(\"signOut\")'\n" +
+    "				title='签出'></a></li>\n" +
+    "		</ul>\n" +
+    "\n" +
+    "		<div class='status-icon' title='{{currentStatusInfo}}'>\n" +
+    "			<i\n" +
+    "				ng-class='{calling: isCurrentActive(\"calling\"), busy: isCurrentActive(\"busy\"), reset: isCurrentActive(\"reset\"), vain:isCurrentActive(\"vain\"), signOut:!isSignIn()}'></i>\n" +
+    "		</div>\n" +
+    "\n" +
+    "		<div class='user-info-timer'>\n" +
+    "			<div class='user-number'><i></i><span>{{username}}</span></div>\n" +
+    "			<div class='timer'><i></i><span>{{currentTimer}}</span></div>\n" +
+    "		</div>\n" +
+    "\n" +
+    "		<div class='status-btns'>\n" +
+    "			<button\n" +
+    "				title='{{firstBtnTitle}}'\n" +
+    "				ng-class='{reset:!isFirstBtnVain(), calling:isFirstBtnVain(), disabled:!isSignIn()||isSecondBtnVain()}'\n" +
+    "				ng-click='toggleFirstBtn()'></button>\n" +
+    "			<button \n" +
+    "				title='{{secondBtnTitle}}'\n" +
+    "				ng-class='{busy: !isSecondBtnVain(), calling:isSecondBtnVain(), disabled: !isSignIn()||isFirstBtnVain()}'\n" +
+    "				ng-click='toggleSecondBtn()'></button>\n" +
+    "		</div>\n" +
     "	</div>\n" +
     "\n" +
     "</section>\n" +
@@ -144,25 +175,62 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
   $templateCache.put("page/leader.html",
     "<section class='leader-chart flex'>\n" +
     "	<div class='employ flex'>\n" +
-    "		<div class='employ-chart'>\n" +
+    "		<div class='employ-chart flex'>\n" +
     "			<div chart-employ class='graph' employ-data='employChart'>\n" +
+    "			</div>\n" +
+    "			<div class='employ-legend'>\n" +
+    "				<ul class='dots'>\n" +
+    "					<li ng-class='{active: isEmployerActiveTab(\"busy\")}'><i class='legend-dot dot-busy'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"busy\")'>示忙</a></li>\n" +
+    "					<li ng-class='{active: isEmployerActiveTab(\"reset\")}'><i class='legend-dot dot-reset'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"reset\")'>小休</a></li>\n" +
+    "					<li ng-class='{active: isEmployerActiveTab(\"respond\")}'><i class='legend-dot dot-respond'></i><a href='javascript:;'  ng-click='toggleEmplyerTab(\"respond\")'>应答</a></li>\n" +
+    "					<li ng-class='{active: isEmployerActiveTab(\"vain\")}'><i class='legend-dot dot-vain'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"vain\")'>空闲</a></li>\n" +
+    "				</ul>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "		<div class='employ-info'>\n" +
+    "			<ul class='flex'>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "			</ul>\n" +
     "		</div>\n" +
     "	</div>\n" +
     "\n" +
     "	<div class='car'>\n" +
     "		<div>\n" +
     "			<ul class='flex'>\n" +
-    "				<li><i></i><span>未登录车/停运</span></li>\n" +
-    "				<li><i></i><span>空车</span></li>\n" +
-    "				<li><i></i><span>重车</span></li>\n" +
-    "				<li><i></i><span>任务车</span></li>\n" +
+    "				<li><i class='legend-dot stop-legend'></i><span>未登录车/停运</span></li>\n" +
+    "				<li><i class='legend-dot empty-legend'></i><span>空车</span></li>\n" +
+    "				<li><i class='legend-dot heavy-legend'></i><span>重车</span></li>\n" +
+    "				<li><i class='legend-dot task-legend'></i><span>任务车</span></li>\n" +
     "			</ul>\n" +
     "		</div>\n" +
-    "		<div class='graph' chart-car car-data='carChart'>\n" +
-    "		</div>\n" +
+    "		<div class='graph' chart-car car-data='carChart'></div>\n" +
     "	</div>\n" +
     "\n" +
     "	<div class='call'>\n" +
@@ -255,7 +323,7 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "					<tr \n" +
     "						ng-repeat='item in orders' \n" +
     "						order-step='item' \n" +
-    "						show-info='showInfo(sn, pos)'\n" +
+    "						show-info='showInfo(sn, pos, $index)'\n" +
     "						map-show='mapShow'\n" +
     "						ng-class='{active: isCurrentItem(item)}'>\n" +
     "						<td>{{$index + 1}}</td>\n" +
@@ -423,7 +491,7 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "						<td>{{item.vehicleNumber}}</td>\n" +
     "						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>\n" +
     "						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>\n" +
-    "						<td>普通</td>\n" +
+    "						<td>{{item.uType}}</td>\n" +
     "						<td>{{item.statusName}}</td>\n" +
     "						<td>2562</td>\n" +
     "						<td>{{item.opName}}</td>\n" +
@@ -578,7 +646,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<input \n" +
     "						type='text'\n" +
     "						class='input-normal long-width'\n" +
-    "						ng-model='callCarCount'\n" +
+    "						ng-model='order.count'\n" +
     "						placeholder='叫车数'/>\n" +
     "\n" +
     "				</li>\n" +
@@ -692,15 +760,15 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "								ng-click='toggleTab(\"prepared\")'>调派中</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"received\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"received\"), \"add-tab\": isAddTab(\"received\")}'\n" +
     "								ng-click='toggleTab(\"received\")'>已接单</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"started\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"started\"), \"add-tab\": isAddTab(\"started\")}'\n" +
     "								ng-click='toggleTab(\"started\")'>已出发</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"done\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"done\"), \"add-tab\": isAddTab(\"done\")}'\n" +
     "								ng-click='toggleTab(\"done\")'>已完成</a></li>\n" +
     "					</ul>\n" +
     "				</nav>\n" +
@@ -721,7 +789,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						</tr>\n" +
     "					</thead>\n" +
     "					<tbody>\n" +
-    "						<tr ng-repeat='item in orders' ng-if='$index < 6'>\n" +
+    "						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{\"add-new\": isOrderSn(item.sn)}'>\n" +
     "							<td>{{$index + 1}}</td>\n" +
     "							<td class='ellipsis'>{{item.sn}}</td>\n" +
     "							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>\n" +
@@ -738,5 +806,6 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		</section>\n" +
     "	</div>\n" +
     "\n" +
-    "</section>");
+    "</section>\n" +
+    "");
 }]);

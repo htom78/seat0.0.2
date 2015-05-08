@@ -75,7 +75,7 @@ var gaode = function($rootScope) {
 			var marker = new AMap.Marker({
 				icon: new AMap.Icon({
 					size: new AMap.Size(22, 32),
-					image: '/static/imgs/car-marker.png'
+					image: window.appRoot + '/static/imgs/car-marker.png'
 				}),
 				position: this.getPoint(lngLat[0], lngLat[1])
 			});

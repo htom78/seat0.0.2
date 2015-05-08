@@ -2,6 +2,11 @@
 	padding: 0 $padding-base-horizontal $padding-large-vertical $padding-base-horizontal;
 	border-left: $border-large-width solid $border-color;
 	border-right: $border-large-width solid $border-color;
+	.nav,
+	.status, 
+	.call-operate {
+		padding: 6px $padding-base-horizontal;
+	}
 	.nav {
 		width: $layout-left-width;
 		box-sizing: border-box;
@@ -43,6 +48,9 @@
 		.list-btn{
 			@include icon-content('\e607');
 		}
+		button {
+			margin-left: $margin-base-horizontal;
+		}
 	}
 
 	.status {
@@ -50,6 +58,118 @@
 		border-top: 0px;
 		border-bottom-right-radius: $radius-base;
 		flex:2 1;
+		@extend %font-ms;
+		.sign-in,
+		.sign-out {
+			display: inline-block;
+			width: 37px;
+			height: 37px;
+			background-image: url(../imgs/sign-in-out.png);
+		}
+		.sign-in {
+			background-position:-75px 0;
+			&.active {
+				background-position:0 0;
+			}
+			margin-right: $margin-base-horizontal;
+		}
+		.sign-out {
+			background-position:-112px 0;
+			&.active {
+				background-position:-37px 0;
+			}
+		}
+
+		.user-number {
+			color: $color-primary;
+			font-size: 12px;
+			i {
+				@extend %icon-font;
+				&:before {
+					font-size: 16px;
+				}
+				@include icon-content('\e627');
+			}
+		}
+		.timer {
+			color: #ccc;
+			font-size: 12px;
+			i {
+				@extend %icon-font;
+				&:before {
+					font-size: 16px;
+				}
+				@include icon-content('\e612');
+			}
+		}
+		.user-info-timer {
+			margin-left: $margin-large-horizontal;
+			line-height: 20px;			  
+		}
+	}
+
+	.status-icon {
+		background-color: #eee;
+		border-radius: $radius-base;
+		width: 42px;
+		height: 42px;
+		text-align: center;
+		line-height: 42px;
+		margin-left: $margin-base-horizontal;
+		i {
+			@extend %icon-font;
+			&:before {
+				font-size: 32px;
+			}
+			color:#f95059;
+			&.reset {
+				@include icon-content('\e60f');
+			}
+			&.busy {
+				@include icon-content('\e60e');
+			}
+			
+			&.vain {
+				@include icon-content('\e60d');
+			}
+
+			&.calling {
+				@include icon-content('\e60c');
+			}
+			&.signOut {
+				color: #ccc;
+				@include icon-content('\e60d');
+			}
+		}
+	}
+	.status-btns {
+		margin-left: $margin-base-horizontal;
+		button {
+			background-color: $color-primary;
+			border-radius: $radius-base;
+			color: #fff;
+			@extend %icon-font;
+			&:before {
+				font-size: 42px;
+			}
+			border: 0;
+			&:active {
+				background-color: #E4A751;
+			}
+			&.disabled {
+				background-color: #ccc;
+				cursor: Default;
+			}
+		}
+		.reset {
+			@include icon-content('\e60f');
+		}
+		.busy {
+			@include icon-content('\e60e');
+		}
+		.calling {
+			@include icon-content('\e605');
+		}
 	}
 }
 
@@ -75,3 +195,4 @@
 		}
 	}
 }
+

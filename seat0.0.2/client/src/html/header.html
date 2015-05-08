@@ -1,9 +1,9 @@
 <section class='flex'>
 	<nav class='nav'>
 		<ul class='flex'>
-			<li><a href='/' class='btn-icon-large file-btn'></a></li>
-			<li><a href='/leader.htm' class='btn-icon-large file-search'></a></li>
-			<li><a href='/searchMore.htm' class='btn-icon-large file-search'></a></li>
+			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>
+			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>
+			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large file-search'></a></li>
 		</ul>
 	</nav>
 
@@ -16,7 +16,38 @@
 		</ul>
 	</div>
 
-	<div class='status'>
+	<div class='status flex'>
+		<ul class='flex'>
+			<li><a href='javascript:;' class='sign-in' 
+				ng-class='{active: isSignIn()}' 
+				ng-click='toggleSign("signIn")'
+				title='签入'></a></li>
+			<li><a href='javascript:;' class='sign-out' 
+				ng-class='{active: !isSignIn()}' 
+				ng-click='toggleSign("signOut")'
+				title='签出'></a></li>
+		</ul>
+
+		<div class='status-icon' title='{{currentStatusInfo}}'>
+			<i
+				ng-class='{calling: isCurrentActive("calling"), busy: isCurrentActive("busy"), reset: isCurrentActive("reset"), vain:isCurrentActive("vain"), signOut:!isSignIn()}'></i>
+		</div>
+
+		<div class='user-info-timer'>
+			<div class='user-number'><i></i><span>{{username}}</span></div>
+			<div class='timer'><i></i><span>{{currentTimer}}</span></div>
+		</div>
+
+		<div class='status-btns'>
+			<button
+				title='{{firstBtnTitle}}'
+				ng-class='{reset:!isFirstBtnVain(), calling:isFirstBtnVain(), disabled:!isSignIn()||isSecondBtnVain()}'
+				ng-click='toggleFirstBtn()'></button>
+			<button 
+				title='{{secondBtnTitle}}'
+				ng-class='{busy: !isSecondBtnVain(), calling:isSecondBtnVain(), disabled: !isSignIn()||isFirstBtnVain()}'
+				ng-click='toggleSecondBtn()'></button>
+		</div>
 	</div>
 
 </section>

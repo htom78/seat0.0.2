@@ -10,7 +10,7 @@ var loginCtrl = function($scope, loginService, $location, $rootScope) {
 		loginService
 			.login($scope.loginForm)
 			.then(function() {
-				$location.path('/');
+				$location.path(window.appRoot + '/');
 			}, function(errorInfo) {
 				$scope.hasError = true;
 				$scope.errorInfo= errorInfo;

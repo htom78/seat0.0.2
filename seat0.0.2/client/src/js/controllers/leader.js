@@ -8,6 +8,19 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 		return tabName === $scope.search.currentTab;
 	};
 
+	//图表 = > 员工tab切换
+	$scope.chartEmployer = {
+		currentTab: 'busy'
+	};
+
+	$scope.isEmployerActiveTab = function(tabName) {
+		return $scope.chartEmployer.currentTab === tabName;
+	};
+
+	$scope.toggleEmplyerTab = function(tabName) {
+		$scope.chartEmployer.currentTab = tabName;
+	};
+
 	//tab切换
 	$scope.tabsCount = {
 		prepared: [0, 0, 0],
@@ -16,6 +29,13 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 		done: [0, 0, 0, 0],
 		exception: [0, 0, 0]
 	};
+
+
+	$scope.updateTabCount = function(tabName) {
+		var count = $scope.orders.total > 999 ? 999 : $scope.orders.total;
+		$scope.tabsCount[tabName] = ('000' + count).slice(-3).split('');
+	};
+
 	$scope.toggleTab = function(tabName) {
 		orderStepDialog.close();
 		$scope.search.currentTab = tabName;
@@ -27,12 +47,9 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.then(function(response) {
 				$scope.orders = response;
 				$scope.numItems = $scope.orders.total;
-				var count = $scope.numItems > 999 ? 999 : $scope.numItems;
-				$scope.tabsCount[tabName] = ('000' + count).slice(-3).split('');
+				$scope.updateTabCount(tabName);
 			});
 	};
-
-
 
 	//点击分页
 	$scope.onSelectPage = function(page) {
@@ -74,9 +91,10 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 	$scope.assign = {};
 	
 	//双击，弹出订单信息步骤
-	$scope.showInfo = function(sn, pos) {
+	$scope.showInfo = function(sn, pos, idx) {
 		orderStepDialog.open($scope, pos);
 		$scope.assign.sn = sn;
+		$scope.assign.idx = idx;
 		orderService
 			.getStepInfo(sn)
 			.then(function(response) {
@@ -84,11 +102,23 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			});
 	};
 
+
+
 	//指派
 	$scope.showAssign = function() {
 		assignDialog.open($scope);
 	};
 
+	//##########################################
+	$scope.updateOrders = function() {
+		if ($scope.search.currentTab === 'exception') {
+			$scope.toggleTab('exception');
+		} else {
+			$scope.orders.splice($scope.assign.idx, 1);
+			$scope.orders.total = $scope.orders.total - 1;
+			$scope.updateTabCount($scope.search.currentTab);
+		}
+	};
 	//取消订单
 	$scope.cancelOrder = function() {
 		orderService
@@ -96,6 +126,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.then(function(response) {
 				orderStepDialog.close();
 				alert('订单取消成功');
+				$scope.updateOrders();
 			});
 	};
 
@@ -106,6 +137,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.then(function(response) {
 				orderStepDialog.close();
 				alert('乘客放空');
+				$scope.updateOrders();
 			});
 	};
 
@@ -116,6 +148,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.then(function(response) {
 				orderStepDialog.close();
 				alert('司机爽约');
+				$scope.updateOrders();
 			});
 	};
 
@@ -128,6 +161,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 				alert('指派失败:' + msg);
 			});
 		assignDialog.close();
+		$scope.updateOrders();
 	};
 
 	$scope.cancelAssign = function() {
@@ -135,7 +169,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 	};
 
 
-	/**********************/
+	/*******************************/
 	$scope.$on('$destroy', function() {
 		orderStepDialog.close();
 	});

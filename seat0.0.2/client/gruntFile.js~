@@ -29,13 +29,11 @@ module.exports = function(grunt) {
 			scocket: {
 				src: ['bower_components/sockjs/sockjs.js'],
 				dest: '<%= distdir %>/js/sockjs.js'
-			}	
-			/*
+			},	
 			socketIo: {
 				src: ['bower_components/socket.io-client/socket.io.js'],
 				dest: '<%= distdir %>/js/socket.io.js'
 			}	
-			*/
 		},
 		copy: {
 			assets: {

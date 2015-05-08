@@ -4,7 +4,8 @@
   "dependencies": {
     "angular": "latest",
     "jquery": "latest",
-	  "angular-route": "latest"
+    "angular-route": "latest",
+    "sockjs": "~0.3.4"
   },
   "devDependencies": {
     "angular-mocks": "latest"

@@ -94,7 +94,6 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 		$scope.search.currentTab = tabName;
 		$scope.search.keywords = '';
 		$scope.show.sn = 'quan';
-		$scope.show.tab = 'quan';
 		$timeout.cancel(snTimer);
 		return orderService
 			.query($scope.search)

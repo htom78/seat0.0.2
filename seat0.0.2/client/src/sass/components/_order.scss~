@@ -40,7 +40,7 @@ tr.add-new {
 
 @-webkit-keyframes addTab
 {
-	from {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
+	from {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, .8);}
 	to {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
 }
 
