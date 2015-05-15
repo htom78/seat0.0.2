@@ -1,0 +1,8 @@
+var controllers = require('./index');
+var policeCtrl = function() {
+
+};
+
+policeCtrl.$inject = ['$scope'];
+
+controllers.controller('policeCtrl', policeCtrl);

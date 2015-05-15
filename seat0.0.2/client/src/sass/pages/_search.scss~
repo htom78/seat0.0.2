@@ -1,0 +1,76 @@
+.search-page {
+	padding: $padding-large-vertical $padding-base-horizontal;
+	border-top: $border-large-width solid $border-color;
+	border-right: $border-large-width solid $border-color;
+	font-size: $font-default-size;
+	@extend %font-ms;
+	.tabs {
+		padding-left: $leader-tab-height + $padding-base-horizontal;
+	}
+	.input-text {
+		padding: $input-padding-vertical $input-padding-horizontal;
+		outline: none;
+		min-height: 20px;;
+		border: 1px solid $input-border-color;
+		border-right:0;
+		border-radius: $input-default-radius 0 0 $input-default-radius;
+		width: 350px;
+		&:focus {
+			border-color: $color-primary;
+		}
+	}
+	.search-btn {
+		height: 30px;
+		border-radius: 0 $input-default-radius $input-default-radius 0;
+		width: 70px; 
+	}
+
+	.more-link {
+		font-size: $font-default-size;
+		color: $text-default-color;
+		text-decoration: none;
+	}
+	.select-normal {
+		width: 180px;
+	}
+	.more-btn {
+		height: $btn-default-height;
+		width: 90px;
+		background: $color-primary;
+		color: #fff;
+		font-size: 16px;
+		border: none;
+		border-radius: $btn-default-radius;
+		@extend %font-ms;
+	}
+	.simple {
+		padding:$padding-large-vertical $padding-large-horizontal;
+		background-color: #fff;
+	}
+	.more {
+		background-color: #fff;
+		padding-left: $padding-large-horizontal + $padding-base-horizontal;
+	}
+	.more-btn-wrap {
+		padding: $padding-base-vertical $padding-base-horizontal;
+	}
+	.field-wraper {
+		display: inline-block;
+		margin-right: $margin-base-horizontal;
+	}
+	.search {
+		position: relative;
+	}
+	.toggle-btns {
+		position: absolute;
+		right: $padding-large-horizontal;
+		top: $padding-large-vertical;
+		button {
+			width: 96px;
+			height: $btn-default-height;
+		}
+		.active {
+			background-color: $color-primary;
+		}
+	}
+}

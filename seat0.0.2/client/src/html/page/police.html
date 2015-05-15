@@ -1,0 +1,111 @@
+<section class='list-page police-page'>
+	<div class='tabs'>
+		<ul class='flex'>
+			<li>
+					<a 
+					href='javascript:;' 
+					class='normal-tab'
+					ng-click='toggleTab("callPolice")'><i class='prepared-icon'>报警记录查询</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class='search'>
+		<form ng-submit='searchOrder()'>
+			<div class='simple'>
+				<input 
+					type='text' 
+					class='input-text'
+					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>
+				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>
+			</div>
+			<div class='more' ng-show='isShowMore'>
+				<div>
+					<span class='field-wraper'>
+						<label>接线员:</label>
+						<input type='text' class='input-normal'/>
+					</span>
+					<span class='field-wraper'>
+						<lable>状态</label>
+						<select class='select-normal'><option>请选择</option></select>
+					</span>
+					<span  class='field-wraper'>
+						<label>订单时间:</label>
+						<input 
+							type='text' 
+							class='input-normal'
+							ng-model='search.beginTime'/>
+						<b>-</b>
+						<input 
+							type='text' 
+							class='input-normal'
+							ng-model='search.endTime'/>
+					</span>
+				</div>
+
+				<div class='more-btn-wrap'>
+					<button class='more-btn'>搜索</button>
+				</div>
+			</div>
+		</form>
+
+		<div class='toggle-btns'>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(0)'
+				ng-class='{active:isCurrentTab(0)}'>全部()</button>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(1)'
+				ng-class='{active:isCurrentTab(1)}'>未处理()</button>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(2)'
+				ng-class='{active:isCurrentTab(2)}'>已处理()</button>
+		</div>
+
+	</div>
+
+	<div class='orders'>
+		<div class='table-wrapper'>
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>报警类型</th>
+						<th>报警时间</th>
+						<th>报警车辆</th>
+						<th>状态</th>
+						<th>司机姓名</th>
+						<th>司机电话</th>
+						<th>终端电话</th>
+						<th>终端编号</th>
+						<th>结案备注</th>
+						<th>分公司</th>
+						<th>车辆位置</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>遇劫报警</td>
+						<td>21:32</td>
+						<td>浙B12345</td>
+						<td>空车</td>
+						<td>梦小小</td>
+						<td>181818181818</td>
+						<td>191818181818</td>
+						<td>143026</td>
+						<td>司机误报</td>
+						<td class='ellipsis'>宁波市中北汽车有限公司</td>
+						<td>坑的就斯蒂芬</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class='paging' ng-show='numItems > 10'>
+			<pagination 
+				num-items='numItems' 
+				current-page='search.currentPage'
+				on-select-page='onSelectPage(page)'></pagination>
+		</div>
+	</div>
+</section>
