@@ -3,3 +3,4 @@ require('./dialog');
 require('./gaode');
 require('./chart');
 require('./utils');
+require('./leaderMap');

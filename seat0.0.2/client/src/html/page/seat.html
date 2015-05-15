@@ -37,15 +37,18 @@
 					<input 
 						type='text' 
 						class='input-normal' 
+						maxlength='11'
 						ng-required='true'
 						ng-model='order.actualTel'
 						ng-pattern='/1\d{10}/'/>
+					<span class='mobile-position'>{{mobilePosition}}</span>
 				</li>
 				<li>
 					<label class='icon-label username-label'><i></i></label>
 					<input 
 						type='text' 
 						class='input-normal'
+						maxlength='30'
 						ng-required='true'
 						ng-model='order.fullName'
 						placeholder='用户姓名'/>
@@ -72,6 +75,7 @@
 						type='text' 
 						class='input-normal long-width'
 						id='startInput'
+						maxlength='50'
 						ng-required='true'
 						ng-model='order.start'
 						placeholder='出发位置'
@@ -83,6 +87,7 @@
 					<input 
 						type='text' 
 						class='input-normal long-width'
+						maxlength='50'
 						ng-model='order.aroundRoadName'
 						placeholder='周围道路名称'/>
 				</li>
@@ -144,7 +149,7 @@
 				</il>
 			</ul>
 			<div class='btns text-center'>
-				<button class='btn-normal' ng-class='{clickable: newOrder.$valid}'>保存</button>
+				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: isSending()}'>保存</button>
 				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>
 				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>
 			</div>
@@ -223,14 +228,15 @@
 						type='text' 
 						class='search-input'
 						ng-required='true'
-						ng-model='words'/><button class='btn-normal search-btn'><i></i></button>
+						ng-model='words'
+						pause-emit='pause'/><button class='btn-normal search-btn'><i></i></button>
 					<select class='search-select'>
 						<option>个人</option>
 					</select>
 				</form>
 			</div>
 			<div class='fr'>
-				<span class='tick-timer'>300秒</span>
+				<span class='tick-timer'>{{averageTimer}}秒</span>
 			</div>
 		</section>
 		<section class='order-content flex'>
@@ -244,15 +250,15 @@
 								ng-click='toggleTab("prepared")'>调派中</a></li>
 						<li><a 
 								href='javascript:;' 
-								ng-class='{active: isCurrentTab("received"), "add-tab": isAddTab("received")}'
+								ng-class='{active: isCurrentTab("received")}'
 								ng-click='toggleTab("received")'>已接单</a></li>
 						<li><a 
 								href='javascript:;' 
-								ng-class='{active: isCurrentTab("started"), "add-tab": isAddTab("started")}'
+								ng-class='{active: isCurrentTab("started")}'
 								ng-click='toggleTab("started")'>已出发</a></li>
 						<li><a 
 								href='javascript:;' 
-								ng-class='{active: isCurrentTab("done"), "add-tab": isAddTab("done")}'
+								ng-class='{active: isCurrentTab("done")}'
 								ng-click='toggleTab("done")'>已完成</a></li>
 					</ul>
 				</nav>

@@ -1,14 +1,8 @@
 var resources = require('./index');
-var mapConfig = {
-	version: 'rsv3',
-	key: 'd64e2c774ba08ec5d8fd282640cd546e',
-	city: '宁波',
-};
 
-var mapResource = function($http) {
+var mapResource = function($http, properties) {
 	return {
 		getNearCars: function(location) {
-			//var temp = 'http://192.168.0.242:18003/aladdin-service';
 			var url = window.aspath + '/rest/instant/vnearby?myjsonp=JSON_CALLBACK';
 			return $http
 						.jsonp(url, {
@@ -24,9 +18,9 @@ var mapResource = function($http) {
 			return $http
 						.jsonp('http://restapi.amap.com/v3/assistant/inputtips?callback=JSON_CALLBACK', {
 							params: {
-								s: mapConfig.version,
-								key: mapConfig.key,
-								city: mapConfig.city,
+								s: properties.version,
+								key: properties.key,
+								city: properties.city,
 								keywords: keyword
 							}
 						})
@@ -38,9 +32,9 @@ var mapResource = function($http) {
 			return $http
 						.jsonp('http://restapi.amap.com/v3/geocode/geo?callback=JSON_CALLBACK', {
 							params: {
-								s: mapConfig.version,
-								key: mapConfig.key,
-								city: mapConfig.city,
+								s: properties.version,
+								key: properties.key,
+								city: properties.city,
 								address: address
 							}
 						})
@@ -51,5 +45,5 @@ var mapResource = function($http) {
 	};
 };
 
-mapResource.$inject = ['$http'];
+mapResource.$inject = ['$http', 'properties'];
 resources.factory('mapResource', mapResource);

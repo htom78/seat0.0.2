@@ -20,23 +20,26 @@
 			background-color: $legend-predict-color;
 		}
 	}
+	.process-chart {
+	    width: 288px;
+	    margin: 0 auto;	    
+	}
 	.process {
 		position: relative;
 		background: $legend-predict-color;
 		height: $process-height;
 		margin-bottom: $margin-big-horizontal;
-		border-radius: $radius-large;
+		border-radius: $radius-large 0 0 $radius-large;
 		.current {
+			position: relative;
 			height: 100%;
 			border-radius: $radius-large 0 0 $radius-large;
-			span {
-				position: absolute;
-				color: #fff;
-				top: 50%;
-				left: 50%;
-				z-index: $zindex-base;
-				transform: translateX(-50%);
-				transform: translateY(-50%);
+			.overflow {
+			    position: absolute;
+			    top: 0;
+			    right: 0;
+			    height: 100%;	    
+			    background: rgba(0,0,0,.2);
 			}
 		}
 		.info {
@@ -79,5 +82,21 @@
 		.current {
 			background-color: $legend-day-color;
 		}
+	}
+	.day-process-wrapper {
+	    position: relative;
+	    width: 288px;	    
+	}
+	.hour-process-wrapper {
+	    position: relative;
+	    width: 192px;	    
+	}
+	.text-info {
+		position: absolute;
+		color: #fff;
+		top: 50%;
+		left: 50%;
+		z-index: $zindex-base;
+		transform: translate(-50%, -50%);
 	}
 }

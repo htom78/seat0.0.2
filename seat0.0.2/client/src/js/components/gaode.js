@@ -22,7 +22,7 @@ function createInfoWindow() {
 }
 
 /************************************/
-var gaode = function($rootScope) {
+var gaode = function($rootScope, properties) {
 	function Map() {
 		this.carMarkers = [];
 	}
@@ -30,7 +30,7 @@ var gaode = function($rootScope) {
 	Map.prototype.open = function(elem) {
 		this.map = new AMap.Map(elem.get(0), {
 						view: new AMap.View2D({
-							center: new AMap.LngLat(121.609614,29.866413),
+							center: new AMap.LngLat(properties.lng, properties.lat),
 							zoom: 16
 						})
 					});
@@ -42,27 +42,56 @@ var gaode = function($rootScope) {
 	};
 
 	Map.prototype.addMarker = function() {
-		 this.marker = new AMap.Marker({
-	        position:this.map.getCenter()
-	    });
+		this.marker = new AMap.Marker({
+			position:this.map.getCenter()
+		});
 		this.marker.setMap(this.map);
+		this.marker.hide();
+	};
+
+	Map.prototype.addCircle = function() {
 		this.circle = new AMap.Circle({
 			center: this.map.getCenter(),
-			radius: 500,
-			strokeColor: '#ffba58',
+			radius: properties.circleRadius,
+			strokeColor: properties.circleBorder,
 			strokeOpacity: 1,
-			strokeWeight: 2,
-			fillColor: '#ffba58',
-			fillOpacity: 0.35
+			strokeWeight: properties.circleWeight,
+			fillColor: properties.circleColor,
+			fillOpacity: properties.circleOpacity
 		});
 		this.circle.setMap(this.map);
+		this.circle.hide();
+	
 	};
 
 	Map.prototype.setMarkerPosition = function(lng, lat) {
 		var pointer = this.getPoint(lng, lat);
 		this.marker.setPosition(pointer);
 		this.map.setCenter(pointer);
+	};
+
+	Map.prototype.setCirclePosition = function(lng, lat) {
+		var pointer = this.getPoint(lng, lat);
 		this.circle.setCenter(pointer);
+	};
+
+	Map.prototype.setMapCenter = function(lng, lat) {
+		var pointer = this.getPoint(lng, lat);
+		this.map.setCenter(pointer);	
+	};
+
+	Map.prototype.hideMarker = function() {
+		this.marker.hide();	
+	};
+	Map.prototype.showMarker = function() {
+		this.marker.show();	
+	};
+
+	Map.prototype.hideCircle = function() {
+		this.circle.hide();	
+	};
+	Map.prototype.showCircle = function() {
+		this.circle.show();	
 	};
 
 	Map.prototype.addCarMarker = function(carInfos) {
@@ -75,7 +104,7 @@ var gaode = function($rootScope) {
 			var marker = new AMap.Marker({
 				icon: new AMap.Icon({
 					size: new AMap.Size(22, 32),
-					image: window.appRoot + '/static/imgs/car-marker.png'
+					image: window.appRoot + properties.markerTaxiIcon 
 				}),
 				position: this.getPoint(lngLat[0], lngLat[1])
 			});
@@ -139,6 +168,6 @@ var gaode = function($rootScope) {
 	};
 };
 
-gaode.$inject = ['$rootScope'];
+gaode.$inject = ['$rootScope', 'properties'];
 
 services.factory('gaode', gaode);

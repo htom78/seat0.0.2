@@ -9,14 +9,25 @@ function Map (elem) {
 	});
 }
 
-var leaderMapService = function() {
+var leaderMapService = function(leaderMap) {
+	var map = leaderMap.map();
 	return {
 		mapView: function(elem) {
-			return new Map(elem);
+			map.open(elem);
+			//map.addMarker();
+		},
+		setMarkerPosition: function(lng, lat) {
+			map.setMarkerPosition(lng, lat);	
+		},
+		setPath: function(points) {
+			map.setPath(points);	
+		},
+		clearPath: function() {
+			map.clearPath();	
 		}
 	};
 };
 
-leaderMapService.$inject = [];
+leaderMapService.$inject = ['leaderMap'];
 
 services.factory('leaderMapService', leaderMapService);

@@ -12,3 +12,5 @@ require('./chartCar');
 require('./leaderMap');
 require('./user');
 require('./orderNotify');
+require('./socket');
+require('./phone');

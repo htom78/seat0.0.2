@@ -4,3 +4,4 @@ require('./seat');
 require('./leader');
 require('./search');
 require('./login');
+require('./police');

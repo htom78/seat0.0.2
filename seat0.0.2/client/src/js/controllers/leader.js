@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $timeout) {
+var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $timeout, leaderMapService) {
 
 	$scope.search = {};
 
@@ -99,6 +99,19 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.getStepInfo(sn)
 			.then(function(response) {
 				$scope.step = response;
+			//	leaderMapService.setMarkerPosition(response.pickupX, response.pickupY);
+				if ($scope.search.currentTab === 'done') {
+					leaderMapService.setPath({
+						pickupX: response.pickupX,
+						pickupY: response.pickupY,
+						assignedX: response.assignedX,
+						assignedY: response.assignedY,
+						arrivedY: response.arrivedY,
+						arrivedX: response.arrivedX
+					});
+				} else {
+					leaderMapService.clearPath();	
+				}
 			});
 	};
 
@@ -106,7 +119,11 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 
 	//指派
 	$scope.showAssign = function() {
-		assignDialog.open($scope);
+		assignDialog
+			.open($scope)
+			.then(function() {
+			    $scope.assign.carNumber = '';	
+			});
 	};
 
 	//##########################################
@@ -127,6 +144,8 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 				orderStepDialog.close();
 				alert('订单取消成功');
 				$scope.updateOrders();
+			}, function() {
+			    alert('操作失败');	
 			});
 	};
 
@@ -138,6 +157,8 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 				orderStepDialog.close();
 				alert('乘客放空');
 				$scope.updateOrders();
+			}, function() {
+			    alert('操作失败');	
 			});
 	};
 
@@ -149,6 +170,8 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 				orderStepDialog.close();
 				alert('司机爽约');
 				$scope.updateOrders();
+			}, function() {
+			    alert('操作失败');	
 			});
 	};
 
@@ -157,8 +180,9 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			.assign($scope.assign)
 			.then(function(response) {
 				alert('指派成功');
+				$scope.toggleTab('prepared');
 			}, function(msg) {
-				alert('指派失败:' + msg);
+				alert('指派失败');
 			});
 		assignDialog.close();
 		$scope.updateOrders();
@@ -259,6 +283,6 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 	/***************************************/
 };
 
-leaderCtrl.$inject = ['$scope', 'orderService', 'orderStepDialog', 'assignDialog', '$timeout'];
+leaderCtrl.$inject = ['$scope', 'orderService', 'orderStepDialog', 'assignDialog', '$timeout', 'leaderMapService'];
 
 controllers.controller('leaderCtrl', leaderCtrl);

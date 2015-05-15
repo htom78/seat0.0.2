@@ -1,4 +1,4 @@
-angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/callStatus.html', 'component/pagination.html', 'component/stepInfo.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/search.html', 'page/seat.html']);
+angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/callStatus.html', 'component/pagination.html', 'component/stepInfo.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
 
 angular.module("component/addressList.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/addressList.html",
@@ -37,20 +37,33 @@ angular.module("component/assignDialog.html", []).run(["$templateCache", functio
 angular.module("component/callStatus.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/callStatus.html",
     "<section class='call-status'>\n" +
-    "	<div class='process process-hour'>\n" +
-    "		<div class='current' style='width:{{hourRate}}%'><span>{{hour}}</span></div>\n" +
-    "		<div class='info'><span>{{lastHour}}</span></div>\n" +
-    "	</div>\n" +
-    "	<div class='process process-day'>\n" +
-    "		<div class='current' style='width:{{dayRate}}%'><span>{{day}}</span></div>\n" +
-    "		<div class='info'><span>{{lastDay}}</span></div>\n" +
+    "	<div class='process-chart'>\n" +
+    "	    <div class='hour-process-wrapper'>\n" +
+    "	        <div class='process process-hour' style='width:{{lastHourWidth}}px'>\n" +
+    "	        	<div class='current' style='width:{{hourWidth}}px'>\n" +
+    "	    		<div class='overflow' style='width:{{hourWidth - lastHourWidth}}px' ng-if='isHourOverflow()'></div>\n" +
+    "	    	</div>\n" +
+    "	        	<div class='info'><span>{{lastHour}}</span></div>\n" +
+    "	        </div>\n" +
+    "	        <span class='text-info'>{{showHour}}<b ng-if='isHourOverflow()'> + {{hourOverflow}}</b></span>\n" +
+    "	    </div>\n" +
+    "	    <div class='day-process-wrapper'>\n" +
+    "	        <div class='process process-day' style='width:{{lastDayWidth}}px'>\n" +
+    "	    	<div class='current' style='width:{{dayWidth}}px'>\n" +
+    "	    		<div class='overflow' style='width:{{dayWidth - lastDayWidth}}px' ng-if='isDayOverflow()'></div>\n" +
+    "	    	</div>\n" +
+    "	        	<div class='info'><span>{{lastDay}}</span></div>\n" +
+    "	        </div>\n" +
+    "	        <span class='text-info'>{{showDay}}<b ng-if='isDayOverflow()'> + {{dayOverflow}}</b></span>\n" +
+    "	    </div>\n" +
     "	</div>\n" +
     "	<ul class='flex legend'>\n" +
     "		<li><i class='legend-dot hour'></i><span>当前小时电召数量</span></li>\n" +
     "		<li><i class='legend-dot day'></i><span>当前天电召数量</span></li>\n" +
     "		<li><i class='legend-dot predict'></i><span>预计数量</span></li>\n" +
     "	</ul>\n" +
-    "</section>");
+    "</section>\n" +
+    "");
 }]);
 
 angular.module("component/pagination.html", []).run(["$templateCache", function($templateCache) {
@@ -116,7 +129,8 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<ul class='flex'>\n" +
     "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +
     "		</ul>\n" +
     "	</nav>\n" +
     "\n" +
@@ -168,7 +182,8 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "<section class='flex info-bar'>\n" +
     "	<div class='info-left'><span>1.一切正常.</span></div>\n" +
     "	<div class='info-right'><span>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>\n" +
-    "</section>");
+    "</section>\n" +
+    "");
 }]);
 
 angular.module("page/leader.html", []).run(["$templateCache", function($templateCache) {
@@ -359,47 +374,163 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
 
 angular.module("page/login.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("page/login.html",
-    "<h1 class='login-header'>平台登录页</h1>\n" +
     "<div class='login-page'>\n" +
-    "	<div class='login-form-wrapper'>\n" +
-    "		<form class='login-form' ng-submit='login()'>\n" +
-    "			<div class='input-wrapper'>\n" +
-    "				<input \n" +
-    "					type='text' \n" +
-    "					class='login-input input-normal'\n" +
-    "					placeholder='工号'\n" +
-    "					ng-required='true'\n" +
-    "					ng-model='loginForm.username'/>\n" +
-    "			</div>\n" +
-    "			<div class='input-wrapper'>\n" +
-    "				<input \n" +
-    "					type='password'\n" +
-    "					class='login-input input-normal'\n" +
-    "					placeholder='密码'\n" +
-    "					ng-required='true'\n" +
-    "					ng-model='loginForm.password'/>\n" +
-    "			</div>\n" +
-    "			<div class='login-error' ng-if='hasError'><span>{{errorInfo}}</span></div>\n" +
-    "			<div class='btn-wrapper'>\n" +
-    "				<button class='login-btn'>登录</button>\n" +
-    "			</div>\n" +
-    "		</form>\n" +
+    "	<div class='login-box'>\n" +
+    "		<div class='login-form-wrapper'>\n" +
+    "			<form class='login-form' ng-submit='login()'>\n" +
+    "				<div class='input-wrapper'>\n" +
+    "					<input \n" +
+    "						type='text' \n" +
+    "						class='login-input username-input'\n" +
+    "						placeholder='工号'\n" +
+    "						ng-required='true'\n" +
+    "						ng-model='loginForm.username'/>\n" +
+    "				</div>\n" +
+    "				<div class='input-wrapper'>\n" +
+    "					<input \n" +
+    "						type='password'\n" +
+    "						class='login-input password-input'\n" +
+    "						placeholder='密码'\n" +
+    "						ng-required='true'\n" +
+    "						ng-model='loginForm.password'/>\n" +
+    "				</div>\n" +
+    "				<div class='some-error'><span>{{errorInfo}}</span></div>\n" +
+    "				<div class='btn-wrapper'>\n" +
+    "					<button class='login-btn'>登录</button>\n" +
+    "				</div>\n" +
+    "			</form>\n" +
+    "		</div>\n" +
+    "		<div class='shadow'></div>\n" +
     "	</div>\n" +
     "</div>\n" +
-    "<div class='bottom-license'>\n" +
-    "	<small>浙江信电技术股份有限公司All Right Reserved     浙ICP备 07026991-2号  Copyright© 1999-2020</small>\n" +
-    "</div>");
+    "");
 }]);
 
-angular.module("page/search.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("page/search.html",
-    "<section class='search-page'>\n" +
+angular.module("page/police.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("page/police.html",
+    "<section class='list-page police-page'>\n" +
     "	<div class='tabs'>\n" +
     "		<ul class='flex'>\n" +
     "			<li>\n" +
     "					<a \n" +
     "					href='javascript:;' \n" +
-    "					class='tab'\n" +
+    "					class='normal-tab'\n" +
+    "					ng-click='toggleTab(\"callPolice\")'><i class='prepared-icon'>报警记录查询</a>\n" +
+    "			</li>\n" +
+    "		</ul>\n" +
+    "	</div>\n" +
+    "\n" +
+    "	<div class='search'>\n" +
+    "		<form ng-submit='searchOrder()'>\n" +
+    "			<div class='simple'>\n" +
+    "				<input \n" +
+    "					type='text' \n" +
+    "					class='input-text'\n" +
+    "					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>\n" +
+    "				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>\n" +
+    "			</div>\n" +
+    "			<div class='more' ng-show='isShowMore'>\n" +
+    "				<div>\n" +
+    "					<span class='field-wraper'>\n" +
+    "						<label>接线员:</label>\n" +
+    "						<input type='text' class='input-normal'/>\n" +
+    "					</span>\n" +
+    "					<span class='field-wraper'>\n" +
+    "						<lable>状态</label>\n" +
+    "						<select class='select-normal'><option>请选择</option></select>\n" +
+    "					</span>\n" +
+    "					<span  class='field-wraper'>\n" +
+    "						<label>订单时间:</label>\n" +
+    "						<input \n" +
+    "							type='text' \n" +
+    "							class='input-normal'\n" +
+    "							ng-model='search.beginTime'/>\n" +
+    "						<b>-</b>\n" +
+    "						<input \n" +
+    "							type='text' \n" +
+    "							class='input-normal'\n" +
+    "							ng-model='search.endTime'/>\n" +
+    "					</span>\n" +
+    "				</div>\n" +
+    "\n" +
+    "				<div class='more-btn-wrap'>\n" +
+    "					<button class='more-btn'>搜索</button>\n" +
+    "				</div>\n" +
+    "			</div>\n" +
+    "		</form>\n" +
+    "\n" +
+    "		<div class='toggle-btns'>\n" +
+    "			<button \n" +
+    "				class='btn-normal' \n" +
+    "				ng-click='toggleCallType(0)'\n" +
+    "				ng-class='{active:isCurrentTab(0)}'>全部()</button>\n" +
+    "			<button \n" +
+    "				class='btn-normal' \n" +
+    "				ng-click='toggleCallType(1)'\n" +
+    "				ng-class='{active:isCurrentTab(1)}'>未处理()</button>\n" +
+    "			<button \n" +
+    "				class='btn-normal' \n" +
+    "				ng-click='toggleCallType(2)'\n" +
+    "				ng-class='{active:isCurrentTab(2)}'>已处理()</button>\n" +
+    "		</div>\n" +
+    "\n" +
+    "	</div>\n" +
+    "\n" +
+    "	<div class='orders'>\n" +
+    "		<div class='table-wrapper'>\n" +
+    "			<table class='table'>\n" +
+    "				<thead>\n" +
+    "					<tr>\n" +
+    "						<th>报警类型</th>\n" +
+    "						<th>报警时间</th>\n" +
+    "						<th>报警车辆</th>\n" +
+    "						<th>状态</th>\n" +
+    "						<th>司机姓名</th>\n" +
+    "						<th>司机电话</th>\n" +
+    "						<th>终端电话</th>\n" +
+    "						<th>终端编号</th>\n" +
+    "						<th>结案备注</th>\n" +
+    "						<th>分公司</th>\n" +
+    "						<th>车辆位置</th>\n" +
+    "					</tr>\n" +
+    "				</thead>\n" +
+    "				<tbody>\n" +
+    "					<tr>\n" +
+    "						<td>遇劫报警</td>\n" +
+    "						<td>21:32</td>\n" +
+    "						<td>浙B12345</td>\n" +
+    "						<td>空车</td>\n" +
+    "						<td>梦小小</td>\n" +
+    "						<td>181818181818</td>\n" +
+    "						<td>191818181818</td>\n" +
+    "						<td>143026</td>\n" +
+    "						<td>司机误报</td>\n" +
+    "						<td class='ellipsis'>宁波市中北汽车有限公司</td>\n" +
+    "						<td>坑的就斯蒂芬</td>\n" +
+    "					</tr>\n" +
+    "				</tbody>\n" +
+    "			</table>\n" +
+    "		</div>\n" +
+    "		<div class='paging' ng-show='numItems > 10'>\n" +
+    "			<pagination \n" +
+    "				num-items='numItems' \n" +
+    "				current-page='search.currentPage'\n" +
+    "				on-select-page='onSelectPage(page)'></pagination>\n" +
+    "		</div>\n" +
+    "	</div>\n" +
+    "</section>\n" +
+    "");
+}]);
+
+angular.module("page/search.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("page/search.html",
+    "<section class='search-page list-page'>\n" +
+    "	<div class='tabs'>\n" +
+    "		<ul class='flex'>\n" +
+    "			<li>\n" +
+    "					<a \n" +
+    "					href='javascript:;' \n" +
+    "					class='normal-tab'\n" +
     "					ng-click='toggleTab(\"prepared\")'><i class='prepared-icon'>订单记录查询</a>\n" +
     "			</li>\n" +
     "		</ul>\n" +
@@ -510,7 +641,8 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "				on-select-page='onSelectPage(page)'></pagination>\n" +
     "		</div>\n" +
     "	</div>\n" +
-    "</section>");
+    "</section>\n" +
+    "");
 }]);
 
 angular.module("page/seat.html", []).run(["$templateCache", function($templateCache) {
@@ -553,15 +685,18 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal' \n" +
+    "						maxlength='11'\n" +
     "						ng-required='true'\n" +
     "						ng-model='order.actualTel'\n" +
     "						ng-pattern='/1\\d{10}/'/>\n" +
+    "					<span class='mobile-position'>{{mobilePosition}}</span>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<label class='icon-label username-label'><i></i></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal'\n" +
+    "						maxlength='30'\n" +
     "						ng-required='true'\n" +
     "						ng-model='order.fullName'\n" +
     "						placeholder='用户姓名'/>\n" +
@@ -588,6 +723,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='text' \n" +
     "						class='input-normal long-width'\n" +
     "						id='startInput'\n" +
+    "						maxlength='50'\n" +
     "						ng-required='true'\n" +
     "						ng-model='order.start'\n" +
     "						placeholder='出发位置'\n" +
@@ -599,6 +735,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal long-width'\n" +
+    "						maxlength='50'\n" +
     "						ng-model='order.aroundRoadName'\n" +
     "						placeholder='周围道路名称'/>\n" +
     "				</li>\n" +
@@ -660,7 +797,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "				</il>\n" +
     "			</ul>\n" +
     "			<div class='btns text-center'>\n" +
-    "				<button class='btn-normal' ng-class='{clickable: newOrder.$valid}'>保存</button>\n" +
+    "				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: isSending()}'>保存</button>\n" +
     "				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>\n" +
     "				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>\n" +
     "			</div>\n" +
@@ -739,14 +876,15 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='text' \n" +
     "						class='search-input'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='words'/><button class='btn-normal search-btn'><i></i></button>\n" +
+    "						ng-model='words'\n" +
+    "						pause-emit='pause'/><button class='btn-normal search-btn'><i></i></button>\n" +
     "					<select class='search-select'>\n" +
     "						<option>个人</option>\n" +
     "					</select>\n" +
     "				</form>\n" +
     "			</div>\n" +
     "			<div class='fr'>\n" +
-    "				<span class='tick-timer'>300秒</span>\n" +
+    "				<span class='tick-timer'>{{averageTimer}}秒</span>\n" +
     "			</div>\n" +
     "		</section>\n" +
     "		<section class='order-content flex'>\n" +
@@ -760,15 +898,15 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "								ng-click='toggleTab(\"prepared\")'>调派中</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"received\"), \"add-tab\": isAddTab(\"received\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"received\")}'\n" +
     "								ng-click='toggleTab(\"received\")'>已接单</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"started\"), \"add-tab\": isAddTab(\"started\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"started\")}'\n" +
     "								ng-click='toggleTab(\"started\")'>已出发</a></li>\n" +
     "						<li><a \n" +
     "								href='javascript:;' \n" +
-    "								ng-class='{active: isCurrentTab(\"done\"), \"add-tab\": isAddTab(\"done\")}'\n" +
+    "								ng-class='{active: isCurrentTab(\"done\")}'\n" +
     "								ng-click='toggleTab(\"done\")'>已完成</a></li>\n" +
     "					</ul>\n" +
     "				</nav>\n" +

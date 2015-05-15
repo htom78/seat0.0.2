@@ -20,6 +20,10 @@ var routers = function ($routeProvider) {
 		.when(approot + '/login.htm', {
 			templateUrl: 'page/login.html',
 			controller: 'loginCtrl'
+		})
+		.when(approot + '/police.htm', {
+			templateUrl: 'page/police.html',
+			controller: 'policeCtrl'	
 		});
 };
 

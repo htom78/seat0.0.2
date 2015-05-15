@@ -21,6 +21,12 @@
 		.file-search {
 			@include icon-content('\e603');
 		}
+		.police {
+			@include icon-content('\e601');
+		}
+		.car-track {
+			@include icon-content('\e602');
+		}
 	}
 
 	.call-operate {

@@ -5,3 +5,4 @@ require('./car');
 require('./map');
 require('./login');
 require('./user');
+require('./phone');

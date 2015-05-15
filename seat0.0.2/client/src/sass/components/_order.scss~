@@ -34,13 +34,16 @@ tr.add-new {
 }
 @keyframes addTab
 {
-	from {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
-	to {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
+	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
+	25% {box-shadow: inset 0px 0px 6px rgba(255, 186, 88, 1);}
+	50% {box-shadow: inset 0px 0px 5px rgba(255, 186, 88, 1);}
+	80% {box-shadow: inset 0px 0px 4px rgba(255, 186, 88, 1);}
+	100% {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
 }
 
 @-webkit-keyframes addTab
 {
-	from {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, .8);}
-	to {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
+	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
+	100% {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
 }
 

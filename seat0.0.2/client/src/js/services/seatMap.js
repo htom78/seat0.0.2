@@ -1,14 +1,18 @@
 var services = require('./index');
 
-var seatMapService = function(gaode, utils) {
+var seatMapService = function(gaode, utils, properties) {
 	var gaodeMap = gaode.map();
 	return {
 		map: function(elem) {
 			gaodeMap.open(elem);
 			gaodeMap.addMarker();
+			gaodeMap.addCircle();
 		},
 		setMarkerPosition: function(lng, lat) {
 			gaodeMap.setMarkerPosition(lng, lat);
+			gaodeMap.setCirclePosition(lng, lat);
+			gaodeMap.showMarker();
+			gaodeMap.showCircle();
 		},
 		addCarMarker: function(carInfos) {
 			if (!carInfos || carInfos.length === 0) {
@@ -24,10 +28,16 @@ var seatMapService = function(gaode, utils) {
 		},
 		removeCarMarker: function() {
 			gaodeMap.removeCarMarker();
+		},
+		resetMap: function() {
+			gaodeMap.hideMarker();
+			gaodeMap.hideCircle();
+			gaodeMap.setMapCenter(properties.lng, properties.lat);	
+			gaodeMap.removeCarMarker();
 		}
 	};
 };
 
-seatMapService.$inject = ['gaode', 'utils'];
+seatMapService.$inject = ['gaode', 'utils', 'properties'];
 
 services.factory('seatMapService', seatMapService);

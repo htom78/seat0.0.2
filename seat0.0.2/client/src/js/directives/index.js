@@ -9,3 +9,4 @@ require('./leaderMap');
 require('./chartEmploy');
 require('./chartCar');
 require('./listenCall');
+require('./pauseEmit');

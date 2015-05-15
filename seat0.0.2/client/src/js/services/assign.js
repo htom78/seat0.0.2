@@ -4,7 +4,7 @@ var assignDialog = function(dialog) {
 	var alert = dialog.dialog({modalClass: 'assign-dialog', backdrop: true});
 	return {
 		open: function(scope) {
-			alert.open({
+			return alert.open({
 						url: 'component/assignDialog.html',
 						scope: scope
 					});

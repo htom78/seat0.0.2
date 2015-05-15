@@ -5,12 +5,12 @@ var orderNotify = function($rootScope) {
 			switch (status) {
 				case 2:
 					//已接单
-					$rootScope.$broadcast('order:receive', sn);
+					$rootScope.$broadcast('order:received', sn);
 					break;
 				case 4:
 				case 5:
 					//已出发
-					$rootScope.$broadcast('order:start', sn);
+					$rootScope.$broadcast('order:started', sn);
 					break;	
 				case 9:
 					//已完成

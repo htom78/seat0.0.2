@@ -1,30 +1,29 @@
-<h1 class='login-header'>平台登录页</h1>
 <div class='login-page'>
-	<div class='login-form-wrapper'>
-		<form class='login-form' ng-submit='login()'>
-			<div class='input-wrapper'>
-				<input 
-					type='text' 
-					class='login-input input-normal'
-					placeholder='工号'
-					ng-required='true'
-					ng-model='loginForm.username'/>
-			</div>
-			<div class='input-wrapper'>
-				<input 
-					type='password'
-					class='login-input input-normal'
-					placeholder='密码'
-					ng-required='true'
-					ng-model='loginForm.password'/>
-			</div>
-			<div class='login-error' ng-if='hasError'><span>{{errorInfo}}</span></div>
-			<div class='btn-wrapper'>
-				<button class='login-btn'>登录</button>
-			</div>
-		</form>
+	<div class='login-box'>
+		<div class='login-form-wrapper'>
+			<form class='login-form' ng-submit='login()'>
+				<div class='input-wrapper'>
+					<input 
+						type='text' 
+						class='login-input username-input'
+						placeholder='工号'
+						ng-required='true'
+						ng-model='loginForm.username'/>
+				</div>
+				<div class='input-wrapper'>
+					<input 
+						type='password'
+						class='login-input password-input'
+						placeholder='密码'
+						ng-required='true'
+						ng-model='loginForm.password'/>
+				</div>
+				<div class='some-error'><span>{{errorInfo}}</span></div>
+				<div class='btn-wrapper'>
+					<button class='login-btn'>登录</button>
+				</div>
+			</form>
+		</div>
+		<div class='shadow'></div>
 	</div>
-</div>
-<div class='bottom-license'>
-	<small>浙江信电技术股份有限公司All Right Reserved     浙ICP备 07026991-2号  Copyright© 1999-2020</small>
 </div>

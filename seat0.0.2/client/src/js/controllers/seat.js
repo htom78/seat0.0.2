@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMapService) {
+var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMapService, socketService, phoneService) {
 
 	//初始化订单信息
 	var initOrderInfo = {
@@ -27,15 +27,19 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 
 
 	/*****************************************/
+	//新建订单
 	$scope.addNewOrder = function() {
 		if ($scope.newOrder.$valid) {
+			$scope.sending = true;
 			var newOrder = $scope.order;
 			orderService
 				.add($scope.order)
 				.then(function(sn) {
+					$scope.sending = false;
 					//下单成功返回一个订单号，序列号
+					//清空订单字段
 					$scope.cancelOrder();
-					//右下脚，切换到pera
+					//订单添加成功，右下脚，切换到prepared
 					$scope
 						.toggleTab('prepared')
 						.then(function(orders) {
@@ -48,29 +52,39 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 								poi: newOrder.start,
 								'destination_poi': newOrder.end
 							}; 	
+							$scope.show.sn = sn;	
 							if (orders.total === 0) {
 								$scope.orders = [order]; 	
 							} else {
+								var has = false;
 								angular.forEach(orders, function(o) {
 									if (order.sn === o.sn) {
+										has = true;
 										return;
 									}	
 								});	
-								$scope.normalTotal = orders.total + 1;
-								$scope.orders.unshift = order;
+								if (!has) {
+									$scope.normalTotal = orders.total + 1;
+									$scope.orders.unshift = order;
+								}
 							}
 						});
 				}, function(error) {
+					$scope.sending = false;
 					alert('下单失败:' + error);	
 				});
 		}
+	};
+
+	$scope.isSending = function() {
+	    return $scope.sending;	
 	};
 
 	//清空表单数据
 	$scope.cancelOrder = function() {
 		$scope.order = angular.copy(initOrderInfo);
 		$scope.newOrder.$setPristine();
-		seatMapService.removeCarMarker();
+		seatMapService.resetMap();
 		$scope.user = angular.copy(initUserInfo);
 	};
 
@@ -91,20 +105,24 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 	$scope.search = {};
 	$scope.errorTotal = 0;
 	$scope.toggleTab = function(tabName) {
+		$scope.pause = true;
 		$scope.search.currentTab = tabName;
 		$scope.search.keywords = '';
 		$scope.show.sn = 'quan';
-		$scope.show.tab = 'quan';
 		$timeout.cancel(snTimer);
 		return orderService
 			.query($scope.search)
 			.then(function(response) {
 				$scope.orders = response;
+				$scope.averageTimer = response.averageTimer;
 				if ($scope.isCurrentTab('exception')) {
 					$scope.errorTotal = $scope.orders.total;
 				} else {
 					$scope.normalTotal = $scope.orders.total;
 				}
+				$timeout(function() {
+				    $scope.pause = false;	
+				}, 3000);
 				return $scope.orders;
 			});
 	};
@@ -118,6 +136,7 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 	//搜索
 	$scope.search = function() {
 		$scope.search.keywords = $scope.words;
+		$scope.averageTimer = 0;
 		orderService
 			.query($scope.search)
 			.then(function(response) {
@@ -160,35 +179,19 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 			});
 	});
 
-
 	//初始化查询
 	$scope.toggleTab('prepared');
 
 	$scope.orderStatus = function(status, sn) {
-		if ($scope.isCurrentTab('prepared') && status === 'received') {
-			$scope
-				.toggleTab(status)
-				.then(function(orders) {
-					$scope.show.sn = sn;	
-				});
-			return;
-		}
-		if (status !== $scope.search.currentTab) {
-			$scope.show.tab = status;		
-		} else if (status === 'done') {
-			//当前的tab为完成，刷新tab，根据order.sn === sn 来添加className		
-			$scope
-				.toggleTab(status)
-				.then(function(orders) {
-					$scope.show.sn = sn;	
-				});
-		} else {
-			$scope.show.sn = sn;	
-			snTimer = $timeout(function() {
+		if (!$scope.pause) {
+			$timeout(function() {
 				$scope
-					.toggleTab(status);
-			}, 3000);
-		}	
+					.toggleTab(status)
+					.then(function() {
+						$scope.show.sn = sn;	
+					});
+			}, 300);
+		}
 	};
 
 	$scope.isAddTab = function(tabName) {
@@ -212,13 +215,28 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 		$scope.orderStatus('done', sn);
 	});
 
+	socketService.connection();
 	$scope.$on('$destroy', function() {
 		$timeout.cancel(snTimer);
+		socketService.close();
+	});
+
+	//电话号码归属地
+	$scope.$watch('order.actualTel', function(value) {
+		if (value) {
+			phoneService
+				.mobileToPosition(value)
+				.then(function(response) {
+					$scope.mobilePosition = response.carrier;
+				});	
+		} else {
+			$scope.mobilePosition = '';	
+		}
 	});
 
 };
 
 
-seatCtrl.$inject = ['$scope', '$timeout', 'orderService', '$q', 'userService', 'seatMapService'];
+seatCtrl.$inject = ['$scope', '$timeout', 'orderService', '$q', 'userService', 'seatMapService', 'socketService', 'phoneService'];
 
 controllers.controller('seatCtrl', seatCtrl);

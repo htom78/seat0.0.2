@@ -8,9 +8,17 @@ var statistics = function(statisticsResource) {
 							return {
 								hour: response.hour,
 								day: response.day,
-								lastHour: response['last_hour'],
+								lastHour: response['last_hour'] ,
 								lastDay: response['last_day']
 							};
+							/*
+							return {
+							    hour: 3,
+							    lastHour: 10,
+							    day: 25,
+							    lastDay: 15	
+							};
+							*/
 						}, function() {
 							return {
 								hour: 0,

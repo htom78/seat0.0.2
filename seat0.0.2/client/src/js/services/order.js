@@ -1,8 +1,9 @@
 var services = require('./index');
 
-var orderService = function(orderResource, mapService, $q) {
+var orderService = function(orderResource, mapService, $q, utils) {
 
 	return {
+		//新建订单
 		add: function(data) {
 			var defer = $q.defer();
 			
@@ -39,10 +40,13 @@ var orderService = function(orderResource, mapService, $q) {
 			$q
 				.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
 				.then(function(lngLats) {
-					orderData.startLongitude = lngLats[0].lng;
-					orderData.startLatitude = lngLats[0].lat;
-					orderData.destinationLongitude = lngLats[1].lng;
-					orderData.destinationLatitude = lngLats[1].lat;
+					//根据地理位置，从高德获取到经纬度 =>  火星坐标转国标 
+					var startLngLat = utils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat),
+					    destinationLngLat = utils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
+					orderData.startLongitude = startLngLat.lng;
+					orderData.startLatitude = startLngLat.lat;
+					orderData.destinationLongitude = destinationLngLat.lng;
+					orderData.destinationLatitude = destinationLngLat.lat;
 					/*
 					 创建多次订单
 					var requests = [];
@@ -93,6 +97,7 @@ var orderService = function(orderResource, mapService, $q) {
 							angular.forEach(response.list, function(value, key) {
 								result[key] = value;
 							});
+							result.averageTimer = response.sec;
 							result.total = response.total;
 							return result;
 						}, function() {
@@ -102,6 +107,7 @@ var orderService = function(orderResource, mapService, $q) {
 		leaderQuery: function(data) {
 			var result = [];
 			result.total = 0;
+			result.averageTimer = 0;
 			var queryData = {
 				status: ['exception', 'prepared', 'received', 'started', 'done'].indexOf(data.currentTab),
 				page: data.currentPage,
@@ -153,13 +159,29 @@ var orderService = function(orderResource, mapService, $q) {
 							createTime: '',
 							orderTime: '',
 							pickupTime: '',
-							endTime: ''
+							endTime: '',
+							pickupX: 0,
+							pickupY: 0,
+							assignedX: 0,
+							assignedY: 0,
+							arrivedX: 0,
+							arrivedY: 0
 						};
 			return orderResource
 						.getStepInfo({
 							sn: sn
 						})
 						.then(function(response) {
+							//gps 转 火星
+							var pickupLngLat = utils.gps84ToGcj02(response.pickupX, response.pickupY),
+							    assignedLngLat = utils.gps84ToGcj02(response.assignedX, response.assignedY),
+							    arrivedLngLat = utils.gps84ToGcj02(response.arrivedX, response.arrivedY);
+							data.pickupX = pickupLngLat.lng;
+							data.pickupY = pickupLngLat.lat;
+							data.assignedX = assignedLngLat.lng;
+							data.assignedY = assignedLngLat.lat;
+							data.arrivedX = arrivedLngLat.lng;
+							data.arrivedY = arrivedLngLat.lat;
 							if (!response.createTime) {
 								return data;
 							}
@@ -188,28 +210,49 @@ var orderService = function(orderResource, mapService, $q) {
 							number: data.carNumber
 						})
 						.then(function(response) {
-							if (response.isSuccess) {
+							if (response && parseInt(response.status) === 0) {
 								return response;
 							} else {
-								return $q.reject(response.msg);
+								return $q.reject(response);
 							}
 						});
 		},
 		cancelOrder: function(sn) {
 			return orderResource
-						.cancelOrder(sn);
+						.cancelOrder(sn)
+						.then(function(response) {
+							if (response && parseInt(response.status) === 0) {
+								return response;
+							} else {
+								return $q.reject(response);
+							}
+						});
 		},
 		passengerFuck: function(sn) {
 			return  orderResource
-						.passengerFuck(sn);
+						.passengerFuck(sn)
+						.then(function(response) {
+							if (response && parseInt(response.status) === 0) {
+								return response;
+							} else {
+								return $q.reject(response);
+							}
+						});
 		},
 		driverFuck: function(sn) {
 			return  orderResource
-						.driverFuck(sn);
+						.driverFuck(sn)
+						.then(function(response) {
+							if (response && parseInt(response.status) === 0) {
+								return response;
+							} else {
+								return $q.reject(response);
+							}
+						});
 		}
 	};
 };
 
-orderService.$inject = ['orderResource', 'mapService', '$q'];
+orderService.$inject = ['orderResource', 'mapService', '$q', 'utils'];
 
 services.factory('orderService', orderService);
