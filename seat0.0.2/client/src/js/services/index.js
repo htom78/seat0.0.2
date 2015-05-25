@@ -14,3 +14,4 @@ require('./user');
 require('./orderNotify');
 require('./socket');
 require('./phone');
+require('./sign');

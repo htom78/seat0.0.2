@@ -24,6 +24,12 @@
 		.police {
 			@include icon-content('\e601');
 		}
+		.car-track {
+			@include icon-content('\e602');
+		}
+		.exit {
+			@include icon-content('\e602');
+		}
 	}
 
 	.call-operate {
@@ -125,7 +131,7 @@
 				font-size: 32px;
 			}
 			color:#f95059;
-			&.reset {
+			&.rest {
 				@include icon-content('\e60f');
 			}
 			&.busy {
@@ -164,7 +170,7 @@
 				cursor: Default;
 			}
 		}
-		.reset {
+		.rest {
 			@include icon-content('\e60f');
 		}
 		.busy {
@@ -180,13 +186,18 @@
 .header {
 	.info-bar {
 		margin-top: $margin-base-horizontal;
-		> div {
+		.info-left,
+	        .info-right {
+			position: relative;
 			background-color: $color-primary;
 			border-radius: $radius-large;
-			line-height: $height-large;
+			height: 30px;
+			line-height: 30px;
+			font-size: 14px;
 			color: #fff;
 			@extend %font-ms;
 			padding:0 $padding-base-horizontal;
+			overflow: hidden;
 		}
 		.info-left {
 			width: $layout-left-width;
@@ -196,6 +207,20 @@
 		.info-right {
 			flex: 2 1;
 		}
+		.scroll-info {
+			position: absolute;	
+			top: 0;
+			animation: scrollInfo 15s infinite;
+			-webkit-animation: scrollInfo 15s infinite;
+		}
 	}
 }
 
+@keyframes scrollInfo {
+	0% {left: -10%;}
+	100% {left: 100%;}
+}
+@-webkit-keyframes scrollInfo {
+	0% {left: -10%;}
+	100% {left: 100%;}
+}

@@ -131,6 +131,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/login.htm' class='btn-icon-large exit'></a></li>\n" +
     "		</ul>\n" +
     "	</nav>\n" +
     "\n" +
@@ -147,17 +148,21 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<ul class='flex'>\n" +
     "			<li><a href='javascript:;' class='sign-in' \n" +
     "				ng-class='{active: isSignIn()}' \n" +
-    "				ng-click='toggleSign(\"signIn\")'\n" +
+    "				ng-click='callSignIn()'\n" +
     "				title='签入'></a></li>\n" +
     "			<li><a href='javascript:;' class='sign-out' \n" +
     "				ng-class='{active: !isSignIn()}' \n" +
-    "				ng-click='toggleSign(\"signOut\")'\n" +
+    "				ng-click='callSignOut()'\n" +
     "				title='签出'></a></li>\n" +
     "		</ul>\n" +
     "\n" +
-    "		<div class='status-icon' title='{{currentStatusInfo}}'>\n" +
+    "		<div class='status-icon' title='{{currentStateInfo}}'>\n" +
     "			<i\n" +
-    "				ng-class='{calling: isCurrentActive(\"calling\"), busy: isCurrentActive(\"busy\"), reset: isCurrentActive(\"reset\"), vain:isCurrentActive(\"vain\"), signOut:!isSignIn()}'></i>\n" +
+    "				ng-class='{\n" +
+    "					vain: isCurrentActive(\"calling\"), \n" +
+    "					busy: isCurrentActive(\"busy\"), \n" +
+    "					rest: isCurrentActive(\"rest\"), \n" +
+    "					signOut:!isSignIn()}'></i>\n" +
     "		</div>\n" +
     "\n" +
     "		<div class='user-info-timer'>\n" +
@@ -168,11 +173,11 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<div class='status-btns'>\n" +
     "			<button\n" +
     "				title='{{firstBtnTitle}}'\n" +
-    "				ng-class='{reset:!isFirstBtnVain(), calling:isFirstBtnVain(), disabled:!isSignIn()||isSecondBtnVain()}'\n" +
+    "				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'\n" +
     "				ng-click='toggleFirstBtn()'></button>\n" +
     "			<button \n" +
     "				title='{{secondBtnTitle}}'\n" +
-    "				ng-class='{busy: !isSecondBtnVain(), calling:isSecondBtnVain(), disabled: !isSignIn()||isFirstBtnVain()}'\n" +
+    "				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'\n" +
     "				ng-click='toggleSecondBtn()'></button>\n" +
     "		</div>\n" +
     "	</div>\n" +
@@ -180,8 +185,8 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "</section>\n" +
     "\n" +
     "<section class='flex info-bar'>\n" +
-    "	<div class='info-left'><span>1.一切正常.</span></div>\n" +
-    "	<div class='info-right'><span>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>\n" +
+    "	<div class='info-left'><span class='scroll-info'>1.一切正常.</span></div>\n" +
+    "	<div class='info-right'><span class='scroll-info'>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>\n" +
     "</section>\n" +
     "");
 }]);

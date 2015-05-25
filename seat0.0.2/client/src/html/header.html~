@@ -4,7 +4,8 @@
 			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>
 			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>
 			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>
-			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large police'></a></li>
+			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>
+			<li><a ng-href='{{appRoot}}/login.htm' class='btn-icon-large login'></a></li>
 		</ul>
 	</nav>
 
@@ -21,17 +22,21 @@
 		<ul class='flex'>
 			<li><a href='javascript:;' class='sign-in' 
 				ng-class='{active: isSignIn()}' 
-				ng-click='toggleSign("signIn")'
+				ng-click='callSignIn()'
 				title='签入'></a></li>
 			<li><a href='javascript:;' class='sign-out' 
 				ng-class='{active: !isSignIn()}' 
-				ng-click='toggleSign("signOut")'
+				ng-click='callSignOut()'
 				title='签出'></a></li>
 		</ul>
 
-		<div class='status-icon' title='{{currentStatusInfo}}'>
+		<div class='status-icon' title='{{currentStateInfo}}'>
 			<i
-				ng-class='{calling: isCurrentActive("calling"), busy: isCurrentActive("busy"), reset: isCurrentActive("reset"), vain:isCurrentActive("vain"), signOut:!isSignIn()}'></i>
+				ng-class='{
+					vain: isCurrentActive("calling"), 
+					busy: isCurrentActive("busy"), 
+					rest: isCurrentActive("rest"), 
+					signOut:!isSignIn()}'></i>
 		</div>
 
 		<div class='user-info-timer'>
@@ -42,11 +47,11 @@
 		<div class='status-btns'>
 			<button
 				title='{{firstBtnTitle}}'
-				ng-class='{reset:!isFirstBtnVain(), calling:isFirstBtnVain(), disabled:!isSignIn()||isSecondBtnVain()}'
+				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'
 				ng-click='toggleFirstBtn()'></button>
 			<button 
 				title='{{secondBtnTitle}}'
-				ng-class='{busy: !isSecondBtnVain(), calling:isSecondBtnVain(), disabled: !isSignIn()||isFirstBtnVain()}'
+				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'
 				ng-click='toggleSecondBtn()'></button>
 		</div>
 	</div>
@@ -54,6 +59,6 @@
 </section>
 
 <section class='flex info-bar'>
-	<div class='info-left'><span>1.一切正常.</span></div>
-	<div class='info-right'><span>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>
+	<div class='info-left'><span class='scroll-info'>1.一切正常.</span></div>
+	<div class='info-right'><span class='scroll-info'>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>
 </section>
