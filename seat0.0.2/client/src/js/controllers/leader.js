@@ -1,8 +1,18 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $timeout, leaderMapService) {
+var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $timeout, leaderMapService, employerService, $location) {
 
 	$scope.search = {};
+	
+	$scope.$watch(function() {
+		return employerService.employerType;	
+	}, function(newValue) {
+		if (newValue) {
+			if (newValue !== 'seat_leader') {
+				$location.path('/');	
+			}	
+		}	
+	});
 
 	$scope.isCurrentTab = function(tabName) {
 		return tabName === $scope.search.currentTab;
@@ -283,6 +293,6 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 	/***************************************/
 };
 
-leaderCtrl.$inject = ['$scope', 'orderService', 'orderStepDialog', 'assignDialog', '$timeout', 'leaderMapService'];
+leaderCtrl.$inject = ['$scope', 'orderService', 'orderStepDialog', 'assignDialog', '$timeout', 'leaderMapService', 'employerService', '$location'];
 
 controllers.controller('leaderCtrl', leaderCtrl);

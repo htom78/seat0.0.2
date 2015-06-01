@@ -15,3 +15,5 @@ require('./orderNotify');
 require('./socket');
 require('./phone');
 require('./sign');
+require('./employer');
+require('./callSocket');

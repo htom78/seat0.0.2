@@ -128,7 +128,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
     "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li ng-show='isLeader()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/login.htm' class='btn-icon-large exit'></a></li>\n" +
@@ -166,7 +166,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		</div>\n" +
     "\n" +
     "		<div class='user-info-timer'>\n" +
-    "			<div class='user-number'><i></i><span>{{username}}</span></div>\n" +
+    "			<div class='user-number'><i></i><span>{{employerName}}</span></div>\n" +
     "			<div class='timer'><i></i><span>{{currentTimer}}</span></div>\n" +
     "		</div>\n" +
     "\n" +

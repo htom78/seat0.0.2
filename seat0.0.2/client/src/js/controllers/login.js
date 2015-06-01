@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var loginCtrl = function($scope, loginService, $location, $rootScope) {
+var loginCtrl = function($scope, loginService, $location, $rootScope, employerService) {
 	$scope.loginForm = {};
 	$rootScope.isLoginPage = true;
 	$scope.$on('$destroy', function() {
@@ -10,14 +10,16 @@ var loginCtrl = function($scope, loginService, $location, $rootScope) {
 		loginService
 			.login($scope.loginForm)
 			.then(function() {
-				$location.path(window.appRoot + '/');
+				$location.path('/');
 			}, function(errorInfo) {
 				$scope.hasError = true;
 				$scope.errorInfo= errorInfo;
 			});
 	};
+
+	employerService.clearInfo();
 };
 
-loginCtrl.$inject = ['$scope', 'loginService', '$location', '$rootScope'];
+loginCtrl.$inject = ['$scope', 'loginService', '$location', '$rootScope', 'employerService'];
 
 controllers.controller('loginCtrl', loginCtrl);

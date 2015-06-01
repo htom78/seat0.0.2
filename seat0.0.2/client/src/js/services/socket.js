@@ -11,10 +11,8 @@ var socketService = function(orderNotify, $rootScope, $timeout) {
 			}
 			this.socket = new WebSocket(link);
 			this.socket.onopen = function() {
-				console.log('open');	
 			};
 			this.socket.onclose = function() {
-				console.log('close');	
 			};
 			this.socket.onmessage = function(ev) {
 				var info = JSON.parse(ev.data);
@@ -45,7 +43,9 @@ var socketService = function(orderNotify, $rootScope, $timeout) {
 
 		},
 		close: function() {
-			this.socket.close();
+			if (this.socket) {
+				this.socket.close();
+			}
 			this.socket = null;	
 		}
 	};

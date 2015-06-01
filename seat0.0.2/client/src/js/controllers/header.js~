@@ -1,14 +1,59 @@
 var controllers = require('./index');
 
-var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope) {
+var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $location, employerService) {
 
-	$scope.username = window.username;
+	$scope.$watch(function() {
+		return 	employerService.employerName;
+	}, function(newValue) {
+		if (newValue) {
+			$scope.employerName = employerService.employerName;
+			$scope.employerType = employerService.employerType;
+			var signState = employerService.signState;
+			if (signState) {
+				switch (signState) {
+						//签入
+						case 1:
+							$scope.currentState = 'calling';
+							$scope.signInfo = 'signIn';	
+							break;
+						//签出
+						case 2:
+							$scope.currentState = '';
+							$scope.signInfo = 'signOut';	
+							break;
+						//小休
+						case 3:
+							$scope.currentState = 'rest';
+							$scope.signInfo = 'signIn';	
+							break;
+						//取消小休
+						case 4:
+							$scope.currentState = 'calling';
+							$scope.signInfo = 'signIn';	
+							break;
+						//示忙
+						case 5:
+							$scope.currentState = 'busy';
+							$scope.signInfo = 'signIn';	
+							break;
+						//取消示忙
+						case 6:
+							$scope.currentState = 'calling';
+							$scope.signInfo = 'signIn';	
+							break;	
+					}	
+			} else {
+			
+				$scope.currentState = '';
+				$scope.signInfo = 'signOut';	
+			}
+		}
+	});
 
-	//左上角时间
-	(function tickTimer(){
-		$scope.currentTimer = $filter('date')(new Date(), 'HH:mm');
-		$timeout(tickTimer, 30000);
-	})();
+	$scope.isLeader = function() {
+		return $scope.employerType === 'seat_leader';	
+	};
+
 
 
 	//签入
@@ -23,6 +68,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope) {
 
 	//签出
 	$scope.callSignOut = function() {
+		console.log($scope.$$phase);
 		signService
 			.signOut()
 			.then(function() {
@@ -100,53 +146,11 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope) {
 		}	
 	});
 
-
-	$rootScope.$on('$routeChangeSuccess', function(ev, next, prev) {
-		if ((prev && prev.loadedTemplateUrl === 'page/login.html') ||
-			localStorage.getItem('parentId') === 'quan') {
-			$scope.currentState = '';
-			$scope.signInfo = 'signOut';	
-		} else {
-			$timeout(function() {
-				var btnState = window.signState;
-				if (btnState) {
-					btnState = parseInt(btnState);	
-					switch (btnState) {
-						//签入
-						case 1:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;
-						//签出
-						case 2:
-							$scope.currentState = '';
-							$scope.signInfo = 'signOut';	
-							break;
-						//小休
-						case 3:
-							$scope.currentState = 'rest';
-							$scope.signInfo = 'signIn';	
-							break;
-						//取消小休
-						case 4:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;
-						//示忙
-						case 5:
-							$scope.currentState = 'busy';
-							$scope.signInfo = 'signIn';	
-							break;
-						//取消示忙
-						case 6:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;	
-					}
-				}	
-			}, 200);
-		}
-	});
+	//左上角时间
+	(function tickTimer(){
+		$scope.currentTimer = $filter('date')(new Date(), 'HH:mm');
+		$timeout(tickTimer, 30000);
+	})();
 
 	/******************************************/
 	//当用户拨打进来电话：切换按钮
@@ -157,6 +161,6 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope) {
 	*/
 };
 
-headerCtrl.$inject = ['$scope', '$timeout', '$filter', 'signService', '$rootScope'];
+headerCtrl.$inject = ['$scope', '$timeout', '$filter', 'signService', '$rootScope' , '$location', 'employerService'];
 
 controllers.controller('headerCtrl', headerCtrl);

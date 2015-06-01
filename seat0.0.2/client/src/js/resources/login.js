@@ -3,7 +3,7 @@ var resources =  require('./index');
 var loginResource = function($http) {
 	return {
 		login: function(data) {
-			var url = window.appRoot + '/login.htm';
+			var url = 'login.htm';
 
 			return $http({
 						method: 'POST',

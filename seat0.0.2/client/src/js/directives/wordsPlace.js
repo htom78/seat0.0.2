@@ -155,7 +155,7 @@ var addressList = function($document) {
 					scope.$apply(function() {
 						scope.show = true;
 					});
-					var	pos = input.offset();
+					var pos = input.offset();
 					elem
 						.css({
 							left: pos.left,

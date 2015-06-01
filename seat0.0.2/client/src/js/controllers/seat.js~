@@ -27,6 +27,7 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 
 
 	/*****************************************/
+	//新建订单
 	$scope.addNewOrder = function() {
 		if ($scope.newOrder.$valid) {
 			$scope.sending = true;
@@ -192,6 +193,7 @@ var seatCtrl = function ($scope, $timeout, orderService, $q, userService, seatMa
 			}, 300);
 		}
 	};
+
 
 	$scope.isAddTab = function(tabName) {
 		return $scope.show.tab === tabName;	

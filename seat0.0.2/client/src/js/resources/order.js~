@@ -5,7 +5,7 @@ var order = function($http) {
 	return {
 		//添加新的订单
 		add: function (data) {
-			var url = window.appRoot + '/call.htm';
+			var url = 'call.htm';
 			return $http({
 							method: 'POST',
 							url: url,

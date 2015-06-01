@@ -1,24 +1,22 @@
 var routers = function ($routeProvider) {
-	var approot = window.appRoot;
-//	var approot = '';
 	$routeProvider
-		.when(approot + '/index.htm', {
+		.when('/', {
 			templateUrl: 'page/seat.html',
 			controller: 'seatCtrl'
 		})
-		.when(approot + '/', {
+		.when('/index.htm', {
 			templateUrl: 'page/seat.html',
 			controller: 'seatCtrl'
 		})
-		.when(approot + '/leader.htm', {
+		.when('/leader.htm', {
 			templateUrl: 'page/leader.html',
 			controller: 'leaderCtrl'
 		})
-		.when(approot + '/searchMore.htm', {
+		.when('/searchMore.htm', {
 			templateUrl: 'page/search.html',
 			controller: 'searchCtrl'
 		})
-		.when(approot + '/login.htm', {
+		.when('/login.htm', {
 			templateUrl: 'page/login.html',
 			controller: 'loginCtrl',
 			resolve: {
@@ -27,7 +25,7 @@ var routers = function ($routeProvider) {
 				}
 			}
 		})
-		.when(approot + '/police.htm', {
+		.when('/police.htm', {
 			templateUrl: 'page/police.html',
 			controller: 'policeCtrl'	
 		});

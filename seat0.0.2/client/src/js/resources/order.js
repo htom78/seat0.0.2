@@ -5,7 +5,7 @@ var order = function($http) {
 	return {
 		//添加新的订单
 		add: function (data) {
-			var url = window.appRoot + '/call.htm';
+			var url = 'call.htm';
 			return $http({
 							method: 'POST',
 							url: url,
@@ -17,7 +17,7 @@ var order = function($http) {
 						});
 		},
 		query: function(data) {
-			var url = window.appRoot + '/search.htm';
+			var url = 'search.htm';
 			return $http
 						.get(url, {
 							params: data
@@ -27,7 +27,7 @@ var order = function($http) {
 						});
 		},
 		queryMore: function(data) {
-			var url = window.appRoot + '/search/more.htm';
+			var url = 'search/more.htm';
 			return $http
 						.get(url, {
 							params: data
@@ -37,7 +37,7 @@ var order = function($http) {
 						});
 		},
 		getStepInfo: function(data) {
-			var url = window.appRoot + '/search/route.htm';
+			var url = 'search/route.htm';
 			return $http
 						.get(url, {
 							params: data
@@ -47,7 +47,7 @@ var order = function($http) {
 						});
 		},
 		assign: function(data) {
-			var url = window.appRoot + '/assign.htm';
+			var url = 'assign.htm';
 			return $http({
 							method: 'POST',
 							url: url,
@@ -59,7 +59,7 @@ var order = function($http) {
 						});
 		},
 		cancelOrder: function(sn) {
-			var url = window.appRoot + '/cancel/1.htm';
+			var url = 'cancel/1.htm';
 			return $http({
 							method: 'POST',
 							url: url,
@@ -71,7 +71,7 @@ var order = function($http) {
 						});
 		},
 		passengerFuck: function(sn) {
-			var url = window.appRoot + '/cancel/6.htm';
+			var url = 'cancel/6.htm';
 			return $http({
 							method: 'POST',
 							url: url,
@@ -83,7 +83,7 @@ var order = function($http) {
 						});
 		},
 		driverFuck: function(sn) {
-			var url = window.appRoot + '/cancel/7.htm';
+			var url = 'cancel/7.htm';
 			return $http({
 							method: 'POST',
 							url: url,
