@@ -1,0 +1,13 @@
+module.exports = angular.module('app.dirctives', []);
+require('./mapView');
+require('./chartUser');
+require('./callStatus');
+require('./pagination');
+require('./orderStep');
+require('./wordsPlace');
+require('./leaderMap');
+require('./chartEmploy');
+require('./chartCar');
+require('./listenCall');
+require('./pauseEmit');
+require('./calendar');

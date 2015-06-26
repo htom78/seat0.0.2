@@ -1,0 +1,186 @@
+<section class='leader-chart flex'>
+	<div class='employ flex'>
+		<div class='employ-chart flex'>
+			<div chart-employ class='graph' employ-data='employChart'>
+			</div>
+			<div class='employ-legend'>
+				<ul class='dots'>
+					<li ng-class='{active: isEmployerActiveTab("busy")}'><i class='legend-dot dot-busy'></i><a href='javascript:;' ng-click='toggleEmplyerTab("busy")'>示忙</a></li>
+					<li ng-class='{active: isEmployerActiveTab("reset")}'><i class='legend-dot dot-reset'></i><a href='javascript:;' ng-click='toggleEmplyerTab("reset")'>小休</a></li>
+					<li ng-class='{active: isEmployerActiveTab("respond")}'><i class='legend-dot dot-respond'></i><a href='javascript:;'  ng-click='toggleEmplyerTab("respond")'>应答</a></li>
+					<li ng-class='{active: isEmployerActiveTab("vain")}'><i class='legend-dot dot-vain'></i><a href='javascript:;' ng-click='toggleEmplyerTab("vain")'>空闲</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class='employ-info'>
+			<ul class='flex'>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='user-icon'></i><span>0000</span></div>
+					<div><i class='timer-icon'></i><span>12:21</span></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class='car'>
+		<div>
+			<ul class='flex'>
+				<li><i class='legend-dot stop-legend'></i><span>未登录车/停运</span></li>
+				<li><i class='legend-dot empty-legend'></i><span>空车</span></li>
+				<li><i class='legend-dot heavy-legend'></i><span>重车</span></li>
+				<li><i class='legend-dot task-legend'></i><span>任务车</span></li>
+			</ul>
+		</div>
+		<div class='graph' chart-car car-data='carChart'></div>
+	</div>
+
+	<div class='call'>
+		<div call-status></div>
+	</div>
+</section>
+
+<section class='leader-orders'>
+	<div class='nav-bar'>
+		<nav class='tabs'>
+			<div class='fr search-wrap'>
+				<form class='flex' ng-submit='searchOrder()'>
+					<div class='input-wrap'><input 
+												type='text' 
+												class='search-input' 
+												ng-required='true'
+												ng-model='words'/></div>
+					<div><button class='btn-normal search-btn'><i></i></button></div>
+				</form>
+			</div>
+			<a href='javascript:;' class='leader-reservation' ng-click='toggleSearchType()'>
+				<span class='btn-word'>{{searchType}}</span>
+			</a>
+			<ul class='flex'>
+				<li>
+					<a 
+					href='javascript:;' 
+					class='tab'
+					ng-class='{active: isCurrentOrderTab("prepared")}'
+					ng-click='cutOrderTabPrepared()'><i class='prepared-icon'></i><span><b>{{preparedOrderTabCount[0]}}</b><b>{{preparedOrderTabCount[1]}}</b><b>{{preparedOrderTabCount[2]}}</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentOrderTab("received")}'
+						ng-click='cutOrderTabReceived()'><i class='received-icon'></i><span><b>{{receivedOrderTabCount[0]}}</b><b>{{receivedOrderTabCount[1]}}</b><b>{{receivedOrderTabCount[2]}}</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentOrderTab("started")}'
+						ng-click='cutOrderTabStarted()'><i class='started-icon'></i><span><b>{{startedOrderTabCount[0]}}</b><b>{{startedOrderTabCount[1]}}</b><b>{{startedOrderTabCount[2]}}</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentOrderTab("done")}'
+						ng-click='cutOrderTabDone()'><i class='done-icon'></i><span><b>{{doneOrderTabCount[0]}}</b><b>{{doneOrderTabCount[1]}}</b><b>{{doneOrderTabCount[2]}}</b></span></a>
+				</li>
+				<li>
+					<a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentOrderTab("exception")}'
+						ng-click='cutOrderTabException()'><i class='exception-icon'></i><span><b>{{exceptionOrderTabCount[0]}}</b><b>{{exceptionOrderTabCount[1]}}</b><b>{{exceptionOrderTabCount[2]}}</b></span></a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class='orders flex'>
+		<div class='table-wrapper'>
+			<table class='table'>
+				<colgroup>
+					<col class='col1'>
+					<col class='col2'>
+					<col class='col3'>
+					<col class='col4'>
+					<col class='col5'>
+					<col class='col6'>
+					<col class='col7'>
+					<col class='col8'>
+					<col class='col9'>
+					<col class='col10'>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>订单编号</th>
+						<th>用车时间</th>
+						<th>乘客</th>
+						<th>乘客号码</th>
+						<th>车牌号</th>
+						<th>乘客地址</th>
+						<th>目的地</th>
+						<th>类型</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr 
+						ng-repeat='item in orders' 
+						order-step='item' 
+						show-info='showInfo(sn, pos, $index)'
+						ng-dblclick='orderStepInfo(item)'
+						map-show='mapShow'
+						ng-class='{active: item.isActive}'>
+						<td>{{$index + 1}}</td>
+						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
+						<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+						<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
+						<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
+						<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
+						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
+						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+						<td class='ellipsis'>{{item.uType}}</td>
+						<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class='map-wrapper' ng-show='mapShow'>
+			<a 
+				href='javascript:;' 
+				class='btn-bg-icon map-close-btn'
+				ng-click='closeMapView()'>X</a>
+			<div class='leader-map' leader-map></div>	
+		</div>
+		<div class='paging' ng-show='orderItemCount > 10'>
+			<pagination 
+				num-items='orderItemCount' 
+				current-page='orderCurrentPage'
+				on-select-page='onSelectPage(page)'></pagination>
+		</div>
+	</div>
+</section>

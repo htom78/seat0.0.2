@@ -1,0 +1,118 @@
+<section class='search-page list-page'>
+	<div class='tabs'>
+		<ul class='flex'>
+			<li>
+					<a 
+					href='javascript:;' 
+					class='normal-tab'
+					ng-click='toggleTab("prepared")'><i class='prepared-icon'>订单记录查询</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class='search'>
+		<form ng-submit='searchOrder()'>
+			<div class='simple'>
+				<input 
+					type='text' 
+					class='input-text'
+					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>
+				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>
+			</div>
+			<div class='more' ng-show='isShowMore'>
+				<div>
+					<span class='field-wraper'>
+						<label>接线员:</label>
+						<input type='text' class='input-normal'/>
+					</span>
+					<span class='field-wraper'>
+						<lable>状态</label>
+						<select class='select-normal'><option>请选择</option></select>
+					</span>
+					<span  class='field-wraper'>
+						<label>订单时间:</label>
+						<input 
+							type='text' 
+							class='input-normal'
+							ng-model='search.beginTime'/>
+						<b>-</b>
+						<input 
+							type='text' 
+							class='input-normal'
+							ng-model='search.endTime'/>
+					</span>
+				</div>
+
+				<div class='more-btn-wrap'>
+					<button class='more-btn'>搜索</button>
+				</div>
+			</div>
+		</form>
+
+		<div class='toggle-btns'>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(0)'
+				ng-class='{active:isCurrentTab(0)}'>全部({{tabCount.total}})</button>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(1)'
+				ng-class='{active:isCurrentTab(1)}'>即时({{tabCount.immediate}})</button>
+			<button 
+				class='btn-normal' 
+				ng-click='toggleCallType(2)'
+				ng-class='{active:isCurrentTab(2)}'>预约({{tabCount.prepared}})</button>
+		</div>
+
+	</div>
+
+	<div class='orders'>
+		<div class='table-wrapper'>
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>订单编号</th>
+						<th>用车时间</th>
+						<th>乘客</th>
+						<th>乘客号码</th>
+						<th>车牌号</th>
+						<th>乘客地址</th>
+						<th>目的地</th>
+						<th>类型</th>
+						<th>订单状态</th>
+						<th>接线员</th>
+						<th>作业员</th>
+						<th>订单形式</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='item in orders'>
+						<td>{{$index + 1}}</td>
+						<td>{{item.sn}}</td>
+						<td>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+						<td>{{item.user}}</td>
+						<td>{{item.contactPhone}}</td>
+						<td>{{item.vehicleNumber}}</td>
+						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
+						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+						<td>{{item.uType}}</td>
+						<td>{{item.statusName}}</td>
+						<td>2562</td>
+						<td>{{item.opName}}</td>
+						<td ng-switch='item.isReserved'>
+							<span ng-switch-when='0'>即时</span>
+							<span ng-switch-when='1'>预约</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class='paging' ng-show='numItems > 10'>
+			<pagination 
+				num-items='numItems' 
+				current-page='search.currentPage'
+				on-select-page='onSelectPage(page)'></pagination>
+		</div>
+	</div>
+</section>

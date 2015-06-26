@@ -1,0 +1,231 @@
+.header {
+	padding: 0 $padding-base-horizontal $padding-large-vertical $padding-base-horizontal;
+	border-left: $border-large-width solid $border-color;
+	border-right: $border-large-width solid $border-color;
+	.nav,
+	.status, 
+	.call-operate {
+		padding: 6px $padding-base-horizontal;
+	}
+	.nav {
+		width: $layout-left-width;
+		box-sizing: border-box;
+		border: $border-base-width solid $border-color;
+		border-top: 0px;
+		border-right: 0px;
+		border-bottom-left-radius: $radius-base;
+		.file-btn {
+			@include icon-content('\e604');
+		}
+
+		.file-search {
+			@include icon-content('\e603');
+		}
+		.police {
+			@include icon-content('\e601');
+		}
+		.car-track {
+			@include icon-content('\e602');
+		}
+	}
+
+	.call-operate {
+		flex:2 1;
+		border: $border-base-width solid $border-color;
+		border-top: 0;
+		border-right: 0;
+		.call-count {
+			font-size: 20px;
+			font-weight: bold;
+			background: $color-primary;
+			color: #fff;
+			border-radius: $radius-base;
+			@include box-info($icon-large-size, $icon-large-size);
+		}
+
+		.call-btn {
+			@include icon-content('\e605');
+		}
+
+		.transform-btn {
+			@include icon-content('\e606');
+		}
+
+		.list-btn{
+			@include icon-content('\e607');
+		}
+		button {
+			margin-left: $margin-base-horizontal;
+		}
+	}
+
+	.status {
+		border: $border-base-width solid $border-color;
+		border-top: 0px;
+		border-bottom-right-radius: $radius-base;
+		flex:2 1;
+		@extend %font-ms;
+		.sign-state {
+			display: inline-block;
+			width: 33px;
+			height: 33px;
+			background-image: url(../imgs/sign-in-out.png);
+			margin: 0 6px;
+			margin-top: 4px;
+		}
+		.sign-in {
+			background-position:0 0;
+		}
+		.sign-out {
+			background-position:-35px 0;
+		}
+
+		.exit-btn {
+			@include icon-content('\e610');
+			&:before {
+				color: rgb(36,163,74);
+			}
+		}
+
+		.more-state {
+			vertical-align: middle;	
+		}
+
+		.user-number {
+			color: $color-primary;
+			font-size: 12px;
+			i {
+				@extend %icon-font;
+				&:before {
+					font-size: 16px;
+				}
+				@include icon-content('\e627');
+			}
+		}
+		.timer {
+			color: #ccc;
+			font-size: 12px;
+			i {
+				@extend %icon-font;
+				&:before {
+					font-size: 16px;
+				}
+				@include icon-content('\e612');
+			}
+		}
+		.user-info-timer {
+			margin-left: $margin-large-horizontal;
+			line-height: 20px;			  
+		}
+	}
+
+	.status-icon {
+		&.signIn {
+			background-color: #f95059;	
+			color: #fff;
+		}
+		background-color: #eee;
+		border-radius: $radius-base;
+		width: 42px;
+		height: 42px;
+		text-align: center;
+		line-height: 42px;
+		margin-left: $margin-base-horizontal;
+		color: #ccc;
+		i {
+			@extend %icon-font;
+			&:before {
+				font-size: 32px;
+			}
+			&.rest {
+				@include icon-content('\e60f');
+			}
+			&.busy {
+				@include icon-content('\e60e');
+			}
+			
+			&.vain {
+				@include icon-content('\e60d');
+			}
+
+			&.calling {
+				@include icon-content('\e60c');
+			}
+			&.signOut {
+				@include icon-content('\e60d');
+			}
+		}
+	}
+	.status-btns {
+		margin-left: $margin-base-horizontal;
+		button {
+			background-color: transparent;
+			color: $color-primary;
+			outline: 0;
+			@extend %icon-font;
+			&:before {
+				font-size: 42px;
+			}
+			border: 0;
+			&:active {
+				background-color: #ccc;
+			}
+			&.disabled {
+				cursor: Default;
+				color: #ccc;
+			}
+		}
+		.rest {
+			@include icon-content('\e60f');
+		}
+		.busy {
+			@include icon-content('\e60e');
+		}
+		.calling {
+			@include icon-content('\e60d');
+		}
+	}
+}
+
+// info bar
+.header {
+	.info-bar {
+		margin-top: $margin-base-horizontal;
+		.info-left,
+	        .info-right {
+			position: relative;
+			background-color: $color-primary;
+			border-radius: $radius-large;
+			height: 30px;
+			line-height: 30px;
+			font-size: 14px;
+			color: #fff;
+			@extend %font-ms;
+			padding:0 $padding-base-horizontal;
+			overflow: hidden;
+		}
+		.info-left {
+			width: $layout-left-width;
+			box-sizing: border-box;
+			margin-right: $margin-small-horizontal;
+		}
+		.info-right {
+			flex: 2 1;
+		}
+		.scroll-info {
+			position: absolute;	
+			top: 0;
+			animation: scrollInfo 15s infinite;
+			-webkit-animation: scrollInfo 15s infinite;
+		}
+	}
+}
+
+@keyframes scrollInfo {
+	0% {left: -10%;}
+	100% {left: 100%;}
+}
+@-webkit-keyframes scrollInfo {
+	0% {left: -10%;}
+	100% {left: 100%;}
+}

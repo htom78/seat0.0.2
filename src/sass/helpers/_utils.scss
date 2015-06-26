@@ -1,0 +1,51 @@
+.clearfix {
+	@include clearfix;
+}
+
+.fr {
+	@include float(right);
+}
+
+.fl {
+	@include float(left);
+}
+
+.hide {
+	display: none !important;
+}
+.show {
+	display: block !important;
+}
+
+.invisible{
+	visibility: hidden;
+}
+
+.hide-text {
+	@include hide-text;
+}
+
+.fix {
+	position: fixed;
+}
+
+.flex {
+	display: -webkit-box;
+	display: flex;
+}
+
+.text-center {
+	text-align: center;
+}
+.ellipsis {
+	@include ellipsis-overflow();
+}
+.justify {
+	text-align: justify;
+	&:after {
+		content: "";
+	    display: inline-block;
+	    width: 100%;
+	    height: 0;
+	}
+}

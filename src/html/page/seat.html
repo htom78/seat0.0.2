@@ -1,0 +1,318 @@
+
+<section class='seat-above flex'>
+
+	<div class='seat-top-left' listen-call>
+		<div class='chart'>
+			<div class='info'>
+				<div class='justify'>
+					<span  class='info-item'><i class='custom-type'></i>{{user.rank}}</span>
+					<span class='info-item'><i class='timer'></i>{{user.timeCreated}}</span>
+				</div>
+				<div class='justify'>
+					<span class='info-item'><i class='serial'></i>{{user.orderNumber}}</span>
+					<span class='info-item'>
+						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
+						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
+					</span>
+				</div>
+			</div>
+			<div class='graph' chart-user order-fuck='user.orderFuck' order-total='user.orderTotal'>
+			</div>
+		</div>
+		<form class='seat-top-form' name='newOrder' ng-submit='addOrder()'>
+			<ul class='seat-field1'>
+				<li>
+					<label class='icon-label calling-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal' 
+						disabled='disabled'
+						ng-model='order.callingTel'/>
+					<input type='checkbox' class='checkbox' id='autoCall'/>
+					<label class='label-checkbox' for='autoCall'></label>
+					<label class='auto-call-label' for='autoCall'>自动回拨</label>
+				</li>
+				<li>
+					<label class='icon-label actual-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal' 
+						maxlength='11'
+						ng-required='true'
+						ng-model='order.actualTel'
+						ng-pattern='/1\d{10}/'/>
+					<span class='mobile-position'>{{mobilePosition}}</span>
+				</li>
+				<li>
+					<label class='icon-label username-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal'
+						maxlength='30'
+						ng-required='true'
+						ng-model='order.fullName'
+						placeholder='用户姓名'/>
+					<input 
+						type='radio' 
+						name='gender' 
+						class='gender-radio' 
+						id='femaleRadio'
+						ng-model='order.gender'
+						value='1'/>
+					<label class='label-radio female' for='femaleRadio'></label>
+					<input 
+						type='radio' 
+						name='gender' 
+						class='gender-radio' 
+						id='maleRadio'
+						ng-model='order.gender'
+						value='2'/>
+					<label class='label-radio male' for='maleRadio'></label>
+				</li>
+				<li>
+					<label class='icon-label start-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal long-width'
+						id='startInput'
+						maxlength='50'
+						ng-required='true'
+						ng-model='order.start'
+						placeholder='出发位置'
+						words-place='order.start'
+						start-list='order.startList'/>
+				</li>
+				<li>
+					<label class='icon-label around-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal long-width'
+						maxlength='50'
+						ng-model='order.aroundRoadName'
+						placeholder='周围道路名称'/>
+				</li>
+			</ul>
+			<ul>
+				<li>
+					<input
+						type='checkbox'
+						id='carTypeSelect'
+						class='input-checkbox'
+						ng-model='order.isCarType'
+						/>
+					<label class='icon-label cartype-label checkbox-label' for='carTypeSelect'><i></i></label>
+					<span class='cartype-selects'>
+						<select class='select-normal car-select' ng-disabled='!order.isCarType'>
+							<option>汽车类型</option>
+						</select>
+						<select class='select-normal price-select' ng-disabled='!order.isCarType'>
+							<option>价格</option>
+						</select>
+						<select class='select-normal count-select' ng-disabled='!order.isCarType'>
+							<option>车数</option>
+						</select>
+					</span>
+					<label class='icon-label destination-label'><i></i></label>
+					<input 
+						list='orderDestination' 
+						class='input-normal long-width'
+						ng-model='order.end'
+						ng-required='true'
+						placeholder='目的地'/>
+					<datalist id='orderDestination'>
+						<option  ng-repeat='item in order.destinationList' value='{{item}}'>
+					</datalist>
+				</li>
+				<li>
+					<input 
+						type='checkbox' 
+						id='reservationSelect' 
+						class='input-checkbox'
+						ng-model='order.isReservation'/>
+					<label class='icon-label prepare-label checkbox-label' for='reservationSelect'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal input-calendar'  
+						ng-disabled='!order.isReservation'
+						ng-model='order.reservationCalendar'/>
+						<div calendar selected='order.reservationCalendar' class='calendar'></div>
+					<select
+						class='select-normal time-select'
+						ng-disabled='!order.isReservation'
+						ng-model='order.hour'
+						ng-init='order.hour=0'
+						ng-options='item for item in options.hour'>
+					</select>
+					<select
+						class='select-normal timer-select'
+						ng-disabled='!order.isReservation'
+						ng-model='order.minute'
+						ng-init='order.minute=0'
+						ng-options='item for item in options.minute'>
+					</select>
+					<label class='icon-label count-label'><i></i></label>
+					<input 
+						type='text'
+						class='input-normal long-width'
+						ng-model='order.count'
+						placeholder='叫车数'/>
+
+				</li>
+				<li>
+					<label class='icon-label remark-label'><i></i></label>
+					<input 
+						type='text' 
+						class='input-normal large-width'
+						ng-model='order.remark'
+						placeholder='附加信息'/>
+				</il>
+			</ul>
+			<div class='btns text-center'>
+				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>
+				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>
+				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>
+			</div>
+		</form>
+	</div>
+
+
+	<div class='seat-top-right'>
+		<nav class='nav'>
+			<ul class='flex'>
+				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>
+				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>
+				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>
+			</ul>
+		</nav>
+		<div class='map' map-view>
+		</div>
+	</div>
+
+</section>
+
+
+<section class='seat-blow flex'>
+	<div class='seat-bottom-left'>
+		<section class='car-status'>
+			<ul class='flex'>
+				<li class='car-icon stop-icon'>
+					<div><span>0152</span></div>
+					<div><span>15%</span></div>
+				</li>
+				<li class='car-icon empty-icon'>
+					<div><span>0152</span></div>
+					<div><span>15%</span></div>
+				</li>
+				<li class='car-icon big-icon'>
+					<div><span>0152</span></div>
+					<div><span>15%</span></div>
+				</li>
+				<li class='car-icon task-icon'>
+					<div><span>0152</span></div>
+					<div><span>15%</span></div>
+				</li>
+			</ul>
+			<ul class='flex legend'>
+				<li><i class='legend-dot stop'></i><span>未登录车/停运</span></li>
+				<li><i class='legend-dot empty'></i><span>空车</span></li>
+				<li><i class='legend-dot big'></i><span>重车</span></li>
+				<li><i class='legend-dot task'></i><span>任务车</span></li>
+			</ul>
+		</section>
+
+		<div call-status></div>
+
+	</div>
+
+	<div class='seat-bottom-right'>
+		<section class='search-bar'>
+			<div class='fl'>
+				<button class='btn-normal toggle-btn' ng-click='toggleSearchType()'>{{searchType}}</button>
+			</div>
+			<ul class='flex fl tabs'>
+				<li><a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: !isCurrentTab("exception")}'
+						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{normalOrderCount}})</a></li>
+				<li><a 
+						href='javascript:;' 
+						class='tab'
+						ng-class='{active: isCurrentTab("exception")}'
+						ng-click='cutOrderTabException()'><i class='error'></i>({{exceptionOrderCount}})</a></li>
+			</ul>
+			<div class='fr'>
+				<form ng-submit='search()'>
+					<input 
+						type='text' 
+						class='search-input'
+						ng-required='true'
+						ng-model='inputOrderWords'
+						pause-emit='pause'/><button class='btn-normal search-btn'><i></i></button>
+					<select class='search-select'>
+						<option>个人</option>
+					</select>
+				</form>
+			</div>
+			<div class='fr'>
+				<span class='tick-timer'>{{averageTimer}}秒</span>
+			</div>
+		</section>
+		<section class='order-content flex'>
+			<div class='order-nav-var' ng-show='!isCurrentTab("exception")'>
+				<h1 class='title'>状态</h1>
+				<nav>
+					<ul>
+						<li><a 
+								href='javascript:;' 
+								ng-class='{active: isCurrentTab("prepared")}'
+								ng-click='cutOrderTabPrepared()'>调派中</a></li>
+						<li><a 
+								href='javascript:;' 
+								ng-class='{active: isCurrentTab("received")}'
+								ng-click='cutOrderTabReceived()'>已接单</a></li>
+						<li><a 
+								href='javascript:;' 
+								ng-class='{active: isCurrentTab("started")}'
+								ng-click='cutOrderTabStarted()'>已出发</a></li>
+						<li><a 
+								href='javascript:;' 
+								ng-class='{active: isCurrentTab("done")}'
+								ng-click='cutOrderTabDone()'>已完成</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class='order-table'>
+				<table class='table'>
+					<thead>
+						<tr>
+							<th>NO</th>
+							<th>订单编号</th>
+							<th>用车时间</th>
+							<th>乘客</th>
+							<th>乘客号码</th>
+							<th>车牌号</th>
+							<th>乘客地址</th>
+							<th>目的地</th>
+							<th ng-if='isCurrentTab("exception")'>状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{"add-new": item.isNewAdd}'>
+							<td>{{$index + 1}}</td>
+							<td class='ellipsis'>{{item.sn}}</td>
+							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+							<td class='ellipsis'>{{item.user}}</td>
+							<td class='ellipsis'>{{item.contactPhone}}</td>
+							<td class='ellipsis'>{{item.vehicleNumber}}</td>
+							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
+							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+							<td ng-if='isCurrentTab("exception")'>{{item.statusName}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+
+</section>

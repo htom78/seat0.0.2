@@ -1,0 +1,42 @@
+.map-dialog{
+	z-index: 300;
+	box-shadow: 0 0 3px rgba(0,0,0,.3);
+ 	width: 160px;
+	@extend %font-ms;
+	.title {
+		color: #fff;
+		border-radius: $radius-base $radius-base 0 0;
+		background: $color-primary;
+		line-height: 30px;
+	  	font-size: $font-default-size;
+	  	text-align: center;
+	  	.distance {
+	  		margin-left: 10px;
+	  	}
+	}
+	.btn-wrapper {
+		text-align: center;
+		background-color: #fff;
+		padding: $padding-base-vertical 0;
+		button {
+			@extend %font-ms;
+			width: 130px;
+			font-size: $font-default-size;
+			background-color: $color-primary;
+			color: #fff;
+			border-radius: $btn-default-radius;
+			border:0;
+			height: $btn-default-height;
+		}
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -10px;
+		border-top:10px solid #fff;
+		border-left:10px solid transparent;
+		border-right:10px solid transparent;
+	}
+}

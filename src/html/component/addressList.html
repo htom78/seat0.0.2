@@ -1,0 +1,9 @@
+<ul>
+	<li ng-repeat='item in addresses'>
+		<a 
+			href='javascript:;' 
+			class='link ellipsis' 
+			ng-class='{active: isActive($index)}'
+			ng-click='onSelectAddress(item)'>{{item.name}}</a>
+		</li>
+</ul>

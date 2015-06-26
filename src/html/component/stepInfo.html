@@ -1,0 +1,27 @@
+<div class='step'>
+	<ul class='flex'>
+		<li>
+			<p>{{step.createTime}}</p>
+			<p>乘客电话召车</p>
+		</li>
+		<li>
+			<p>司机抢单成功</p>
+			<p>{{step.orderTime}}</p>
+		</li>
+		<li>
+			<p>{{step.pickupTime}}</p>
+			<p>司机接到乘客</p>
+		</li>
+		<li>
+			<p>到达目的</p>
+			<p>{{step.endTime}}</p>
+		</li>
+	</ul>
+</div>
+
+<div class='btns'>
+	<button ng-click='showAssign()' ng-show='isAssignBtnShow()'>指派</button>
+	<button ng-click='cancelOrder()' ng-show='isCancelBtnShow()'>取消</button>
+	<button ng-click='passengerFuck()' ng-show='isPassengerFuckBtnShow()'>乘客放空</button>
+	<button ng-click='driverFuck()' ng-show='isDriverFuckBtnShow()'>司机爽约</button>
+</div>

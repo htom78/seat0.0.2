@@ -1,0 +1,25 @@
+{
+  "name": "seat",
+  "version": "0.0.2",
+  "dependencies": {
+    "grunt-browserify": "latest",
+    "grunt-cli": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-sass": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-html2js": "latest",
+    "grunt-karma": "latest",
+    "karma-browserify": "latest",
+    "moment": "^2.10.3"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.2.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5"
+  }
+}

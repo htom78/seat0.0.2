@@ -1,0 +1,71 @@
+$secondary-color:						$color-primary;
+
+@mixin vertical-centre($height) {
+	height: $height;
+	line-height: $height;
+	text-align: center;
+}
+
+.calendar {
+	position: absolute;
+	z-index: 20;
+	display: block;
+	background: #fff;
+	width: 300px;
+	box-sizing: border-box;
+	div.calendar-header {
+		background: $secondary-color;		
+		color: #fff;
+		overflow: hidden;
+		@include vertical-centre(40px);
+		.fa {
+			font-style: normal;	
+			cursor: pointer;
+			font-weight: bold;
+		}
+		.fa-angle-left {
+			float: left;	
+			margin-left: 10px;
+		}
+		.fa-angle-right {
+			float: right;	
+			margin-right: 10px;
+		}
+	}
+	div.week {
+		overflow:hidden;
+		&.names .day{
+			color: $secondary-color;
+		}
+		span.day {
+			float: left;
+			width: (100%/7);
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-left:0;
+			border-top:0;
+			&:first-child {
+				border-left: 1px solid #ccc;	
+			}
+			background: #fff;
+			cursor: pointer;
+			color: #333;	
+			display: inline-block;
+			@include vertical-centre(30px);
+
+			&.today {
+				background: #E3F2FF;	
+			}
+
+			&.different-month {
+				color: #c0c0c0;	
+			}
+
+			&.selected {
+				background: $secondary-color;	
+				color: #fff;
+			}
+		}	
+	}
+}
+

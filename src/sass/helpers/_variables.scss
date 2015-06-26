@@ -1,0 +1,162 @@
+//color
+$color-primary:			#ffba58;
+$color-second:			#649626;
+$color-third:			#97c255;
+$color-fourth:			#ff9663;
+$color-text:			#666;
+$color-default:			#ccc;
+
+$text-default-color:	$color-text;
+
+//bg
+$bg-body:				#f4f2f2;
+
+
+//icon font size
+$icon-base-size:		28px;
+$icon-large-size:		42px;
+$icon-small-size:		24px;
+$icon-base-bg:			$color-default;
+
+//height
+$height-small:			24px;
+$height-base:			30px;
+$height-default:		30px;
+$height-large:			32px;
+$height-big:			46px;
+
+//width
+$width-base:			30px;
+
+
+//padding
+$padding-small-vertical: 		4px;
+$padding-small-horizontal:		4px;
+$padding-base-vertical:			10px;
+$padding-base-horizontal:		12px;
+
+$padding-large-vertical:		20px;
+$padding-large-horizontal:		20px;
+
+
+//margin
+$margin-small-horizontal:		4px;
+
+$margin-base-vertical:			10px;
+$margin-base-horizontal:		10px;
+
+$margin-large-vertical:			20px;
+$margin-large-horizontal:		20px;
+
+$margin-big-horizontal:			24px;
+
+//radius
+$radius-base:				4px;
+$radius-small:				3px;
+$radius-large:				8px;
+
+//border
+$border-small-width:		2px;
+$border-base-width:			4px;
+$border-large-width:		8px;
+$border-color:				#fff;
+
+//button
+$btn-default-color:			#fff;
+$btn-default-bg:			$color-default;
+$btn-hover-bg:				darken($btn-default-bg, 10%);
+$btn-active-bg:				darken($btn-default-bg, 20%);
+$btn-large-width:			140px;
+$btn-default-radius:		4px;
+$btn-default-height:		30px;
+
+
+//input
+$input-bg:						#fff;
+$input-disabled-bg:				#eee;
+$input-color:					#333;
+$input-border-color:			$color-default;
+$input-padding-vertical:		4px;
+$input-padding-horizontal:		6px;
+$input-base-width:				160px;
+$input-base-height:				30px;
+$input-font-size:				13px;
+$input-min-height:				18px;
+$disabled-color:				#ccc;
+$input-default-radius:			4px;
+
+//select
+$select-bg:						#f3ecec;
+$select-padding-left:			20px;
+
+//label
+$label-font-bg:					$color-default;
+$label-base-width:				28px;
+$label-base-height:				28px;	
+
+//checkbox
+$checkbox-width:				14px;
+$checkbox-height:				14px;	
+
+//font
+$font-default-size:				14px;
+$font-input-size:				13px;
+$font-small-size:				12px;
+$font-large-size:				16px;
+
+
+//chart
+$chart-bg:					#e5e5e5;
+$process-height:			28px;
+$process-info-height:		16px;
+$process-day-width:			240px;
+$process-hour-width:		160px;
+$chart-order-count-bg:		$color-second;
+$chart-fuck-count-bg:		$color-third;
+
+
+//layout
+$layout-left-width:			620px;	
+
+//cursor
+$cursor-disabled:			not-allowed;
+
+//legend
+$legend-dot-width:			8px;
+$legend-stop-color:			$color-fourth;
+$legend-empty-color:		#e6c707;
+$legend-big-color:			$color-third;
+$legend-task-color:			$color-second;
+
+$legend-hour-color:			$color-third;
+$legend-day-color:			$color-fourth;
+$legend-predict-color:		$color-default;
+
+//z-index
+$zindex-base:				10;
+$zindex-large:				20;
+
+
+
+//page # seat
+
+//page #leader
+$leader-chart-height:			200px;
+$leader-tab-height:				40px;
+$leader-num-height:				20px;
+$leader-below-padding-top:		40px;
+$leader-order-height:			380px;
+
+//pagination
+$pagination-height:					30px;
+$pagination-width:					30px;
+$pagination-link-height:			20px;
+$pagination-link-width:				20px;
+
+$dot-default-width:					8px;
+$dot-default-height:				8px;
+
+/******************************************************/
+
+
+

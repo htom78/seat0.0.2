@@ -1,0 +1,7 @@
+@mixin opacity($opacity:.65, $support-for-ie: true) {
+	opacity: $opacity;
+	@if	$support-for-ie {
+		$opacity-ie: $opacity * 100;
+		filter: alpha(opacity=$opacity-ie);
+	}
+}
