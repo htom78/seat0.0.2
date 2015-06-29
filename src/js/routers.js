@@ -30,15 +30,24 @@ var routers = function ($routeProvider) {
 		}	
 	};
 
+	var searchRouteConfig = {
+		templateUrl: 'page/search.html',
+		controller: 'searchCtrl',
+		title: '搜索',
+		resolve: {
+			store: ['searchOrderStorageService', function(searchOrderStorageService) {
+				searchOrderStorageService.initOrderSearchParams();
+				searchOrderStorageService.getAllOrders();
+				return searchOrderStorageService;	
+			}]	
+		}	
+	};
+
 	$routeProvider
 		.when('/', seatRouteConfig)
 		.when('/index.htm', seatRouteConfig)
 		.when('/leader.htm', leadRouteConfig)
-		.when('/searchMore.htm', {
-			templateUrl: 'page/search.html',
-			controller: 'searchCtrl',
-			title: '搜索'
-		})
+		.when('/searchMore.htm', searchRouteConfig)
 		.when('/login.htm', {
 			templateUrl: 'page/login.html',
 			controller: 'loginCtrl',

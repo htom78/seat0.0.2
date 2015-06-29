@@ -234,12 +234,12 @@
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: !isCurrentTab("exception")}'
-						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{normalOrderCount}})</a></li>
+						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{orders.normalOrderCount}})</a></li>
 				<li><a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentTab("exception")}'
-						ng-click='cutOrderTabException()'><i class='error'></i>({{exceptionOrderCount}})</a></li>
+						ng-click='cutOrderTabException()'><i class='error'></i>({{orders.exceptionOrderCount}})</a></li>
 			</ul>
 			<div class='fr'>
 				<form ng-submit='search()'>
@@ -255,7 +255,7 @@
 				</form>
 			</div>
 			<div class='fr'>
-				<span class='tick-timer'>{{averageTimer}}秒</span>
+				<span class='tick-timer'>{{orders.averageTimer}}秒</span>
 			</div>
 		</section>
 		<section class='order-content flex'>

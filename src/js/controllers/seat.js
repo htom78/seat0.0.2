@@ -61,9 +61,9 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 	//清空表单数据
 	$scope.cancelOrder = function() {
 		$scope.order = angular.copy(initOrderInfo);
+		$scope.user = angular.copy(initUserInfo);
 		$scope.newOrder.$setPristine();
 		seatMapService.resetMap();
-		$scope.user = angular.copy(initUserInfo);
 	};
 
 
@@ -81,35 +81,27 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 
 	//订单查询 右下部分
 	//exception(0),prepared(1),received(2),started(3),done(4);
-	$scope.exceptionOrderCount = 0;
-	$scope.normalOrderCount = 0;
-
-	$scope.$watch('orders', function() {
-		$scope.exceptionOrderCount = store.exceptionOrderCount;
-		$scope.normalOrderCount = store.normalOrderCount;
-		$scope.averageTimer = store.averageTimer;
-	}, true);
 
 	$scope.currentOrderTab = 'prepared';
 	$scope.cutOrderTabPrepared = function() {
 		$scope.currentOrderTab = 'prepared';
-		return store.getPrepared();	
+		return store.getPrepared();
 	};
 	$scope.cutOrderTabReceived = function() {
 		$scope.currentOrderTab = 'received';
-		return store.getReceived();	
+		return store.getReceived();
 	};
 	$scope.cutOrderTabStarted = function() {
 		$scope.currentOrderTab = 'started';
-		return store.getStarted();	
+		return store.getStarted();
 	};
 	$scope.cutOrderTabDone = function() {
 		$scope.currentOrderTab = 'done';
-		return store.getDone();	
+		return store.getDone();
 	};
 	$scope.cutOrderTabException = function() {
 		$scope.currentOrderTab = 'exception';
-		return store.getException();	
+		return store.getException();
 	};
 
 	$scope.isCurrentTab = function(tabName) {

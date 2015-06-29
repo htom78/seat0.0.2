@@ -19,3 +19,4 @@ require('./employer');
 require('./callSocket');
 require('./seatOrderStorageService');
 require('./leaderOrderStorageService');
+require('./searchOrderStorageService');

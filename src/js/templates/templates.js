@@ -582,7 +582,7 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "					type='text' \n" +
     "					class='input-text'\n" +
     "					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>\n" +
-    "				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>\n" +
+    "				<a href='javascript:;' class='more-link' ng-click='filterMoreOrderSearchBtn()'>更多筛选条件</a>\n" +
     "			</div>\n" +
     "			<div class='more' ng-show='isShowMore'>\n" +
     "				<div>\n" +
@@ -599,12 +599,12 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "						<input \n" +
     "							type='text' \n" +
     "							class='input-normal'\n" +
-    "							ng-model='search.beginTime'/>\n" +
+    "							ng-model='searchOrderBeginTime'/>\n" +
     "						<b>-</b>\n" +
     "						<input \n" +
     "							type='text' \n" +
     "							class='input-normal'\n" +
-    "							ng-model='search.endTime'/>\n" +
+    "							ng-model='searchOrderEndTime'/>\n" +
     "					</span>\n" +
     "				</div>\n" +
     "\n" +
@@ -617,16 +617,16 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "		<div class='toggle-btns'>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(0)'\n" +
-    "				ng-class='{active:isCurrentTab(0)}'>全部({{tabCount.total}})</button>\n" +
+    "				ng-click='cutAllOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{allOrderCount}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(1)'\n" +
-    "				ng-class='{active:isCurrentTab(1)}'>即时({{tabCount.immediate}})</button>\n" +
+    "				ng-click='cutImmediateOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"immediate\")}'>即时({{immediateOrderCount}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(2)'\n" +
-    "				ng-class='{active:isCurrentTab(2)}'>预约({{tabCount.prepared}})</button>\n" +
+    "				ng-click='cutReservationOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"reservation\")}'>预约({{reservationOrderCount}})</button>\n" +
     "		</div>\n" +
     "\n" +
     "	</div>\n" +
@@ -673,10 +673,10 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "				</tbody>\n" +
     "			</table>\n" +
     "		</div>\n" +
-    "		<div class='paging' ng-show='numItems > 10'>\n" +
+    "		<div class='paging' ng-show='orderItemCount > 10'>\n" +
     "			<pagination \n" +
-    "				num-items='numItems' \n" +
-    "				current-page='search.currentPage'\n" +
+    "				num-items='orderItemCount' \n" +
+    "				current-page='currentOrderPage'\n" +
     "				on-select-page='onSelectPage(page)'></pagination>\n" +
     "		</div>\n" +
     "	</div>\n" +
@@ -921,12 +921,12 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: !isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{normalOrderCount}})</a></li>\n" +
+    "						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{orders.normalOrderCount}})</a></li>\n" +
     "				<li><a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabException()'><i class='error'></i>({{exceptionOrderCount}})</a></li>\n" +
+    "						ng-click='cutOrderTabException()'><i class='error'></i>({{orders.exceptionOrderCount}})</a></li>\n" +
     "			</ul>\n" +
     "			<div class='fr'>\n" +
     "				<form ng-submit='search()'>\n" +
@@ -942,7 +942,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "				</form>\n" +
     "			</div>\n" +
     "			<div class='fr'>\n" +
-    "				<span class='tick-timer'>{{averageTimer}}秒</span>\n" +
+    "				<span class='tick-timer'>{{orders.averageTimer}}秒</span>\n" +
     "			</div>\n" +
     "		</section>\n" +
     "		<section class='order-content flex'>\n" +

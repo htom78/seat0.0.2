@@ -23,6 +23,9 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 		pauseSearch: false,
 		initOrderSearchParams: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
+			store.orders = [];
+			store.orders.normalOrderCount = 0;
+			store.orders.exceptionOrderCount = 0;
 		},
 
 		setCallType: function(callType) {
@@ -83,11 +86,12 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 				.then(function(response) {
 					angular.copy(response.data.list, store.orders);
 					if (parseInt(orderSearchParams.status) === 0) {
-						store.exceptionOrderCount = response.data.total;	
+						store.orders.exceptionOrderCount = response.data.total;	
 					} else {
-						store.normalOrderCount = response.data.total;	
+						store.orders.normalOrderCount = response.data.total;	
 					}
-					store.averageTimer = response.data.sec;//平局秒数
+					store.orders.averageTimer = response.data.sec;//平局秒数
+					return store.orders;
 				})
 				.finally(function() {
 					setTimeout(function() {
