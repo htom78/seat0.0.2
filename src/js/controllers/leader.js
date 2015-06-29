@@ -1,8 +1,7 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $timeout, leaderMapService, employerService, $location, store) {
+var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leaderMapService, employerService, $location, store) {
 
-	$scope.search = {};
 
 	$scope.orders = store.orders;
 	
@@ -94,7 +93,7 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 			$scope.searchType = '即';	
 			store.orderSearchParams.isImmediate = 1;
 		}	
-		store.flushCurrentOrderTab();
+		store.refreshCurrentOrderTab();
 	};
 
 	$scope.step = {};
@@ -127,70 +126,30 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 		assignDialog
 			.open($scope)
 			.then(function() {
-			    $scope.assign.carNumber = '';	
+			    $scope.carPlate = '';	
 			});
 	};
 
-	//##########################################
-	$scope.updateOrders = function() {
-		if ($scope.search.currentTab === 'exception') {
-			$scope.toggleTab('exception');
-		} else {
-			$scope.orders.splice($scope.assign.idx, 1);
-			$scope.orders.total = $scope.orders.total - 1;
-			$scope.updateTabCount($scope.search.currentTab);
-		}
-	};
 	//取消订单
 	$scope.cancelOrder = function() {
-		orderService
-			.cancelOrder($scope.assign.sn)
-			.then(function(response) {
-				orderStepDialog.close();
-				alert('订单取消成功');
-				$scope.updateOrders();
-			}, function() {
-			    alert('操作失败');	
-			});
+		store.dealCancelOrder();
 	};
 
 	//乘客放空
 	$scope.passengerFuck = function() {
-		orderService
-			.passengerFuck($scope.assign.sn)
-			.then(function(response) {
-				orderStepDialog.close();
-				alert('乘客放空');
-				$scope.updateOrders();
-			}, function() {
-			    alert('操作失败');	
-			});
+		store.dealPassengerFuckOrder();
 	};
 
 	//司机放空
 	$scope.driverFuck = function() {
-		orderService
-			.driverFuck($scope.assign.sn)
-			.then(function(response) {
-				orderStepDialog.close();
-				alert('司机爽约');
-				$scope.updateOrders();
-			}, function() {
-			    alert('操作失败');	
-			});
+		store.dealDriverFuckOrder();
 	};
 
 	$scope.assigning = function() {
-		orderService
-			.assign($scope.assign)
-			.then(function(response) {
-				alert('指派成功');
-				$scope.toggleTab('prepared');
-			}, function(msg) {
-				alert('指派失败');
+		store.assignOrderToCarPlate($scope.carPlate)
+			.finally(function() {
+				assignDialog.close();
 			});
-		assignDialog.close();
-		$scope.updateOrders();
 	};
 
 	$scope.cancelAssign = function() {
@@ -292,7 +251,6 @@ var leaderCtrl = function($scope, orderService, orderStepDialog, assignDialog, $
 
 leaderCtrl.$inject = [
 	'$scope',
- 	'orderService',
  	'orderStepDialog',
  	'assignDialog',
  	'$timeout',

@@ -12,8 +12,6 @@ var searchCtrl = function($scope, store) {
 
 	$scope.orders = store.orders;
 
-
-
 	$scope.currentOrderTab = 'all';
 	$scope.allOrderCount = 0;
 	$scope.immediateOrderCount = 0;

@@ -24,14 +24,15 @@ angular.module("component/assignDialog.html", []).run(["$templateCache", functio
     "				type='text' \n" +
     "				class='input-normal' \n" +
     "				placeholder='请输入车牌号码'\n" +
-    "				ng-model='assign.carNumber'/>\n" +
+    "				ng-model='carPlate'/>\n" +
     "		</div>\n" +
     "		<div class='btns'>\n" +
     "			<button class='btn ensure' ng-click='assigning()'>确定</button>\n" +
     "			<a href='javascript:;' class='btn btn-normal' ng-click='cancelAssign()'>取消</a>\n" +
     "		</div>\n" +
     "	</form>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("component/calendar.html", []).run(["$templateCache", function($templateCache) {
@@ -662,7 +663,7 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>\n" +
     "						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>\n" +
     "						<td>{{item.uType}}</td>\n" +
-    "						<td>{{item.statusName}}</td>\n" +
+    "						<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>\n" +
     "						<td>2562</td>\n" +
     "						<td>{{item.opName}}</td>\n" +
     "						<td ng-switch='item.isReserved'>\n" +

@@ -5,7 +5,7 @@ var orderSearchDefaultParams = {
 	pagesize: 10,
 	page: 1,
 	callType: 0, //普通召车1， 专车2
-	isImmediate: 1,	//立即召车1， 预约召车0
+	isImmediate: 0,	//立即召车1， 预约召车0, 0全部
 	status: -1, //exception(0),prepared(1),received(2),started(3),done(4);
 	beginTime: '',
 	endTime: ''
@@ -34,12 +34,14 @@ var searchOrderStorageService = function($http) {
 		getAllOrders: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orderSearchParams.k = '';
+			store.orderSearchParams.isImmediate = 0;
 			return store.get(store.orderSearchParams);
 		},
 
 		getImmediatOrders: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orderSearchParams.k = '';
+			store.orderSearchParams.isImmediate = 1;
 			return store.get(store.orderSearchParams);
 		},
 

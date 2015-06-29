@@ -87,7 +87,10 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 			return store.get(store.orderSearchParams);
 		},
 
-		flushCurrentOrderTab: function() {
+		refreshCurrentOrderTab: function(pageNumber) {
+			if (pageNumber) {
+				store.orderSearchParams.page = pageNumber;	
+			}
 			return store.get(store.orderSearchParams);
 		},
 
@@ -105,12 +108,64 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 			if (store.currentOrderStepItemNumber !== null) {
 				store.orders[store.currentOrderStepItemNumber].isActive = false;
 			}
-		}
+		},
+
+		cancelOrder: function(url) {
+			var currentOrder = store.orders[store.currentOrderStepItemNumber];
+			if (!currentOrder) {
+				return $q.reject();	
+			}
+			return $http({
+				method: 'POST',
+				url: url,
+				data: $.param({sn: currentOrder.sn}),
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.then(function() {
+				store.refreshCurrentOrderTab(1);	
+			})
+			.finally(function() {
+				store.clearOrderItemActive();
+				orderStepDialog.close();	
+			});	
+		},
+
+		dealPassengerFuckOrder: function() {
+			return store.cancelOrder('cancel/6.htm');
+		},
+
+		dealDriverFuckOrder: function(sn) {
+			return store.cancelOrder('cancel/7.htm');
+		},
+
+		dealCancelOrder: function() {
+			return store.cancelOrder('cancel/1.htm');
+		},
+
+		assignOrderToCarPlate: function(carPlate) {
+			var currentOrder = store.orders[store.currentOrderStepItemNumber];
+			if (!currentOrder) {
+				return $q.reject();	
+			}
+			return $http({
+				method: 'POST',
+				url: 'assign.htm',
+				data: $.param({sn: currentOrder.sn, number: carPlate}),
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.then(function() {
+				store.refreshCurrentOrderTab(1);	
+			})
+			.finally(function() {
+				store.clearOrderItemActive();
+				orderStepDialog.close();	
+			});	
+		}	
 
 	};
 	return store;
 };
 
-leaderOrderStorageService.$inject = ['$http', 'orderStepDialog'];
+leaderOrderStorageService.$inject = ['$http', 'orderStepDialog', '$q'];
 
 services.factory('leaderOrderStorageService', leaderOrderStorageService);
