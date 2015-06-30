@@ -1,16 +1,11 @@
 var controllers = require('./index');
 
 var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $location, employerService, callSocket, userService) {
-
 	//依据这个判断用户是否已经登录
 	$scope.$watch(function() {
 		return 	employerService.employerName;
 	}, function(newValue) {
 		if (newValue) {
-			//和oxc建立websocket连接
-			
-			//callSocket.connection();	
-
 			/****************/
 			$scope.employerName = employerService.employerName;
 			$scope.employerType = employerService.employerType;
@@ -154,6 +149,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $l
 	$scope.loginOut = function() {
 		userService.loginOut()
 			.then(function() {
+				callSocket.close();
 				$location.path('/login.htm');	
 			});
 			

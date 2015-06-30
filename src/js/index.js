@@ -25,7 +25,8 @@ var app = angular.module('app', requires)
 	.config(require('./config'))
 	.constant('properties', require('./properties'))
 	.constant('selectData', require('./selectData'))
-	.run(['$rootScope', '$location', 'employerService', function($rootScope, $location, employerService) {
+	.run(['$rootScope', '$location', 'employerService', 'callSocket', function($rootScope, $location, employerService, callSocket) {
+		callSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
 		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
 			if (window.employer && employerService.employerName !== window.employer) {
