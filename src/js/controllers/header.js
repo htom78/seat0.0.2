@@ -1,7 +1,7 @@
 var controllers = require('./index');
 
-var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $location, employerService, callSocket, userService) {
-	//依据这个判断用户是否已经登录
+var headerCtrl = function($scope, $timeout, $filter, signService, $location, employerService,  userService) {
+	//on the basis of watch employerName judge user is login
 	$scope.$watch(function() {
 		return 	employerService.employerName;
 	}, function(newValue) {
@@ -9,48 +9,13 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $l
 			/****************/
 			$scope.employerName = employerService.employerName;
 			$scope.employerType = employerService.employerType;
-			var signState = employerService.signState;
-			if (signState) {
-				switch (signState) {
-						//签入
-						case 1:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;
-						//签出
-						case 2:
-							$scope.currentState = '';
-							$scope.signInfo = 'signOut';	
-							break;
-						//小休
-						case 3:
-							$scope.currentState = 'rest';
-							$scope.signInfo = 'signIn';	
-							break;
-						//取消小休
-						case 4:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;
-						//示忙
-						case 5:
-							$scope.currentState = 'busy';
-							$scope.signInfo = 'signIn';	
-							break;
-						//取消示忙
-						case 6:
-							$scope.currentState = 'calling';
-							$scope.signInfo = 'signIn';	
-							break;	
+			signService.getCurrentState()
+				.then(function(response) {
+					if (response.isSignIn) {
+						$scope.signInfo = 'signIn';	
+						$scope.currentState = response.currentCallingState;
 					}	
-
-			} else {
-				$scope.currentState = '';
-				$scope.signInfo = 'signOut';	
-			}
-		} else {
-			//用户未登录
-				callSocket.close();
+				});
 		}
 	});
 
@@ -58,20 +23,16 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $l
 		return $scope.employerType === 'seat_leader';	
 	};
 
-
-	$scope.toggleSign = function() {
+	$scope.toggleSignState = function() {
+		$scope.currentState = 'free';
 		if (!$scope.isSignIn()) {
-			signService
-				.signIn()
+			signService.signIn()
 				.then(function() {
-					$scope.currentState = 'calling';
 					$scope.signInfo = 'signIn';	
 				});	
 		} else {
-			signService
-				.signOut()
+			signService.signOut()
 				.then(function() {
-					$scope.currentState = '';
 					$scope.signInfo = 'signOut';	
 				});	
 		}
@@ -94,65 +55,45 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $l
 	};
 
 	$scope.firstBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.currentState === 'calling' || $scope.currentState === 'rest');
+		return $scope.isSignIn() && ($scope.currentState === 'free' || $scope.currentState === 'rest');
 	};
 	$scope.secondBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.currentState === 'calling' || $scope.currentState === 'busy');
+		return $scope.isSignIn() && ($scope.currentState === 'free' || $scope.currentState === 'busy');
 	};
 
 
 	//切换第一个按钮(小休、接电话)
-	$scope.toggleFirstBtn = function() {
+	$scope.toggleFirstCallingStateBtn = function() {
 		if ($scope.isSignIn()) {
-			if ($scope.currentState === 'calling') {
+			if ($scope.currentState === 'free') {
 				$scope.currentState = 'rest';	
 				signService.rest();
 			} else if($scope.currentState === 'rest') {
-				$scope.currentState = 'calling';
+				$scope.currentState = 'free';
 				signService.unrest();
 			}
 		}
 	};
 
 	//切换第二个按钮(示忙、接电话)
-	$scope.toggleSecondBtn = function() {
+	$scope.toggleSecondCallingStateBtn = function() {
 		if ($scope.isSignIn()) {
-			if ($scope.currentState === 'calling') {
+			if ($scope.currentState === 'free') {
 				$scope.currentState = 'busy';	
 				signService.busy();
 			} else if ($scope.currentState === 'busy') {
-				$scope.currentState = 'calling';	
+				$scope.currentState = 'free';	
 				signService.unbusy();
 			}
 		}
 	};
 
-
-	$scope.$watch('currentState', function(newValue) {
-		if (newValue) {
-			switch (newValue) {
-				case 'calling':
-					$scope.currentStateInfo = '等电话中';
-					break;	
-				case 'busy':
-					$scope.currentStateInfo = '示忙';
-					break;
-				case 'rest':
-					$scope.currentStateInfo = '小休';
-					break;
-			}	
-		} else {
-			$scope.currentStateInfo = '';	
-		}	
-	});
-
 	$scope.loginOut = function() {
+		signService.loginOut();
 		userService.loginOut()
 			.then(function() {
-				callSocket.close();
 				$location.path('/login.htm');	
 			});
-			
 	};
 
 	//左上角时间
@@ -161,13 +102,6 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $rootScope, $l
 		$timeout(tickTimer, 30000);
 	})();
 
-	/******************************************/
-	//当用户拨打进来电话：切换按钮
-	/*
-	$scope.$on('userCall', function() {
-		$scope.toggleStatus('calling');
-	});
-	*/
 };
 
 headerCtrl.$inject = [
@@ -175,10 +109,8 @@ headerCtrl.$inject = [
 	'$timeout',
  	'$filter',
  	'signService',
- 	'$rootScope' ,
  	'$location',
  	'employerService',
- 	'callSocket',
 	'userService'
 	];
 

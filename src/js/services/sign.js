@@ -1,109 +1,85 @@
 var services = require('./index');
 
-function saveId(id) {
-	localStorage.setItem('parentId', id);
-}
-
-function removeId() {
-	localStorage.removeItem('parentId');
-}
-
-function getId() {
-	return localStorage.getItem('parentId');
-}
-
 var signService = function(signResource, $q, callSocket) {
-	var parentId = getId();
-	return {
+	var store = {
+
+		parentId: null,
+
+		getParentId: function() {
+			if (store.parentId) {
+				return store.parentId;	
+			}	
+			var parentId = localStorage.getItem('parentId');
+			return parentId;
+		},
+
+		addParentId: function(parentId) {
+			store.parentId = parentId;	
+			localStorage.setItem('parentId', parentId);
+		},
+		
+		clearParentId: function() {
+			store.parentId = null;
+			localStorage.removeItem('parentId');	
+		},
+
 		signIn: function() {
-			parentId = null;
-			removeId();
 			callSocket.signIn();
 			return signResource.signIn();	
 		},
+
 		signOut: function() {
-			parentId = null;
-			removeId();
 			callSocket.signOut();
 			return signResource.signOut();	
 		},
+
 		rest: function() {
 			callSocket.sayRest();
-			return signResource
-					.rest()
-					.then(function(id) {
-						if (id) {
-							parentId = id;	
-							saveId(id);
-							return parentId;
-						} else {
-							return $q.reject();	
-						}
-					}, function() {
-						parentId = null;	
-						removeId();
-						return $q.reject();
-					});	
+			return signResource.rest()
+				.then(function(id) {
+					store.addParentId(id);
+				});
 		},
 		unrest: function() {
-			var defer = $q.defer();
-			if (!parentId) {
-				defer.reject();	
-			} else {
-				callSocket.sayFree();
-				signResource
-					.unrest(parentId)
+			callSocket.sayFree();
+			var parentId = store.getParentId();
+			if (parentId) {
+				return signResource.unrest(parentId)
 					.then(function() {
-						parentId = null;
-						removeId();
-						defer.resolve();	
-					}, function() {
-						parentId = null;
-						removeId();
-						defer.reject();	
-					});	
+						store.clearParentId();
+					});
 			}
-			return defer.promise;
 		},
+
 		busy: function() {
 			callSocket.sayBusy();
-			return signResource
-					.busy()
+			return signResource.busy()
 					.then(function(id) {
-						if (id) {
-							parentId = id;	
-							saveId(id);
-							return parentId;	
-						} else {
-							return $q.reject();	
-						}
-					}, function() {
-						parentId = null;	
-						removeId();
-						return $q.reject();
+						store.addParentId(id);
 					});	
 		},
 		unbusy: function() {
 			var defer = $q.defer();
+			callSocket.sayFree();
+			var parentId = store.getParentId();
 			if (parentId) {
-				callSocket.sayFree();
-				signResource
-					.unbusy(parentId)
+				return signResource.unbusy(parentId)
 					.then(function() {
-						parentId = null;
-						removeId();
-						defer.resolve();	
-					}, function() {
-						parentId = null;
-						removeId();
-						defer.reject();	
-					});	
-			} else {
-				defer.reject();	
+						store.clearParentId();
+					});
 			}
-			return defer.promise;
+		},
+
+		getCurrentState: function() {
+			return callSocket.getCurrentState();	
+		},
+
+		loginOut: function() {
+			callSocket.loginOut();	
 		}	
 	};
+
+	return store;
 };
 
 signService.$inject = ['signResource', '$q', 'callSocket'];

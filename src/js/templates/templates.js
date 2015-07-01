@@ -177,11 +177,11 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "\n" +
     "	<div class='status flex'>\n" +
     "\n" +
-    "		<div class='status-icon' title='{{currentStateInfo}}' ng-class='{signIn: isSignIn()}'>\n" +
+    "		<div class='status-icon' ng-class='{signIn: isSignIn()}'>\n" +
     "			<i\n" +
     "				class='more-state'\n" +
     "				ng-class='{\n" +
-    "					vain: isCurrentActive(\"calling\"), \n" +
+    "					vain: isCurrentActive(\"free\"), \n" +
     "					busy: isCurrentActive(\"busy\"), \n" +
     "					rest: isCurrentActive(\"rest\"), \n" +
     "					signOut:!isSignIn()}'></i>\n" +
@@ -196,17 +196,17 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "			<button\n" +
     "				title='{{firstBtnTitle}}'\n" +
     "				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'\n" +
-    "				ng-click='toggleFirstBtn()'></button><button \n" +
+    "				ng-click='toggleFirstCallingStateBtn()'></button><button \n" +
     "				title='{{secondBtnTitle}}'\n" +
     "				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'\n" +
-    "				ng-click='toggleSecondBtn()'></button>\n" +
+    "				ng-click='toggleSecondCallingStateBtn()'></button>\n" +
     "		</div>\n" +
     "\n" +
     "		<ul class='flex'>\n" +
     "			<li><a href='javascript:;' \n" +
     "				class='sign-state'\n" +
     "				ng-class='{\"sign-out\": !isSignIn(), \"sign-in\": isSingIn()}' \n" +
-    "				ng-click='toggleSign()'></a></li>\n" +
+    "				ng-click='toggleSignState()'></a></li>\n" +
     "			<li><a href='javascript:;' class='exit-btn btn-icon-large' ng-click='loginOut()'></a></li>\n" +
     "		</ul>\n" +
     "\n" +

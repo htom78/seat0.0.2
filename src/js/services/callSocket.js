@@ -1,5 +1,8 @@
 var service = require('./index');
-var callSocket = function($rootScope, $location, $q) {
+
+var baseUrl = 'localhost:8822';
+
+var callSocket = function($rootScope, $location, $q, $http) {
 
 	var socket = {
 		status: 'disable',
@@ -48,28 +51,41 @@ var callSocket = function($rootScope, $location, $q) {
 		},
 
 		signIn: function() {
-			socket.webSocket.send(JSON.stringify({operate: 'signIn'}));	
+			return $http.jsonp('http://' + baseUrl + '/signIn?callback=JSON_CALLBACK');
 		},
 
 		signOut: function() {
-			socket.webSocket.send(JSON.stringify({operate: 'signOut'}));	
+			return $http.jsonp('http://' + baseUrl + '/signOut?callback=JSON_CALLBACK');
 		},
 
 		sayRest: function() {
-			socket.webSocket.send(JSON.stringify({operate: 'sayBusy'}));	
+			return $http.jsonp('http://' + baseUrl + '/sayRest?callback=JSON_CALLBACK');
 		},
 
 		sayBusy: function() {
-			socket.webSocket.send(JSON.stringify({operate: 'sayBusy'}));	
+			return $http.jsonp('http://' + baseUrl + '/sayBusy?callback=JSON_CALLBACK');
 		},
 
 		sayFree: function() {
-			socket.webSocket.send(JSON.stringify({operate: 'sayFree'}));	
+			return $http.jsonp('http://' + baseUrl + '/sayFree?callback=JSON_CALLBACK');
 		},	
 
 		login: function(data) {
-			socket.webSocket.send(JSON.stringify(data));	
+			return $http.jsonp('http://' + baseUrl + '/login?callback=JSON_CALLBACK', {params: data});
+		},
+
+		loginOut: function() {
+			return $http.jsonp('http://' + baseUrl + '/loginOut?callback=JSON_CALLBACK');
+		},
+
+		getCurrentState: function() {
+			return $http.jsonp('http://' + baseUrl + '/currentStatus?callback=JSON_CALLBACK')
+				.then(function(response) {
+					console.log(response);
+					return response.data;	
+				});
 		}
+
 	};
 
 	/*
@@ -101,5 +117,5 @@ var callSocket = function($rootScope, $location, $q) {
 	
 	return socket;
 };
-callSocket.$inject = ['$rootScope', '$location', '$q'];
+callSocket.$inject = ['$rootScope', '$location', '$q', '$http'];
 service.factory('callSocket', callSocket);

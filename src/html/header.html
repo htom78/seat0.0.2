@@ -20,11 +20,11 @@
 
 	<div class='status flex'>
 
-		<div class='status-icon' title='{{currentStateInfo}}' ng-class='{signIn: isSignIn()}'>
+		<div class='status-icon' ng-class='{signIn: isSignIn()}'>
 			<i
 				class='more-state'
 				ng-class='{
-					vain: isCurrentActive("calling"), 
+					vain: isCurrentActive("free"), 
 					busy: isCurrentActive("busy"), 
 					rest: isCurrentActive("rest"), 
 					signOut:!isSignIn()}'></i>
@@ -39,17 +39,17 @@
 			<button
 				title='{{firstBtnTitle}}'
 				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'
-				ng-click='toggleFirstBtn()'></button><button 
+				ng-click='toggleFirstCallingStateBtn()'></button><button 
 				title='{{secondBtnTitle}}'
 				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'
-				ng-click='toggleSecondBtn()'></button>
+				ng-click='toggleSecondCallingStateBtn()'></button>
 		</div>
 
 		<ul class='flex'>
 			<li><a href='javascript:;' 
 				class='sign-state'
 				ng-class='{"sign-out": !isSignIn(), "sign-in": isSingIn()}' 
-				ng-click='toggleSign()'></a></li>
+				ng-click='toggleSignState()'></a></li>
 			<li><a href='javascript:;' class='exit-btn btn-icon-large' ng-click='loginOut()'></a></li>
 		</ul>
 
