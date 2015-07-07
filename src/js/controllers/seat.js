@@ -1,12 +1,14 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, phoneService, selectData, orderUtils, employerService, store) {
-	$scope.orders = store.orders;
-	//初始化订单信息
-	var initOrderInfo = {
+var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, phoneService, selectData, employerService, seatOrderStorageService) {
+
+	$scope.orders = seatOrderStorageService.orders;
+
+	var initOrderData = {
 		gender: 1,
 		startList: [],
+		destinationList: [],
 		count: 1,
 		isReservation: false,
 		isCarType: false,
@@ -15,9 +17,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 		reservationCalendar: moment().format('YYYY-MM-DD')
 	};
 
-
-	//初始化用户信息
-	var initUserInfo = {
+	var initUserData = {
 		orderFuck: 0,
 		orderTotal: 0,
 		timeCreated: '',
@@ -31,51 +31,51 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 		minute: selectData.minute	
 	};
 
-	$scope.order = angular.copy(initOrderInfo);
-	$scope.user = angular.copy(initUserInfo);
+	$scope.orderData = angular.copy(initOrderData);
+	$scope.userData = angular.copy(initUserData);
 
-	var snTimer;
 	/*****************************************/
-	//新建订单
 	$scope.addNewOrder = function() {
 		$scope.sendingOrderData = true;
-		if ($scope.newOrder.$valid) {
-			store.insert($scope.order)
-			.then(function success(response) {
+		seatOrderStorageService.addNewOrder($scope.orderData)
+			.then(function (response) {
 				var sn = response.sn;
 				var newOrderData = response.order;
-				$scope.cancelOrder();	
+				$scope.initOrderDataAndUserData();	
 				$scope.cutOrderTabPrepared()
 					.then(function() {
-						store.addNewOrderState(sn, newOrderData);
+						seatOrderStorageService.addNewOrderState(sn, newOrderData);
 					});
-			}, function error(err) {
+			}, function (err) {
 				alert('订单提交失败:' + err);
 			})
 			.finally(function() {
 				$scope.sendingOrderData = false;
 			});
-		}
 	};
 
-	//清空表单数据
-	$scope.cancelOrder = function() {
-		$scope.order = angular.copy(initOrderInfo);
-		$scope.user = angular.copy(initUserInfo);
+	$scope.initOrderDataAndUserData = function() {
+		$scope.mobilePosition = '';	
+		$scope.orderData = angular.copy(initOrderData);
+		$scope.userData = angular.copy(initUserData);
 		$scope.newOrder.$setPristine();
 		seatMapService.resetMap();
 	};
 
+	//清空表单数据
+	$scope.cancelOrder = function() {
+		$scope.initOrderDataAndUserData();
+	};
 
-	//普通下单
-	$scope.addOrder = function() {
-		$scope.order.vehicleNumber = null;
+
+	$scope.addOrderFromForm = function() {
+		$scope.orderData.vehicleNumber = null;
 		$scope.addNewOrder();
 	};
 
 	//通过地图上的出租车图标下单
 	$scope.$on('addNewOrder', function(ev, carInfo) {
-		$scope.order.vehicleNumber = carInfo.vehicleNumber;
+		$scope.orderData.vehicleNumber = carInfo.vehicleNumber;
 		$scope.addNewOrder();
 	});
 
@@ -85,23 +85,23 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 	$scope.currentOrderTab = 'prepared';
 	$scope.cutOrderTabPrepared = function() {
 		$scope.currentOrderTab = 'prepared';
-		return store.getPrepared();
+		return seatOrderStorageService.getPreparedOrders();
 	};
 	$scope.cutOrderTabReceived = function() {
 		$scope.currentOrderTab = 'received';
-		return store.getReceived();
+		return seatOrderStorageService.getReceivedOrders();
 	};
 	$scope.cutOrderTabStarted = function() {
 		$scope.currentOrderTab = 'started';
-		return store.getStarted();
+		return seatOrderStorageService.getStartedOrders();
 	};
 	$scope.cutOrderTabDone = function() {
 		$scope.currentOrderTab = 'done';
-		return store.getDone();
+		return seatOrderStorageService.getDoneOrders();
 	};
 	$scope.cutOrderTabException = function() {
 		$scope.currentOrderTab = 'exception';
-		return store.getException();
+		return seatOrderStorageService.getExceptionOrders();
 	};
 
 	$scope.isCurrentTab = function(tabName) {
@@ -109,17 +109,16 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 	};
 
 
-	//搜索
-	$scope.search = function() {
-		store.searchOrderForKeywords($scope.inputOrderWords);
+	$scope.searchCurrentOrderByKeywords = function() {
+		seatOrderStorageService.getCurrentOrdersByKeywords($scope.inputOrderWords);
 	};
 
 	//用户拨打电话进来，异步
 	$scope.$on('userCall', function(ev, data) {
-		$scope.cancelOrder();
+		$scope.initOrderDataAndUserData();
 		var mobile = data.mobile;
-		$scope.order.callingTel = mobile;
-		$scope.order.actualTel = mobile;
+		$scope.orderData.callingTel = mobile;
+		$scope.orderData.actualTel = mobile;
 
 		//自动焦距
 		var startInput = document.getElementById('startInput');
@@ -129,36 +128,35 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 			}, 1000);
 		}
 
-		userService
-			.getUserInfoToMobile(mobile)
+		userService.getUserInfoToMobile(mobile)
 			.then(function(response) {
-				$scope.user.orderFuck = response.fkTotal;
-				$scope.user.orderTotal = response.total;
-				$scope.user.timeCreated = response.timeCreated;
-				$scope.user.orderNumber = response.sn;
-				$scope.user.rank = response.rank;
+				$scope.userData.orderFuck = response.fkTotal;
+				$scope.userData.orderTotal = response.total;
+				$scope.userData.timeCreated = response.timeCreated;
+				$scope.userData.orderNumber = response.sn;
+				$scope.userData.rank = response.rank;
 
-				$scope.order.fullName = response.contactName;
-				$scope.order.destinationList = response.targetpoiList;
-				$scope.order.startList = response.poiList;
+				$scope.orderData.fullName = response.contactName;
+				$scope.orderData.destinationList = response.targetpoiList;
+				$scope.orderData.startList = response.poiList;
 			}, function() {
-				$scope.user = angular.copy(initUserInfo);
-				$scope.order.fullName = '';
-				$scope.order.destinationList = [];
-				$scope.order.startList = [];
+				$scope.userData = angular.copy(initUserData);
+				$scope.orderData.fullName = '';
+				$scope.orderData.destinationList = [];
+				$scope.orderData.startList = [];
 			});
 	});
 
 
 	$scope.$on('order:stateChange', function(ev, orderInfo) {
-		if ($scope.pause || store.pauseSearch) {
+		if ($scope.pause || seatOrderStorageService.pauseSearch) {
 			return;	
 		}
 		$timeout(function() {
 			var sn = orderInfo.sn;
 			switch (orderInfo.state) {
 				case 'received':
-					store.getVriableOrders(2, sn)
+					seatOrderStorageService.getVriableOrders(2, sn)
 						.then(function() {
 							$scope.currentOrderTab = 'received';
 						}, function() {
@@ -166,7 +164,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 						});
 					break;	
 				case 'started':
-					store.getVriableOrders(3, sn)
+					seatOrderStorageService.getVriableOrders(3, sn)
 						.then(function() {
 							$scope.currentOrderTab = 'started';
 						}, function() {
@@ -174,7 +172,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 						});
 					break;
 				case 'done':
-					store.getVriableOrders(4, sn)
+					seatOrderStorageService.getVriableOrders(4, sn)
 						.then(function() {
 							$scope.currentOrderTab = 'done';
 						}, function() {
@@ -182,16 +180,15 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 						});
 					break;
 			}
-		}, 100);
+		}, 200);
 	
 	});
 
 
 	//电话号码归属地
-	$scope.$watch('order.actualTel', function(value) {
+	$scope.$watch('orderData.actualTel', function(value) {
 		if (value) {
-			phoneService
-				.mobileToPosition(value)
+			phoneService.mobileToPosition(value)
 				.then(function(response) {
 					$scope.mobilePosition = response.carrier;
 				});	
@@ -206,14 +203,12 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 	$scope.toggleSearchType = function() {
 		if ($scope.searchType === '即时') {
 			$scope.searchType = '预约';	
-			store.orderSearchParams.isImmediate = 0;
+			seatOrderStorageService.getCurrentPrepareOrder();
 		} else {
 			$scope.searchType = '即时';	
-			store.orderSearchParams.isImmediate = 1;
+			seatOrderStorageService.getCurrentImmediateOrder();
 		}	
-		store.flushCurrentOrderTab();
 	};
-
 
 //socket connection
 	$scope.$watch(function() {
@@ -224,9 +219,8 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 			socketService.connection();
 		}	
 	});
+
 	$scope.$on('$destroy', function() {
-		$timeout.cancel(snTimer);
-		//关闭socket
 		socketService.close();
 	});
 
@@ -241,9 +235,8 @@ seatCtrl.$inject = [
 	'socketService', 
 	'phoneService', 
 	'selectData',
-	'orderUtils',
 	'employerService',
-	'store'
+	'seatOrderStorageService'
 	];
 
 controllers.controller('seatCtrl', seatCtrl);

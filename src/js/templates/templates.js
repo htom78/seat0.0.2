@@ -693,21 +693,21 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		<div class='chart'>\n" +
     "			<div class='info'>\n" +
     "				<div class='justify'>\n" +
-    "					<span  class='info-item'><i class='custom-type'></i>{{user.rank}}</span>\n" +
-    "					<span class='info-item'><i class='timer'></i>{{user.timeCreated}}</span>\n" +
+    "					<span  class='info-item'><i class='custom-type'></i>{{userData.rank}}</span>\n" +
+    "					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>\n" +
     "				</div>\n" +
     "				<div class='justify'>\n" +
-    "					<span class='info-item'><i class='serial'></i>{{user.orderNumber}}</span>\n" +
+    "					<span class='info-item'><i class='serial'></i>{{userData.orderNumber}}</span>\n" +
     "					<span class='info-item'>\n" +
     "						<span><b class='legend-dot dot-order-count'></b>订单次数</span>\n" +
     "						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>\n" +
     "					</span>\n" +
     "				</div>\n" +
     "			</div>\n" +
-    "			<div class='graph' chart-user order-fuck='user.orderFuck' order-total='user.orderTotal'>\n" +
+    "			<div class='graph' chart-user order-fuck='userData.orderFuck' order-total='userData.orderTotal'>\n" +
     "			</div>\n" +
     "		</div>\n" +
-    "		<form class='seat-top-form' name='newOrder' ng-submit='addOrder()'>\n" +
+    "		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>\n" +
     "			<ul class='seat-field1'>\n" +
     "				<li>\n" +
     "					<label class='icon-label calling-label'><i></i></label>\n" +
@@ -715,7 +715,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='text' \n" +
     "						class='input-normal' \n" +
     "						disabled='disabled'\n" +
-    "						ng-model='order.callingTel'/>\n" +
+    "						ng-model='orderData.callingTel'/>\n" +
     "					<input type='checkbox' class='checkbox' id='autoCall'/>\n" +
     "					<label class='label-checkbox' for='autoCall'></label>\n" +
     "					<label class='auto-call-label' for='autoCall'>自动回拨</label>\n" +
@@ -727,7 +727,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='input-normal' \n" +
     "						maxlength='11'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='order.actualTel'\n" +
+    "						ng-model='orderData.actualTel'\n" +
     "						ng-pattern='/1\\d{10}/'/>\n" +
     "					<span class='mobile-position'>{{mobilePosition}}</span>\n" +
     "				</li>\n" +
@@ -738,14 +738,14 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='input-normal'\n" +
     "						maxlength='30'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='order.fullName'\n" +
+    "						ng-model='orderData.fullName'\n" +
     "						placeholder='用户姓名'/>\n" +
     "					<input \n" +
     "						type='radio' \n" +
     "						name='gender' \n" +
     "						class='gender-radio' \n" +
     "						id='femaleRadio'\n" +
-    "						ng-model='order.gender'\n" +
+    "						ng-model='orderData.gender'\n" +
     "						value='1'/>\n" +
     "					<label class='label-radio female' for='femaleRadio'></label>\n" +
     "					<input \n" +
@@ -753,7 +753,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						name='gender' \n" +
     "						class='gender-radio' \n" +
     "						id='maleRadio'\n" +
-    "						ng-model='order.gender'\n" +
+    "						ng-model='orderData.gender'\n" +
     "						value='2'/>\n" +
     "					<label class='label-radio male' for='maleRadio'></label>\n" +
     "				</li>\n" +
@@ -765,10 +765,10 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						id='startInput'\n" +
     "						maxlength='50'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='order.start'\n" +
+    "						ng-model='orderData.start'\n" +
     "						placeholder='出发位置'\n" +
-    "						words-place='order.start'\n" +
-    "						start-list='order.startList'/>\n" +
+    "						words-place='orderData.start'\n" +
+    "						start-list='orderData.startList'/>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<label class='icon-label around-label'><i></i></label>\n" +
@@ -776,7 +776,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='text' \n" +
     "						class='input-normal long-width'\n" +
     "						maxlength='50'\n" +
-    "						ng-model='order.aroundRoadName'\n" +
+    "						ng-model='orderData.aroundRoadName'\n" +
     "						placeholder='周围道路名称'/>\n" +
     "				</li>\n" +
     "			</ul>\n" +
@@ -786,17 +786,17 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='checkbox'\n" +
     "						id='carTypeSelect'\n" +
     "						class='input-checkbox'\n" +
-    "						ng-model='order.isCarType'\n" +
+    "						ng-model='orderData.isCarType'\n" +
     "						/>\n" +
     "					<label class='icon-label cartype-label checkbox-label' for='carTypeSelect'><i></i></label>\n" +
     "					<span class='cartype-selects'>\n" +
-    "						<select class='select-normal car-select' ng-disabled='!order.isCarType'>\n" +
+    "						<select class='select-normal car-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>汽车类型</option>\n" +
     "						</select>\n" +
-    "						<select class='select-normal price-select' ng-disabled='!order.isCarType'>\n" +
+    "						<select class='select-normal price-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>价格</option>\n" +
     "						</select>\n" +
-    "						<select class='select-normal count-select' ng-disabled='!order.isCarType'>\n" +
+    "						<select class='select-normal count-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>车数</option>\n" +
     "						</select>\n" +
     "					</span>\n" +
@@ -804,11 +804,11 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<input \n" +
     "						list='orderDestination' \n" +
     "						class='input-normal long-width'\n" +
-    "						ng-model='order.end'\n" +
+    "						ng-model='orderData.end'\n" +
     "						ng-required='true'\n" +
     "						placeholder='目的地'/>\n" +
     "					<datalist id='orderDestination'>\n" +
-    "						<option  ng-repeat='item in order.destinationList' value='{{item}}'>\n" +
+    "						<option  ng-repeat='item in orderData.destinationList' value='{{item}}'>\n" +
     "					</datalist>\n" +
     "				</li>\n" +
     "				<li>\n" +
@@ -816,33 +816,33 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						type='checkbox' \n" +
     "						id='reservationSelect' \n" +
     "						class='input-checkbox'\n" +
-    "						ng-model='order.isReservation'/>\n" +
+    "						ng-model='orderData.isReservation'/>\n" +
     "					<label class='icon-label prepare-label checkbox-label' for='reservationSelect'><i></i></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal input-calendar'  \n" +
-    "						ng-disabled='!order.isReservation'\n" +
-    "						ng-model='order.reservationCalendar'/>\n" +
-    "						<div calendar selected='order.reservationCalendar' class='calendar'></div>\n" +
+    "						ng-disabled='!orderData.isReservation'\n" +
+    "						ng-model='orderData.reservationCalendar'/>\n" +
+    "						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>\n" +
     "					<select\n" +
     "						class='select-normal time-select'\n" +
-    "						ng-disabled='!order.isReservation'\n" +
-    "						ng-model='order.hour'\n" +
-    "						ng-init='order.hour=0'\n" +
+    "						ng-disabled='!orderData.isReservation'\n" +
+    "						ng-model='orderData.hour'\n" +
+    "						ng-init='orderData.hour=0'\n" +
     "						ng-options='item for item in options.hour'>\n" +
     "					</select>\n" +
     "					<select\n" +
     "						class='select-normal timer-select'\n" +
-    "						ng-disabled='!order.isReservation'\n" +
-    "						ng-model='order.minute'\n" +
-    "						ng-init='order.minute=0'\n" +
+    "						ng-disabled='!orderData.isReservation'\n" +
+    "						ng-model='orderData.minute'\n" +
+    "						ng-init='orderData.minute=0'\n" +
     "						ng-options='item for item in options.minute'>\n" +
     "					</select>\n" +
     "					<label class='icon-label count-label'><i></i></label>\n" +
     "					<input \n" +
     "						type='text'\n" +
     "						class='input-normal long-width'\n" +
-    "						ng-model='order.count'\n" +
+    "						ng-model='orderData.count'\n" +
     "						placeholder='叫车数'/>\n" +
     "\n" +
     "				</li>\n" +
@@ -851,7 +851,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal large-width'\n" +
-    "						ng-model='order.remark'\n" +
+    "						ng-model='orderData.remark'\n" +
     "						placeholder='附加信息'/>\n" +
     "				</il>\n" +
     "			</ul>\n" +
@@ -930,7 +930,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-click='cutOrderTabException()'><i class='error'></i>({{orders.exceptionOrderCount}})</a></li>\n" +
     "			</ul>\n" +
     "			<div class='fr'>\n" +
-    "				<form ng-submit='search()'>\n" +
+    "				<form ng-submit='searchCurrentOrderByKeywords()'>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='search-input'\n" +

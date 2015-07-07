@@ -5,21 +5,21 @@
 		<div class='chart'>
 			<div class='info'>
 				<div class='justify'>
-					<span  class='info-item'><i class='custom-type'></i>{{user.rank}}</span>
-					<span class='info-item'><i class='timer'></i>{{user.timeCreated}}</span>
+					<span  class='info-item'><i class='custom-type'></i>{{userData.rank}}</span>
+					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>
 				</div>
 				<div class='justify'>
-					<span class='info-item'><i class='serial'></i>{{user.orderNumber}}</span>
+					<span class='info-item'><i class='serial'></i>{{userData.orderNumber}}</span>
 					<span class='info-item'>
 						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
 						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
 					</span>
 				</div>
 			</div>
-			<div class='graph' chart-user order-fuck='user.orderFuck' order-total='user.orderTotal'>
+			<div class='graph' chart-user order-fuck='userData.orderFuck' order-total='userData.orderTotal'>
 			</div>
 		</div>
-		<form class='seat-top-form' name='newOrder' ng-submit='addOrder()'>
+		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>
 			<ul class='seat-field1'>
 				<li>
 					<label class='icon-label calling-label'><i></i></label>
@@ -27,7 +27,7 @@
 						type='text' 
 						class='input-normal' 
 						disabled='disabled'
-						ng-model='order.callingTel'/>
+						ng-model='orderData.callingTel'/>
 					<input type='checkbox' class='checkbox' id='autoCall'/>
 					<label class='label-checkbox' for='autoCall'></label>
 					<label class='auto-call-label' for='autoCall'>自动回拨</label>
@@ -39,7 +39,7 @@
 						class='input-normal' 
 						maxlength='11'
 						ng-required='true'
-						ng-model='order.actualTel'
+						ng-model='orderData.actualTel'
 						ng-pattern='/1\d{10}/'/>
 					<span class='mobile-position'>{{mobilePosition}}</span>
 				</li>
@@ -50,14 +50,14 @@
 						class='input-normal'
 						maxlength='30'
 						ng-required='true'
-						ng-model='order.fullName'
+						ng-model='orderData.fullName'
 						placeholder='用户姓名'/>
 					<input 
 						type='radio' 
 						name='gender' 
 						class='gender-radio' 
 						id='femaleRadio'
-						ng-model='order.gender'
+						ng-model='orderData.gender'
 						value='1'/>
 					<label class='label-radio female' for='femaleRadio'></label>
 					<input 
@@ -65,7 +65,7 @@
 						name='gender' 
 						class='gender-radio' 
 						id='maleRadio'
-						ng-model='order.gender'
+						ng-model='orderData.gender'
 						value='2'/>
 					<label class='label-radio male' for='maleRadio'></label>
 				</li>
@@ -77,10 +77,10 @@
 						id='startInput'
 						maxlength='50'
 						ng-required='true'
-						ng-model='order.start'
+						ng-model='orderData.start'
 						placeholder='出发位置'
-						words-place='order.start'
-						start-list='order.startList'/>
+						words-place='orderData.start'
+						start-list='orderData.startList'/>
 				</li>
 				<li>
 					<label class='icon-label around-label'><i></i></label>
@@ -88,7 +88,7 @@
 						type='text' 
 						class='input-normal long-width'
 						maxlength='50'
-						ng-model='order.aroundRoadName'
+						ng-model='orderData.aroundRoadName'
 						placeholder='周围道路名称'/>
 				</li>
 			</ul>
@@ -98,17 +98,17 @@
 						type='checkbox'
 						id='carTypeSelect'
 						class='input-checkbox'
-						ng-model='order.isCarType'
+						ng-model='orderData.isCarType'
 						/>
 					<label class='icon-label cartype-label checkbox-label' for='carTypeSelect'><i></i></label>
 					<span class='cartype-selects'>
-						<select class='select-normal car-select' ng-disabled='!order.isCarType'>
+						<select class='select-normal car-select' ng-disabled='!orderData.isCarType'>
 							<option>汽车类型</option>
 						</select>
-						<select class='select-normal price-select' ng-disabled='!order.isCarType'>
+						<select class='select-normal price-select' ng-disabled='!orderData.isCarType'>
 							<option>价格</option>
 						</select>
-						<select class='select-normal count-select' ng-disabled='!order.isCarType'>
+						<select class='select-normal count-select' ng-disabled='!orderData.isCarType'>
 							<option>车数</option>
 						</select>
 					</span>
@@ -116,11 +116,11 @@
 					<input 
 						list='orderDestination' 
 						class='input-normal long-width'
-						ng-model='order.end'
+						ng-model='orderData.end'
 						ng-required='true'
 						placeholder='目的地'/>
 					<datalist id='orderDestination'>
-						<option  ng-repeat='item in order.destinationList' value='{{item}}'>
+						<option  ng-repeat='item in orderData.destinationList' value='{{item}}'>
 					</datalist>
 				</li>
 				<li>
@@ -128,33 +128,33 @@
 						type='checkbox' 
 						id='reservationSelect' 
 						class='input-checkbox'
-						ng-model='order.isReservation'/>
+						ng-model='orderData.isReservation'/>
 					<label class='icon-label prepare-label checkbox-label' for='reservationSelect'><i></i></label>
 					<input 
 						type='text' 
 						class='input-normal input-calendar'  
-						ng-disabled='!order.isReservation'
-						ng-model='order.reservationCalendar'/>
-						<div calendar selected='order.reservationCalendar' class='calendar'></div>
+						ng-disabled='!orderData.isReservation'
+						ng-model='orderData.reservationCalendar'/>
+						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>
 					<select
 						class='select-normal time-select'
-						ng-disabled='!order.isReservation'
-						ng-model='order.hour'
-						ng-init='order.hour=0'
+						ng-disabled='!orderData.isReservation'
+						ng-model='orderData.hour'
+						ng-init='orderData.hour=0'
 						ng-options='item for item in options.hour'>
 					</select>
 					<select
 						class='select-normal timer-select'
-						ng-disabled='!order.isReservation'
-						ng-model='order.minute'
-						ng-init='order.minute=0'
+						ng-disabled='!orderData.isReservation'
+						ng-model='orderData.minute'
+						ng-init='orderData.minute=0'
 						ng-options='item for item in options.minute'>
 					</select>
 					<label class='icon-label count-label'><i></i></label>
 					<input 
 						type='text'
 						class='input-normal long-width'
-						ng-model='order.count'
+						ng-model='orderData.count'
 						placeholder='叫车数'/>
 
 				</li>
@@ -163,7 +163,7 @@
 					<input 
 						type='text' 
 						class='input-normal large-width'
-						ng-model='order.remark'
+						ng-model='orderData.remark'
 						placeholder='附加信息'/>
 				</il>
 			</ul>
@@ -242,7 +242,7 @@
 						ng-click='cutOrderTabException()'><i class='error'></i>({{orders.exceptionOrderCount}})</a></li>
 			</ul>
 			<div class='fr'>
-				<form ng-submit='search()'>
+				<form ng-submit='searchCurrentOrderByKeywords()'>
 					<input 
 						type='text' 
 						class='search-input'

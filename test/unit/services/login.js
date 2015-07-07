@@ -13,20 +13,33 @@ describe('login', function() {
 
 	describe ('login ok', function() {
 		beforeEach(function() {
-			$httpBackend.when('POST', '/login.htm').respond(200, {state: 'ok'});
+			$httpBackend.whenPOST('login.htm').respond(200, {state: 'ok'});
 		});
-		it('', function() {
-			var data = {
-				username: 'user001',
-				password: '0'
-			}
-			$httpBackend.expect('POST', '/login.htm');
-			loginService
-				.login(data)
+
+		it('username password for login', function() {
+			$httpBackend.expectPOST('login.htm');
+			loginService.login({username: 'username', password: 'password'})
 				.then(function(response) {
 					expect(response).toEqual({state: 'ok'});
 				});
+			$httpBackend.flush();
+		});
+	});
 
+	describe('login fail', function() {
+		beforeEach(function() {
+			$httpBackend.whenPOST('login.htm').respond(200, {code: 20});	
+		});	
+
+		it('user is not exist error', function() {
+			$httpBackend.expectPOST('login.htm');
+			loginService.login({username:'username', password: 'password'})
+				.then(
+					function success(response) {}, 
+					function error(errorInfo) {
+						expect(errorInfo).toEqual('用户不存在');	
+					}
+				);	
 			$httpBackend.flush();
 		});
 	});

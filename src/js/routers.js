@@ -11,7 +11,7 @@ var routers = function ($routeProvider) {
 					seatOrderStorageService.setCallType(1);	
 				}
 				seatOrderStorageService.initOrderSearchParams();
-				seatOrderStorageService.getPrepared();
+				seatOrderStorageService.getPreparedOrders();
 				return seatOrderStorageService;	
 			}]	
 		}

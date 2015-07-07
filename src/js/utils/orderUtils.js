@@ -2,7 +2,7 @@ var utils = require('./index');
 
 var orderUtils = function($filter) {
 	return {
-		getCreateOrderData: function(rawFormData) {
+		convertOrderServerData: function(rawFormData) {
 		
 			var orderData = {
 				callingTel: rawFormData.callingTel || '',

@@ -35,9 +35,9 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 		/**
 		 * @param {json} form order raw data
 		 */
-		insert: function(orderData) {
+		addNewOrder: function(orderData) {
 			var defer = $q.defer();
-			orderData = orderUtils.getCreateOrderData(orderData);
+			orderData = orderUtils.convertOrderServerData(orderData);
 			orderData.callType = orderSearchDefaultParams.callType;
 			$q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
 				.then(function(lngLats) {
@@ -80,7 +80,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			return defer.promise;
 		},
 
-		get: function(orderSearchParams) {
+		_get: function(orderSearchParams) {
 			store.pauseSearch = true;
 			return $http.get(orderGetUrl, {params: orderSearchParams})
 				.then(function(response) {
@@ -118,42 +118,42 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 				});	
 		},
 
-		getPrepared: function() {
+		getPreparedOrders: function() {
 			store.orderSearchParams.status = 1;
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
-		getReceived: function() {
+		getReceivedOrders: function() {
 			store.orderSearchParams.status = 2;
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
-		getStarted: function() {
+		getStartedOrders: function() {
 			store.orderSearchParams.status = 3;
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
-		getDone: function() {
+		getDoneOrders: function() {
 			store.orderSearchParams.status = 4;
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
-		getException: function() {
+		getExceptionOrders: function() {
 			store.orderSearchParams.status = 0;
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
 		flushCurrentOrderTab: function() {
-			return store.get(store.orderSearchParams);
+			return store._get(store.orderSearchParams);
 		},
 
 		/**
 		 * @param {string}
 		 */
-		searchOrderForKeywords: function(keywords) {
+		getCurrentOrdersByKeywords: function(keywords) {
 			var orderSearchParams = angular.copy(store.orderSearchParams);
 			orderSearchParams.k = keywords;
-			return store.get(orderSearchParams);
+			return store._get(orderSearchParams);
 		},
 
 		/**
@@ -179,6 +179,16 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					orders.unshift(newOrderData);
 				}
 			}	
+		},
+
+		getCurrentImmediateOrder: function() {
+			store.orderSearchParams.isImmediate = 1;	
+			store._get(store.orderSearchParams);
+		},
+
+		getCurrentPrepareOrder: function() {
+			store.orderSearchParams.isImmediate = 0;	
+			store._get(store.orderSearchParams);
 		}
 
 	};

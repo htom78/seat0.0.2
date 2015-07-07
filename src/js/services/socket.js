@@ -15,13 +15,10 @@ var socketService = function(orderNotify, $rootScope, $timeout) {
 			this.socket.onclose = function() {
 			};
 			this.socket.onmessage = function(ev) {
-				var info = JSON.parse(ev.data);
-				var status = parseInt(info.status);
-				var sn = info.sn;
-				console.log(info);
-				if (status && status > 0) {
-					orderNotify
-						.notify(status, sn);//即时1  预约0	
+				var response = JSON.parse(ev.data);
+				console.log(response);
+				if (parseInt(response.type) === 1) {
+					orderNotify.notify(response.msg.status, response.msg.sn);	
 				}
 			};
 
