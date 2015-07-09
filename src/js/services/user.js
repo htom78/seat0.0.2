@@ -1,26 +1,28 @@
 var services = require('./index');
-var userService = function(userResource, $q, $http) {
+var userService = function($http, $q) {
 	return {
-		getUserInfoToMobile: function(mobile) {
-			return userResource
-						.getUserInfoToMobile(mobile)
-						.then(function(response) {
-							if (response.sn) {
-								return response;
-							} else {
-								return $q.reject();
-							}
-						});
+		getUserInfoByMobile: function(mobile) {
+			return $http.get('statis/m.htm', { params: {mobile: mobile}})
+				.then(function(response) {
+					if (response.data.sn) {
+						return response.data;	
+					} else {
+						return $q.reject();	
+					}	
+				});
 		},
-		loginOut: function() {
-			return $http({
-				method: 'POST',
-				url: 'logout.htm',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			});	
+		fromMobileGetLocation: function(mobile) {
+			return $http.jsonp('http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?callback=JSON_CALLBACK', {
+				params: {
+					tel: mobile	
+				}	
+			})
+				.then(function(response) {
+					return response.data;	
+				});	
 		}
 	};
 };
-userService.$inject = ['userResource', '$q', '$http'];
+userService.$inject = ['$http', '$q'];
 
 services.factory('userService', userService);

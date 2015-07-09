@@ -28,16 +28,6 @@ var app = angular.module('app', requires)
 	.run(['$rootScope', '$location', 'employerService', 'callSocket', function($rootScope, $location, employerService, callSocket) {
 		callSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
-		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
-			if (window.employer && employerService.employerName !== window.employer) {
-				employerService.employerName = window.employer;	
-				employerService.employerType = window.employerType;
-				employerService.signState = window.signState && parseInt(window.signState);
-			} else if ($location.$$path !== '/login.htm' && !employerService.employerName){
-				location.reload();	
-			}
-			$rootScope.title = current.$$route.title;
-		});
 	}]);
 
 

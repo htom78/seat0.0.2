@@ -1,7 +1,7 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, phoneService, selectData, employerService, seatOrderStorageService) {
+var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, selectData, employerService, seatOrderStorageService) {
 
 	$scope.orders = seatOrderStorageService.orders;
 
@@ -128,7 +128,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 			}, 1000);
 		}
 
-		userService.getUserInfoToMobile(mobile)
+		userService.getUserInfoByMobile(mobile)
 			.then(function(response) {
 				$scope.userData.orderFuck = response.fkTotal;
 				$scope.userData.orderTotal = response.total;
@@ -188,7 +188,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 	//电话号码归属地
 	$scope.$watch('orderData.actualTel', function(value) {
 		if (value) {
-			phoneService.mobileToPosition(value)
+			userService.fromMobileGetLocation(value)
 				.then(function(response) {
 					$scope.mobilePosition = response.carrier;
 				});	
@@ -233,7 +233,6 @@ seatCtrl.$inject = [
 	'userService', 
 	'seatMapService', 
 	'socketService', 
-	'phoneService', 
 	'selectData',
 	'employerService',
 	'seatOrderStorageService'

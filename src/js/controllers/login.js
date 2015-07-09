@@ -1,25 +1,31 @@
 var controllers = require('./index');
 
-var loginCtrl = function($scope, loginService, $location, $rootScope, employerService) {
-	$scope.loginForm = {};
+var loginCtrl = function($scope, $rootScope, $location, security) {
 	$rootScope.isLoginPage = true;
 	$scope.$on('$destroy', function() {
 		$rootScope.isLoginPage = false;
 	});
+
 	$scope.login = function() {
-		loginService
-			.login($scope.loginForm)
+		security.login($scope.username, $scope.password)
 			.then(function() {
-				$location.path('/');
+				location.reload();	
 			}, function(errorInfo) {
-				$scope.hasError = true;
-				$scope.errorInfo= errorInfo;
+				$scope.hasError = true;	
+				$scope.errorInfo = errorInfo;
 			});
 	};
 
-	employerService.clearInfo();
+	$scope.$watch(function() {
+		return security.isAuthenticated();	
+	}, function(isAuthenticated) {
+		if (isAuthenticated) {
+			$location.path('/');	
+		}	
+	});
+
 };
 
-loginCtrl.$inject = ['$scope', 'loginService', '$location', '$rootScope', 'employerService'];
+loginCtrl.$inject = ['$scope', '$rootScope', '$location', 'security'];
 
 controllers.controller('loginCtrl', loginCtrl);

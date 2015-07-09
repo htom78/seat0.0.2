@@ -1,27 +1,6 @@
 var controllers = require('./index');
 
-var headerCtrl = function($scope, $timeout, $filter, signService, $location, employerService,  userService) {
-	//on the basis of watch employerName judge user is login
-	$scope.$watch(function() {
-		return 	employerService.employerName;
-	}, function(newValue) {
-		if (newValue) {
-			/****************/
-			$scope.employerName = employerService.employerName;
-			$scope.employerType = employerService.employerType;
-			signService.getCurrentState()
-				.then(function(response) {
-					if (response.isSignIn) {
-						$scope.signInfo = 'signIn';	
-						$scope.currentState = response.currentCallingState;
-					}	
-				});
-		}
-	});
-
-	$scope.isLeader = function() {
-		return $scope.employerType === 'seat_leader';	
-	};
+var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 
 	$scope.toggleSignState = function() {
 		$scope.currentState = 'free';
@@ -88,13 +67,24 @@ var headerCtrl = function($scope, $timeout, $filter, signService, $location, emp
 		}
 	};
 
-	$scope.loginOut = function() {
+	$scope.logout = function() {
 		signService.loginOut();
-		userService.loginOut()
-			.then(function() {
-				$location.path('/login.htm');	
-			});
+		security.logout();
 	};
+
+	$scope.isLeader = security.isLeader;
+
+	security.requestCurrentUser()
+		.then(function(response) {
+			$scope.username = response; 	
+			signService.getCurrentState()
+				.then(function(response) {
+					if (response.isSignIn) {
+						$scope.signInfo = 'signIn';	
+						$scope.currentState = response.currentCallingState;
+					}	
+				});
+		});
 
 	//左上角时间
 	(function tickTimer(){
@@ -109,9 +99,7 @@ headerCtrl.$inject = [
 	'$timeout',
  	'$filter',
  	'signService',
- 	'$location',
- 	'employerService',
-	'userService'
+	'security'
 	];
 
 controllers.controller('headerCtrl', headerCtrl);

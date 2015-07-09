@@ -188,7 +188,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		</div>\n" +
     "\n" +
     "		<div class='user-info-timer'>\n" +
-    "			<div class='user-number'><i></i><span>{{employerName}}</span></div>\n" +
+    "			<div class='user-number'><i></i><span>{{username}}</span></div>\n" +
     "			<div class='timer'><i></i><span>{{currentTimer}}</span></div>\n" +
     "		</div>\n" +
     "\n" +
@@ -207,7 +207,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "				class='sign-state'\n" +
     "				ng-class='{\"sign-out\": !isSignIn(), \"sign-in\": isSingIn()}' \n" +
     "				ng-click='toggleSignState()'></a></li>\n" +
-    "			<li><a href='javascript:;' class='exit-btn btn-icon-large' ng-click='loginOut()'></a></li>\n" +
+    "			<li><a href='javascript:;' class='exit-btn btn-icon-large' ng-click='logout()'></a></li>\n" +
     "		</ul>\n" +
     "\n" +
     "	</div>\n" +
@@ -424,7 +424,7 @@ angular.module("page/login.html", []).run(["$templateCache", function($templateC
     "						class='login-input username-input'\n" +
     "						placeholder='工号'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='loginForm.username'/>\n" +
+    "						ng-model='username'/>\n" +
     "				</div>\n" +
     "				<div class='input-wrapper'>\n" +
     "					<input \n" +
@@ -432,7 +432,7 @@ angular.module("page/login.html", []).run(["$templateCache", function($templateC
     "						class='login-input password-input'\n" +
     "						placeholder='密码'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='loginForm.password'/>\n" +
+    "						ng-model='password'/>\n" +
     "				</div>\n" +
     "				<div class='some-error'><span>{{errorInfo}}</span></div>\n" +
     "				<div class='btn-wrapper'>\n" +
