@@ -25,11 +25,7 @@ module.exports = function(grunt) {
 			jquery: {
 				src: ['bower_components/jquery/dist/jquery.js'],
 				dest: '<%= distdir %>/js/jquery.js'
-			},
-			scocket: {
-				src: ['bower_components/sockjs/sockjs.js'],
-				dest: '<%= distdir %>/js/sockjs.js'
-			}	
+			}
 		},
 		copy: {
 			assets: {

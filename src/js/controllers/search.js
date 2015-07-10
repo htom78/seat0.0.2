@@ -1,49 +1,41 @@
 var controllers = require('./index');
 
-var initInfo = {
-	beginTime: '',
-	endTime: '',
-	currentPage: 1,
-	keywords: '',
-	status: -1
-};
+var searchCtrl = function($scope, searchOrderStorageService) {
 
-var searchCtrl = function($scope, store) {
+	$scope.orders = searchOrderStorageService.orders;
 
-	$scope.orders = store.orders;
-
-	$scope.currentOrderTab = 'all';
-	$scope.allOrderCount = 0;
-	$scope.immediateOrderCount = 0;
-	$scope.reservationOrderCount = 0;
+	$scope.allOrderCount = searchOrderStorageService.getAllOrderCount;
+	$scope.immediateOrderCount = searchOrderStorageService.getImmediateOrderCount;
+	$scope.reservationOrderCount = searchOrderStorageService.getReservationOrderCount;
 
 	$scope.$watch('orders', function() {
-		$scope.currentOrderPage = store.currentOrderPage;
-		$scope.orderItemCount = store.orderItemCount;
+		$scope.currentOrderPage = searchOrderStorageService.currentOrderPage;
+		$scope.orderItemCount = searchOrderStorageService.orderItemCount;
 	}, true);
 
+	$scope.currentOrderTab = 'all';
 	$scope.isCurrentTab = function(type) {
 		return $scope.currentOrderTab === type;
 	};
 
 	$scope.cutAllOrderTab = function() {
 		$scope.currentOrderTab = 'all';
-		return store.getAllOrders();
+		return searchOrderStorageService.getAllOrders();
 	};
 
 	$scope.cutImmediateOrderTab = function() {
 		$scope.currentOrderTab = 'immediate';
-		return store.getImmediatOrders();
+		return searchOrderStorageService.getImmediatOrders();
 	};
 
 	$scope.cutReservationOrderTab = function() {
 		$scope.currentOrderTab = 'reservation';	
-		return store.getReservationOrders();
+		return searchOrderStorageService.getReservationOrders();
 	};
 
 	//点击分页按钮
 	$scope.onSelectPage = function(page) {
-		store.getSelectPageOrder(page);
+		searchOrderStorageService.getSelectPageOrder(page);
 	};
 
 	//更多筛选条件
@@ -61,14 +53,14 @@ var searchCtrl = function($scope, store) {
 			filterData.beginTime = $scope.searchOrderBeginTime;
 			filterData.endTime = $scope.searchOrderEndTime;	
 		}
-		store.searchOrderForKeywords($scope.words, filterData);
+		searchOrderStorageService.searchOrderForKeywords($scope.words, filterData);
 	};
 
 };
 
 searchCtrl.$inject = [
 	'$scope', 
-	'store'
+	'searchOrderStorageService'
 	];
 
 controllers.controller('searchCtrl', searchCtrl);

@@ -619,15 +619,15 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutAllOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{allOrderCount}})</button>\n" +
+    "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{allOrderCount()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutImmediateOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"immediate\")}'>即时({{immediateOrderCount}})</button>\n" +
+    "				ng-class='{active:isCurrentTab(\"immediate\")}'>即时({{immediateOrderCount()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutReservationOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"reservation\")}'>预约({{reservationOrderCount}})</button>\n" +
+    "				ng-class='{active:isCurrentTab(\"reservation\")}'>预约({{reservationOrderCount()}})</button>\n" +
     "		</div>\n" +
     "\n" +
     "	</div>\n" +

@@ -17,17 +17,39 @@ var searchOrderStorageService = function($http) {
 		orderSearchParams: {},
 		currentOrderPage: 1,
 		orderItemCount: 0,
+		allOrderCount: 0,
+		immediateOrderCount: 0,
+		reservationOrderCount: 0,
+
+		getAllOrderCount: function() {
+			return store.allOrderCount;	
+		},
+
+		getImmediateOrderCount: function() {
+			return store.immediateOrderCount;	
+		},
+
+		getReservationOrderCount: function() {
+			return store.reservationOrderCount;	
+		},
+
+
 		initOrderSearchParams: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orders = [];
+			store.orderItemCount = 0;
+			store.allOrderCount = 0;
+			store.immediateOrderCount = 0;
+			store.reservationOrderCount = 0;
 		},
+
 		get: function(orderSearchParams) {
 			return $http.get('search/more.htm', {params: orderSearchParams})
 				.then(function(response) {
 					angular.copy(response.data.list, store.orders);
 					store.orderItemCount = response.data.total;
 					store.currentOrderPage = orderSearchParams.page;
-					return store.orders;
+					return response.data.total;
 				});
 		},
 
@@ -35,20 +57,29 @@ var searchOrderStorageService = function($http) {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orderSearchParams.k = '';
 			store.orderSearchParams.isImmediate = 0;
-			return store.get(store.orderSearchParams);
+			return store.get(store.orderSearchParams)
+				.then(function(response) {
+					store.allOrderCount = response;	
+				});
 		},
 
 		getImmediatOrders: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orderSearchParams.k = '';
 			store.orderSearchParams.isImmediate = 1;
-			return store.get(store.orderSearchParams);
+			return store.get(store.orderSearchParams)
+				.then(function(response) {
+					store.immediateOrderCount = response;	
+				});
 		},
 
 		getReservationOrders: function() {
 			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
 			store.orderSearchParams.isImmediate = 2;
-			return store.get(store.orderSearchParams);
+			return store.get(store.orderSearchParams)
+				.then(function(response) {
+					store.reservationOrderCount = response;	
+				});
 		},
 
 		getShowOrderCount: function() {

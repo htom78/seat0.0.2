@@ -19,13 +19,18 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 		currentOrderPage: 1,
 		orderItemCount: 0,
 		currentOrderStepItemNumber: null,	
+
 		getShowOrderCount: function() {
 			var count = store.orderItemCount > 999 ? 999 : store.orderItemCount;	
 			return ('000' + count).slice(-3).split('');
 		},
+
 		initOrderSearchParams: function() {
 			angular.copy(orderSearchDefaultParams, store.orderSearchParams);	
+			store.orders = [];
+			store.orderItemCount = 0;
 		},
+
 		get: function(orderSearchParams) {
 			orderStepDialog.close();
 			return $http.get(orderGetUrl, {params: orderSearchParams})
