@@ -25,9 +25,14 @@ var app = angular.module('app', requires)
 	.config(require('./config'))
 	.constant('properties', require('./properties'))
 	.constant('selectData', require('./selectData'))
-	.run(['$rootScope', '$location', 'employerService', 'callSocket', function($rootScope, $location, employerService, callSocket) {
+	.run(['$rootScope', 'callSocket', function($rootScope, callSocket) {
+
 		callSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
+
+		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
+			$rootScope.title = current.$$route.title;	
+		});
 	}]);
 
 

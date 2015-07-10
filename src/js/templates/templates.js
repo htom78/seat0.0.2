@@ -922,12 +922,12 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: !isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{orders.normalOrderCount}})</a></li>\n" +
+    "						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{normalOrderCount()}})</a></li>\n" +
     "				<li><a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabException()'><i class='error'></i>({{orders.exceptionOrderCount}})</a></li>\n" +
+    "						ng-click='cutOrderTabException()'><i class='error'></i>({{exceptionOrderCount()}})</a></li>\n" +
     "			</ul>\n" +
     "			<div class='fr'>\n" +
     "				<form ng-submit='searchCurrentOrderByKeywords()'>\n" +
@@ -943,7 +943,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "				</form>\n" +
     "			</div>\n" +
     "			<div class='fr'>\n" +
-    "				<span class='tick-timer'>{{orders.averageTimer}}秒</span>\n" +
+    "				<span class='tick-timer'>{{averageTimer()}}秒</span>\n" +
     "			</div>\n" +
     "		</section>\n" +
     "		<section class='order-content flex'>\n" +

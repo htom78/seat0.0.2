@@ -1,17 +1,15 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leaderMapService, employerService, $location, store) {
+var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leaderMapService, $location, security, leaderOrderStorageService) {
 
 
-	$scope.orders = store.orders;
+	$scope.orders = leaderOrderStorageService.orders;
 	
 	$scope.$watch(function() {
-		return employerService.employerType;	
-	}, function(newValue) {
-		if (newValue) {
-			if (newValue !== 'seat_leader') {
-				$location.path('/');	
-			}	
+		return security.isLeader();	
+	}, function(isLeader) {
+		if (!isLeader) {
+			$location.path('/');	
 		}	
 	});
 
@@ -38,27 +36,27 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 
 	$scope.cutOrderTabPrepared = function() {
 		$scope.currentOrderTab = 'prepared';
-		store.getPrepared();	
+		leaderOrderStorageService.getPrepared();	
 	};
 
 	$scope.cutOrderTabReceived = function() {
 		$scope.currentOrderTab = 'received';
-		store.getReceived();	
+		leaderOrderStorageService.getReceived();	
 	};
 
 	$scope.cutOrderTabStarted = function() {
 		$scope.currentOrderTab = 'started';
-		store.getStarted();	
+		leaderOrderStorageService.getStarted();	
 	};
 
 	$scope.cutOrderTabDone = function() {
 		$scope.currentOrderTab = 'done';
-		store.getDone();	
+		leaderOrderStorageService.getDone();	
 	};
 
 	$scope.cutOrderTabException = function() {
 		$scope.currentOrderTab = 'exception';
-		store.getException();	
+		leaderOrderStorageService.getException();	
 	};
 
 	$scope.preparedOrderTabCount = [0, 0, 0];
@@ -68,19 +66,19 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 	$scope.exceptionOrderTabCount = [0, 0, 0];
 
 	$scope.$watch('orders', function() {
-		$scope.orderCurrentPage = store.currentOrderPage;
-		$scope.orderItemCount = store.orderItemCount;
-		$scope[$scope.currentOrderTab + 'OrderTabCount'] = store.getShowOrderCount();
+		$scope.orderCurrentPage = leaderOrderStorageService.currentOrderPage;
+		$scope.orderItemCount = leaderOrderStorageService.orderItemCount;
+		$scope[$scope.currentOrderTab + 'OrderTabCount'] = leaderOrderStorageService.getShowOrderCount();
 	}, true);
 
 	//点击分页
 	$scope.onSelectPage = function(pageNumber) {
-		store.getSelectPageOrder(pageNumber);
+		leaderOrderStorageService.getSelectPageOrder(pageNumber);
 	};
 
 	//搜索
 	$scope.searchOrder = function() {
-		store.searchOrderForKeywords($scope.words);
+		leaderOrderStorageService.searchOrderForKeywords($scope.words);
 	};
 
 	$scope.searchType = '即';
@@ -88,18 +86,18 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 	$scope.toggleSearchType = function() {
 		if ($scope.searchType === '即') {
 			$scope.searchType = '预';	
-			store.orderSearchParams.isImmediate = 0;
+			leaderOrderStorageService.orderSearchParams.isImmediate = 0;
 		} else {
 			$scope.searchType = '即';	
-			store.orderSearchParams.isImmediate = 1;
+			leaderOrderStorageService.orderSearchParams.isImmediate = 1;
 		}	
-		store.refreshCurrentOrderTab();
+		leaderOrderStorageService.refreshCurrentOrderTab();
 	};
 
 	$scope.step = {};
 
 	$scope.orderStepInfo = function(orderItem) {
-		store.getOrderStepInfo(orderItem)
+		leaderOrderStorageService.getOrderStepInfo(orderItem)
 			.then(function(response) {
 				$scope.step = response;
 				orderStepDialog.open($scope);
@@ -118,8 +116,6 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 			});	
 	};
 
-	//dialog ------------------------------
-	$scope.assign = {};
 
 	//指派
 	$scope.showAssign = function() {
@@ -132,21 +128,21 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 
 	//取消订单
 	$scope.cancelOrder = function() {
-		store.dealCancelOrder();
+		leaderOrderStorageService.dealCancelOrder();
 	};
 
 	//乘客放空
 	$scope.passengerFuck = function() {
-		store.dealPassengerFuckOrder();
+		leaderOrderStorageService.dealPassengerFuckOrder();
 	};
 
 	//司机放空
 	$scope.driverFuck = function() {
-		store.dealDriverFuckOrder();
+		leaderOrderStorageService.dealDriverFuckOrder();
 	};
 
 	$scope.assigning = function() {
-		store.assignOrderToCarPlate($scope.carPlate)
+		leaderOrderStorageService.assignOrderToCarPlate($scope.carPlate)
 			.finally(function() {
 				assignDialog.close();
 			});
@@ -165,12 +161,9 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 	//地图显示
 	$scope.closeMapView = function() {
 		orderStepDialog.close();
-		store.clearOrderItemActive();
+		leaderOrderStorageService.clearOrderItemActive();
 	};
 
-	$scope.isCurrentItem = function(item) {
-		return orderStepDialog.isOpen() && item.sn === $scope.assign.sn;
-	};
 
 
 	//双击表单出来的，控制按钮，权限控制
@@ -255,9 +248,9 @@ leaderCtrl.$inject = [
  	'assignDialog',
  	'$timeout',
  	'leaderMapService',
- 	'employerService',
  	'$location',
-	'store'
+	'security',
+	'leaderOrderStorageService'
 	];
 
 controllers.controller('leaderCtrl', leaderCtrl);

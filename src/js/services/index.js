@@ -1,6 +1,5 @@
 module.exports = angular.module('app.services', []);
 require('./statistics');
-require('./order');
 require('./orderStep');
 require('./assign');
 require('./map');
@@ -13,7 +12,6 @@ require('./leaderMap');
 require('./orderNotify');
 require('./socket');
 require('./sign');
-require('./employer');
 require('./callSocket');
 require('./seatOrderStorageService');
 require('./leaderOrderStorageService');

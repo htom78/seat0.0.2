@@ -1,9 +1,15 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, selectData, employerService, seatOrderStorageService) {
+var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, selectData, seatOrderStorageService) {
 
 	$scope.orders = seatOrderStorageService.orders;
+
+	$scope.normalOrderCount = seatOrderStorageService.getNormalOrderCount;
+
+	$scope.exceptionOrderCount = seatOrderStorageService.getExceptionOrderCount;
+
+	$scope.averageTimer = seatOrderStorageService.getAverageTimer;
 
 	var initOrderData = {
 		gender: 1,
@@ -210,16 +216,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 		}	
 	};
 
-//socket connection
-	$scope.$watch(function() {
-		return employerService.employerName;		
-	}, function() {
-		if (employerService.employerName && 
-			employerService.employerName === window.employer) {
-			socketService.connection();
-		}	
-	});
-
+	socketService.connection();
 	$scope.$on('$destroy', function() {
 		socketService.close();
 	});
@@ -234,7 +231,6 @@ seatCtrl.$inject = [
 	'seatMapService', 
 	'socketService', 
 	'selectData',
-	'employerService',
 	'seatOrderStorageService'
 	];
 
