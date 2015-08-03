@@ -1,0 +1,46 @@
+<div class='fl'>
+	<ul class='flex'>
+		<li><button ng-click='watchCar()'>监听</button></li>	
+		<li><button ng-click='photograph()'>拍照</button></li>	
+		<li><button ng-click='trackCar()'>跟踪</button></li>	
+		<li><button ng-click='relieve()'>解除</button></li>	
+	</ul>	
+</div>
+
+<div class='fr'>
+	<form ng-submit='handleAlarm()'>
+		<ul class='flex'>
+			<li><span>备注</span></li>	
+			<li>
+				<input 
+					type='radio' 
+					name='alarmReason'/>	
+				<label>司机误报</label>
+			</li>
+			<li>
+				<input 
+					type='radio' 
+					name='alarmReason'/>	
+				<label>测试</label>
+			</li>
+			<li>
+				<input 
+					type='radio' 
+					name='alarmReason'/>	
+				<label>实警</label>
+			</li>
+			<li>
+				<input 
+					type='radio' 
+					name='alarmReason'/>	
+				<label>设备故障</label>
+			</li>
+			<li>
+				<input type='text' />
+			</li>
+			<li>
+				<button>确定</button>
+			</li>
+		</ul>
+	</form>
+</div>

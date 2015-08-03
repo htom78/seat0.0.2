@@ -1,4 +1,4 @@
-angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/pagination.html', 'component/stepInfo.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
+angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/pagination.html', 'component/stepInfo.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
 
 angular.module("component/addressList.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/addressList.html",
@@ -94,6 +94,52 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
     "		<li><i class='legend-dot predict'></i><span>预计数量</span></li>\n" +
     "	</ul>\n" +
     "</section>\n" +
+    "");
+}]);
+
+angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/handleAlarmDialog.html",
+    "<div class='fl'>\n" +
+    "	<ul class='flex'>\n" +
+    "		<li><button>监听</button></li>	\n" +
+    "		<li><button>拍照</button></li>	\n" +
+    "		<li><button>跟踪</button></li>	\n" +
+    "		<li><button>解除</button></li>	\n" +
+    "	</ul>	\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class='fr'>\n" +
+    "	<ul class='flex'>\n" +
+    "		<li><span>备注</span></li>	\n" +
+    "		<li>\n" +
+    "			<input \n" +
+    "				type='radio' \n" +
+    "				name='alarmReason'/>	\n" +
+    "			<label>司机误报</label>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<input \n" +
+    "				type='radio' \n" +
+    "				name='alarmReason'/>	\n" +
+    "			<label>测试</label>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<input \n" +
+    "				type='radio' \n" +
+    "				name='alarmReason'/>	\n" +
+    "			<label>实警</label>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<input \n" +
+    "				type='radio' \n" +
+    "				name='alarmReason'/>	\n" +
+    "			<label>设备故障</label>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<input type='text' />\n" +
+    "		</li>\n" +
+    "	</ul>\n" +
+    "</div>\n" +
     "");
 }]);
 
@@ -535,7 +581,10 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "					</tr>\n" +
     "				</thead>\n" +
     "				<tbody>\n" +
-    "					<tr ng-repeat='item in orders'>\n" +
+    "					<tr \n" +
+    "						ng-repeat='item in orders'\n" +
+    "						handle-alarm-order='item'\n" +
+    "						ng-class='{active: item.isActive}'>\n" +
     "						<td>{{item.rTypeLabel}}</td>\n" +
     "						<td>{{item.timeCreated}}</td>\n" +
     "						<td>{{item.vehicleNumber}}</td>\n" +

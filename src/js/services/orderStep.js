@@ -4,6 +4,7 @@ var orderStepDialog = function(dialog, leaderOrderStorageService) {
 	var stepDialog = dialog.dialog({modalClass: 'order-step'});
 
 	return {
+
 		open: function(scope) {
 			if (this.isOpen()) {
 				return;	
@@ -15,24 +16,29 @@ var orderStepDialog = function(dialog, leaderOrderStorageService) {
 						scope: scope
 					});
 		},
+
 		setStepDialogPosition: function(pos) {
 			stepDialog.modalEl.css({
 				top: pos.top,
 				left: pos.left
 			});
 		},
+
 		close: function() {
 			if (this.scope) {
 				this.scope.mapShow = false;
 			}
 			stepDialog.close();
 		},
+
 		isOpen: function() {
 			return stepDialog.isOpen();
 		},
+
 		setDialogWidth: function(width) {
 			stepDialog.modalEl.width(width);
 		}
+
 	};
 };
 

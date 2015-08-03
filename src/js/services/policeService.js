@@ -14,6 +14,7 @@ var policeService = function($http) {
 		unhandleOrderTotal: 0,
 		handleOrderTotal: 0,
 		currentOrderTotal: 0,
+		activeItemIndex: -1,
 
 		initParams: function() {
 			this.keywords = '';
@@ -28,10 +29,12 @@ var policeService = function($http) {
 			this.unhandleOrderTotal = 0;
 			this.handleOrderTotal = 0;
 			this.currentOrderTotal = 0;
+			this.activeItemIndex = -1;
 		},
 
 		get: function() {
 			var self = this;
+			this.activeItemIndex = -1;
 			return $http.get('alarm/list.htm', {
 				params: {
 					k: this.keywords,
@@ -99,6 +102,14 @@ var policeService = function($http) {
 
 		getHandleOrderTotal: function() {
 			return store.handleOrderTotal;	
+		},
+
+		addActiveItem: function(order) {
+			if (this.activeItemIndex !== -1) {
+				this.orders[this.activeItemIndex].isActive = false;				
+			}	
+			this.activeItemIndex = this.orders.indexOf(order);
+			order.isActive =  true;
 		}
 
 

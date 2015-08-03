@@ -85,7 +85,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat='item in orders'>
+					<tr 
+						ng-repeat='item in orders'
+						handle-alarm-order='item'
+						ng-class='{active: item.isActive}'>
 						<td>{{item.rTypeLabel}}</td>
 						<td>{{item.timeCreated}}</td>
 						<td>{{item.vehicleNumber}}</td>

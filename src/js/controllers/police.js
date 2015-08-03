@@ -40,6 +40,8 @@ var policeCtrl = function($scope, policeService) {
 		policeService.getOrderByPageNumber(page);
 	};
 
+
+
 };
 
 policeCtrl.$inject = ['$scope', 'policeService'];

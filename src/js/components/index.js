@@ -3,3 +3,4 @@ require('./dialog');
 require('./gaode');
 require('./chart');
 require('./leaderMap');
+require('./quanDialog');
