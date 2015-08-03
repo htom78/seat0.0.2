@@ -16,5 +16,6 @@ require('./callSocket');
 require('./seatOrderStorageService');
 require('./leaderOrderStorageService');
 require('./searchOrderStorageService');
+require('./policeService');
 require('./security');
 require('./user');

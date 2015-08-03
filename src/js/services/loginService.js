@@ -6,8 +6,7 @@ var loginService = function($q, $http, callSocket) {
 			return $http({
 				method: 'POST',
 				url: 'login.htm',
-				data: $.param(data),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				data: data,
 			}).then(function(response) {
 				if (response.data.isSuccess) {
 					callSocket.login(data);	

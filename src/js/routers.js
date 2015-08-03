@@ -43,6 +43,19 @@ var routers = function ($routeProvider) {
 		}	
 	};
 
+	var policeRouteConfig = {
+		templateUrl: 'page/police.html',
+		controller: 'policeCtrl',
+		title: '报警',
+		resolve: {
+			store: ['policeService', function(policeService) {
+				policeService.initService();
+				policeService.get();
+				return policeService;	
+			}]	
+		}
+	};
+
 	$routeProvider
 		.when('/', seatRouteConfig)
 		.when('/index.htm', seatRouteConfig)
@@ -58,11 +71,7 @@ var routers = function ($routeProvider) {
 				}
 			}
 		})
-		.when('/police.htm', {
-			templateUrl: 'page/police.html',
-			controller: 'policeCtrl',
-			title: '报警'
-		})
+		.when('/police.htm', policeRouteConfig)
 		.when('/special.htm', seatRouteConfig);
 };
 

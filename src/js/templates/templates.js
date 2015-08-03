@@ -466,7 +466,7 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "				<input \n" +
     "					type='text' \n" +
     "					class='input-text'\n" +
-    "					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>\n" +
+    "					ng-model='keywords'/><button class='search-btn btn-normal'>搜索</button>\n" +
     "				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>\n" +
     "			</div>\n" +
     "			<div class='more' ng-show='isShowMore'>\n" +
@@ -476,7 +476,7 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "						<input type='text' class='input-normal'/>\n" +
     "					</span>\n" +
     "					<span class='field-wraper'>\n" +
-    "						<lable>状态</label>\n" +
+    "						<label>状态</label>\n" +
     "						<select class='select-normal'><option>请选择</option></select>\n" +
     "					</span>\n" +
     "					<span  class='field-wraper'>\n" +
@@ -502,16 +502,16 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "		<div class='toggle-btns'>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(0)'\n" +
-    "				ng-class='{active:isCurrentTab(0)}'>全部()</button>\n" +
+    "				ng-click='cutAllOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{getAllOrderTotal()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(1)'\n" +
-    "				ng-class='{active:isCurrentTab(1)}'>未处理()</button>\n" +
+    "				ng-click='cutUnhandleOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"unhandle\")}'>未处理({{getUnhandleOrderTotal()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
-    "				ng-click='toggleCallType(2)'\n" +
-    "				ng-class='{active:isCurrentTab(2)}'>已处理()</button>\n" +
+    "				ng-click='cutHandleOrderTab()'\n" +
+    "				ng-class='{active:isCurrentTab(\"handle\")}'>已处理({{getHandleOrderTotal()}})</button>\n" +
     "		</div>\n" +
     "\n" +
     "	</div>\n" +
@@ -535,26 +535,26 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "					</tr>\n" +
     "				</thead>\n" +
     "				<tbody>\n" +
-    "					<tr>\n" +
-    "						<td>遇劫报警</td>\n" +
-    "						<td>21:32</td>\n" +
-    "						<td>浙B12345</td>\n" +
-    "						<td>空车</td>\n" +
-    "						<td>梦小小</td>\n" +
-    "						<td>181818181818</td>\n" +
-    "						<td>191818181818</td>\n" +
-    "						<td>143026</td>\n" +
-    "						<td>司机误报</td>\n" +
-    "						<td class='ellipsis'>宁波市中北汽车有限公司</td>\n" +
-    "						<td>坑的就斯蒂芬</td>\n" +
+    "					<tr ng-repeat='item in orders'>\n" +
+    "						<td>{{item.rTypeLabel}}</td>\n" +
+    "						<td>{{item.timeCreated}}</td>\n" +
+    "						<td>{{item.vehicleNumber}}</td>\n" +
+    "						<td>{{item.oemStatus}}</td>\n" +
+    "						<td>{{item.driverName}}</td>\n" +
+    "						<td>{{item.driverMobile}}</td>\n" +
+    "						<td>{{item.terminalMobile}}</td>\n" +
+    "						<td>{{item.terminalCode}}</td>\n" +
+    "						<td class='ellipsis'>{{item.note}}</td>\n" +
+    "						<td class='ellipsis'>{{item.corpName}}</td>\n" +
+    "						<td class='ellipsis'>{{item.poi}}</td>\n" +
     "					</tr>\n" +
     "				</tbody>\n" +
     "			</table>\n" +
     "		</div>\n" +
-    "		<div class='paging' ng-show='numItems > 10'>\n" +
+    "		<div class='paging' ng-show='currentOrderTotal > 10'>\n" +
     "			<pagination \n" +
-    "				num-items='numItems' \n" +
-    "				current-page='search.currentPage'\n" +
+    "				num-items='currentOrderTotal' \n" +
+    "				current-page='currentOrderPage'\n" +
     "				on-select-page='onSelectPage(page)'></pagination>\n" +
     "		</div>\n" +
     "	</div>\n" +
