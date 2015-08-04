@@ -40,6 +40,26 @@ var policeCtrl = function($scope, policeService) {
 		policeService.getOrderByPageNumber(page);
 	};
 
+	$scope.watchCar = function() {
+		policeService.watchCar();
+	};
+
+	$scope.trackCar = function() {
+		policeService.trackCar();	
+	};
+
+	$scope.photograph = function() {
+		policeService.photograph();	
+	};
+
+	$scope.transferPolice = function() {
+		policeService.transferPolice();	
+	};
+
+	$scope.alarmOperateInfo = 1;
+	$scope.handleAlarm = function() {
+		policeService.handleAlarm($scope.alarmOperateInfo, $scope.alarmNote);
+	};
 
 
 };

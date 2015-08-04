@@ -1,46 +1,68 @@
-<div class='fl'>
-	<ul class='flex'>
-		<li><button ng-click='watchCar()'>监听</button></li>	
-		<li><button ng-click='photograph()'>拍照</button></li>	
-		<li><button ng-click='trackCar()'>跟踪</button></li>	
-		<li><button ng-click='relieve()'>解除</button></li>	
-	</ul>	
-</div>
-
-<div class='fr'>
-	<form ng-submit='handleAlarm()'>
-		<ul class='flex'>
-			<li><span>备注</span></li>	
-			<li>
-				<input 
-					type='radio' 
-					name='alarmReason'/>	
-				<label>司机误报</label>
-			</li>
-			<li>
-				<input 
-					type='radio' 
-					name='alarmReason'/>	
-				<label>测试</label>
-			</li>
-			<li>
-				<input 
-					type='radio' 
-					name='alarmReason'/>	
-				<label>实警</label>
-			</li>
-			<li>
-				<input 
-					type='radio' 
-					name='alarmReason'/>	
-				<label>设备故障</label>
-			</li>
-			<li>
-				<input type='text' />
-			</li>
-			<li>
-				<button>确定</button>
-			</li>
-		</ul>
-	</form>
+<div class='dialog-wrap'>
+	<div class='fl'>
+		<ul class='operate-btns flex'>
+			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>监听</button></li>	
+			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>拍照</button></li>	
+			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪</button></li>	
+			<li class='operate-btn-li'><button ng-click='relieve()' class='operate-btn'>解除</button></li>	
+			<li class='operate-btn-li'><button ng-click='transferPolice()' class='operate-btn transfer-police-btn'>转警</button></li>	
+		</ul>	
+	</div>
+	
+	<div class='fr'>
+		<form ng-submit='handleAlarm()' class='handle-form'>
+			<ul class='flex'>
+				<li class='field-li'>
+					<input 
+						type='radio' 
+						name='alarmReason'
+						class='field-select'
+						id='operateDriverMiss'
+						ng-model='alarmOperateInfo'
+						ng-value='1'/>	
+					<label for='operateDriverMiss'>司机误报</label>
+				</li>
+				<li class='field-li'>
+					<input 
+						type='radio' 
+						name='alarmReason'
+						class='field-select'
+						id='operateTest'
+						ng-model='alarmOperateInfo'
+						ng-value='2'/>	
+					<label for='operateTest'>测试</label>
+				</li>
+				<li class='field-li'>
+					<input 
+						type='radio' 
+						name='alarmReason'
+						class='field-select'
+						id='operatePractice'
+						ng-model='alarmOperateInfo'
+						ng-value='3'/>	
+					<label for='operatePractice'>实警</label>
+				</li>
+				<li class='field-li'>
+					<input 
+						type='radio' 
+						name='alarmReason'
+						class='field-select'
+						id='operateFacilityError'
+						ng-model='alarmOperateInfo'
+						ng-value='4'/>	
+					<label for='operateFacilityError'>设备故障</label>
+				</li>
+				<li class='field-li'>
+					<input 
+						type='text' 
+						class='text-input'
+						placeholder='详细说明'
+						ng-model='alarmNote'/>
+				</li>
+				<li class='field-li'>
+					<button class='submit-btn'>确定</button>
+				</li>
+			</ul>
+		</form>
+	</div>
 </div>

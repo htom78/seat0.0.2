@@ -99,46 +99,73 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
 
 angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/handleAlarmDialog.html",
-    "<div class='fl'>\n" +
-    "	<ul class='flex'>\n" +
-    "		<li><button>监听</button></li>	\n" +
-    "		<li><button>拍照</button></li>	\n" +
-    "		<li><button>跟踪</button></li>	\n" +
-    "		<li><button>解除</button></li>	\n" +
-    "	</ul>	\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class='fr'>\n" +
-    "	<ul class='flex'>\n" +
-    "		<li><span>备注</span></li>	\n" +
-    "		<li>\n" +
-    "			<input \n" +
-    "				type='radio' \n" +
-    "				name='alarmReason'/>	\n" +
-    "			<label>司机误报</label>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<input \n" +
-    "				type='radio' \n" +
-    "				name='alarmReason'/>	\n" +
-    "			<label>测试</label>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<input \n" +
-    "				type='radio' \n" +
-    "				name='alarmReason'/>	\n" +
-    "			<label>实警</label>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<input \n" +
-    "				type='radio' \n" +
-    "				name='alarmReason'/>	\n" +
-    "			<label>设备故障</label>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<input type='text' />\n" +
-    "		</li>\n" +
-    "	</ul>\n" +
+    "<div class='dialog-wrap'>\n" +
+    "	<div class='fl'>\n" +
+    "		<ul class='operate-btns flex'>\n" +
+    "			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>监听</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>拍照</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='relieve()' class='operate-btn'>解除</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='transferPolice()' class='operate-btn transfer-police-btn'>转警</button></li>	\n" +
+    "		</ul>	\n" +
+    "	</div>\n" +
+    "	\n" +
+    "	<div class='fr'>\n" +
+    "		<form ng-submit='handleAlarm()' class='handle-form'>\n" +
+    "			<ul class='flex'>\n" +
+    "				<li class='field-li'>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='alarmReason'\n" +
+    "						class='field-select'\n" +
+    "						id='operateDriverMiss'\n" +
+    "						ng-model='alarmOperateInfo'\n" +
+    "						ng-value='1'/>	\n" +
+    "					<label for='operateDriverMiss'>司机误报</label>\n" +
+    "				</li>\n" +
+    "				<li class='field-li'>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='alarmReason'\n" +
+    "						class='field-select'\n" +
+    "						id='operateTest'\n" +
+    "						ng-model='alarmOperateInfo'\n" +
+    "						ng-value='2'/>	\n" +
+    "					<label for='operateTest'>测试</label>\n" +
+    "				</li>\n" +
+    "				<li class='field-li'>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='alarmReason'\n" +
+    "						class='field-select'\n" +
+    "						id='operatePractice'\n" +
+    "						ng-model='alarmOperateInfo'\n" +
+    "						ng-value='3'/>	\n" +
+    "					<label for='operatePractice'>实警</label>\n" +
+    "				</li>\n" +
+    "				<li class='field-li'>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='alarmReason'\n" +
+    "						class='field-select'\n" +
+    "						id='operateFacilityError'\n" +
+    "						ng-model='alarmOperateInfo'\n" +
+    "						ng-value='4'/>	\n" +
+    "					<label for='operateFacilityError'>设备故障</label>\n" +
+    "				</li>\n" +
+    "				<li class='field-li'>\n" +
+    "					<input \n" +
+    "						type='text' \n" +
+    "						class='text-input'\n" +
+    "						placeholder='详细说明'\n" +
+    "						ng-model='alarmNote'/>\n" +
+    "				</li>\n" +
+    "				<li class='field-li'>\n" +
+    "					<button class='submit-btn'>确定</button>\n" +
+    "				</li>\n" +
+    "			</ul>\n" +
+    "		</form>\n" +
+    "	</div>\n" +
     "</div>\n" +
     "");
 }]);

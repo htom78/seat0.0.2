@@ -9,12 +9,9 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService) {
 
 		link: function(scope, elem) {
 			elem.on('dblclick', function(ev) {
-				scope.$apply(function() {
-					policeService.addActiveItem(scope.order);
-				});
 				var self = $(this);
 				var pos = self.offset();
-				handleAlarmDialog.open();
+				handleAlarmDialog.open(scope, scope.order);
 				handleAlarmDialog.setDialogStyle(pos.top + self.height(), pos.left, self.width());
 			});	
 		}	

@@ -2,7 +2,7 @@ var services = require('./index');
 
 var PAGE_SIZE = 10;
 
-var policeService = function($http) {
+var policeService = function($http, $q) {
 
 	var store = {
 		orders: [],
@@ -105,13 +105,75 @@ var policeService = function($http) {
 		},
 
 		addActiveItem: function(order) {
+			this.removeActiveItem();
+			this.activeItemIndex = this.orders.indexOf(order);
+			var order = this.getActiveItem();
+			if (order) {
+				order.isActive =  true;
+			}
+		},
+
+		removeActiveItem: function() {
 			if (this.activeItemIndex !== -1) {
 				this.orders[this.activeItemIndex].isActive = false;				
 			}	
-			this.activeItemIndex = this.orders.indexOf(order);
-			order.isActive =  true;
-		}
+			this.activeItemIndex = -1;
+		},
 
+		getActiveItem: function() {
+			if (this.activeItemIndex !== -1) {
+				return this.orders[this.activeItemIndex];	
+			}
+			return null;	
+		},
+
+		watchCar: function() {
+			var item = this.getActiveItem();
+			if (item) {
+				return $http.post('alarm/listen.htm', {
+					number: item.vehicleNumber	
+				});	
+			}
+		},
+
+		trackCar: function() {
+			var item = this.getActiveItem();	
+			if (item) {
+				return $http.post('alarm/once.htm', {
+					number: item.vehicleNumber	
+				});	
+			}
+		},
+
+		photograph: function() {
+			var item = this.getActiveItem();	
+			if (item) {
+				return $http.post('alarm/snap.htm', {
+					number: item.vehicleNumber	
+				});	
+			}
+		},
+
+		transferPolice: function() {
+			var item = this.getActiveItem();	
+			if (item) {
+				return $http.post('alarm/transfered.htm', {
+					id: item.id	
+				});	
+			}
+		},
+
+		handleAlarm: function(reason, note) {
+			var item = this.getActiveItem();	
+			if (item) {
+				return $http.post('alarm/do.htm', {
+					id: item.id,
+					rType: reason,
+					note: note || ''	
+				});	
+			}
+			return $q.reject();
+		}
 
 	};
 
@@ -119,7 +181,7 @@ var policeService = function($http) {
 
 };
 
-policeService.$inject = ['$http'];
+policeService.$inject = ['$http', '$q'];
 
 
 

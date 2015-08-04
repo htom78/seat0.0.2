@@ -40,6 +40,7 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 				$compile(self.modalElem.contents())($scope);
 				self._addElementsToDom();
 				self._open = true;
+				self._bindEvents();
 			});
 
 		this.defer = $q.defer();
@@ -51,6 +52,7 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 			this._removeElementsFromDom();
 			this._open = false;	
 			this.defer.resolve();
+			this._unbindEvents();
 		}	
 	};
 
@@ -64,6 +66,25 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 				};
 			});
 
+	};
+
+	Dialog.prototype._bindEvents = function() {
+		if (this.options.bodyClick) {
+			$('body').on('click', this.handleBodyClick.bind(this));	
+		}	
+	};
+
+	Dialog.prototype._unbindEvents = function() {
+		if (this.options.bodyClick) {
+			$('body').off('click', this.handleBodyClick.bind(this));	
+		}	
+	};
+
+	Dialog.prototype.handleBodyClick = function(ev) {
+		var elem = this.modalElem;
+		if (elem.has($(ev.target)).length === 0) {
+			this.close();	
+		}
 	};
 
 	Dialog.prototype._removeElementsFromDom = function() {
