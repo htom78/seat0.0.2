@@ -1,4 +1,4 @@
-angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/pagination.html', 'component/stepInfo.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
+angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/pagination.html', 'component/stepInfo.html', 'component/unhandleAlarmDialog.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
 
 angular.module("component/addressList.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/addressList.html",
@@ -99,6 +99,82 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
 
 angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/handleAlarmDialog.html",
+    "<div class='dialog-wrap handle'>\n" +
+    "	<div class='fl handle-info'>\n" +
+    "		<span>转警时间:2015/02/05 14:22</span>	\n" +
+    "		<span>接警员:0258</span>\n" +
+    "	</div>\n" +
+    "\n" +
+    "	<div class='fr'>\n" +
+    "		<ul class='operate-btns flex'>\n" +
+    "			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>播放监听</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>查看拍照</button></li>	\n" +
+    "			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪回放</button></li>	\n" +
+    "		</ul>	\n" +
+    "	</div>\n" +
+    "	\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("component/pagination.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/pagination.html",
+    "<div class='pagination'>\n" +
+    "	<ul>\n" +
+    "		<li><a \n" +
+    "				href='javascript:;' \n" +
+    "				class='prev'\n" +
+    "				ng-class='{disabled: noPrevious()}'\n" +
+    "				ng-click='selectPrevious()'><i></i></a></li>\n" +
+    "		<li><a \n" +
+    "				href='javascript:;' \n" +
+    "				class='page'\n" +
+    "				ng-class='{active: isCurrentPage(item)}'\n" +
+    "				ng-click='selectPage(item)'\n" +
+    "				ng-repeat='item in pages'>{{item}}</a></li>\n" +
+    "		<li><a \n" +
+    "				href='javascript:;' \n" +
+    "				class='next'\n" +
+    "				ng-class='{disabled: noNext()}'\n" +
+    "				ng-click='selectNext()'><i></i></a></li>\n" +
+    "	</ul>\n" +
+    "</div>");
+}]);
+
+angular.module("component/stepInfo.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/stepInfo.html",
+    "<div class='step'>\n" +
+    "	<ul class='flex'>\n" +
+    "		<li>\n" +
+    "			<p>{{step.createTime}}</p>\n" +
+    "			<p>乘客电话召车</p>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<p>司机抢单成功</p>\n" +
+    "			<p>{{step.orderTime}}</p>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<p>{{step.pickupTime}}</p>\n" +
+    "			<p>司机接到乘客</p>\n" +
+    "		</li>\n" +
+    "		<li>\n" +
+    "			<p>到达目的</p>\n" +
+    "			<p>{{step.endTime}}</p>\n" +
+    "		</li>\n" +
+    "	</ul>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class='btns'>\n" +
+    "	<button ng-click='showAssign()' ng-show='isAssignBtnShow()'>指派</button>\n" +
+    "	<button ng-click='cancelOrder()' ng-show='isCancelBtnShow()'>取消</button>\n" +
+    "	<button ng-click='passengerFuck()' ng-show='isPassengerFuckBtnShow()'>乘客放空</button>\n" +
+    "	<button ng-click='driverFuck()' ng-show='isDriverFuckBtnShow()'>司机爽约</button>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/unhandleAlarmDialog.html",
     "<div class='dialog-wrap'>\n" +
     "	<div class='fl'>\n" +
     "		<ul class='operate-btns flex'>\n" +
@@ -166,62 +242,6 @@ angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", fu
     "			</ul>\n" +
     "		</form>\n" +
     "	</div>\n" +
-    "</div>\n" +
-    "");
-}]);
-
-angular.module("component/pagination.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("component/pagination.html",
-    "<div class='pagination'>\n" +
-    "	<ul>\n" +
-    "		<li><a \n" +
-    "				href='javascript:;' \n" +
-    "				class='prev'\n" +
-    "				ng-class='{disabled: noPrevious()}'\n" +
-    "				ng-click='selectPrevious()'><i></i></a></li>\n" +
-    "		<li><a \n" +
-    "				href='javascript:;' \n" +
-    "				class='page'\n" +
-    "				ng-class='{active: isCurrentPage(item)}'\n" +
-    "				ng-click='selectPage(item)'\n" +
-    "				ng-repeat='item in pages'>{{item}}</a></li>\n" +
-    "		<li><a \n" +
-    "				href='javascript:;' \n" +
-    "				class='next'\n" +
-    "				ng-class='{disabled: noNext()}'\n" +
-    "				ng-click='selectNext()'><i></i></a></li>\n" +
-    "	</ul>\n" +
-    "</div>");
-}]);
-
-angular.module("component/stepInfo.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("component/stepInfo.html",
-    "<div class='step'>\n" +
-    "	<ul class='flex'>\n" +
-    "		<li>\n" +
-    "			<p>{{step.createTime}}</p>\n" +
-    "			<p>乘客电话召车</p>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<p>司机抢单成功</p>\n" +
-    "			<p>{{step.orderTime}}</p>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<p>{{step.pickupTime}}</p>\n" +
-    "			<p>司机接到乘客</p>\n" +
-    "		</li>\n" +
-    "		<li>\n" +
-    "			<p>到达目的</p>\n" +
-    "			<p>{{step.endTime}}</p>\n" +
-    "		</li>\n" +
-    "	</ul>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class='btns'>\n" +
-    "	<button ng-click='showAssign()' ng-show='isAssignBtnShow()'>指派</button>\n" +
-    "	<button ng-click='cancelOrder()' ng-show='isCancelBtnShow()'>取消</button>\n" +
-    "	<button ng-click='passengerFuck()' ng-show='isPassengerFuckBtnShow()'>乘客放空</button>\n" +
-    "	<button ng-click='driverFuck()' ng-show='isDriverFuckBtnShow()'>司机爽约</button>\n" +
     "</div>\n" +
     "");
 }]);
@@ -612,7 +632,10 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "						ng-repeat='item in orders'\n" +
     "						handle-alarm-order='item'\n" +
     "						ng-class='{active: item.isActive}'>\n" +
-    "						<td>{{item.rTypeLabel}}</td>\n" +
+    "						<td class='first-field'>\n" +
+    "							<i ng-class='{unhandle: (item.status === 1)}'></i>\n" +
+    "							<span>{{item.rTypeLabel}}</span>\n" +
+    "						</td>\n" +
     "						<td>{{item.timeCreated}}</td>\n" +
     "						<td>{{item.vehicleNumber}}</td>\n" +
     "						<td>{{item.oemStatus}}</td>\n" +

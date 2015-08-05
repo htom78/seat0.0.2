@@ -1,6 +1,6 @@
 var directives = require('./index');
 
-var handleAlarmOrder = function(handleAlarmDialog, policeService) {
+var handleAlarmOrder = function(handleAlarmDialog) {
 	return {
 
 		scope: {
@@ -19,6 +19,6 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService) {
 	};
 };
 
-handleAlarmOrder.$inject = ['handleAlarmDialog', 'policeService'];
+handleAlarmOrder.$inject = ['handleAlarmDialog'];
 
 directives.directive('handleAlarmOrder', handleAlarmOrder);

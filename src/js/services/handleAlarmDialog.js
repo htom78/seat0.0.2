@@ -10,10 +10,17 @@ var handleAlarmDialog = function(quanDialog, policeService) {
 
 		open: function(scope, order) {
 			if (!this.isOpen()) {
-				alarmDialog.open('component/handleAlarmDialog.html', 'policeCtrl')
-					.then(function() {
-						policeService.removeActiveItem();	
-					});
+				if (order.status === 1) {
+					alarmDialog.open('component/unhandleAlarmDialog.html', 'policeCtrl')
+						.then(function() {
+							policeService.removeActiveItem();	
+						});
+				} else {
+					alarmDialog.open('component/handleAlarmDialog.html', 'policeCtrl')
+						.then(function() {
+							policeService.removeActiveItem();	
+						});
+				}
 				policeService.addActiveItem(order);
 			}	
 		},

@@ -107,7 +107,7 @@ var policeService = function($http, $q) {
 		addActiveItem: function(order) {
 			this.removeActiveItem();
 			this.activeItemIndex = this.orders.indexOf(order);
-			var order = this.getActiveItem();
+			order = this.getActiveItem();
 			if (order) {
 				order.isActive =  true;
 			}

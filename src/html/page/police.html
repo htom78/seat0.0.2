@@ -89,7 +89,10 @@
 						ng-repeat='item in orders'
 						handle-alarm-order='item'
 						ng-class='{active: item.isActive}'>
-						<td>{{item.rTypeLabel}}</td>
+						<td class='first-field'>
+							<i ng-class='{unhandle: (item.status === 1)}'></i>
+							<span>{{item.rTypeLabel}}</span>
+						</td>
 						<td>{{item.timeCreated}}</td>
 						<td>{{item.vehicleNumber}}</td>
 						<td>{{item.oemStatus}}</td>

@@ -12,6 +12,7 @@ var security = function($http, $q, $location, callSocket) {
 		currentUser: null,
 
 		login: function(username, password) {
+
 			return $http({
 				url: 'login.htm',	
 				method: 'POST',
@@ -69,7 +70,7 @@ var security = function($http, $q, $location, callSocket) {
 		},
 
 		isLeader: function() {
-			return !!(service.currentUser && window.userType === 'seat_leader');	
+			return !!(service.currentUser && (window.userType === 'seat_leader' || !window.userType));	
 		}
 	};
 
