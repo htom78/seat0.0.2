@@ -248,6 +248,7 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
 
 angular.module("header.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("header.html",
+    "<div ng-show='isHeaderShow'>\n" +
     "<section class='flex'>\n" +
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
@@ -311,6 +312,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "	<div class='info-left'><span class='scroll-info'>1.一切正常.</span></div>\n" +
     "	<div class='info-right'><span class='scroll-info'>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>\n" +
     "</section>\n" +
+    "</div>\n" +
     "");
 }]);
 

@@ -11,7 +11,7 @@
 		<script src='/static/<%= grunt.config.get("pkg.name") %>.js'></script>
 	</head>
 	<body ng-app='app'>
-		<header class='header' ng-include='"header.html"' ng-controller='headerCtrl' ng-hide='isLoginPage'></header>
+		<header class='header' ng-include='"header.html"' ng-controller='headerCtrl'></header>
 		<div ng-view>
 		</div>
 	</body>

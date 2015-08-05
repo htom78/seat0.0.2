@@ -4,7 +4,6 @@ require('./orderStep');
 require('./assign');
 require('./map');
 require('./seatMap');
-require('./loginService');
 require('./chartUser');
 require('./chartEmploy');
 require('./chartCar');

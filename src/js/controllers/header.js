@@ -67,6 +67,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		}
 	};
 
+	//security
 	$scope.logout = function() {
 		signService.loginOut();
 		security.logout();
@@ -77,6 +78,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 	security.requestCurrentUser()
 		.then(function(response) {
 			$scope.username = response; 	
+			$scope.isHeaderShow = true;
 			signService.getCurrentState()
 				.then(function(response) {
 					if (response.isSignIn) {
@@ -84,6 +86,8 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 						$scope.currentState = response.currentCallingState;
 					}	
 				});
+		}, function() {
+			$scope.isHeaderShow = false;	
 		});
 
 	//左上角时间

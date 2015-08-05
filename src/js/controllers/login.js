@@ -1,10 +1,12 @@
 var controllers = require('./index');
 
-var loginCtrl = function($scope, $rootScope, $location, security) {
+var loginCtrl = function($scope, $location, security) {
+	/*
 	$rootScope.isLoginPage = true;
 	$scope.$on('$destroy', function() {
 		$rootScope.isLoginPage = false;
 	});
+	*/
 
 	$scope.login = function() {
 		security.login($scope.username, $scope.password)
@@ -26,6 +28,6 @@ var loginCtrl = function($scope, $rootScope, $location, security) {
 
 };
 
-loginCtrl.$inject = ['$scope', '$rootScope', '$location', 'security'];
+loginCtrl.$inject = ['$scope', '$location', 'security'];
 
 controllers.controller('loginCtrl', loginCtrl);

@@ -12,42 +12,44 @@ var security = function($http, $q, $location, callSocket) {
 		currentUser: null,
 
 		login: function(username, password) {
-
-			return $http({
-				url: 'login.htm',	
-				method: 'POST',
-				data: $.param({username: username, password: password}),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			}).then(function(response) {
-				if (response.data.isSuccess) {
-					callSocket.login({username: username, password: password});
-				} else {
-					var errorInfo;
-					switch (parseInt(response.data.code)) {
-						case 20:
-							errorInfo = '用户不存在';
-							break;
-						case 21:
-							errorInfo = '密码错误';
-							break;
-						default:
-							errorInfo = '登录错误';
-							break;
-					}	
-					return $q.reject(errorInfo);	
-				}
-			});	
+			
+			return $http.post('login.htm', {
+				username: username,
+				password: password	
+			})
+				.then(function(response) {
+					if (response.data.isSuccess) {
+						callSocket.login({username: username, password: password});
+					} else {
+						var errorInfo;
+						switch (parseInt(response.data.code)) {
+							case 20:
+								errorInfo = '用户不存在';
+								break;
+							case 21:
+								errorInfo = '密码错误';
+								break;
+							default:
+								errorInfo = '登录错误';
+								break;
+						}	
+						return $q.reject(errorInfo);	
+					}
+				});
 		},
 
 		logout: function() {
-			return $http({
-				method: 'POST',
-				url: 'logout.htm',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			}).then(function() {
-				window.currentUser = null;	
-				redirect('login.htm');
-			});
+			var self = this;
+			return $http.post('logout.htm')
+				.then(function() {
+					self.clearUserInfo();
+					redirect('login.htm');
+				});
+		},
+
+		clearUserInfo: function() {
+			this.currentUser = null;
+			window.currentUser = null;	
 		},
 
 		requestCurrentUser: function() {

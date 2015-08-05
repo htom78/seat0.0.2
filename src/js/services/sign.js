@@ -1,25 +1,25 @@
 var services = require('./index');
 
 var signService = function(signResource, $q, callSocket) {
-	var store = {
+	var service = {
 
 		parentId: null,
 
 		getParentId: function() {
-			if (store.parentId) {
-				return store.parentId;	
+			if (service.parentId) {
+				return service.parentId;	
 			}	
 			var parentId = localStorage.getItem('parentId');
 			return parentId;
 		},
 
 		addParentId: function(parentId) {
-			store.parentId = parentId;	
+			service.parentId = parentId;	
 			localStorage.setItem('parentId', parentId);
 		},
 		
 		clearParentId: function() {
-			store.parentId = null;
+			service.parentId = null;
 			localStorage.removeItem('parentId');	
 		},
 
@@ -37,16 +37,16 @@ var signService = function(signResource, $q, callSocket) {
 			callSocket.sayRest();
 			return signResource.rest()
 				.then(function(id) {
-					store.addParentId(id);
+					service.addParentId(id);
 				});
 		},
 		unrest: function() {
 			callSocket.sayFree();
-			var parentId = store.getParentId();
+			var parentId = service.getParentId();
 			if (parentId) {
 				return signResource.unrest(parentId)
 					.then(function() {
-						store.clearParentId();
+						service.clearParentId();
 					});
 			}
 		},
@@ -55,17 +55,17 @@ var signService = function(signResource, $q, callSocket) {
 			callSocket.sayBusy();
 			return signResource.busy()
 					.then(function(id) {
-						store.addParentId(id);
+						service.addParentId(id);
 					});	
 		},
 		unbusy: function() {
 			var defer = $q.defer();
 			callSocket.sayFree();
-			var parentId = store.getParentId();
+			var parentId = service.getParentId();
 			if (parentId) {
 				return signResource.unbusy(parentId)
 					.then(function() {
-						store.clearParentId();
+						service.clearParentId();
 					});
 			}
 		},
@@ -79,7 +79,7 @@ var signService = function(signResource, $q, callSocket) {
 		}	
 	};
 
-	return store;
+	return service;
 };
 
 signService.$inject = ['signResource', '$q', 'callSocket'];
