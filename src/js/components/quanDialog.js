@@ -22,11 +22,15 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 		this.backdropElem = createElement(this.options.backdropClass);
 	}
 
-	Dialog.prototype.open = function(templateUrl, controller) {
+	Dialog.prototype.open = function(templateUrl, controller, scope) {
 		var self = this;
 		var options = this.options;	
-		options.templateUrl = templateUrl;	
-		options.controller = controller;
+		if (templateUrl) {
+			options.templateUrl = templateUrl;	
+		}
+		if (controller) {
+			options.controller = controller;
+		}
 
 		if (!options.templateUrl) {
 			throw new Error('Dialog.open expected template or templateUrl, neither found');	
@@ -34,7 +38,7 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 
 		this._loadResolves()
 			.then(function(locals) {
-				var $scope = locals.$scope = self.$scope = $rootScope.$new();
+				var $scope = locals.$scope = self.$scope = scope || $rootScope.$new();
 				self.modalElem.html(locals.$template);
 				var ctrl = $controller(controller, locals);
 				$compile(self.modalElem.contents())($scope);
@@ -57,32 +61,64 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 	};
 
 	Dialog.prototype._loadResolves = function() {
-		var self = this;
-		return $http.get(this.options.templateUrl, {cache: $templateCache})
+		var values = [],
+				keys = [],
+				templatePromise,
+				self = this;
+
+		templatePromise = $http.get(this.options.templateUrl, {cache: $templateCache})
 			.then(function(response) {
-				return {
-					$template: response.data,	
-					dialog: self
-				};
+				return response.data;
+			});
+
+		angular.forEach(this.options.resolve || [], function(value, key) {
+			keys.push(key);
+			values.push(value);	
+		});
+
+		keys.push('$template');
+		values.push(templatePromise);
+
+		return $q.all(values)
+			.then(function(values) {
+				var locals = {};	
+				angular.forEach(values, function(value, index) {
+					locals[keys[index]] = value;	
+				});
+				locals.dialog = self;	
+				return locals;
 			});
 
 	};
 
 	Dialog.prototype._bindEvents = function() {
+		if (this.options.backdrop && this.options.backdropClick) {
+			this.backdropElem.on('click', this.handleBackdropClick.bind(this));	
+		}
 		if (this.options.bodyClick) {
 			$('body').on('click', this.handleBodyClick.bind(this));	
 		}	
 	};
 
 	Dialog.prototype._unbindEvents = function() {
+		if (this.options.backdrop && this.options.backdropClick) {
+			this.backdropElem.off('click', this.handleBackdropClick.bind(this));	
+		}
 		if (this.options.bodyClick) {
 			$('body').off('click', this.handleBodyClick.bind(this));	
 		}	
 	};
 
+	Dialog.prototype.handleBackdropClick = function(ev) {
+		ev.preventDefault();
+		ev.stopPropagation();
+		this.close();	
+	};
+
 	Dialog.prototype.handleBodyClick = function(ev) {
 		var elem = this.modalElem;
-		if (elem.has($(ev.target)).length === 0) {
+		if (elem.has($(ev.target)).length === 0 &&
+				$(ev.target).closest('.message-box').length === 0) {
 			this.close();	
 		}
 	};
@@ -104,9 +140,26 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 	};
 
 	return {
+
 		dialog: function(opts) {
 			return new Dialog(opts);	
-		}	
+		},
+
+		messageBox: function(title, message, buttons) {
+			return new Dialog({
+				templateUrl: 'component/messageBox.html',
+				controller: 'messageBoxController',
+				modalClass: 'message-box',
+				backdrop: true,
+				resolve: {
+					model: {
+						title: title,
+						message: message,
+						buttons: buttons
+					}	
+				}
+			});	
+		}
 	};
 
 };

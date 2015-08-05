@@ -61,6 +61,16 @@ var policeCtrl = function($scope, policeService) {
 		policeService.handleAlarm($scope.alarmOperateInfo, $scope.alarmNote);
 	};
 
+	$scope.isShowRelieveBtn = function() {
+		var item = policeService.getActiveItem();	
+		return item && (item.isRevecatory === 0);
+	};
+
+	$scope.isShowTransferedBtn = function() {
+		var item = policeService.getActiveItem();	
+		return item && (item.isTransfered === 0);
+	};
+
 
 };
 

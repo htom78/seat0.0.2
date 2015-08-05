@@ -19,3 +19,4 @@ require('./policeService');
 require('./security');
 require('./user');
 require('./handleAlarmDialog');
+require('./messageBoxService');

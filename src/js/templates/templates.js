@@ -1,4 +1,4 @@
-angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/pagination.html', 'component/stepInfo.html', 'component/unhandleAlarmDialog.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
+angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/messageBox.html', 'component/pagination.html', 'component/stepInfo.html', 'component/unhandleAlarmDialog.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
 
 angular.module("component/addressList.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/addressList.html",
@@ -107,12 +107,49 @@ angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", fu
     "\n" +
     "	<div class='fr'>\n" +
     "		<ul class='operate-btns flex'>\n" +
-    "			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>播放监听</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>查看拍照</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪回放</button></li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button\n" +
+    "				 	class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认处理?'\n" +
+    "					ensure-fn='watchCar()'>播放监听</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button\n" +
+    "				 	class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认处理?'\n" +
+    "					ensure-fn='photograph()'>查看拍照</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button\n" +
+    "				 	class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认处理?'\n" +
+    "					ensure-fn='trackCar()'>跟踪回放</button>\n" +
+    "			</li>	\n" +
     "		</ul>	\n" +
     "	</div>\n" +
     "	\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("component/messageBox.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/messageBox.html",
+    "<div class='box-wrap'>\n" +
+    "	<h1 class='box-title'>{{message}}</h1>\n" +
+    "	<div class='message-box-btns'>\n" +
+    "		<button \n" +
+    "			class='message-box-ensure btn-normal'\n" +
+    "			ng-click='ensure()'>确认</button>\n" +
+    "		<button \n" +
+    "			class='message-box-cancel btn-normal'\n" +
+    "			ng-click='cancel()'>取消</button>\n" +
+    "	</div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -178,16 +215,57 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "<div class='dialog-wrap'>\n" +
     "	<div class='fl'>\n" +
     "		<ul class='operate-btns flex'>\n" +
-    "			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>监听</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>拍照</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='relieve()' class='operate-btn'>解除</button></li>	\n" +
-    "			<li class='operate-btn-li'><button ng-click='transferPolice()' class='operate-btn transfer-police-btn'>转警</button></li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button \n" +
+    "					class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认监听?'\n" +
+    "					ensure-fn='watchCar()'>监听</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button \n" +
+    "					class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认拍照?'\n" +
+    "					ensure-fn='photograph()'>拍照</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button \n" +
+    "					class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认跟踪?'\n" +
+    "					ensure-fn='trackCar()'>跟踪</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li' ng-show='isShowRelieveBtn()'>\n" +
+    "				<button \n" +
+    "					class='operate-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认解除?'\n" +
+    "					ensure-fn='relieve()'>解除</button>\n" +
+    "			</li>	\n" +
+    "			<li class='operate-btn-li' ng-show='isShowTransferedBtn()'>\n" +
+    "				<button \n" +
+    "					class='operate-btn transfer-police-btn'\n" +
+    "					confirm-dialog\n" +
+    "					box-ctrl='policeCtrl'\n" +
+    "					message-box='确认转警'\n" +
+    "					ensure-fn='transferPolice()'>转警</button>\n" +
+    "			</li>	\n" +
     "		</ul>	\n" +
     "	</div>\n" +
+    "\n" +
     "	\n" +
     "	<div class='fr'>\n" +
-    "		<form ng-submit='handleAlarm()' class='handle-form'>\n" +
+    "		<form \n" +
+    "			class='handle-form'\n" +
+    "			confirm-dialog\n" +
+    "			box-ctrl='policeCtrl'\n" +
+    "			message-box='确认提交'\n" +
+    "			ensure-fn='handleAlarm()'>\n" +
     "			<ul class='flex'>\n" +
     "				<li class='field-li'>\n" +
     "					<input \n" +
@@ -242,6 +320,21 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "			</ul>\n" +
     "		</form>\n" +
     "	</div>\n" +
+    "\n" +
+    "	<div class='fr after-click-btns'>\n" +
+    "		<ul class='flex'>\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button class='operate-btn'>播放监听</button>	\n" +
+    "			</li>\n" +
+    "			<li class='operate-btn-li' >\n" +
+    "				<button class='operate-btn'>查看拍照</button>	\n" +
+    "			</li>\n" +
+    "			<li class='operate-btn-li'>\n" +
+    "				<button class='operate-btn'>跟踪回放</button>	\n" +
+    "			</li>\n" +
+    "		</ul>\n" +
+    "	</div>\n" +
+    "\n" +
     "</div>\n" +
     "");
 }]);

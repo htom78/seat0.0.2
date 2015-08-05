@@ -1,16 +1,57 @@
 <div class='dialog-wrap'>
 	<div class='fl'>
 		<ul class='operate-btns flex'>
-			<li class='operate-btn-li'><button ng-click='watchCar()' class='operate-btn'>监听</button></li>	
-			<li class='operate-btn-li'><button ng-click='photograph()' class='operate-btn'>拍照</button></li>	
-			<li class='operate-btn-li'><button ng-click='trackCar()' class='operate-btn'>跟踪</button></li>	
-			<li class='operate-btn-li'><button ng-click='relieve()' class='operate-btn'>解除</button></li>	
-			<li class='operate-btn-li'><button ng-click='transferPolice()' class='operate-btn transfer-police-btn'>转警</button></li>	
+			<li class='operate-btn-li'>
+				<button 
+					class='operate-btn'
+					confirm-dialog
+					box-ctrl='policeCtrl'
+					message-box='确认监听?'
+					ensure-fn='watchCar()'>监听</button>
+			</li>	
+			<li class='operate-btn-li'>
+				<button 
+					class='operate-btn'
+					confirm-dialog
+					box-ctrl='policeCtrl'
+					message-box='确认拍照?'
+					ensure-fn='photograph()'>拍照</button>
+			</li>	
+			<li class='operate-btn-li'>
+				<button 
+					class='operate-btn'
+					confirm-dialog
+					box-ctrl='policeCtrl'
+					message-box='确认跟踪?'
+					ensure-fn='trackCar()'>跟踪</button>
+			</li>	
+			<li class='operate-btn-li' ng-show='isShowRelieveBtn()'>
+				<button 
+					class='operate-btn'
+					confirm-dialog
+					box-ctrl='policeCtrl'
+					message-box='确认解除?'
+					ensure-fn='relieve()'>解除</button>
+			</li>	
+			<li class='operate-btn-li' ng-show='isShowTransferedBtn()'>
+				<button 
+					class='operate-btn transfer-police-btn'
+					confirm-dialog
+					box-ctrl='policeCtrl'
+					message-box='确认转警'
+					ensure-fn='transferPolice()'>转警</button>
+			</li>	
 		</ul>	
 	</div>
+
 	
 	<div class='fr'>
-		<form ng-submit='handleAlarm()' class='handle-form'>
+		<form 
+			class='handle-form'
+			confirm-dialog
+			box-ctrl='policeCtrl'
+			message-box='确认提交'
+			ensure-fn='handleAlarm()'>
 			<ul class='flex'>
 				<li class='field-li'>
 					<input 
@@ -65,4 +106,19 @@
 			</ul>
 		</form>
 	</div>
+
+	<div class='fr after-click-btns'>
+		<ul class='flex'>
+			<li class='operate-btn-li'>
+				<button class='operate-btn'>播放监听</button>	
+			</li>
+			<li class='operate-btn-li' >
+				<button class='operate-btn'>查看拍照</button>	
+			</li>
+			<li class='operate-btn-li'>
+				<button class='operate-btn'>跟踪回放</button>	
+			</li>
+		</ul>
+	</div>
+
 </div>

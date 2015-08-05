@@ -16,6 +16,10 @@ var policeService = function($http, $q) {
 		currentOrderTotal: 0,
 		activeItemIndex: -1,
 
+		trackingCar: false,
+		photographed: false,
+		watchingCar: false,
+
 		initParams: function() {
 			this.keywords = '';
 			this.currentPage = 1;
@@ -30,6 +34,7 @@ var policeService = function($http, $q) {
 			this.handleOrderTotal = 0;
 			this.currentOrderTotal = 0;
 			this.activeItemIndex = -1;
+			this.clearOperateBtn();
 		},
 
 		get: function() {
@@ -113,10 +118,17 @@ var policeService = function($http, $q) {
 			}
 		},
 
+		clearOperateBtn: function() {
+			this.trackingCar = false,
+			this.photographed = false,
+			this.watchingCar = false,
+		},
+
 		removeActiveItem: function() {
 			if (this.activeItemIndex !== -1) {
 				this.orders[this.activeItemIndex].isActive = false;				
 			}	
+			this.clearOperateBtn();
 			this.activeItemIndex = -1;
 		},
 
@@ -128,30 +140,54 @@ var policeService = function($http, $q) {
 		},
 
 		watchCar: function() {
+			var self = this;
 			var item = this.getActiveItem();
 			if (item) {
 				return $http.post('alarm/listen.htm', {
 					number: item.vehicleNumber	
-				});	
+				})
+					.then(function() {
+						self.watchingCar = true;	
+					});	
 			}
 		},
 
+		isWatchingCar: function() {
+			return this.watchingCar;	
+		},
+
 		trackCar: function() {
+			var self = this;
 			var item = this.getActiveItem();	
 			if (item) {
 				return $http.post('alarm/once.htm', {
 					number: item.vehicleNumber	
-				});	
+				})
+					.then(function() {
+						self.trackingCar = true;	
+					});	
 			}
 		},
 
+		isTrackingCar: function() {
+			return this.trackingCar;	
+		},
+
 		photograph: function() {
+			var self = this;
 			var item = this.getActiveItem();	
 			if (item) {
 				return $http.post('alarm/snap.htm', {
 					number: item.vehicleNumber	
-				});	
+				})
+					.then(function() {
+						self.photographed = true;	
+					});	
 			}
+		},
+
+		isPhotographed: function() {
+			return this.photographed;	
 		},
 
 		transferPolice: function() {
