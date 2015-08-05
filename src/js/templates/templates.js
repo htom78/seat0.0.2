@@ -275,9 +275,9 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "			<i\n" +
     "				class='more-state'\n" +
     "				ng-class='{\n" +
-    "					vain: isCurrentActive(\"free\"), \n" +
-    "					busy: isCurrentActive(\"busy\"), \n" +
-    "					rest: isCurrentActive(\"rest\"), \n" +
+    "					vain: isFreeState(), \n" +
+    "					busy: isBusyState(), \n" +
+    "					rest: isRestState(), \n" +
     "					signOut:!isSignIn()}'></i>\n" +
     "		</div>\n" +
     "\n" +
@@ -289,10 +289,10 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<div class='status-btns'>\n" +
     "			<button\n" +
     "				title='{{firstBtnTitle}}'\n" +
-    "				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'\n" +
+    "				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'\n" +
     "				ng-click='toggleFirstCallingStateBtn()'></button><button \n" +
     "				title='{{secondBtnTitle}}'\n" +
-    "				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'\n" +
+    "				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'\n" +
     "				ng-click='toggleSecondCallingStateBtn()'></button>\n" +
     "		</div>\n" +
     "\n" +
