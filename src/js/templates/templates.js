@@ -258,9 +258,9 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "		</ul>	\n" +
     "	</div>\n" +
     "\n" +
-    "	<div class='fl handle-info'>\n" +
-    "		<span>转警时间:2015/02/05 14:22</span>	\n" +
-    "		<span>接警员:0258</span>\n" +
+    "	<div class='fl handle-info' ng-show='!isShowTransferedBtn()'>\n" +
+    "		<span>转警时间:{{timeTransfered}}</span>	\n" +
+    "		<span>接警员:{{operator}}</span>\n" +
     "	</div>\n" +
     "\n" +
     "	\n" +
@@ -731,6 +731,8 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "					<tr \n" +
     "						ng-repeat='item in orders'\n" +
     "						handle-alarm-order='item'\n" +
+    "						operator='{{item.opName}}'\n" +
+    "						time-transfered='{{item.timeTransfered}}'\n" +
     "						ng-class='{active: item.isActive}'>\n" +
     "						<td class='first-field'>\n" +
     "							<i ng-class='{unhandle: (item.status === 1)}'></i>\n" +

@@ -88,6 +88,8 @@
 					<tr 
 						ng-repeat='item in orders'
 						handle-alarm-order='item'
+						operator='{{item.opName}}'
+						time-transfered='{{item.timeTransfered}}'
 						ng-class='{active: item.isActive}'>
 						<td class='first-field'>
 							<i ng-class='{unhandle: (item.status === 1)}'></i>

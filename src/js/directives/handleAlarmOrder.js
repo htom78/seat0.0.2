@@ -1,31 +1,25 @@
 var directives = require('./index');
 
-var handleAlarmOrder = function(handleAlarmDialog, policeService) {
+var handleAlarmOrder = function(handleAlarmDialog, policeService, security, $filter) {
 	return {
 
 		scope: {
 			order: '=handleAlarmOrder',	
+			timeTransfered: '@timeTransfered',
+			operator: '@operator'
 		},
 
 		link: function(scope, elem) {
 			elem.on('dblclick', function(ev) {
-				scope.clearOperateBtn();
 				scope.order.isActive = true;
 				var self = $(this);
 				var pos = self.offset();
 				handleAlarmDialog.open(scope)
 					.then(function() {
 						scope.order.isActive = false;
-						scope.clearOperateBtn();
 					});
 				handleAlarmDialog.setDialogStyle(pos.top + self.height(), pos.left, self.width());
 			});	
-
-			scope.clearOperateBtn = function() {
-				scope.isWatchingCar = false;				
-				scope.isPhotographed = false;
-				scope.isTrackingCar = false;
-			};
 
 			scope.canPlayVioce = function() {
 				return scope.isWatchingCar;	
@@ -62,6 +56,11 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService) {
 				policeService.transferPolice(scope.order.id)
 					.then(function() {
 						scope.order.isTransfered = 1;					
+						scope.timeTransfered = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+						security.requestCurrentUser()
+							.then(function(response) {
+								scope.operator = response;
+							});
 					});	
 			};
 
@@ -97,6 +96,6 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService) {
 	};
 };
 
-handleAlarmOrder.$inject = ['handleAlarmDialog', 'policeService'];
+handleAlarmOrder.$inject = ['handleAlarmDialog', 'policeService', 'security', '$filter'];
 
 directives.directive('handleAlarmOrder', handleAlarmOrder);
