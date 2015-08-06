@@ -7,7 +7,7 @@ var policeService = function($http, $q) {
 	var store = {
 		orders: [],
 		keywords: '',
-		status: 0,
+		status: 1,
 		pageSize: PAGE_SIZE,
 		currentPage:1,
 		allOrderTotal: 0,	
@@ -18,7 +18,7 @@ var policeService = function($http, $q) {
 		initParams: function() {
 			this.keywords = '';
 			this.currentPage = 1;
-			this.status = 0;
+			this.status = 1;
 		},
 
 		initService: function() {

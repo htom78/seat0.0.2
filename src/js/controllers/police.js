@@ -11,11 +11,7 @@ var policeCtrl = function($scope, policeService) {
 		$scope.currentOrderTotal = policeService.currentOrderTotal;
 	}, true);
 
-	$scope.currentOrderTab = 'all';
-
-	$scope.isCurrentTab = function(type) {
-		return $scope.currentOrderTab === type;
-	};
+	$scope.currentOrderTab = 'unhandle';
 
 	$scope.cutAllOrderTab = function() {
 		$scope.currentOrderTab = 'all';	
@@ -32,6 +28,18 @@ var policeCtrl = function($scope, policeService) {
 		policeService.getUnhandleOrders();
 	};
 
+	$scope.isAllOrderTab = function() {
+		return $scope.currentOrderTab === 'all';	
+	};
+
+	$scope.isHandleOrderTab = function() {
+		return $scope.currentOrderTab === 'handle';	
+	};
+
+	$scope.isUnhandleOrderTab = function() {
+		return $scope.currentOrderTab === 'unhandle';	
+	};
+
 	$scope.searchOrder = function() {
 		policeService.getOrderByKeywords($scope.keywords);
 	};
@@ -39,6 +47,16 @@ var policeCtrl = function($scope, policeService) {
 	$scope.onSelectPage = function(page) {
 		policeService.getOrderByPageNumber(page);
 	};
+
+	$scope.$on('newAlarmMessage', function(ev, orders) {
+		if ($scope.isUnhandleOrderTab()) {
+			angular.forEach(orders, function(order) {
+				$scope.orders.unshift(order);	
+			});
+		} else {
+			$scope.cutUnhandleOrderTab();	
+		}
+	});
 
 };
 

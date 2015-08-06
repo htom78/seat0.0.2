@@ -696,15 +696,15 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutAllOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{getAllOrderTotal()}})</button>\n" +
+    "				ng-class='{active: isAllOrderTab()}'>全部({{getAllOrderTotal()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutUnhandleOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"unhandle\")}'>未处理({{getUnhandleOrderTotal()}})</button>\n" +
+    "				ng-class='{active: isUnhandleOrderTab()}'>未处理({{getUnhandleOrderTotal()}})</button>\n" +
     "			<button \n" +
     "				class='btn-normal' \n" +
     "				ng-click='cutHandleOrderTab()'\n" +
-    "				ng-class='{active:isCurrentTab(\"handle\")}'>已处理({{getHandleOrderTotal()}})</button>\n" +
+    "				ng-class='{active: isHandleOrderTab()}'>已处理({{getHandleOrderTotal()}})</button>\n" +
     "		</div>\n" +
     "\n" +
     "	</div>\n" +

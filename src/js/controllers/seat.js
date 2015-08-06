@@ -216,13 +216,6 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, selectD
 		}	
 	};
 
-	/*
-	socketService.connection();
-	$scope.$on('$destroy', function() {
-		socketService.close();
-	});
-	*/
-
 };
 
 

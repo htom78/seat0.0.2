@@ -20,3 +20,5 @@ require('./security');
 require('./user');
 require('./handleAlarmDialog');
 require('./messageBoxService');
+require('./socketMessageService');
+require('./alarmMessageService');

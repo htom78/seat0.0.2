@@ -53,15 +53,15 @@
 			<button 
 				class='btn-normal' 
 				ng-click='cutAllOrderTab()'
-				ng-class='{active:isCurrentTab("all")}'>全部({{getAllOrderTotal()}})</button>
+				ng-class='{active: isAllOrderTab()}'>全部({{getAllOrderTotal()}})</button>
 			<button 
 				class='btn-normal' 
 				ng-click='cutUnhandleOrderTab()'
-				ng-class='{active:isCurrentTab("unhandle")}'>未处理({{getUnhandleOrderTotal()}})</button>
+				ng-class='{active: isUnhandleOrderTab()}'>未处理({{getUnhandleOrderTotal()}})</button>
 			<button 
 				class='btn-normal' 
 				ng-click='cutHandleOrderTab()'
-				ng-class='{active:isCurrentTab("handle")}'>已处理({{getHandleOrderTotal()}})</button>
+				ng-class='{active: isHandleOrderTab()}'>已处理({{getHandleOrderTotal()}})</button>
 		</div>
 
 	</div>
