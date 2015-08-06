@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var headerCtrl = function($scope, $timeout, $filter, signService, security) {
+var headerCtrl = function($scope, $timeout, $filter, signService, security, socketService) {
 
 	$scope.toggleSignState = function() {
 		$scope.currentState = 'free';
@@ -68,9 +68,11 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 	};
 
 	//security
+	//###############################################################
 	$scope.logout = function() {
 		signService.loginOut();
 		security.logout();
+		socketService.close();
 	};
 
 	security.requestCurrentUser()
@@ -79,6 +81,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 			$scope.isHeaderShow = true;
 			signService.getCurrentState()
 				.then(function(response) {
+					socketService.connection();
 					$scope.isLeader = security.isLeader();
 					if (response.isSignIn) {
 						$scope.signInfo = 'signIn';	
@@ -110,7 +113,8 @@ headerCtrl.$inject = [
 	'$timeout',
  	'$filter',
  	'signService',
-	'security'
+	'security',
+	'socketService'
 	];
 
 controllers.controller('headerCtrl', headerCtrl);

@@ -1,7 +1,7 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketService, selectData, seatOrderStorageService) {
+var seatCtrl = function ($scope, $timeout,  userService, seatMapService, selectData, seatOrderStorageService) {
 
 	$scope.orders = seatOrderStorageService.orders;
 
@@ -216,10 +216,12 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, socketS
 		}	
 	};
 
+	/*
 	socketService.connection();
 	$scope.$on('$destroy', function() {
 		socketService.close();
 	});
+	*/
 
 };
 
@@ -229,7 +231,6 @@ seatCtrl.$inject = [
 	'$timeout', 
 	'userService', 
 	'seatMapService', 
-	'socketService', 
 	'selectData',
 	'seatOrderStorageService'
 	];
