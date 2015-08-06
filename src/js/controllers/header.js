@@ -37,7 +37,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isRestState());
 	};
 	$scope.secondBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isRestState());
+		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isBusyState());
 	};
 
 
