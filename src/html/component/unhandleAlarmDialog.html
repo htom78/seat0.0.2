@@ -44,8 +44,13 @@
 		</ul>	
 	</div>
 
+	<div class='fl handle-info'>
+		<span>转警时间:2015/02/05 14:22</span>	
+		<span>接警员:0258</span>
+	</div>
+
 	
-	<div class='fr'>
+	<div class='fr' ng-show='hasHandleAlarm()'>
 		<form 
 			class='handle-form'
 			confirm-dialog
@@ -109,13 +114,13 @@
 
 	<div class='fr after-click-btns'>
 		<ul class='flex'>
-			<li class='operate-btn-li'>
+			<li class='operate-btn-li' ng-show='canPlayVioce()'>
 				<button class='operate-btn'>播放监听</button>	
 			</li>
-			<li class='operate-btn-li' >
+			<li class='operate-btn-li' ng-show='canViewPhoto()'>
 				<button class='operate-btn'>查看拍照</button>	
 			</li>
-			<li class='operate-btn-li'>
+			<li class='operate-btn-li' ng-show='canPlayTrace()'>
 				<button class='operate-btn'>跟踪回放</button>	
 			</li>
 		</ul>

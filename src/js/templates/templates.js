@@ -258,8 +258,13 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "		</ul>	\n" +
     "	</div>\n" +
     "\n" +
+    "	<div class='fl handle-info'>\n" +
+    "		<span>转警时间:2015/02/05 14:22</span>	\n" +
+    "		<span>接警员:0258</span>\n" +
+    "	</div>\n" +
+    "\n" +
     "	\n" +
-    "	<div class='fr'>\n" +
+    "	<div class='fr' ng-show='hasHandleAlarm()'>\n" +
     "		<form \n" +
     "			class='handle-form'\n" +
     "			confirm-dialog\n" +
@@ -323,13 +328,13 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "\n" +
     "	<div class='fr after-click-btns'>\n" +
     "		<ul class='flex'>\n" +
-    "			<li class='operate-btn-li'>\n" +
+    "			<li class='operate-btn-li' ng-show='canPlayVioce()'>\n" +
     "				<button class='operate-btn'>播放监听</button>	\n" +
     "			</li>\n" +
-    "			<li class='operate-btn-li' >\n" +
+    "			<li class='operate-btn-li' ng-show='canViewPhoto()'>\n" +
     "				<button class='operate-btn'>查看拍照</button>	\n" +
     "			</li>\n" +
-    "			<li class='operate-btn-li'>\n" +
+    "			<li class='operate-btn-li' ng-show='canPlayTrace()'>\n" +
     "				<button class='operate-btn'>跟踪回放</button>	\n" +
     "			</li>\n" +
     "		</ul>\n" +

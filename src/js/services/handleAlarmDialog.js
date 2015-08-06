@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var handleAlarmDialog = function(quanDialog, policeService) {
+var handleAlarmDialog = function(quanDialog, $q) {
 	var alarmDialog = quanDialog.dialog({
 		modalClass: 'handle-alram-dialog',
 		bodyClick: true
@@ -8,21 +8,11 @@ var handleAlarmDialog = function(quanDialog, policeService) {
 
 	return {
 
-		open: function(scope, order) {
+		open: function(scope) {
 			if (!this.isOpen()) {
-				if (order.status === 1) {
-					alarmDialog.open('component/unhandleAlarmDialog.html', 'policeCtrl')
-						.then(function() {
-							policeService.removeActiveItem();	
-						});
-				} else {
-					alarmDialog.open('component/handleAlarmDialog.html', 'policeCtrl')
-						.then(function() {
-							policeService.removeActiveItem();	
-						});
-				}
-				policeService.addActiveItem(order);
+				return alarmDialog.open('component/unhandleAlarmDialog.html', 'policeCtrl', scope);
 			}	
+			return $q.reject();
 		},
 
 		close: function() {
@@ -52,6 +42,6 @@ var handleAlarmDialog = function(quanDialog, policeService) {
 	};
 };
 
-handleAlarmDialog.$inject = ['quanDialog', 'policeService'];
+handleAlarmDialog.$inject = ['quanDialog', '$q'];
 
 services.factory('handleAlarmDialog', handleAlarmDialog);

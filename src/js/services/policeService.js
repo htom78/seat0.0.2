@@ -14,11 +14,6 @@ var policeService = function($http, $q) {
 		unhandleOrderTotal: 0,
 		handleOrderTotal: 0,
 		currentOrderTotal: 0,
-		activeItemIndex: -1,
-
-		trackingCar: false,
-		photographed: false,
-		watchingCar: false,
 
 		initParams: function() {
 			this.keywords = '';
@@ -33,13 +28,10 @@ var policeService = function($http, $q) {
 			this.unhandleOrderTotal = 0;
 			this.handleOrderTotal = 0;
 			this.currentOrderTotal = 0;
-			this.activeItemIndex = -1;
-			this.clearOperateBtn();
 		},
 
 		get: function() {
 			var self = this;
-			this.activeItemIndex = -1;
 			return $http.get('alarm/list.htm', {
 				params: {
 					k: this.keywords,
@@ -109,106 +101,40 @@ var policeService = function($http, $q) {
 			return store.handleOrderTotal;	
 		},
 
-		addActiveItem: function(order) {
-			this.removeActiveItem();
-			this.activeItemIndex = this.orders.indexOf(order);
-			order = this.getActiveItem();
-			if (order) {
-				order.isActive =  true;
-			}
+		watchCar: function(number) {
+			return $http.post('alarm/listen.htm', {
+				number: number	
+			});
 		},
 
-		clearOperateBtn: function() {
-			this.trackingCar = false,
-			this.photographed = false,
-			this.watchingCar = false,
+		trackCar: function(number) {
+			return $http.post('alarm/once.htm', {
+				number: number	
+			});
 		},
 
-		removeActiveItem: function() {
-			if (this.activeItemIndex !== -1) {
-				this.orders[this.activeItemIndex].isActive = false;				
-			}	
-			this.clearOperateBtn();
-			this.activeItemIndex = -1;
+		relieve: function() {
+			return $q.when('relieve');	
 		},
 
-		getActiveItem: function() {
-			if (this.activeItemIndex !== -1) {
-				return this.orders[this.activeItemIndex];	
-			}
-			return null;	
+		photograph: function(number) {
+			return $http.post('alarm/snap.htm', {
+				number: number	
+			});
 		},
 
-		watchCar: function() {
-			var self = this;
-			var item = this.getActiveItem();
-			if (item) {
-				return $http.post('alarm/listen.htm', {
-					number: item.vehicleNumber	
-				})
-					.then(function() {
-						self.watchingCar = true;	
-					});	
-			}
+		transferPolice: function(id) {
+			return $http.post('alarm/transfered.htm', {
+				id: id	
+			});	
 		},
 
-		isWatchingCar: function() {
-			return this.watchingCar;	
-		},
-
-		trackCar: function() {
-			var self = this;
-			var item = this.getActiveItem();	
-			if (item) {
-				return $http.post('alarm/once.htm', {
-					number: item.vehicleNumber	
-				})
-					.then(function() {
-						self.trackingCar = true;	
-					});	
-			}
-		},
-
-		isTrackingCar: function() {
-			return this.trackingCar;	
-		},
-
-		photograph: function() {
-			var self = this;
-			var item = this.getActiveItem();	
-			if (item) {
-				return $http.post('alarm/snap.htm', {
-					number: item.vehicleNumber	
-				})
-					.then(function() {
-						self.photographed = true;	
-					});	
-			}
-		},
-
-		isPhotographed: function() {
-			return this.photographed;	
-		},
-
-		transferPolice: function() {
-			var item = this.getActiveItem();	
-			if (item) {
-				return $http.post('alarm/transfered.htm', {
-					id: item.id	
-				});	
-			}
-		},
-
-		handleAlarm: function(reason, note) {
-			var item = this.getActiveItem();	
-			if (item) {
-				return $http.post('alarm/do.htm', {
-					id: item.id,
-					rType: reason,
-					note: note || ''	
-				});	
-			}
-			return $q.reject();
+		handleAlarm: function(id, reason, note) {
+			return $http.post('alarm/do.htm', {
+				id: id,
+				rType: reason,
+				note: note || ''	
+			});	
 		}
 
 	};
