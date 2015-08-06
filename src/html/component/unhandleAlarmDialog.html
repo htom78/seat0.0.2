@@ -44,9 +44,9 @@
 		</ul>	
 	</div>
 
-	<div class='fl handle-info'>
-		<span>转警时间:2015/02/05 14:22</span>	
-		<span>接警员:0258</span>
+	<div class='fl handle-info' ng-show='!isShowTransferedBtn()'>
+		<span>转警时间:{{timeTransfered}}</span>	
+		<span>接警员:{{operator}}</span>
 	</div>
 
 	
