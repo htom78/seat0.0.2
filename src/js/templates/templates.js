@@ -346,12 +346,12 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
 
 angular.module("header.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("header.html",
-    "<div ng-show='isHeaderShow'>\n" +
+    "<div ng-if='hasHeader()'>\n" +
     "<section class='flex'>\n" +
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
     "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
-    "			<li ng-show='isLeader()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li ng-show='hasLeaderBtn()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/special.htm' class='btn-icon-large car-track'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +
@@ -373,9 +373,9 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "			<i\n" +
     "				class='more-state'\n" +
     "				ng-class='{\n" +
-    "					vain: isCurrentActive(\"free\"), \n" +
-    "					busy: isCurrentActive(\"busy\"), \n" +
-    "					rest: isCurrentActive(\"rest\"), \n" +
+    "					vain: isFreeState(), \n" +
+    "					busy: isBusyState(), \n" +
+    "					rest: isRestState(), \n" +
     "					signOut:!isSignIn()}'></i>\n" +
     "		</div>\n" +
     "\n" +
@@ -387,10 +387,10 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<div class='status-btns'>\n" +
     "			<button\n" +
     "				title='{{firstBtnTitle}}'\n" +
-    "				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'\n" +
+    "				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'\n" +
     "				ng-click='toggleFirstCallingStateBtn()'></button><button \n" +
     "				title='{{secondBtnTitle}}'\n" +
-    "				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'\n" +
+    "				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'\n" +
     "				ng-click='toggleSecondCallingStateBtn()'></button>\n" +
     "		</div>\n" +
     "\n" +

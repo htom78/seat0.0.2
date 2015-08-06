@@ -17,37 +17,37 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		}
 	};
 
-	//检测是否为签入状态
 	$scope.isSignIn = function() {
 		return $scope.signInfo === 'signIn';
 	};
-	$scope.isFirstBtnRest = function() {
+
+	$scope.isFreeState = function() {
+		return $scope.currentState === 'free';	
+	};
+
+	$scope.isRestState = function() {
 		return $scope.currentState === 'rest';	
 	};
 
-	$scope.isSecondBtnBusy = function() {
+	$scope.isBusyState = function() {
 		return $scope.currentState === 'busy';	
 	};
 
-	$scope.isCurrentActive = function(state) {
-		return $scope.currentState === state;	
-	};
-
 	$scope.firstBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.currentState === 'free' || $scope.currentState === 'rest');
+		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isRestState());
 	};
 	$scope.secondBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.currentState === 'free' || $scope.currentState === 'busy');
+		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isBusyState());
 	};
 
 
 	//切换第一个按钮(小休、接电话)
 	$scope.toggleFirstCallingStateBtn = function() {
 		if ($scope.isSignIn()) {
-			if ($scope.currentState === 'free') {
+			if ($scope.isFreeState()) {
 				$scope.currentState = 'rest';	
 				signService.rest();
-			} else if($scope.currentState === 'rest') {
+			} else if($scope.isRestState()) {
 				$scope.currentState = 'free';
 				signService.unrest();
 			}
@@ -57,10 +57,10 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 	//切换第二个按钮(示忙、接电话)
 	$scope.toggleSecondCallingStateBtn = function() {
 		if ($scope.isSignIn()) {
-			if ($scope.currentState === 'free') {
+			if ($scope.isFreeState()) {
 				$scope.currentState = 'busy';	
 				signService.busy();
-			} else if ($scope.currentState === 'busy') {
+			} else if ($scope.isBusyState()) {
 				$scope.currentState = 'free';	
 				signService.unbusy();
 			}
@@ -73,14 +73,13 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		security.logout();
 	};
 
-	$scope.isLeader = security.isLeader;
-
 	security.requestCurrentUser()
 		.then(function(response) {
 			$scope.username = response; 	
 			$scope.isHeaderShow = true;
 			signService.getCurrentState()
 				.then(function(response) {
+					$scope.isLeader = security.isLeader();
 					if (response.isSignIn) {
 						$scope.signInfo = 'signIn';	
 						$scope.currentState = response.currentCallingState;
@@ -89,6 +88,14 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		}, function() {
 			$scope.isHeaderShow = false;	
 		});
+
+	$scope.hasHeader = function() {
+		return $scope.isHeaderShow;	
+	};
+
+	$scope.hasLeaderBtn = function() {
+		return $scope.isLeader;	
+	};
 
 	//左上角时间
 	(function tickTimer(){

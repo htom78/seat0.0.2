@@ -1,9 +1,9 @@
-<div ng-show='isHeaderShow'>
+<div ng-if='hasHeader()'>
 <section class='flex'>
 	<nav class='nav'>
 		<ul class='flex'>
 			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>
-			<li ng-show='isLeader()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>
+			<li ng-show='hasLeaderBtn()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>
 			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>
 			<li><a ng-href='{{appRoot}}/special.htm' class='btn-icon-large car-track'></a></li>
 			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>
@@ -25,9 +25,9 @@
 			<i
 				class='more-state'
 				ng-class='{
-					vain: isCurrentActive("free"), 
-					busy: isCurrentActive("busy"), 
-					rest: isCurrentActive("rest"), 
+					vain: isFreeState(), 
+					busy: isBusyState(), 
+					rest: isRestState(), 
 					signOut:!isSignIn()}'></i>
 		</div>
 
@@ -39,10 +39,10 @@
 		<div class='status-btns'>
 			<button
 				title='{{firstBtnTitle}}'
-				ng-class='{disabled:!firstBtnCanClick(),rest:!isFirstBtnRest(),calling:isFirstBtnRest()}'
+				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'
 				ng-click='toggleFirstCallingStateBtn()'></button><button 
 				title='{{secondBtnTitle}}'
-				ng-class='{disabled:!secondBtnCanClick(),busy:!isSecondBtnBusy(),calling:isSecondBtnBusy()}'
+				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'
 				ng-click='toggleSecondCallingStateBtn()'></button>
 		</div>
 
