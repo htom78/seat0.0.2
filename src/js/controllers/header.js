@@ -73,14 +73,13 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		security.logout();
 	};
 
-	$scope.isLeader = security.isLeader;
-
 	security.requestCurrentUser()
 		.then(function(response) {
 			$scope.username = response; 	
 			$scope.isHeaderShow = true;
 			signService.getCurrentState()
 				.then(function(response) {
+					$scope.isLeader = security.isLeader();
 					if (response.isSignIn) {
 						$scope.signInfo = 'signIn';	
 						$scope.currentState = response.currentCallingState;
@@ -89,6 +88,14 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security) {
 		}, function() {
 			$scope.isHeaderShow = false;	
 		});
+
+	$scope.hasHeader = function() {
+		return $scope.isHeaderShow;	
+	};
+
+	$scope.hasLeaderBtn = function() {
+		return $scope.isLeader;	
+	};
 
 	//左上角时间
 	(function tickTimer(){

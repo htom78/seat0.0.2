@@ -248,12 +248,12 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
 
 angular.module("header.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("header.html",
-    "<div ng-show='isHeaderShow'>\n" +
+    "<div ng-if='hasHeader()'>\n" +
     "<section class='flex'>\n" +
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
     "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
-    "			<li ng-show='isLeader()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
+    "			<li ng-show='hasLeaderBtn()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/special.htm' class='btn-icon-large car-track'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +

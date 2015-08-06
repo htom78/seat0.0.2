@@ -72,7 +72,7 @@ var security = function($http, $q, $location, callSocket) {
 		},
 
 		isLeader: function() {
-			return !!(service.currentUser && (window.userType === 'seat_leader' || !window.userType));	
+			return !!(service.currentUser && (window.userType === 'superadmin' || !window.userType));	
 		}
 	};
 
