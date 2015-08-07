@@ -1013,20 +1013,11 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-disabled='!orderData.isReservation'\n" +
     "						ng-model='orderData.reservationCalendar'/>\n" +
     "						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>\n" +
-    "					<select\n" +
-    "						class='select-normal time-select'\n" +
-    "						ng-disabled='!orderData.isReservation'\n" +
-    "						ng-model='orderData.hour'\n" +
-    "						ng-init='orderData.hour=0'\n" +
-    "						ng-options='item for item in options.hour'>\n" +
-    "					</select>\n" +
-    "					<select\n" +
-    "						class='select-normal timer-select'\n" +
-    "						ng-disabled='!orderData.isReservation'\n" +
-    "						ng-model='orderData.minute'\n" +
-    "						ng-init='orderData.minute=0'\n" +
-    "						ng-options='item for item in options.minute'>\n" +
-    "					</select>\n" +
+    "\n" +
+    "					<span class='time-select disabled' time-select>\n" +
+    "						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>\n" +
+    "					</span>\n" +
+    "\n" +
     "					<label class='icon-label count-label'><i></i></label>\n" +
     "					<input \n" +
     "						type='text'\n" +
@@ -1104,7 +1095,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "	<div class='seat-bottom-right'>\n" +
     "		<section class='search-bar'>\n" +
     "			<div class='fl'>\n" +
-    "				<button class='btn-normal toggle-btn' ng-click='toggleSearchType()'>{{searchType}}</button>\n" +
+    "				<button class='btn-normal toggle-btn' ng-click='toggleImmediateOrReservation()'>{{immediateOrReservation}}</button>\n" +
     "			</div>\n" +
     "			<ul class='flex fl tabs'>\n" +
     "				<li><a \n" +

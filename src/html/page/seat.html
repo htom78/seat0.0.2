@@ -136,20 +136,11 @@
 						ng-disabled='!orderData.isReservation'
 						ng-model='orderData.reservationCalendar'/>
 						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>
-					<select
-						class='select-normal time-select'
-						ng-disabled='!orderData.isReservation'
-						ng-model='orderData.hour'
-						ng-init='orderData.hour=0'
-						ng-options='item for item in options.hour'>
-					</select>
-					<select
-						class='select-normal timer-select'
-						ng-disabled='!orderData.isReservation'
-						ng-model='orderData.minute'
-						ng-init='orderData.minute=0'
-						ng-options='item for item in options.minute'>
-					</select>
+
+					<span class='time-select disabled' time-select>
+						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>
+					</span>
+
 					<label class='icon-label count-label'><i></i></label>
 					<input 
 						type='text'
@@ -227,7 +218,7 @@
 	<div class='seat-bottom-right'>
 		<section class='search-bar'>
 			<div class='fl'>
-				<button class='btn-normal toggle-btn' ng-click='toggleSearchType()'>{{searchType}}</button>
+				<button class='btn-normal toggle-btn' ng-click='toggleImmediateOrReservation()'>{{immediateOrReservation}}</button>
 			</div>
 			<ul class='flex fl tabs'>
 				<li><a 

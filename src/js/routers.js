@@ -1,18 +1,19 @@
 var routers = function ($routeProvider) {
+
 	var seatRouteConfig = {
 		templateUrl: 'page/seat.html',
 		controller: 'seatCtrl',
 		title: '坐席',
 		resolve: {
-			store: ['seatOrderStorageService', '$location', function(seatOrderStorageService, $location) {
+			store: ['seatOrderStorageService', '$location', function(seatService, $location) {
 				if ($location.url() === '/special.htm') {
-					seatOrderStorageService.setCallType(2);	//专车
+					seatService.selectSpecialCar();
 				} else {
-					seatOrderStorageService.setCallType(1);	
+					seatService.selectNormalCar();
 				}
-				seatOrderStorageService.initOrderSearchParams();
-				seatOrderStorageService.getPreparedOrders();
-				return seatOrderStorageService;	
+				seatService.initService();
+				seatService.get();
+				return seatService;	
 			}]	
 		}
 	};

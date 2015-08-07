@@ -1,38 +1,111 @@
 var services = require('./index');
 
-var orderGetUrl = 'search.htm';
-var orderSearchDefaultParams = {
-	k: '',
-	all: 0,
-	pagesize: 6,
-	page: 1,
-	callType: 1, //普通召车1， 专车2
-	isImmediate: 1,	//立即召车1， 预约召车0
-	status: 1 //exception(0),prepared(1),received(2),started(3),done(4);
-};
-
 var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
 
 	var store = {
-		orders: [],
-		variableOrders: [],
-		orderSearchParams: {},
-		normalOrderCount: 0,
-		exceptionOrderCount: 0,
-		averageTimer: 0,
-		pauseSearch: false,
 
-
-		initOrderSearchParams: function() {
-			store.orderSearchParams = angular.copy(orderSearchDefaultParams);	
-			store.orders = [];
-			store.normalOrderCount = 0;
-			store.exceptionOrderCount = 0;
-			store.averageTimer = 0;
+		initParams: function() {
+			this.searchOrderKeywords = '';
+			this.currentOrderType = 1;
 		},
 
-		setCallType: function(callType) {
-			orderSearchDefaultParams.callType = callType;	
+		initService: function() {
+			this.initParams();		
+			this.isImmediate = true;
+			this.normalOrderCount = 0;
+			this.exceptionOrderCount = 0;
+			this.averageTimer = 0;
+			this.orders = [];
+			this.variableOrders = [];
+		},
+
+		selectSpecialCar: function() {
+			this.callType = 2;	
+		},
+
+		selectNormalCar: function() {
+			this.callType = 1;	
+		},
+
+		selectImmediate: function() {
+			this.isImmediate = true;	
+		},
+
+		selectReservation: function() {
+			this.isImmediate = false;	
+		},
+
+		get: function() {
+			var self = this;
+			var immediateOrReservation = this.isImmediate ? 1 : 0;
+			this.isPauseSearch = true;
+			return $http.get('search.htm', {
+				params: {
+					all: 0,
+					page: 1,
+					pagesize: 6,
+					callType: this.callType,
+					isImmediate: immediateOrReservation,
+					k: this.searchOrderKeywords,
+					status: this.currentOrderType
+				}
+			})
+				.then(function(response) {
+					angular.copy(response.data.list, store.orders);
+					var total = response.data.total;
+					if (self.currentOrderType === 0) {
+						self.exceptionOrderCount = total;	
+					} else {
+						self.normalOrderCount = total;	
+					}
+					self.averageTimer = response.data.sec;//平局秒数
+					return self.orders;
+				})
+				.finally(function() {
+					setTimeout(function() {
+						self.isPauseSearch = false;	
+					}, 3000);
+				});
+		},
+
+		getPreparedOrders: function() {
+			this.initParams();
+			this.currentOrderType = 1;
+			return this.get();
+		},
+
+		getReceivedOrders: function() {
+			this.initParams();
+			this.currentOrderType = 2;
+			return this.get();
+		},
+
+		getStartedOrders: function() {
+			this.initParams();
+			this.currentOrderType = 3;
+			return this.get();
+		},
+
+		getDoneOrders: function() {
+			this.initParams();
+			this.currentOrderType = 4;
+			return this.get();
+		},
+
+		getExceptionOrders: function() {
+			this.initParams();
+			this.currentOrderType = 0;
+			return this.get();
+		},
+
+		refreshCurrentOrder: function() {
+			this.searchOrderKeywords = '';
+			return this.get();
+		},
+
+		getCurrentOrdersByKeywords: function(keywords) {
+			this.searchOrderKeywords = keywords || '';
+			return this.get();
 		},
 
 		getNormalOrderCount: function() {
@@ -47,9 +120,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			return store.averageTimer;	
 		},
 
-		/**
-		 * @param {json} form order raw data
-		 */
 		addNewOrder: function(orderData) {
 			var defer = $q.defer();
 			orderData = orderUtils.convertOrderServerData(orderData);
@@ -95,26 +165,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			return defer.promise;
 		},
 
-		_get: function(orderSearchParams) {
-			store.pauseSearch = true;
-			return $http.get(orderGetUrl, {params: orderSearchParams})
-				.then(function(response) {
-					angular.copy(response.data.list, store.orders);
-					if (parseInt(orderSearchParams.status) === 0) {
-						store.exceptionOrderCount = response.data.total;	
-					} else {
-						store.normalOrderCount = response.data.total;	
-					}
-					store.averageTimer = response.data.sec;//平局秒数
-					return store.orders;
-				})
-				.finally(function() {
-					setTimeout(function() {
-						store.pauseSearch = false;	
-					}, 3000);
-				});
-		},
-
 		getVriableOrders: function(status, sn) {
 			var orderSearchParams = angular.copy(store.orderSearchParams);
 			orderSearchParams.status = status;
@@ -131,44 +181,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					}
 					return $q.reject();
 				});	
-		},
-
-		getPreparedOrders: function() {
-			store.orderSearchParams.status = 1;
-			return store._get(store.orderSearchParams);
-		},
-
-		getReceivedOrders: function() {
-			store.orderSearchParams.status = 2;
-			return store._get(store.orderSearchParams);
-		},
-
-		getStartedOrders: function() {
-			store.orderSearchParams.status = 3;
-			return store._get(store.orderSearchParams);
-		},
-
-		getDoneOrders: function() {
-			store.orderSearchParams.status = 4;
-			return store._get(store.orderSearchParams);
-		},
-
-		getExceptionOrders: function() {
-			store.orderSearchParams.status = 0;
-			return store._get(store.orderSearchParams);
-		},
-
-		flushCurrentOrderTab: function() {
-			return store._get(store.orderSearchParams);
-		},
-
-		/**
-		 * @param {string}
-		 */
-		getCurrentOrdersByKeywords: function(keywords) {
-			var orderSearchParams = angular.copy(store.orderSearchParams);
-			orderSearchParams.k = keywords;
-			return store._get(orderSearchParams);
 		},
 
 		/**
@@ -194,16 +206,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					orders.unshift(newOrderData);
 				}
 			}	
-		},
-
-		getCurrentImmediateOrder: function() {
-			store.orderSearchParams.isImmediate = 1;	
-			store._get(store.orderSearchParams);
-		},
-
-		getCurrentPrepareOrder: function() {
-			store.orderSearchParams.isImmediate = 0;	
-			store._get(store.orderSearchParams);
 		}
 
 	};

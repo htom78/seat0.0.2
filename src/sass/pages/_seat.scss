@@ -174,8 +174,32 @@
 		width: 63px;
 	}
 
-	.timer-select {
-		width: 44px;
+	.time-select {
+		display: inline-block;
+		border: 1px solid #ccc;
+		height: 28px;
+		line-height: 28px;
+		box-sizing: border-box;
+		border-radius: 4px;
+		background-color: #fff;
+		vertical-align: bottom;
+		@extend %font-ms;
+		font-size: 13px;
+		color: #333;
+		
+		&.disabled {
+			background-color: #EBEBE4;	
+			color: #ccc;
+		}
+
+		.hour,
+		.minute {
+			display: inline-block;
+			width: 30px;
+			text-align: center;	
+			cursor: Default;
+		}
+
 	}
 	.input-calendar {
 		width: 150px;
