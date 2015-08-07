@@ -79,10 +79,10 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 		.then(function(response) {
 			$scope.username = response; 	
 			$scope.isHeaderShow = true;
+			socketService.connection();
+			$scope.isLeader = security.isLeader();
 			signService.getCurrentState()
 				.then(function(response) {
-					socketService.connection();
-					$scope.isLeader = security.isLeader();
 					if (response.isSignIn) {
 						$scope.signInfo = 'signIn';	
 						$scope.currentState = response.currentCallingState;

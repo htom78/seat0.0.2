@@ -30,10 +30,10 @@ var socketService = function() {
 							}
 							*/
 						};
+						/*
 						$timeout(function() {
 							socketMessageService.message({type: 2, msg: [{name: 'quan'}]});
 						}, 3000);
-						/*
 						$timeout(function() {
 							orderNotify
 								.notify(2, 'P2CC72A501');	

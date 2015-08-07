@@ -90,7 +90,7 @@
 						handle-alarm-order='item'
 						operator='{{item.opName}}'
 						time-transfered='{{item.timeTransfered}}'
-						ng-class='{active: item.isActive}'>
+						ng-class='{active: item.isActive, selfSelected: item.hasSelfSelected(), otherSelected: item.hasOtherSelected()}'>
 						<td class='first-field'>
 							<i ng-class='{unhandle: (item.status === 1)}'></i>
 							<span>{{item.rTypeLabel}}</span>

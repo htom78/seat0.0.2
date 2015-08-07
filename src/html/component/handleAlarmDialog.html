@@ -1,34 +1,22 @@
 <div class='dialog-wrap handle'>
-	<div class='fl handle-info'>
-		<span>转警时间:2015/02/05 14:22</span>	
-		<span>接警员:0258</span>
+	<div class='fl handle-info' ng-show='hasTransferPolice()'>
+		<span>转警时间:{{order.timeCreated}}</span>	
+		<span>接警员:{{order.opName}}</span>
 	</div>
 
 	<div class='fr'>
 		<ul class='operate-btns flex'>
 			<li class='operate-btn-li'>
 				<button
-				 	class='operate-btn'
-					confirm-dialog
-					box-ctrl='policeCtrl'
-					message-box='确认处理?'
-					ensure-fn='watchCar()'>播放监听</button>
+				 	class='operate-btn'>播放监听</button>
 			</li>	
 			<li class='operate-btn-li'>
 				<button
-				 	class='operate-btn'
-					confirm-dialog
-					box-ctrl='policeCtrl'
-					message-box='确认处理?'
-					ensure-fn='photograph()'>查看拍照</button>
+				 	class='operate-btn'>查看拍照</button>
 			</li>	
 			<li class='operate-btn-li'>
 				<button
-				 	class='operate-btn'
-					confirm-dialog
-					box-ctrl='policeCtrl'
-					message-box='确认处理?'
-					ensure-fn='trackCar()'>跟踪回放</button>
+				 	class='operate-btn'>跟踪回放</button>
 			</li>	
 		</ul>	
 	</div>

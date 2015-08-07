@@ -100,36 +100,24 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
 angular.module("component/handleAlarmDialog.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/handleAlarmDialog.html",
     "<div class='dialog-wrap handle'>\n" +
-    "	<div class='fl handle-info'>\n" +
-    "		<span>转警时间:2015/02/05 14:22</span>	\n" +
-    "		<span>接警员:0258</span>\n" +
+    "	<div class='fl handle-info' ng-show='hasTransferPolice()'>\n" +
+    "		<span>转警时间:{{order.timeCreated}}</span>	\n" +
+    "		<span>接警员:{{order.opName}}</span>\n" +
     "	</div>\n" +
     "\n" +
     "	<div class='fr'>\n" +
     "		<ul class='operate-btns flex'>\n" +
     "			<li class='operate-btn-li'>\n" +
     "				<button\n" +
-    "				 	class='operate-btn'\n" +
-    "					confirm-dialog\n" +
-    "					box-ctrl='policeCtrl'\n" +
-    "					message-box='确认处理?'\n" +
-    "					ensure-fn='watchCar()'>播放监听</button>\n" +
+    "				 	class='operate-btn'>播放监听</button>\n" +
     "			</li>	\n" +
     "			<li class='operate-btn-li'>\n" +
     "				<button\n" +
-    "				 	class='operate-btn'\n" +
-    "					confirm-dialog\n" +
-    "					box-ctrl='policeCtrl'\n" +
-    "					message-box='确认处理?'\n" +
-    "					ensure-fn='photograph()'>查看拍照</button>\n" +
+    "				 	class='operate-btn'>查看拍照</button>\n" +
     "			</li>	\n" +
     "			<li class='operate-btn-li'>\n" +
     "				<button\n" +
-    "				 	class='operate-btn'\n" +
-    "					confirm-dialog\n" +
-    "					box-ctrl='policeCtrl'\n" +
-    "					message-box='确认处理?'\n" +
-    "					ensure-fn='trackCar()'>跟踪回放</button>\n" +
+    "				 	class='operate-btn'>跟踪回放</button>\n" +
     "			</li>	\n" +
     "		</ul>	\n" +
     "	</div>\n" +
@@ -247,7 +235,7 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "					message-box='确认解除?'\n" +
     "					ensure-fn='relieve()'>解除</button>\n" +
     "			</li>	\n" +
-    "			<li class='operate-btn-li' ng-show='isShowTransferedBtn()'>\n" +
+    "			<li class='operate-btn-li' ng-show='!hasTransferPolice()'>\n" +
     "				<button \n" +
     "					class='operate-btn transfer-police-btn'\n" +
     "					confirm-dialog\n" +
@@ -258,7 +246,7 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "		</ul>	\n" +
     "	</div>\n" +
     "\n" +
-    "	<div class='fl handle-info' ng-show='!isShowTransferedBtn()'>\n" +
+    "	<div class='fl handle-info' ng-show='hasTransferPolice()'>\n" +
     "		<span>转警时间:{{timeTransfered}}</span>	\n" +
     "		<span>接警员:{{operator}}</span>\n" +
     "	</div>\n" +
@@ -733,7 +721,7 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "						handle-alarm-order='item'\n" +
     "						operator='{{item.opName}}'\n" +
     "						time-transfered='{{item.timeTransfered}}'\n" +
-    "						ng-class='{active: item.isActive}'>\n" +
+    "						ng-class='{active: item.isActive, selfSelected: item.hasSelfSelected(), otherSelected: item.hasOtherSelected()}'>\n" +
     "						<td class='first-field'>\n" +
     "							<i ng-class='{unhandle: (item.status === 1)}'></i>\n" +
     "							<span>{{item.rTypeLabel}}</span>\n" +

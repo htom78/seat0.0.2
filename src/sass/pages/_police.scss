@@ -12,4 +12,15 @@
 		background-image: url(../imgs/quan-icons.png);
 		background-position: 0 0;
 	}
+
+	.table tr.selfSelected{
+		background-color: #f00;	
+		color:#fff;
+	}
+
+	.table tr.otherSelected{
+		background-color: #5B6AD3;	
+		color:#fff;
+	}
 }
+

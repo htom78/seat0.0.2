@@ -33,7 +33,7 @@
 					message-box='确认解除?'
 					ensure-fn='relieve()'>解除</button>
 			</li>	
-			<li class='operate-btn-li' ng-show='isShowTransferedBtn()'>
+			<li class='operate-btn-li' ng-show='!hasTransferPolice()'>
 				<button 
 					class='operate-btn transfer-police-btn'
 					confirm-dialog
@@ -44,7 +44,7 @@
 		</ul>	
 	</div>
 
-	<div class='fl handle-info' ng-show='!isShowTransferedBtn()'>
+	<div class='fl handle-info' ng-show='hasTransferPolice()'>
 		<span>转警时间:{{timeTransfered}}</span>	
 		<span>接警员:{{operator}}</span>
 	</div>

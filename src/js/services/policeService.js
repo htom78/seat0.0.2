@@ -44,38 +44,72 @@ var policeService = function($http, $q) {
 					var total = response.data.count;
 					angular.copy(response.data.list, self.orders);		
 					self.currentOrderTotal = total;
-					return total;
+					switch (self.status) {
+						case 0:
+							self.allOrderTotal = total;	
+							self.setOrderSelectState();
+							break;	
+						case 1:
+							self.unhandleOrderTotal = total;	
+							self.setOrderSelectState();
+							break;
+						case 2:
+							self.handleOrderTotal = total;	
+							break;
+						default:
+							break;
+					}
+					return self.orders;
 				});	
+		},
+
+		setOrderSelectState: function() {
+			var orders = this.orders;	
+			var self = this;
+			var info;
+			this.getOrderSelectState().then(function(response) {
+
+				var selectInfos = response.data.msg;	
+				angular.forEach(orders, function(order) {
+					for (var i = 0, ii = selectInfos.length; i < ii; i ++) {
+						info = selectInfos[i];
+						if (self.isUnhandleOrder(order) && 
+							parseInt(info.id) === order.id) {
+							if (info.isOwner) {
+								order.isSelfSelected = true;	
+							} else {
+								order.isOtherSelected = true;	
+							}
+						}	
+					}	
+				});
+
+			});
+		},
+
+		isUnhandleOrder: function(order) {
+			return order.status === 1;	
 		},
 
 		getAllOrders: function() {
 			var self = this;
 			this.initParams();
 			this.status = 0;
-			return this.get()
-				.then(function(total) {
-					self.allOrderTotal = total;	
-				});
+			return this.get();
 		},
 
 		getUnhandleOrders: function() {
 			var self = this;	
 			this.initParams();
 			this.status = 1;
-			return this.get()
-				.then(function(total) {
-					self.unhandleOrderTotal = total;	
-				});
+			return this.get();
 		},
 
 		getHandleOrders: function() {
 			var self = this;	
 			this.initParams();
 			this.status = 2;
-			return this.get()
-				.then(function(total) {
-					self.handleOrderTotal = total;	
-				});
+			return this.get();
 		},
 
 		getOrderByPageNumber: function(pageNumber) {
@@ -113,8 +147,10 @@ var policeService = function($http, $q) {
 			});
 		},
 
-		relieve: function() {
-			return $q.when('relieve');	
+		relieve: function(id) {
+			return $http.post('alarm/remove.htm', {
+				id: id	
+			});
 		},
 
 		photograph: function(number) {
@@ -135,6 +171,18 @@ var policeService = function($http, $q) {
 				rType: reason,
 				note: note || ''	
 			});	
+		},
+
+		selectItem: function(id) {
+			return $http.get('alarm/select.htm', {
+				params: {
+					id: id	
+				}
+			});	
+		},
+
+		getOrderSelectState: function() {
+			return $http.get('alarm/getSelected.htm');	
 		}
 
 	};
