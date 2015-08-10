@@ -15,6 +15,9 @@ var socketMessageService = function($rootScope, alarmMessageService) {
 					alarmMessageService.message(data.msg);
 					break;	
 
+				case 3:
+					alarmMessageService.itemSelected(data.msg);
+					break;
 				default: 
 					break;
 			}

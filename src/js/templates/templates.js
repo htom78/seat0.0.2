@@ -252,13 +252,13 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "	</div>\n" +
     "\n" +
     "	\n" +
-    "	<div class='fr' ng-show='hasHandleAlarm()'>\n" +
+    "	<div class='fr' ng-show='hasAlarmNode()'>\n" +
     "		<form \n" +
     "			class='handle-form'\n" +
     "			confirm-dialog\n" +
     "			box-ctrl='policeCtrl'\n" +
     "			message-box='确认提交'\n" +
-    "			ensure-fn='handleAlarm()'>\n" +
+    "			ensure-fn='addAlarmNode()'>\n" +
     "			<ul class='flex'>\n" +
     "				<li class='field-li'>\n" +
     "					<input \n" +
@@ -268,7 +268,7 @@ angular.module("component/unhandleAlarmDialog.html", []).run(["$templateCache", 
     "						id='operateDriverMiss'\n" +
     "						ng-model='alarmOperateInfo'\n" +
     "						ng-value='1'/>	\n" +
-    "					<label for='operateDriverMiss'>司机误报</label>\n" +
+    "					<label for='operateDriverMiss'>设备误报</label>\n" +
     "				</li>\n" +
     "				<li class='field-li'>\n" +
     "					<input \n" +
