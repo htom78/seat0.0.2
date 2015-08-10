@@ -123,7 +123,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 		addNewOrder: function(orderData) {
 			var defer = $q.defer();
 			orderData = orderUtils.convertOrderServerData(orderData);
-			orderData.callType = orderSearchDefaultParams.callType;
+			orderData.callType = this.callType;
 			$q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
 				.then(function(lngLats) {
 					var startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
@@ -134,32 +134,23 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					orderData.destinationLongitude = destinationLngLat.lng;
 					orderData.destinationLatitude = destinationLngLat.lat;
 
-					//submit order to server
-					//I also want restFUL API, but .... fuck 
-					$http({
-						method: 'POST',
-						url: 'call.htm',
-						data: $.param(orderData),
-						headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-					}).then(function(response) {
-						response = response.data;
-						if (parseInt(response.status) === 0 &&
-							response.sn &&
-							response.sn.length > 2) {
-							//add order success
-							defer.resolve({
-								sn: response.sn,
-								order: orderData
-							});	
-						} else {
-							defer.reject(response.code);	
-						}
-					}, function() {
-						defer.reject('about server error');	
-					});
-
-				}, function() {
-					defer.reject('from gaode convert address to longtude and latitude error');	
+					$http.post('call.htm', orderData)
+						.then(function(response) {
+							response = response.data;
+							if (parseInt(response.status) === 0 &&
+								response.sn &&
+								response.sn.length > 2) {
+								//add order success
+								defer.resolve({
+									sn: response.sn,
+									order: orderData
+								});	
+							} else {
+								defer.reject(response.code);	
+							}
+						}, function() {
+							defer.reject('about server error');	
+						});
 				});
 
 			return defer.promise;

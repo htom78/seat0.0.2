@@ -183,6 +183,17 @@ var policeService = function($http, $q) {
 
 		getOrderSelectState: function() {
 			return $http.get('alarm/getSelected.htm');	
+		},
+
+		hasOrderExist: function(order) {
+			var isExist = false;
+			angular.forEach(this.orders, function(item) {
+				if (item.id === order.id) {
+					isExist = true;	
+				}	
+			});	
+
+			return isExist;
 		}
 
 	};

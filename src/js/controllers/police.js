@@ -53,7 +53,9 @@ var policeCtrl = function($scope, policeService) {
 			$scope.isAllOrderTab()) {
 			$scope.$apply(function() {
 				angular.forEach(orders, function(order) {
-					$scope.orders.unshift(order);	
+					if (!policeService.hasOrderExist(order)) {
+						$scope.orders.unshift(order);	
+					}
 				});
 			});
 		} else {
