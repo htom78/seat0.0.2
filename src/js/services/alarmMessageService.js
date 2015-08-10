@@ -16,6 +16,10 @@ var alarmMessageService = function($rootScope, $location, quanDialog) {
 			}
 		},
 
+		itemSelected: function(id) {
+			$rootScope.$broadcast('alarmItemSelect', id);	
+		},
+
 		openDialog: function() {
 			if (!this.isDialogOpen()) {
 				var scope = $rootScope.$new();

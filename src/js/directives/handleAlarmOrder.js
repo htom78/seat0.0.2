@@ -31,11 +31,11 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService, security, $fil
 
 			});	
 
-			scope.hasSelfSelected = function() {
+			scope.order.hasSelfSelected = function() {
 				return scope.isUnhandleOrder() && scope.order.isSelfSelected;	
 			};
 
-			scope.hasOtherSelected = function() {
+			scope.order.hasOtherSelected = function() {
 				return scope.isUnhandleOrder() && scope.order.isOtherSelected;	
 			};
 
@@ -99,12 +99,17 @@ var handleAlarmOrder = function(handleAlarmDialog, policeService, security, $fil
 			};
 
 			scope.alarmOperateInfo = 1;
-			scope.handleAlarm = function() {
-				policeService.handleAlarm(scope.order.id, scope.alarmOperateInfo, scope.alarmNote);
+			scope.addAlarmNode = function() {
+				policeService.addAlarmNode(scope.order.id, scope.alarmOperateInfo, scope.alarmNote)
+					.then(function() {
+						var operateInfo = ['设备误报', '测试', '实警', '设备故障'];
+						scope.order.rTypeLabel = operateInfo[scope.alarmOperateInfo - 1];		
+						scope.order.note = scope.alarmNote;
+					});
 			};
 
-			scope.hasHandleAlarm = function() {
-				return scope.order.status === 1;
+			scope.hasAlarmNode = function() {
+				return scope.order.status === 1 && !scope.order.rTypeLabel;
 			};
 
 			scope.isShowRelieveBtn = function() {

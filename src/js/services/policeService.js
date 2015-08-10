@@ -165,7 +165,7 @@ var policeService = function($http, $q) {
 			});	
 		},
 
-		handleAlarm: function(id, reason, note) {
+		addAlarmNode: function(id, reason, note) {
 			return $http.post('alarm/do.htm', {
 				id: id,
 				rType: reason,

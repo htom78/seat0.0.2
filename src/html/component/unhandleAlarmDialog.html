@@ -50,13 +50,13 @@
 	</div>
 
 	
-	<div class='fr' ng-show='hasHandleAlarm()'>
+	<div class='fr' ng-show='hasAlarmNode()'>
 		<form 
 			class='handle-form'
 			confirm-dialog
 			box-ctrl='policeCtrl'
 			message-box='确认提交'
-			ensure-fn='handleAlarm()'>
+			ensure-fn='addAlarmNode()'>
 			<ul class='flex'>
 				<li class='field-li'>
 					<input 
@@ -66,7 +66,7 @@
 						id='operateDriverMiss'
 						ng-model='alarmOperateInfo'
 						ng-value='1'/>	
-					<label for='operateDriverMiss'>司机误报</label>
+					<label for='operateDriverMiss'>设备误报</label>
 				</li>
 				<li class='field-li'>
 					<input 

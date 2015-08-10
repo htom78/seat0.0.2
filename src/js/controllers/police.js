@@ -49,13 +49,26 @@ var policeCtrl = function($scope, policeService) {
 	};
 
 	$scope.$on('newAlarmMessage', function(ev, orders) {
-		if ($scope.isUnhandleOrderTab()) {
-			angular.forEach(orders, function(order) {
-				$scope.orders.unshift(order);	
+		if ($scope.isUnhandleOrderTab() || 
+			$scope.isAllOrderTab()) {
+			$scope.$apply(function() {
+				angular.forEach(orders, function(order) {
+					$scope.orders.unshift(order);	
+				});
 			});
 		} else {
 			$scope.cutUnhandleOrderTab();	
 		}
+	});
+
+	$scope.$on('alarmItemSelect', function(ev, id) {
+		$scope.$apply(function() {
+			angular.forEach($scope.orders, function(order) {
+				if (order.id === id) {
+					order.isOtherSelected = true;	
+				}	
+			});	
+		});
 	});
 
 };
