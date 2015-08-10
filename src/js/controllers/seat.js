@@ -11,6 +11,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 
 	$scope.averageTimer = seatService.getAverageTimer;
 
+	var currentTimer = new Date();
 	var initOrderData = {
 		gender: 1,
 		startList: [],
@@ -18,8 +19,8 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 		count: 1,
 		isReservation: false,
 		isCarType: false,
-		hour: 0,
-		minute: 0,
+		hour: currentTimer.getHours(),
+		minute: currentTimer.getMinutes(),	
 		reservationCalendar: moment().format('YYYY-MM-DD')
 	};
 

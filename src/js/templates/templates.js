@@ -1016,9 +1016,18 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "\n" +
     "						<span \n" +
     "							class='time-select' \n" +
-    "							ng-class='{disabled: !orderData.isReservation}' \n" +
-    "							time-select='orderData.isReservation'>\n" +
-    "						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>\n" +
+    "							ng-class='{disabled: !orderData.isReservation}'>\n" +
+    "						<em \n" +
+    "							class='hour' \n" +
+    "							time-select='24'\n" +
+    "							selected='orderData.hour'\n" +
+    "							reservation='orderData.isReservation'\n" +
+    "							>{{orderData.hour}}</em><i class='colon'>:</i><em \n" +
+    "							class='minute' \n" +
+    "							time-select='60'\n" +
+    "							number-mod='5'\n" +
+    "							reservation='orderData.isReservation'\n" +
+    "							selected='orderData.minute'>{{orderData.minute}}</em>\n" +
     "					</span>\n" +
     "\n" +
     "					<label class='icon-label count-label'><i></i></label>\n" +

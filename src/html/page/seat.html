@@ -139,9 +139,18 @@
 
 						<span 
 							class='time-select' 
-							ng-class='{disabled: !orderData.isReservation}' 
-							time-select='orderData.isReservation'>
-						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>
+							ng-class='{disabled: !orderData.isReservation}'>
+						<em 
+							class='hour' 
+							time-select='24'
+							selected='orderData.hour'
+							reservation='orderData.isReservation'
+							>{{orderData.hour}}</em><i class='colon'>:</i><em 
+							class='minute' 
+							time-select='60'
+							number-mod='5'
+							reservation='orderData.isReservation'
+							selected='orderData.minute'>{{orderData.minute}}</em>
 					</span>
 
 					<label class='icon-label count-label'><i></i></label>
