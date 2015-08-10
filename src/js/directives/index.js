@@ -13,3 +13,4 @@ require('./pauseEmit');
 require('./calendar');
 require('./handleAlarmOrder');
 require('./confirmDialog');
+require('./timeSelect');

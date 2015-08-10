@@ -1014,7 +1014,10 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-model='orderData.reservationCalendar'/>\n" +
     "						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>\n" +
     "\n" +
-    "					<span class='time-select disabled' time-select>\n" +
+    "						<span \n" +
+    "							class='time-select' \n" +
+    "							ng-class='{disabled: !orderData.isReservation}' \n" +
+    "							time-select='orderData.isReservation'>\n" +
     "						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>\n" +
     "					</span>\n" +
     "\n" +

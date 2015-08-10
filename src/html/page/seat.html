@@ -137,7 +137,10 @@
 						ng-model='orderData.reservationCalendar'/>
 						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>
 
-					<span class='time-select disabled' time-select>
+						<span 
+							class='time-select' 
+							ng-class='{disabled: !orderData.isReservation}' 
+							time-select='orderData.isReservation'>
 						<em class='hour'>12</em><i class='colon'>:</i><em class='minute'>10</em>
 					</span>
 
