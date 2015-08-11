@@ -23,3 +23,4 @@ require('./messageBoxService');
 require('./socketMessageService');
 require('./alarmMessageService');
 require('./orderStateChangeMessage');
+require('./leaderOrderInfoDialog');

@@ -16,7 +16,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			this.exceptionOrderCount = 0;
 			this.averageTimer = 0;
 			this.orders = [];
-			this.variableOrders = [];
 		},
 
 		selectSpecialCar: function() {
@@ -51,7 +50,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 				}
 			})
 				.then(function(response) {
-					angular.copy(response.data.list, store.orders);
+					angular.copy(response.data.list, self.orders);
 					var total = response.data.total;
 					if (self.currentOrderType === 0) {
 						self.exceptionOrderCount = total;	

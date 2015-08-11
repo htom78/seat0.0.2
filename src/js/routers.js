@@ -23,10 +23,10 @@ var routers = function ($routeProvider) {
 		controller: 'leaderCtrl',
 		title: '班长',
 		resolve: {
-			store: ['leaderOrderStorageService', function(leaderOrderStorageService) {
-				leaderOrderStorageService.initOrderSearchParams();	
-				leaderOrderStorageService.getPrepared();	
-				return leaderOrderStorageService;	
+			store: ['leaderOrderStorageService', function(leaderService) {
+				leaderService.initService();
+				leaderService.get();
+				return leaderService;	
 			}]	
 		}	
 	};
