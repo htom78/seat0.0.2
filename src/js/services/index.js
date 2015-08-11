@@ -22,3 +22,4 @@ require('./handleAlarmDialog');
 require('./messageBoxService');
 require('./socketMessageService');
 require('./alarmMessageService');
+require('./orderStateChangeMessage');

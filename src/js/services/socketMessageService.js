@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var socketMessageService = function($rootScope, alarmMessageService) {
+var socketMessageService = function($rootScope, alarmMessageService, orderStateChangeMessage) {
 	return {
 
 		message: function(data) {
@@ -9,6 +9,7 @@ var socketMessageService = function($rootScope, alarmMessageService) {
 			switch (type) {
 
 				case 1:
+					orderStateChangeMessage.message(data.msg);
 					break;
 
 				case 2:
@@ -26,6 +27,6 @@ var socketMessageService = function($rootScope, alarmMessageService) {
 	};
 };
 
-socketMessageService.$inject = ['$rootScope', 'alarmMessageService'];
+socketMessageService.$inject = ['$rootScope', 'alarmMessageService', 'orderStateChangeMessage'];
 
 services.factory('socketMessageService', socketMessageService);

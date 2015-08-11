@@ -68,6 +68,21 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 				});
 		},
 
+		getOrders: function(status) {
+			var immediateOrReservation = this.isImmediate ? 1 : 0;
+			return $http.get('search.htm', {
+				params: {
+					all: 0,
+					page: 1,
+					pagesize: 6,
+					callType: this.callType,
+					isImmediate: immediateOrReservation,
+					k: '',
+					status: status	 
+				}	
+			});	
+		},
+
 		getPreparedOrders: function() {
 			this.initParams();
 			this.currentOrderType = 1;
@@ -122,6 +137,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 
 		addNewOrder: function(orderData) {
 			var defer = $q.defer();
+			var self = this;
 			orderData = orderUtils.convertOrderServerData(orderData);
 			orderData.callType = this.callType;
 			$q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
@@ -134,54 +150,89 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					orderData.destinationLongitude = destinationLngLat.lng;
 					orderData.destinationLatitude = destinationLngLat.lat;
 
-					$http.post('call.htm', orderData)
-						.then(function(response) {
-							response = response.data;
-							if (parseInt(response.status) === 0 &&
-								response.sn &&
-								response.sn.length > 2) {
-								//add order success
-								defer.resolve({
-									sn: response.sn,
-									order: orderData
-								});	
-							} else {
-								defer.reject(response.code);	
-							}
+					self.add(orderData)
+						.then(function(sn) {
+							orderData.sn = sn;
+							defer.resolve(orderData);	
 						}, function() {
-							defer.reject('about server error');	
+							defer.reject();	
 						});
 				});
 
 			return defer.promise;
 		},
 
-		getVriableOrders: function(status, sn) {
-			var orderSearchParams = angular.copy(store.orderSearchParams);
-			orderSearchParams.status = status;
-			return $http.get(orderGetUrl, {params: orderSearchParams})
+		add: function(orderData) {
+			var defer = $q.defer();
+			$http.post('call.htm', orderData)
 				.then(function(response) {
-					angular.copy(response.data.list, store.variableOrders);	
-					var variableOrders = store.variableOrders;
-					for (var i = 0, ii = variableOrders.length; i < ii; i++) {
-						if (variableOrders[i].sn === sn) {
-							angular.copy(variableOrders, store.orders);	
-							store.orders[i].isNewAdd = true;
-							return true;
-						}	
+					if (response.data.sn) {
+						defer.resolve(response.data.sn);	
+					}	else {
+						defer.reject();	
 					}
-					return $q.reject();
+				}, function() {
+					defer.reject();	
 				});	
+
+			return defer.promise;
 		},
+
+		receiveOrderUpdate: function(sn) {
+			return this.updateOrder(2, sn);
+		},
+
+		startedOrderUpdate: function(sn) {
+			return this.updateOrder(3, sn);	
+		},
+
+		doneOrderUpdate: function(sn) {
+			return this.updateOrder(4, sn);
+		},
+
+		updateOrder: function(status, sn) {
+			if (this.isPauseSearch) {
+				return $q.reject();	
+			}
+			var defer = $q.defer();	
+			var self = this;
+			this.getOrders(status).then(function(response) {
+				var orders = response.data.list;	
+				if (orders.length === 0) {
+					defer.reject();	
+				} else {
+					var shouldUpdate = false;
+					for (var i = 0, ii = orders.length; i < ii; i ++) {
+						if (orders[i].sn === sn) {
+							orders[i].isNewAdd = true;
+							shouldUpdate = true;	
+							break;
+						}	
+					}	
+					if (shouldUpdate) {
+						angular.copy(orders, self.orders);
+						self.currentOrderType = status;
+						defer.resolve();	
+					} else {
+						defer.reject();	
+					}
+				}
+			});
+
+			return defer.promise;
+		},
+
+		
 
 		/**
 		 * @param {string}
 		 * @param {json}
 		 */
-		addNewOrderState: function(sn, newOrderData) {
-			var orders = store.orders;
+		addNewOrderState: function(newOrderData) {
+			var orders = this.orders;
 			newOrderData = orderUtils.convertOrderItemData(newOrderData);
 			newOrderData.isNewAdd = true;
+			var sn = newOrderData.sn;
 			if (orders.length === 0) {
 				orders.push(newOrderData);	
 			} else {

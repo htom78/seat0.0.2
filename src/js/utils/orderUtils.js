@@ -42,9 +42,9 @@ var orderUtils = function($filter) {
 		},
 
 		//###########################################
-		convertOrderItemData: function(orderData, sn) {
+		convertOrderItemData: function(orderData) {
 			return {
-				sn: sn,
+				sn: orderData.sn,
 				timeCreated: new Date(),
 				user: orderData.fullName,
 				contactPhone: orderData.actualTel,

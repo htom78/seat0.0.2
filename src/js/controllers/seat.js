@@ -39,13 +39,11 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 	$scope.addNewOrder = function() {
 		$scope.sendingOrderData = true;
 		seatService.addNewOrder($scope.orderData)
-			.then(function (response) {
-				var sn = response.sn;
-				var newOrderData = response.order;
+			.then(function (newOrderData) {
 				$scope.initOrderDataAndUserData();	
 				$scope.cutOrderTabPrepared()
 					.then(function() {
-						seatService.addNewOrderState(sn, newOrderData);
+						seatService.addNewOrderState(newOrderData);
 					});
 			}, function (err) {
 				alert('订单提交失败:' + err);
@@ -164,42 +162,25 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 		}
 	});
 
-//socket
-	$scope.$on('order:stateChange', function(ev, orderInfo) {
-		if ($scope.pause || seatService.pauseSearch) {
-			return;	
-		}
-		$timeout(function() {
-			var sn = orderInfo.sn;
-			switch (orderInfo.state) {
-				case 'received':
-					seatService.getVriableOrders(2, sn)
-						.then(function() {
-							$scope.currentOrderTab = 'received';
-						}, function() {
-							console.log('receive error');	
-						});
-					break;	
-				case 'started':
-					seatService.getVriableOrders(3, sn)
-						.then(function() {
-							$scope.currentOrderTab = 'started';
-						}, function() {
-							console.log('started error');	
-						});
-					break;
-				case 'done':
-					seatService.getVriableOrders(4, sn)
-						.then(function() {
-							$scope.currentOrderTab = 'done';
-						}, function() {
-							console.log('done error');	
-						});
-					break;
-			}
-		}, 200);
 	
+	$scope.$on('order:receive', function(ev, data) {
+		seatService.receiveOrderUpdate(data.sn).then(function() {
+			$scope.currentOrderTab = 'receive';	
+		});
 	});
+
+	$scope.$on('order:depart', function(ev, data) {
+		seatService.startedOrderUpdate(data.sn).then(function() {
+			$scope.currentOrderTab = 'stated';	
+		});
+	});
+
+	$scope.$on('order:done', function(ev, data) {
+		seatService.doneOrderUpdate(data.sn).then(function() {
+			$scope.currentOrderTab = 'done';	
+		});
+	});
+
 };
 
 
