@@ -6,7 +6,9 @@ var confirmDialog = function(messageBoxService) {
 		scope: {
 			ctrl: '@boxCtrl',
 			yes: '&ensureFn',
-			message: '@messageBox'
+			message: '@messageBox',
+			inputShow: '@inputShow',
+			labelName: '@labelName'
 		},	
 
 		link: function(scope, elem) {
@@ -22,12 +24,22 @@ var confirmDialog = function(messageBoxService) {
 			}
 
 			scope.ensure = function() {
-				messageBoxService.close();
-				scope.yes();
+				if (scope.isInputShow() && scope.input) {
+					scope.yes({input: scope.input});
+					messageBoxService.close();
+					scope.input = '';
+				} else if (!scope.isInputShow()){
+					scope.yes();	
+					messageBoxService.close();
+				}
 			};
 
 			scope.cancel = function() {
 				messageBoxService.close();
+			};
+
+			scope.isInputShow = function() {
+				return !!scope.inputShow;	
 			};
 		}
 	};

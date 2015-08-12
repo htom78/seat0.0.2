@@ -76,8 +76,8 @@
 					<div><button class='btn-normal search-btn'><i></i></button></div>
 				</form>
 			</div>
-			<a href='javascript:;' class='leader-reservation' ng-click='toggleSearchType()'>
-				<span class='btn-word'>{{searchType}}</span>
+			<a href='javascript:;' class='leader-reservation' ng-click='toggleImmediateOrReservation()'>
+				<span class='btn-word'>{{immediateOrReservation}}</span>
 			</a>
 			<ul class='flex'>
 				<li>
@@ -150,10 +150,7 @@
 				<tbody>
 					<tr 
 						ng-repeat='item in orders' 
-						order-step='item' 
-						show-info='showInfo(sn, pos, $index)'
-						ng-dblclick='orderStepInfo(item)'
-						map-show='mapShow'
+						leader-order-info='item'
 						ng-class='{active: item.isActive}'>
 						<td>{{$index + 1}}</td>
 						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>

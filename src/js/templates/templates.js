@@ -130,6 +130,12 @@ angular.module("component/messageBox.html", []).run(["$templateCache", function(
   $templateCache.put("component/messageBox.html",
     "<div class='box-wrap'>\n" +
     "	<h1 class='box-title'>{{message}}</h1>\n" +
+    "	<div class='message-input-wrap' ng-show='isInputShow()'>\n" +
+    "		<label>{{labelName}}</label>\n" +
+    "		<input \n" +
+    "			type='input'\n" +
+    "			ng-model='input'/>\n" +
+    "	</div>\n" +
     "	<div class='message-box-btns'>\n" +
     "		<button \n" +
     "			class='message-box-ensure btn-normal'\n" +
@@ -171,29 +177,51 @@ angular.module("component/stepInfo.html", []).run(["$templateCache", function($t
     "<div class='step'>\n" +
     "	<ul class='flex'>\n" +
     "		<li>\n" +
-    "			<p>{{step.createTime}}</p>\n" +
+    "			<p>{{orderInfo.createTime}}</p>\n" +
     "			<p>乘客电话召车</p>\n" +
     "		</li>\n" +
     "		<li>\n" +
     "			<p>司机抢单成功</p>\n" +
-    "			<p>{{step.orderTime}}</p>\n" +
+    "			<p>{{orderInfo.orderTime}}</p>\n" +
     "		</li>\n" +
     "		<li>\n" +
-    "			<p>{{step.pickupTime}}</p>\n" +
+    "			<p>{{orderInfo.pickupTime}}</p>\n" +
     "			<p>司机接到乘客</p>\n" +
     "		</li>\n" +
     "		<li>\n" +
     "			<p>到达目的</p>\n" +
-    "			<p>{{step.endTime}}</p>\n" +
+    "			<p>{{orderInfo.endTime}}</p>\n" +
     "		</li>\n" +
     "	</ul>\n" +
     "</div>\n" +
     "\n" +
     "<div class='btns'>\n" +
-    "	<button ng-click='showAssign()' ng-show='isAssignBtnShow()'>指派</button>\n" +
-    "	<button ng-click='cancelOrder()' ng-show='isCancelBtnShow()'>取消</button>\n" +
-    "	<button ng-click='passengerFuck()' ng-show='isPassengerFuckBtnShow()'>乘客放空</button>\n" +
-    "	<button ng-click='driverFuck()' ng-show='isDriverFuckBtnShow()'>司机爽约</button>\n" +
+    "	<button \n" +
+    "		confirm-dialog\n" +
+    "		box-ctrl='leaderCtrl'\n" +
+    "		message-box='指派'\n" +
+    "		input-show='true'\n" +
+    "		label-name='指派车辆'\n" +
+    "		ensure-fn='assignCar(input)'\n" +
+    "		ng-show='isAssignBtnShow()'>指派</button>\n" +
+    "	<button \n" +
+    "		confirm-dialog\n" +
+    "		box-ctrl='leaderCtrl'\n" +
+    "		message-box='确认处理?'\n" +
+    "		ensure-fn='cancelOrder()'\n" +
+    "		ng-show='isCancelBtnShow()'>取消</button>\n" +
+    "	<button \n" +
+    "		confirm-dialog\n" +
+    "		box-ctrl='leaderCtrl'\n" +
+    "		message-box='确认处理?'\n" +
+    "		ensure-fn='passengerFuck()'\n" +
+    "		ng-show='isPassengerFuckBtnShow()'>乘客放空</button>\n" +
+    "	<button \n" +
+    "		confirm-dialog\n" +
+    "		box-ctrl='leaderCtrl'\n" +
+    "		message-box='确认处理?'\n" +
+    "		ensure-fn='driverFuck()'\n" +
+    "		ng-show='isDriverFuckBtnShow()'>司机爽约</button>\n" +
     "</div>\n" +
     "");
 }]);
@@ -482,8 +510,8 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "					<div><button class='btn-normal search-btn'><i></i></button></div>\n" +
     "				</form>\n" +
     "			</div>\n" +
-    "			<a href='javascript:;' class='leader-reservation' ng-click='toggleSearchType()'>\n" +
-    "				<span class='btn-word'>{{searchType}}</span>\n" +
+    "			<a href='javascript:;' class='leader-reservation' ng-click='toggleImmediateOrReservation()'>\n" +
+    "				<span class='btn-word'>{{immediateOrReservation}}</span>\n" +
     "			</a>\n" +
     "			<ul class='flex'>\n" +
     "				<li>\n" +
@@ -556,10 +584,7 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "				<tbody>\n" +
     "					<tr \n" +
     "						ng-repeat='item in orders' \n" +
-    "						order-step='item' \n" +
-    "						show-info='showInfo(sn, pos, $index)'\n" +
-    "						ng-dblclick='orderStepInfo(item)'\n" +
-    "						map-show='mapShow'\n" +
+    "						leader-order-info='item'\n" +
     "						ng-class='{active: item.isActive}'>\n" +
     "						<td>{{$index + 1}}</td>\n" +
     "						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>\n" +

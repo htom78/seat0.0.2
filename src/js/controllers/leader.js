@@ -1,19 +1,10 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leaderMapService, $location, security, leaderOrderStorageService) {
+var leaderCtrl = function($scope, $timeout, leaderMapService, $location, security, leaderService) {
 
 
-	$scope.orders = leaderOrderStorageService.orders;
+	$scope.orders = leaderService.orders;
 	
-	$scope.$watch(function() {
-		return security.isLeader();	
-	}, function(isLeader) {
-		if (!isLeader) {
-			$location.path('/');	
-		}	
-	});
-
-
 	//图表 = > 员工tab切换
 	$scope.chartEmployer = {
 		currentTab: 'busy'
@@ -29,35 +20,35 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 
 	//######################################################################################
 
-	$scope.currentOrderTab = 'prepared';
 	$scope.isCurrentOrderTab = function(tabName) {
 		return tabName === $scope.currentOrderTab;
 	};
 
 	$scope.cutOrderTabPrepared = function() {
 		$scope.currentOrderTab = 'prepared';
-		leaderOrderStorageService.getPrepared();	
+		leaderService.getPreparedOrders();	
 	};
 
 	$scope.cutOrderTabReceived = function() {
 		$scope.currentOrderTab = 'received';
-		leaderOrderStorageService.getReceived();	
+		leaderService.getReceivedOrders();	
 	};
 
 	$scope.cutOrderTabStarted = function() {
 		$scope.currentOrderTab = 'started';
-		leaderOrderStorageService.getStarted();	
+		leaderService.getStartedOrders();	
 	};
 
 	$scope.cutOrderTabDone = function() {
 		$scope.currentOrderTab = 'done';
-		leaderOrderStorageService.getDone();	
+		leaderService.getDoneOrders();	
 	};
 
 	$scope.cutOrderTabException = function() {
 		$scope.currentOrderTab = 'exception';
-		leaderOrderStorageService.getException();	
+		leaderService.getExceptionOrders();	
 	};
+	$scope.currentOrderTab = 'prepared';
 
 	$scope.preparedOrderTabCount = [0, 0, 0];
 	$scope.receivedOrderTabCount = [0, 0, 0];
@@ -66,146 +57,40 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 	$scope.exceptionOrderTabCount = [0, 0, 0];
 
 	$scope.$watch('orders', function() {
-		$scope.orderCurrentPage = leaderOrderStorageService.currentOrderPage;
-		$scope.orderItemCount = leaderOrderStorageService.orderItemCount;
-		$scope[$scope.currentOrderTab + 'OrderTabCount'] = leaderOrderStorageService.getShowOrderCount();
+		$scope.orderCurrentPage = leaderService.currentPage;
+		$scope.orderItemCount = leaderService.currentOrderTotal;
+		$scope[$scope.currentOrderTab + 'OrderTabCount'] = leaderService.getShowOrderCount();
 	}, true);
 
 	//点击分页
 	$scope.onSelectPage = function(pageNumber) {
-		leaderOrderStorageService.getSelectPageOrder(pageNumber);
+		leaderService.getOrderByPageNumber(pageNumber);
 	};
 
 	//搜索
 	$scope.searchOrder = function() {
-		leaderOrderStorageService.searchOrderForKeywords($scope.words);
+		leaderService.getCurrentOrdersByKeywords($scope.words);
 	};
 
-	$scope.searchType = '即';
-	//即时、预约切换
-	$scope.toggleSearchType = function() {
-		if ($scope.searchType === '即') {
-			$scope.searchType = '预';	
-			leaderOrderStorageService.orderSearchParams.isImmediate = 0;
+	$scope.immediateOrReservation = '即';
+	$scope.toggleImmediateOrReservation = function() {
+		if ($scope.immediateOrReservation === '即') {
+			$scope.immediateOrReservation = '预';	
+			leaderService.selectReservation();
 		} else {
-			$scope.searchType = '即';	
-			leaderOrderStorageService.orderSearchParams.isImmediate = 1;
+			$scope.immediateOrReservation = '即';	
+			leaderService.selectImmediate();
 		}	
-		leaderOrderStorageService.refreshCurrentOrderTab();
+		leaderService.refreshCurrentOrder();
 	};
 
-	$scope.step = {};
-
-	$scope.orderStepInfo = function(orderItem) {
-		leaderOrderStorageService.getOrderStepInfo(orderItem)
-			.then(function(response) {
-				$scope.step = response;
-				orderStepDialog.open($scope);
-				if ($scope.currentOrderTab === 'done') {
-					leaderMapService.setPath({
-						pickupX: response.pickupX,
-						pickupY: response.pickupY,
-						assignedX: response.assignedX,
-						assignedY: response.assignedY,
-						arrivedY: response.arrivedY,
-						arrivedX: response.arrivedX
-					});
-				} else {
-					leaderMapService.clearPath();	
-				}
-			});	
+	$scope.showMap = function() {
+		$scope.mapShow = true;	
 	};
 
-
-	//指派
-	$scope.showAssign = function() {
-		assignDialog
-			.open($scope)
-			.then(function() {
-			    $scope.carPlate = '';	
-			});
+	$scope.closeMap = function() {
+		$scope.mapShow = false;	
 	};
-
-	//取消订单
-	$scope.cancelOrder = function() {
-		leaderOrderStorageService.dealCancelOrder();
-	};
-
-	//乘客放空
-	$scope.passengerFuck = function() {
-		leaderOrderStorageService.dealPassengerFuckOrder();
-	};
-
-	//司机放空
-	$scope.driverFuck = function() {
-		leaderOrderStorageService.dealDriverFuckOrder();
-	};
-
-	$scope.assigning = function() {
-		leaderOrderStorageService.assignOrderToCarPlate($scope.carPlate)
-			.finally(function() {
-				assignDialog.close();
-			});
-	};
-
-	$scope.cancelAssign = function() {
-		assignDialog.close();
-	};
-
-
-	/*******************************/
-	$scope.$on('$destroy', function() {
-		orderStepDialog.close();
-	});
-
-	//地图显示
-	$scope.closeMapView = function() {
-		orderStepDialog.close();
-		leaderOrderStorageService.clearOrderItemActive();
-	};
-
-
-
-	//双击表单出来的，控制按钮，权限控制
-	$scope.isAssignBtnShow = function() {
-		if ($scope.currentOrderTab === 'done' ||
-			$scope.currentOrderTab === 'received') {
-			return false;
-		} else {
-			return true;
-		}
-	};
-
-	$scope.isCancelBtnShow = function() {
-		if ($scope.currentOrderTab === 'done' ||
-			$scope.currentOrderTab === 'started') {
-			return false;
-		} else {
-			return true;
-		}
-	};
-
-	$scope.isPassengerFuckBtnShow = function() {
-		if ($scope.currentOrderTab === 'exception' ||
-			$scope.currentOrderTab === 'received') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	$scope.isDriverFuckBtnShow = function() {
-		if ($scope.currentOrderTab === 'exception' ||
-			$scope.currentOrderTab === 'started' ||
-			$scope.currentOrderTab === 'received') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	//---------------------------------------------------------------
-
 	//图表数据
 	$scope.employChart = {
 		busy: 1,
@@ -240,12 +125,29 @@ var leaderCtrl = function($scope, orderStepDialog, assignDialog, $timeout, leade
 	}, 4000);
 	/***************************************/
 
+	$scope.$watch(function() {
+		return security.isLeader();	
+	}, function(isLeader) {
+		if (!isLeader) {
+			$location.path('/');	
+		}	
+	});
+
+	$scope.$watch(function() {
+		return leaderService.isMapShow;	
+	}, function(isShow) {
+		if (isShow) {
+			$scope.mapShow = true;	
+		} else {
+			$scope.mapShow = false;	
+		}	
+	});
+
+
 };
 
 leaderCtrl.$inject = [
 	'$scope',
- 	'orderStepDialog',
- 	'assignDialog',
  	'$timeout',
  	'leaderMapService',
  	'$location',
