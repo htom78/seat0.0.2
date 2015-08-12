@@ -7,6 +7,9 @@ var leaderMap = function(leaderMapService) {
 		},
 		link: function(scope, elem) {
 			leaderMapService.mapView(elem);
+			elem.on('click', function(ev) {
+				ev.stopPropagation();	
+			});
 		}
 	};
 };

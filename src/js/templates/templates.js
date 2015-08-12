@@ -585,7 +585,6 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "					<tr \n" +
     "						ng-repeat='item in orders' \n" +
     "						leader-order-info='item'\n" +
-    "						current-tab='currentOrderTab'\n" +
     "						ng-class='{active: item.isActive}'>\n" +
     "						<td>{{$index + 1}}</td>\n" +
     "						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>\n" +

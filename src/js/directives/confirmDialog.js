@@ -24,11 +24,13 @@ var confirmDialog = function(messageBoxService) {
 			}
 
 			scope.ensure = function() {
-				messageBoxService.close();
-				if (scope.input) {
+				if (scope.isInputShow() && scope.input) {
 					scope.yes({input: scope.input});
-				} else {
+					messageBoxService.close();
+					scope.input = '';
+				} else if (!scope.isInputShow()){
 					scope.yes();	
+					messageBoxService.close();
 				}
 			};
 

@@ -48,7 +48,7 @@ var leaderCtrl = function($scope, orderStepDialog, $timeout, leaderMapService, $
 		$scope.currentOrderTab = 'exception';
 		leaderService.getExceptionOrders();	
 	};
-	//$scope.currentOrderTab = 'prepared';
+	$scope.currentOrderTab = 'prepared';
 
 	$scope.preparedOrderTabCount = [0, 0, 0];
 	$scope.receivedOrderTabCount = [0, 0, 0];
@@ -84,14 +84,13 @@ var leaderCtrl = function($scope, orderStepDialog, $timeout, leaderMapService, $
 		leaderService.refreshCurrentOrder();
 	};
 
+	$scope.showMap = function() {
+		$scope.mapShow = true;	
+	};
 
-
-
-	/*******************************/
-
-
-	//---------------------------------------------------------------
-
+	$scope.closeMap = function() {
+		$scope.mapShow = false;	
+	};
 	//图表数据
 	$scope.employChart = {
 		busy: 1,
@@ -131,6 +130,16 @@ var leaderCtrl = function($scope, orderStepDialog, $timeout, leaderMapService, $
 	}, function(isLeader) {
 		if (!isLeader) {
 			$location.path('/');	
+		}	
+	});
+
+	$scope.$watch(function() {
+		return leaderService.isMapShow;	
+	}, function(isShow) {
+		if (isShow) {
+			$scope.mapShow = true;	
+		} else {
+			$scope.mapShow = false;	
 		}	
 	});
 

@@ -14,7 +14,21 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 			this.initParams();	
 			this.isImmediate = true;
 			this.orders = [];
+			this.currentTabName = 'prepared';
 			this.currentOrderTotal = 0;
+			this.isMapShow = false;
+		},
+
+		getCurrentTabName: function() {
+			return store.currentTabName;	
+		},
+
+		showMap: function() {
+			this.isMapShow = true;	
+		},
+
+		closeMap: function() {
+			this.isMapShow = false;	
 		},
 
 		selectImmediate: function() {
@@ -47,32 +61,42 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 		},
 
 		getPreparedOrders: function() {
+			this.currentTabName = 'prepared';
 			this.initParams();
 			this.currentOrderType = 1;
 			return this.get();
 		},
 
 		getReceivedOrders: function() {
+			this.currentTabName = 'received';
 			this.initParams();
 			this.currentOrderType = 2;
 			return this.get();
 		},
 
 		getStartedOrders: function() {
+			this.currentTabName = 'started';
 			this.initParams();
 			this.currentOrderType = 3;
 			return this.get();
 		},
 
 		getDoneOrders: function() {
+			this.currentTabName = 'done';
 			this.initParams();
 			this.currentOrderType = 4;
 			return this.get();
 		},
 
 		getExceptionOrders: function() {
+			this.currentTabName = 'exception';
 			this.initParams();
 			this.currentOrderType = 0;
+			return this.get();
+		},
+
+		getOrderByPageNumber: function(num) {
+			this.currentPage = num || 1;	
 			return this.get();
 		},
 
@@ -104,11 +128,11 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 			return $http.post('cancel/6.htm', {sn: sn});
 		},
 
-		heandleDriverFuckOrder: function(sn) {
+		handleDriverFuckOrder: function(sn) {
 			return $http.post('cancel/7.htm', {sn: sn});
 		},
 
-		heandleCancelOrder: function(sn) {
+		handleCancelOrder: function(sn) {
 			return $http.post('cancel/1.htm', {sn: sn});
 		},
 
@@ -117,6 +141,13 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 				sn: sn,
 				number: carPlate	 
 			});	
+		},
+
+		removeOrder: function(order) {
+			var index = this.orders.indexOf(order);	
+			if (index !== -1) {
+				this.orders.splice(index, 1);	
+			}
 		}
 
 	};

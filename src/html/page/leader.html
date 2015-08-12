@@ -151,7 +151,6 @@
 					<tr 
 						ng-repeat='item in orders' 
 						leader-order-info='item'
-						current-tab='currentOrderTab'
 						ng-class='{active: item.isActive}'>
 						<td>{{$index + 1}}</td>
 						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
