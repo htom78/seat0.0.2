@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var leaderOrderStorageService = function($http, orderStepDialog) {
+var leaderOrderStorageService = function($http) {
 
 	var store = {
 
@@ -154,6 +154,6 @@ var leaderOrderStorageService = function($http, orderStepDialog) {
 	return store;
 };
 
-leaderOrderStorageService.$inject = ['$http', 'orderStepDialog', '$q'];
+leaderOrderStorageService.$inject = ['$http'];
 
 services.factory('leaderOrderStorageService', leaderOrderStorageService);

@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var leaderCtrl = function($scope, orderStepDialog, $timeout, leaderMapService, $location, security, leaderService) {
+var leaderCtrl = function($scope, $timeout, leaderMapService, $location, security, leaderService) {
 
 
 	$scope.orders = leaderService.orders;
@@ -148,7 +148,6 @@ var leaderCtrl = function($scope, orderStepDialog, $timeout, leaderMapService, $
 
 leaderCtrl.$inject = [
 	'$scope',
- 	'orderStepDialog',
  	'$timeout',
  	'leaderMapService',
  	'$location',

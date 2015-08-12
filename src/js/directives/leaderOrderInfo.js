@@ -1,6 +1,6 @@
 var directives = require('./index');
 
-var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
+var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMapService) {
 	return {
 
 		scope: {
@@ -9,6 +9,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 
 		link: function(scope, elem) {
 
+			scope.getCurrentTabName = leaderService.getCurrentTabName;
+
 			elem.on('dblclick', function(ev) {
 				scope.order.isActive = true;
 				leaderService.showMap();	
@@ -16,21 +18,39 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 					.then(function() {
 						scope.order.isActive = false;	
 						leaderService.closeMap();
+						leaderMapService.clearPath();
 					});	
 				leaderService.getOrderInfo(scope.order.sn)
 					.then(function(response) {
 						scope.orderInfo = response.data;	
+						if (scope.isDoneCurrentTab()) {
+							leaderMapService.setPath(scope.orderInfo);
+						}
 					});
 				var pos = elem.offset();
 				leaderOrderInfoDialog.setDialogStyle(pos.top + elem.height(), pos.left, elem.width() - 680);
 			});	
 
-			scope.getCurrentTabName = leaderService.getCurrentTabName;
+			scope.isExceptionCurrentTab = function() {
+				return scope.getCurrentTabName() === 'exception';	
+			};
+
+			scope.isDoneCurrentTab = function() {
+				return scope.getCurrentTabName() === 'done';	
+			};
+
+			scope.isReceivedCurrentTab = function() {
+				return scope.getCurrentTabName() === 'received';	
+			};
+
+			scope.isStartedCurrentTab = function() {
+				return scope.getCurrentTabName() === 'started';	
+			};
 
 			//双击表单出来的，控制按钮，权限控制
 			scope.isAssignBtnShow = function() {
-				if (scope.getCurrentTabName() === 'done' ||
-					scope.getCurrentTabName() === 'received') {
+				if (scope.isDoneCurrentTab() ||
+					scope.isReceivedCurrentTab()) {
 					return false;
 				} else {
 					return true;
@@ -38,8 +58,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 			};
 
 			scope.isCancelBtnShow = function() {
-				if (scope.getCurrentTabName() === 'done' ||
-					scope.getCurrentTabName() === 'started') {
+				if (scope.isDoneCurrentTab() ||
+					scope.isStartedCurrentTab()) {
 					return false;
 				} else {
 					return true;
@@ -47,8 +67,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 			};
 
 			scope.isPassengerFuckBtnShow = function() {
-				if (scope.getCurrentTabName() === 'exception' ||
-					scope.getCurrentTabName() === 'received') {
+				if (scope.isExceptionCurrentTab() ||
+					scope.isReceivedCurrentTab()) {
 					return true;
 				} else {
 					return false;
@@ -56,19 +76,14 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 			};
 
 			scope.isDriverFuckBtnShow = function() {
-				if (scope.getCurrentTabName() === 'exception' ||
-					scope.getCurrentTabName() === 'started' ||
-					scope.getCurrentTabName() === 'received') {
+				if (scope.isExceptionCurrentTab() ||
+					scope.isStartedCurrentTab() ||
+					scope.isReceivedCurrentTab()) {
 					return true;
 				} else {
 					return false;
 				}
 			};
-
-			scope.isExceptionCurrentTab = function() {
-				return scope.getCurrentTabName() === 'exception';	
-			};
-
 
 			scope.cancelOrder = function() {
 				leaderService.handleCancelOrder(scope.order.sn)
@@ -108,10 +123,10 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService) {
 					});
 			};
 
-			}
+		}
 	};
 };
 
-leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderOrderStorageService'];
+leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderOrderStorageService', 'leaderMapService'];
 
 directives.directive('leaderOrderInfo', leaderOrderInfo);
