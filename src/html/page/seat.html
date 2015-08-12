@@ -9,14 +9,14 @@
 					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>
 				</div>
 				<div class='justify'>
-					<span class='info-item'><i class='serial'></i>{{userData.orderNumber}}</span>
+					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial'></i>{{userData.sn}}</span>
 					<span class='info-item'>
 						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
 						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
 					</span>
 				</div>
 			</div>
-			<div class='graph' chart-user order-fuck='userData.orderFuck' order-total='userData.orderTotal'>
+			<div class='graph' chart-user order-fuck='userData.fkTotal' order-total='userData.total'>
 			</div>
 		</div>
 		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>
@@ -50,7 +50,7 @@
 						class='input-normal'
 						maxlength='30'
 						ng-required='true'
-						ng-model='orderData.fullName'
+						ng-model='orderData.contactName'
 						placeholder='用户姓名'/>
 					<input 
 						type='radio' 
@@ -80,7 +80,7 @@
 						ng-model='orderData.start'
 						placeholder='出发位置'
 						words-place='orderData.start'
-						start-list='orderData.startList'/>
+						start-list='orderData.poiList'/>
 				</li>
 				<li>
 					<label class='icon-label around-label'><i></i></label>
@@ -120,7 +120,7 @@
 						ng-required='true'
 						placeholder='目的地'/>
 					<datalist id='orderDestination'>
-						<option  ng-repeat='item in orderData.destinationList' value='{{item}}'>
+						<option  ng-repeat='item in orderData.targetpoiList' value='{{item}}'>
 					</datalist>
 				</li>
 				<li>

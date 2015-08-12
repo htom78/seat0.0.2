@@ -16,7 +16,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			this.exceptionOrderCount = 0;
 			this.averageTimer = 0;
 			this.orders = [];
-			this.variableOrders = [];
 		},
 
 		selectSpecialCar: function() {
@@ -51,7 +50,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 				}
 			})
 				.then(function(response) {
-					angular.copy(response.data.list, store.orders);
+					angular.copy(response.data.list, self.orders);
 					var total = response.data.total;
 					if (self.currentOrderType === 0) {
 						self.exceptionOrderCount = total;	
@@ -222,12 +221,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			return defer.promise;
 		},
 
-		
-
-		/**
-		 * @param {string}
-		 * @param {json}
-		 */
 		addNewOrderState: function(newOrderData) {
 			var orders = this.orders;
 			newOrderData = orderUtils.convertOrderItemData(newOrderData);
@@ -248,6 +241,27 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 					orders.unshift(newOrderData);
 				}
 			}	
+		},
+
+		queryOrderBySn: function(sn, isImmediate) {
+			return $http.get('search.htm', {
+				params: {
+					all: 0,
+					page: 1,
+					pagesize: 6,
+					callType: this.callType,
+					isImmediate: isImmediate,
+					k: sn,
+					status: -1
+				}
+			}).then(function(response) {
+				var orders = response.data.list;
+				if (orders && orders.length > 0) {
+					return orders[0];	
+				} else {
+					return $q.reject();	
+				}
+			});	
 		}
 
 	};

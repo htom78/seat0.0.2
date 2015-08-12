@@ -45,6 +45,7 @@
 			font-size: 12px;
 		}
 		.info-item{
+			cursor: Default;
 			display: inline-block;
 			@include icon-bg($icon-small-size, $color-text);
 		}

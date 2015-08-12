@@ -886,14 +886,14 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>\n" +
     "				</div>\n" +
     "				<div class='justify'>\n" +
-    "					<span class='info-item'><i class='serial'></i>{{userData.orderNumber}}</span>\n" +
+    "					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial'></i>{{userData.sn}}</span>\n" +
     "					<span class='info-item'>\n" +
     "						<span><b class='legend-dot dot-order-count'></b>订单次数</span>\n" +
     "						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>\n" +
     "					</span>\n" +
     "				</div>\n" +
     "			</div>\n" +
-    "			<div class='graph' chart-user order-fuck='userData.orderFuck' order-total='userData.orderTotal'>\n" +
+    "			<div class='graph' chart-user order-fuck='userData.fkTotal' order-total='userData.total'>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>\n" +
@@ -927,7 +927,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='input-normal'\n" +
     "						maxlength='30'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='orderData.fullName'\n" +
+    "						ng-model='orderData.contactName'\n" +
     "						placeholder='用户姓名'/>\n" +
     "					<input \n" +
     "						type='radio' \n" +
@@ -957,7 +957,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-model='orderData.start'\n" +
     "						placeholder='出发位置'\n" +
     "						words-place='orderData.start'\n" +
-    "						start-list='orderData.startList'/>\n" +
+    "						start-list='orderData.poiList'/>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<label class='icon-label around-label'><i></i></label>\n" +
@@ -997,7 +997,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-required='true'\n" +
     "						placeholder='目的地'/>\n" +
     "					<datalist id='orderDestination'>\n" +
-    "						<option  ng-repeat='item in orderData.destinationList' value='{{item}}'>\n" +
+    "						<option  ng-repeat='item in orderData.targetpoiList' value='{{item}}'>\n" +
     "					</datalist>\n" +
     "				</li>\n" +
     "				<li>\n" +

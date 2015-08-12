@@ -138,6 +138,7 @@ Chart.prototype.draw = function(pieData, lineData) {
 };
 
 Chart.prototype.drawTotalLine = function(total) {
+	total = total || 0;
 	var options = this.options,
 		context = this.canvasContext;
 	var x = this.pivotX - options.outPieRadius,

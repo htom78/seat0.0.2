@@ -1,7 +1,7 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatService, utils) {
+var seatCtrl = function ($scope,  userService, seatMapService, seatService, utils) {
 
 	$scope.orders = seatService.orders;
 
@@ -14,8 +14,8 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 	var currentTimer = new Date();
 	var initOrderData = {
 		gender: 1,
-		startList: [],
-		destinationList: [],
+		poiList: [],
+		targetpoiList: [],
 		count: 1,
 		isReservation: false,
 		isCarType: false,
@@ -24,16 +24,7 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 		reservationCalendar: moment().format('YYYY-MM-DD')
 	};
 
-	var initUserData = {
-		orderFuck: 0,
-		orderTotal: 0,
-		timeCreated: '',
-		orderNumber: '',
-		rank: ''
-	};
-
 	$scope.orderData = angular.copy(initOrderData);
-	$scope.userData = angular.copy(initUserData);
 
 	/*****************************************/
 	$scope.addNewOrder = function() {
@@ -56,16 +47,16 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 	$scope.initOrderDataAndUserData = function() {
 		$scope.mobilePosition = '';	
 		$scope.orderData = angular.copy(initOrderData);
-		$scope.userData = angular.copy(initUserData);
+		$scope.userData = {};
 		$scope.newOrder.$setPristine();
 		seatMapService.resetMap();
+		$scope.clearSearchWords();
 	};
 
 	//清空表单数据
 	$scope.cancelOrder = function() {
 		$scope.initOrderDataAndUserData();
 	};
-
 
 	$scope.addOrderFromForm = function() {
 		$scope.orderData.vehicleNumber = null;
@@ -124,6 +115,37 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 		seatService.refreshCurrentOrder();
 	};
 
+
+	$scope.queryOrderBySn = function() {
+		if ($scope.userData.sn) {
+			seatService.queryOrderBySn($scope.userData.sn, $scope.userData.isImmediate)
+				.then(function(order) {
+					$scope.changeOrderTab(order.status);
+					angular.copy([order], $scope.orders);
+					if ($scope.userData.isImmediate === 1) {
+						$scope.immediateOrReservation = '即时';	
+						seatService.selectImmediate();
+					} else if ($scope.userData.isImmediate === 0) {
+						$scope.immediateOrReservation = '预约';	
+						seatService.selectReservation();
+					}
+				});	
+		}
+	};
+
+	$scope.changeOrderTab = function(status) {
+		var tabsName = ['exception', 'prepared', 'received', 'started', 'done'];	
+		$scope.currentOrderTab = tabsName[status];
+	};
+
+	$scope.hasSearchWords = function() {
+		return $scope.inputOrderWords	&& $scope.inputOrderWords.trim().length > 0;
+	};
+
+	$scope.clearSearchWords = function() {
+		$scope.inputOrderWords = '';
+	};
+
 	//用户拨打电话进来，异步
 	$scope.$on('userCall', function(ev, data) {
 		$scope.initOrderDataAndUserData();
@@ -133,20 +155,17 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 
 		userService.getUserInfoByMobile(mobile)
 			.then(function(response) {
-				$scope.userData.orderFuck = response.fkTotal;
-				$scope.userData.orderTotal = response.total;
-				$scope.userData.timeCreated = response.timeCreated;
-				$scope.userData.orderNumber = response.sn;
-				$scope.userData.rank = response.rank;
 
-				$scope.orderData.fullName = response.contactName;
-				$scope.orderData.destinationList = response.targetpoiList;
-				$scope.orderData.startList = response.poiList;
+				$scope.userData = response;
+
+				$scope.orderData.contactName = response.contactName;
+				$scope.orderData.targetpoiList = response.targetpoiList;
+				$scope.orderData.poiList = response.poiList;
 			}, function() {
-				$scope.userData = angular.copy(initUserData);
-				$scope.orderData.fullName = '';
-				$scope.orderData.destinationList = [];
-				$scope.orderData.startList = [];
+				$scope.userData = {};
+				$scope.orderData.contactName = '';
+				$scope.orderData.targetpoiList = [];
+				$scope.orderData.poiList = [];
 			});
 	});
 
@@ -164,21 +183,27 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 
 	
 	$scope.$on('order:receive', function(ev, data) {
-		seatService.receiveOrderUpdate(data.sn).then(function() {
-			$scope.currentOrderTab = 'receive';	
-		});
+		if (!$scope.hasSearchWords()) {
+			seatService.receiveOrderUpdate(data.sn).then(function() {
+				$scope.currentOrderTab = 'receive';	
+			});
+		}
 	});
 
 	$scope.$on('order:depart', function(ev, data) {
-		seatService.startedOrderUpdate(data.sn).then(function() {
-			$scope.currentOrderTab = 'stated';	
-		});
+		if (!$scope.hasSearchWords()) {
+			seatService.startedOrderUpdate(data.sn).then(function() {
+				$scope.currentOrderTab = 'stated';	
+			});
+		}
 	});
 
 	$scope.$on('order:done', function(ev, data) {
-		seatService.doneOrderUpdate(data.sn).then(function() {
-			$scope.currentOrderTab = 'done';	
-		});
+		if (!$scope.hasSearchWords()) {
+			seatService.doneOrderUpdate(data.sn).then(function() {
+				$scope.currentOrderTab = 'done';	
+			});
+		}
 	});
 
 };
@@ -186,7 +211,6 @@ var seatCtrl = function ($scope, $timeout,  userService, seatMapService, seatSer
 
 seatCtrl.$inject = [
 	'$scope', 
-	'$timeout', 
 	'userService', 
 	'seatMapService', 
 	'seatOrderStorageService',
