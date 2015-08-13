@@ -1,6 +1,6 @@
 var directives = require('./index');
 
-var wordsPlace = function(mapService, $http, $templateCache, $compile, $document, $timeout, seatMapService, calculateAngleUtils) {
+var wordsPlace = function(mapService, $http, $templateCache, $compile, $document, $timeout, seatMapService) {
 	return {
 		scope: {
 			words: '=wordsPlace',
@@ -110,16 +110,13 @@ var wordsPlace = function(mapService, $http, $templateCache, $compile, $document
 							mapService
 								.geocode(scope.words)
 								.then(function(response) {
-									if (parseInt(response.lng) !== 0 ) {
-										seatMapService.setMarkerPosition(response.lng, response.lat);
-										//火星转gps
-										//var gcj2gps = calculateAngleUtils.gcj02ToGps84(response.lng, response.lat);
-										mapService
-											.getNearCars(response.lng + ',' + response.lat)
-											.then(function(response) {
-												seatMapService.addCarMarker(response);
-											});
-									}
+									seatMapService.setMarkerPosition(response.lng, response.lat);
+									//火星转gps
+									//var gcj2gps = calculateAngleUtils.gcj02ToGps84(response.lng, response.lat);
+									mapService.getNearCars(response.lng + ',' + response.lat)
+										.then(function(response) {
+											seatMapService.addCarMarker(response);
+										});
 								});
 						}
 					}, 200);
@@ -129,7 +126,7 @@ var wordsPlace = function(mapService, $http, $templateCache, $compile, $document
 	};
 };
 
-wordsPlace.$inject = ['mapService', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMapService', 'calculateAngleUtils'];
+wordsPlace.$inject = ['mapService', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMapService'];
 
 directives.directive('wordsPlace', wordsPlace);
 

@@ -1086,7 +1086,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>\n" +
     "			</ul>\n" +
     "		</nav>\n" +
-    "		<div class='map' map-view>\n" +
+    "		<div class='map' seat-map-view>\n" +
     "		</div>\n" +
     "	</div>\n" +
     "\n" +

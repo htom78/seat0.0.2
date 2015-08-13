@@ -22,3 +22,4 @@ require('./socketMessageService');
 require('./alarmMessageService');
 require('./orderStateChangeMessage');
 require('./leaderOrderInfoDialog');
+require('./myHttpInterceptor');

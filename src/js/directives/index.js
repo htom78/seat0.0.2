@@ -1,5 +1,5 @@
 module.exports = angular.module('app.dirctives', []);
-require('./mapView');
+require('./seatMapView');
 require('./chartUser');
 require('./callStatus');
 require('./pagination');

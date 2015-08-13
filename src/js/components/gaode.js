@@ -28,7 +28,7 @@ var gaode = function($rootScope, properties) {
 	}
 
 	Map.prototype.open = function(elem) {
-		this.map = new AMap.Map(elem.get(0), {
+		this.map = new AMap.Map(elem, {
 						view: new AMap.View2D({
 							center: new AMap.LngLat(properties.lng, properties.lat),
 							zoom: 16
