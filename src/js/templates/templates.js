@@ -370,7 +370,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "			<li ng-show='hasLeaderBtn()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
     "			<li><a ng-href='{{appRoot}}/special.htm' class='btn-icon-large car-track'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large car-track'></a></li>\n" +
+    "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large listen'></a></li>\n" +
     "		</ul>\n" +
     "	</nav>\n" +
     "\n" +
@@ -930,9 +930,6 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='input-normal' \n" +
     "						disabled='disabled'\n" +
     "						ng-model='orderData.callingTel'/>\n" +
-    "					<input type='checkbox' class='checkbox' id='autoCall'/>\n" +
-    "					<label class='label-checkbox' for='autoCall'></label>\n" +
-    "					<label class='auto-call-label' for='autoCall'>自动回拨</label>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<label class='icon-label actual-label'><i></i></label>\n" +
@@ -952,7 +949,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='input-normal'\n" +
     "						maxlength='30'\n" +
     "						ng-required='true'\n" +
-    "						ng-model='orderData.contactName'\n" +
+    "						ng-model='orderData.fullName'\n" +
     "						placeholder='用户姓名'/>\n" +
     "					<input \n" +
     "						type='radio' \n" +
@@ -1191,7 +1188,6 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "				<table class='table'>\n" +
     "					<thead>\n" +
     "						<tr>\n" +
-    "							<th>NO</th>\n" +
     "							<th>订单编号</th>\n" +
     "							<th>用车时间</th>\n" +
     "							<th>乘客</th>\n" +
@@ -1204,9 +1200,8 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					</thead>\n" +
     "					<tbody>\n" +
     "						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{\"add-new\": item.isNewAdd}'>\n" +
-    "							<td>{{$index + 1}}</td>\n" +
     "							<td class='ellipsis'>{{item.sn}}</td>\n" +
-    "							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>\n" +
+    "							<td class='ellipsis'>{{item.timeCreated}}</td>\n" +
     "							<td class='ellipsis'>{{item.user}}</td>\n" +
     "							<td class='ellipsis'>{{item.contactPhone}}</td>\n" +
     "							<td class='ellipsis'>{{item.vehicleNumber}}</td>\n" +

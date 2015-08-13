@@ -27,6 +27,9 @@
 		.car-track {
 			@include icon-content('\e602');
 		}
+		.listen {
+			@include icon-content('\e61e');
+		}
 	}
 
 	.call-operate {

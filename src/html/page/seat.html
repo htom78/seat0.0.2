@@ -28,9 +28,6 @@
 						class='input-normal' 
 						disabled='disabled'
 						ng-model='orderData.callingTel'/>
-					<input type='checkbox' class='checkbox' id='autoCall'/>
-					<label class='label-checkbox' for='autoCall'></label>
-					<label class='auto-call-label' for='autoCall'>自动回拨</label>
 				</li>
 				<li>
 					<label class='icon-label actual-label'><i></i></label>
@@ -50,7 +47,7 @@
 						class='input-normal'
 						maxlength='30'
 						ng-required='true'
-						ng-model='orderData.contactName'
+						ng-model='orderData.fullName'
 						placeholder='用户姓名'/>
 					<input 
 						type='radio' 
@@ -289,7 +286,6 @@
 				<table class='table'>
 					<thead>
 						<tr>
-							<th>NO</th>
 							<th>订单编号</th>
 							<th>用车时间</th>
 							<th>乘客</th>
@@ -302,9 +298,8 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{"add-new": item.isNewAdd}'>
-							<td>{{$index + 1}}</td>
 							<td class='ellipsis'>{{item.sn}}</td>
-							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+							<td class='ellipsis'>{{item.timeCreated}}</td>
 							<td class='ellipsis'>{{item.user}}</td>
 							<td class='ellipsis'>{{item.contactPhone}}</td>
 							<td class='ellipsis'>{{item.vehicleNumber}}</td>

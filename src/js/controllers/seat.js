@@ -30,12 +30,10 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 	$scope.addNewOrder = function() {
 		$scope.sendingOrderData = true;
 		seatService.addNewOrder($scope.orderData)
-			.then(function (newOrderData) {
+			.then(function () {
 				$scope.initOrderDataAndUserData();	
-				$scope.cutOrderTabPrepared()
-					.then(function() {
-						seatService.addNewOrderState(newOrderData);
-					});
+				$scope.currentOrderTab = 'prepared';
+				$scope.updateOrderCallType();
 			}, function (err) {
 				alert('订单提交失败:' + err);
 			})
@@ -53,7 +51,6 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		$scope.clearSearchWords();
 	};
 
-	//清空表单数据
 	$scope.cancelOrder = function() {
 		$scope.initOrderDataAndUserData();
 	};
@@ -68,9 +65,6 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		$scope.orderData.vehicleNumber = carInfo.vehicleNumber;
 		$scope.addNewOrder();
 	});
-
-	//订单查询 右下部分
-	//exception(0),prepared(1),received(2),started(3),done(4);
 
 	$scope.currentOrderTab = 'prepared';
 	$scope.cutOrderTabPrepared = function() {
@@ -95,7 +89,7 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 	};
 
 	$scope.isCurrentTab = function(tabName) {
-		return tabName === $scope.currentOrderTab;
+		return $scope.currentOrderTab === tabName;
 	};
 
 	$scope.searchCurrentOrderByKeywords = function() {
@@ -103,7 +97,6 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 	};
 
 	$scope.immediateOrReservation = '即时';
-	//即时、预约切换
 	$scope.toggleImmediateOrReservation = function() {
 		if ($scope.immediateOrReservation === '即时') {
 			$scope.immediateOrReservation = '预约';	
@@ -120,20 +113,23 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		if ($scope.userData.sn) {
 			seatService.queryOrderBySn($scope.userData.sn, $scope.userData.isImmediate)
 				.then(function(order) {
-					$scope.changeOrderTab(order.status);
+					$scope.updateOrderTab(order.status);
+					$scope.updateOrderCallType();
 					angular.copy([order], $scope.orders);
-					if ($scope.userData.isImmediate === 1) {
-						$scope.immediateOrReservation = '即时';	
-						seatService.selectImmediate();
-					} else if ($scope.userData.isImmediate === 0) {
-						$scope.immediateOrReservation = '预约';	
-						seatService.selectReservation();
-					}
+					$scope.updateOrderCallType();
 				});	
 		}
 	};
 
-	$scope.changeOrderTab = function(status) {
+	$scope.updateOrderCallType = function() {
+		if (seatService.isImmediateSelect()) {
+			$scope.immediateOrReservation = '即时';
+		} else {
+			$scope.immediateOrReservation = '预约';
+		}
+	};
+
+	$scope.updateOrderTab = function(status) {
 		var tabsName = ['exception', 'prepared', 'received', 'started', 'done'];	
 		$scope.currentOrderTab = tabsName[status];
 	};
@@ -152,18 +148,15 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		var mobile = data.mobile;
 		$scope.orderData.callingTel = mobile;
 		$scope.orderData.actualTel = mobile;
-
 		userService.getUserInfoByMobile(mobile)
 			.then(function(response) {
-
 				$scope.userData = response;
-
-				$scope.orderData.contactName = response.contactName;
+				$scope.orderData.fullName = response.contactName;
 				$scope.orderData.targetpoiList = response.targetpoiList;
 				$scope.orderData.poiList = response.poiList;
 			}, function() {
 				$scope.userData = {};
-				$scope.orderData.contactName = '';
+				$scope.orderData.fullName = '';
 				$scope.orderData.targetpoiList = [];
 				$scope.orderData.poiList = [];
 			});
@@ -207,7 +200,6 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 	});
 
 };
-
 
 seatCtrl.$inject = [
 	'$scope', 

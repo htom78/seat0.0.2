@@ -34,6 +34,10 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			this.isImmediate = false;	
 		},
 
+		isImmediateSelect: function() {
+			return this.isImmediate;	
+		},
+
 		get: function() {
 			var self = this;
 			var immediateOrReservation = this.isImmediate ? 1 : 0;
@@ -135,33 +139,57 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 		},
 
 		addNewOrder: function(orderData) {
-			var defer = $q.defer();
 			var self = this;
 			orderData = orderUtils.convertOrderServerData(orderData);
 			orderData.callType = this.callType;
-			$q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
+			return $q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
 				.then(function(lngLats) {
 					var startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
 					var destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
-
 					orderData.startLongitude = startLngLat.lng;
 					orderData.startLatitude = startLngLat.lat;
 					orderData.destinationLongitude = destinationLngLat.lng;
 					orderData.destinationLatitude = destinationLngLat.lat;
 
-					self.add(orderData)
-						.then(function(sn) {
-							orderData.sn = sn;
-							defer.resolve(orderData);	
-						}, function() {
-							defer.reject();	
+					return orderData;
+				})
+				.then(function(orderData) {
+					return self.create(orderData);
+				})
+				.then(function(sn) {
+					if (orderData.reservationTime) {
+						self.selectReservation();
+					} else {
+						self.selectImmediate();	
+					}
+					var newOrder = {
+						sn: sn,
+						contactPhone: orderData.actualTel,
+						timeCreated: orderData.reservationTime || new Date(),
+						user: orderData.fullName,
+						poi: orderData.start,
+						'destination_poi': orderData.end,
+						isNewAdd: true
+					};
+					return newOrder;
+				})
+				.then(function(newOrder) {
+						return self.getPreparedOrders().then(function(orders) {
+							var hasOrder = false;
+							self.orders.forEach(function(order) {
+								if (order.sn === newOrder.sn) {
+									order.isNewAdd = true;
+									hasOrder = true;	
+								}
+							});
+							if (!hasOrder) {
+								self.orders.unshift(newOrder);	
+							}
 						});
 				});
-
-			return defer.promise;
 		},
 
-		add: function(orderData) {
+		create: function(orderData) {
 			var defer = $q.defer();
 			$http.post('call.htm', orderData)
 				.then(function(response) {
@@ -221,29 +249,12 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			return defer.promise;
 		},
 
-		addNewOrderState: function(newOrderData) {
-			var orders = this.orders;
-			newOrderData = orderUtils.convertOrderItemData(newOrderData);
-			newOrderData.isNewAdd = true;
-			var sn = newOrderData.sn;
-			if (orders.length === 0) {
-				orders.push(newOrderData);	
-			} else {
-				var flag = false;
-				for (var i = 0, ii = orders.length; i < ii; i++) {
-					if (orders[i].sn === sn) {
-						orders[i].isNewAdd = true;	
-						flag = true;
-						break;
-					}	
-				}
-				if (!flag) {
-					orders.unshift(newOrderData);
-				}
-			}	
-		},
-
 		queryOrderBySn: function(sn, isImmediate) {
+			if (isImmediate === 1) {
+				this.selectImmediate();	
+			} else {
+				this.selectReservation();	
+			}
 			return $http.get('search.htm', {
 				params: {
 					all: 0,
