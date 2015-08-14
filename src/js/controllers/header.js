@@ -1,6 +1,6 @@
 var controllers = require('./index');
 
-var headerCtrl = function($scope, $timeout, $filter, signService, security, socketService) {
+var headerCtrl = function($scope, $timeout, $filter, signService, security, socket) {
 
 	$scope.toggleSignState = function() {
 		$scope.currentState = 'free';
@@ -72,14 +72,14 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 	$scope.logout = function() {
 		signService.loginOut();
 		security.logout();
-		socketService.close();
+		socket.close();
 	};
 
 	security.requestCurrentUser()
 		.then(function(response) {
 			$scope.username = response; 	
 			$scope.isHeaderShow = true;
-			socketService.connection();
+			socket.connection();
 			$scope.isLeader = security.isLeader();
 			signService.getCurrentState()
 				.then(function(response) {
@@ -114,7 +114,7 @@ headerCtrl.$inject = [
  	'$filter',
  	'signService',
 	'security',
-	'socketService'
+	'socket'
 	];
 
 controllers.controller('headerCtrl', headerCtrl);

@@ -1,4 +1,4 @@
-var config = function($locationProvider, $httpProvider, socketServiceProvider, mapServiceProvider, myHttpInnterceptor, seatMapProvider) {
+var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider) {
 	$locationProvider.html5Mode(true);
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$httpProvider.defaults.transformRequest = [function(data) {
@@ -7,9 +7,9 @@ var config = function($locationProvider, $httpProvider, socketServiceProvider, m
 
 
 	var socketUrl = 'ws://' + location.host + window.appRoot + '/ws/server';
-	socketServiceProvider.setSocketUrl(socketUrl);
+	socketProvider.setSocketUrl(socketUrl);
 
-	mapServiceProvider.options(require('./gaodeOptions'));
+	mapProvider.options(require('./gaodeOptions'));
 	myHttpInnterceptor.options(require('./gaodeOptions'));
 	seatMapProvider.options(require('./gaodeOptions'));
 
@@ -19,10 +19,10 @@ var config = function($locationProvider, $httpProvider, socketServiceProvider, m
 config.$inject = [
 	'$locationProvider', 
 	'$httpProvider', 
-	'socketServiceProvider', 
-	'mapServiceProvider',
+	'socketProvider', 
+	'mapProvider',
 	'myHttpInterceptorProvider',
-	'seatMapServiceProvider'
+	'seatMapProvider'
 	];
 
 module.exports = config;

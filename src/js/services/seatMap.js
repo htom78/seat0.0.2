@@ -21,7 +21,7 @@ function createInfoWindow() {
 	return infoBox;
 }
 
-var seatMapService = function() {
+var seatMap = function() {
 
 	var mapOptions = {};
 
@@ -30,7 +30,7 @@ var seatMapService = function() {
 	};
 
 
-	this.$get = [function() {
+	this.$get = ['$rootScope', function($rootScope) {
 
 		var gaode = {
 
@@ -113,27 +113,47 @@ var seatMapService = function() {
 			},
 
 			carMarkerBindEvents: function() {
-				var self = this;	
-				
+				var self = this;
+				this.carMarkers.forEach(function(marker) {
+					AMap.event.addListener(marker, 'click', self.carMarkerEventFn.bind(self));	
+				});
 			},
 
 			carMarkerEventFn: function(ev) {
 				this.infoWindow.open(this.map, ev.target.getPosition());	
+				var currentCarInfo = this.currentCarInfo = ev.target.carInfo;
+				this.boxTitle.html('<span>' + currentCarInfo.vehicleNumber + '</span><span class="distance">距离:' + currentCarInfo.refDistance + '米</span>');
 			},
 
 			createInfoWindow: function() {
 				var self = this;
 				var boxInfo = createInfoWindow();	
 				this.boxBtn = $(boxInfo).find('button');
-				this.boxBtn.on('click', function() {
-					$rootScope.$broadcast('addNewOrder', this.currentCarInfo);	
-				});
+				this.boxTitle = $(boxInfo).find('.title');
 				this.infoWindow = new AMap.InfoWindow({
 					isCustom: true,
 					content: boxInfo,
 					offset: new AMap.Pixel(0, -45)	
 				});
+				this.boxBtn.on('click', this.infoWindowBtnEventFn.bind(this));
 			},
+
+			infoWindowBtnEventFn: function(ev) {
+				$rootScope.$broadcast('addNewOrder', this.currentCarInfo);	
+			},
+
+			clearCarMarkers: function() {
+				var self = this;
+				this.carMarkers.forEach(function(carMarker) {
+					AMap.event.removeListener(carMarker, 'click', self.carMarkerEventFn.bind(self));
+					carMarker.setMap(null);	
+				});
+				this.carMarkers = [];
+			},
+
+			clearWindowInfo: function() {
+				this.map.clearInfoWindow();	
+			},	
 
 			clearMarkers: function() {
 				if (this.marker) {
@@ -145,19 +165,20 @@ var seatMapService = function() {
 				this.circle = null;
 				this.marker = null;
 				this.clearCarMarkers();
+				this.clearWindowInfo();
 			},
 
-			clearCarMarkers: function() {
-
-				this.carMarkers.forEach(function(carMarker) {
-					carMarker.setMap(null);	
-				});
-
-				this.carMarkers = [];
-
-				//AMap.event.removeListener('click');
-				//this.clearInfoWindow();
-			}	
+			clearMap: function() {
+				this.clearMarkers();	
+				if (this.boxBtn) {
+					this.boxBtn.off('click', this.infoWindowBtnEventFn.bind(this));
+				}
+				this.boxBtn = null;
+				this.boxTitle = null;
+				this.infoWindow = null;
+				this.currentCarInfo = null;
+				this.map = null;
+			}
 
 		};
 
@@ -167,6 +188,7 @@ var seatMapService = function() {
 			},
 
 			setMarkerPosition: function(lng, lat) {
+				gaode.clearMarkers();
 				gaode.setMapCenter(lng, lat);
 				gaode.setCirclePosition(lng, lat);
 				gaode.setMarkerPosition(lng, lat);
@@ -174,6 +196,10 @@ var seatMapService = function() {
 
 			addCarMarker: function(carInfos) {
 				gaode.addCarMarker(carInfos);
+			},
+
+			clearMap: function() {
+				gaode.clearMap();
 			},
 
 			resetMap: function() {
@@ -185,4 +211,4 @@ var seatMapService = function() {
 
 };
 
-services.provider('seatMapService', seatMapService);
+services.provider('seatMap', seatMap);

@@ -1,7 +1,7 @@
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope,  userService, seatMapService, seatService, utils) {
+var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 
 	$scope.orders = seatService.orders;
 
@@ -28,18 +28,20 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 
 	/*****************************************/
 	$scope.addNewOrder = function() {
-		$scope.sendingOrderData = true;
-		seatService.addNewOrder($scope.orderData)
-			.then(function () {
-				$scope.initOrderDataAndUserData();	
-				$scope.currentOrderTab = 'prepared';
-				$scope.updateOrderCallType();
-			}, function (err) {
-				alert('订单提交失败:' + err);
-			})
-			.finally(function() {
-				$scope.sendingOrderData = false;
-			});
+		if ($scope.newOrder.$valid) {
+			$scope.sendingOrderData = true;
+			seatService.addNewOrder($scope.orderData)
+				.then(function () {
+					$scope.initOrderDataAndUserData();	
+					$scope.currentOrderTab = 'prepared';
+					$scope.updateOrderCallType();
+				}, function (err) {
+					alert('订单提交失败:' + err);
+				})
+				.finally(function() {
+					$scope.sendingOrderData = false;
+				});
+		}
 	};
 
 	$scope.initOrderDataAndUserData = function() {
@@ -47,7 +49,7 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		$scope.orderData = angular.copy(initOrderData);
 		$scope.userData = {};
 		$scope.newOrder.$setPristine();
-		seatMapService.resetMap();
+		seatMap.resetMap();
 		$scope.clearSearchWords();
 	};
 
@@ -173,7 +175,6 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 			$scope.mobilePosition = '';	
 		}
 	});
-
 	
 	$scope.$on('order:receive', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
@@ -199,12 +200,15 @@ var seatCtrl = function ($scope,  userService, seatMapService, seatService, util
 		}
 	});
 
+	$scope.$on('$destroy', function() {
+		seatMap.clearMap();	
+	});
 };
 
 seatCtrl.$inject = [
 	'$scope', 
 	'userService', 
-	'seatMapService', 
+	'seatMap', 
 	'seatOrderStorageService',
 	'utils'
 	];

@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
+var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $rootScope) {
 
 	var store = {
 
@@ -142,7 +142,7 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 			var self = this;
 			orderData = orderUtils.convertOrderServerData(orderData);
 			orderData.callType = this.callType;
-			return $q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
+			return $q.all([map.geocode(orderData.start), map.geocode(orderData.end)])
 				.then(function(lngLats) {
 					var startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
 					var destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
@@ -279,6 +279,6 @@ var seatOrderStorageService = function($http, $q, mapService, gpsGcjExchangeUtil
 	return store;
 };
 
-seatOrderStorageService.$inject = ['$http', '$q', 'mapService', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
+seatOrderStorageService.$inject = ['$http', '$q', 'map', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
 
 services.factory('seatOrderStorageService', seatOrderStorageService);

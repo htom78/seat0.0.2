@@ -1,13 +1,13 @@
 var directives = require('./index');
-var seatMapView = function(seatMapService) {
+var seatMapView = function(seatMap) {
 	return {
 		scope: {},
 		link: function(scope, elem) {
-			seatMapService.init(elem.get(0));
+			seatMap.init(elem.get(0));
 		}
 	};
 };
 
-seatMapView.$inject = ['seatMapService'];
+seatMapView.$inject = ['seatMap'];
 
 directives.directive('seatMapView', seatMapView);

@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var socketService = function() {
+var socket = function() {
 
 	this.socketUrl = '';
 
@@ -109,4 +109,4 @@ var socketService = function() {
 };
 
 
-services.provider('socketService', socketService);
+services.provider('socket', socket);
