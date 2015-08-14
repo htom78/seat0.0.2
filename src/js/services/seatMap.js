@@ -100,7 +100,7 @@ var seatMap = function() {
 					info = carInfos[i];
 					var marker = new AMap.Marker({
 						icon: new AMap.Icon({
-							size: new AMap.Size(22, 32),
+							size: new AMap.Size(mapOptions.markerSize.width, mapOptions.markerSize.height),
 							image: mapOptions.markerTaxiIcon 
 						}),
 						position: this.getPoint(info.lng, info.lat)

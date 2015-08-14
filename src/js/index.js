@@ -21,7 +21,6 @@ var requires = [
 var app = angular.module('app', requires)
 	.config(require('./routers'))
 	.config(require('./config'))
-	.constant('properties', require('./properties'))
 	.run(['$rootScope', 'callSocket', function($rootScope, callSocket) {
 
 		callSocket.connection();	
