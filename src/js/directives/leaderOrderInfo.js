@@ -1,6 +1,6 @@
 var directives = require('./index');
 
-var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMapService) {
+var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) {
 	return {
 
 		scope: {
@@ -18,13 +18,13 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMapSe
 					.then(function() {
 						scope.order.isActive = false;	
 						leaderService.closeMap();
-						leaderMapService.clearPath();
+						leaderMap.clearPath();
 					});	
 				leaderService.getOrderInfo(scope.order.sn)
 					.then(function(response) {
 						scope.orderInfo = response.data;	
 						if (scope.isDoneCurrentTab()) {
-							leaderMapService.setPath(scope.orderInfo);
+							leaderMap.setPath(scope.orderInfo);
 						}
 					});
 				var pos = elem.offset();
@@ -127,6 +127,6 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMapSe
 	};
 };
 
-leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderOrderStorageService', 'leaderMapService'];
+leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderOrderStorageService', 'leaderMap'];
 
 directives.directive('leaderOrderInfo', leaderOrderInfo);

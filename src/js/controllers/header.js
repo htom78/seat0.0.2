@@ -82,12 +82,12 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 			socket.connection();
 			$scope.isLeader = security.isLeader();
 			signService.getCurrentState()
-				.then(function(response) {
-					if (response.isSignIn) {
-						$scope.signInfo = 'signIn';	
-						$scope.currentState = response.currentCallingState;
-					}	
-				});
+			.then(function(response) {
+				if (response.isSignIn) {
+					$scope.signInfo = 'signIn';	
+					$scope.currentState = response.currentCallingState;
+				}	
+			});
 		}, function() {
 			$scope.isHeaderShow = false;	
 		});

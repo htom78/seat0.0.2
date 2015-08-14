@@ -38,9 +38,9 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 				}, function (err) {
 					alert('订单提交失败:' + err);
 				})
-				.finally(function() {
-					$scope.sendingOrderData = false;
-				});
+			.finally(function() {
+				$scope.sendingOrderData = false;
+			});
 		}
 	};
 
@@ -151,31 +151,26 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 		$scope.orderData.callingTel = mobile;
 		$scope.orderData.actualTel = mobile;
 		userService.getUserInfoByMobile(mobile)
-			.then(function(response) {
-				$scope.userData = response;
-				$scope.orderData.fullName = response.contactName;
-				$scope.orderData.targetpoiList = response.targetpoiList;
-				$scope.orderData.poiList = response.poiList;
-			}, function() {
-				$scope.userData = {};
-				$scope.orderData.fullName = '';
-				$scope.orderData.targetpoiList = [];
-				$scope.orderData.poiList = [];
-			});
+		.then(function(response) {
+			$scope.userData = response;
+			$scope.orderData.fullName = response.contactName;
+			$scope.orderData.targetpoiList = response.targetpoiList;
+			$scope.orderData.poiList = response.poiList;
+		});
 	});
 
 	//电话号码归属地
 	$scope.$watch('orderData.actualTel', function(mobile) {
 		if (mobile) {
 			utils.getLocationByMobile(mobile)
-				.then(function(response) {
-					$scope.mobilePosition = response.carrier;
-				});	
+		.then(function(response) {
+			$scope.mobilePosition = response.carrier;
+		});	
 		} else {
 			$scope.mobilePosition = '';	
 		}
 	});
-	
+
 	$scope.$on('order:receive', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
 			seatService.receiveOrderUpdate(data.sn).then(function() {
@@ -206,11 +201,11 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 };
 
 seatCtrl.$inject = [
-	'$scope', 
+'$scope', 
 	'userService', 
 	'seatMap', 
 	'seatOrderStorageService',
 	'utils'
 	];
 
-controllers.controller('seatCtrl', seatCtrl);
+	controllers.controller('seatCtrl', seatCtrl);

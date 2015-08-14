@@ -1196,6 +1196,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							<th>乘客地址</th>\n" +
     "							<th>目的地</th>\n" +
     "							<th ng-if='isCurrentTab(\"exception\")'>状态</th>\n" +
+    "							<th>操作</th>\n" +
     "						</tr>\n" +
     "					</thead>\n" +
     "					<tbody>\n" +
@@ -1208,6 +1209,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>\n" +
     "							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>\n" +
     "							<td ng-if='isCurrentTab(\"exception\")'>{{item.statusName}}</td>\n" +
+    "							<td>111</td>\n" +
     "						</tr>\n" +
     "					</tbody>\n" +
     "				</table>\n" +
