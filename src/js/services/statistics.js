@@ -1,34 +1,18 @@
 var services = require('./index');
-var statistics = function(statisticsResource) {
+var statistics = function($http) {
 	return {
 		callStatistics: function() {
-			return	statisticsResource
-						.callStatistics()
-						.then(function(response) {
-							return {
-								hour: response.hour,
-								day: response.day,
-								lastHour: response['last_hour'] ,
-								lastDay: response['last_day']
-							};
-							/*
-							return {
-							    hour: 3,
-							    lastHour: 10,
-							    day: 25,
-							    lastDay: 15	
-							};
-							*/
-						}, function() {
-							return {
-								hour: 0,
-								day: 0,
-								lastHour: 0,
-								lastDay: 0
-							};
-						});
+			return $http.get('statis/d.htm')
+				.then(function(response) {
+					return {
+						hour: response.data.hour,
+						day: response.data.day,
+						lastHour: response.data['last_hour'],
+						lastDay: response.data['last_day']
+					};
+				});
 		}
 	};
 };
-statistics.$inject = ['statisticsResource'];
+statistics.$inject = ['$http'];
 services.factory('statisticsService', statistics);

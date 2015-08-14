@@ -1,6 +1,5 @@
 require('./templates/templates');
 require('./controllers');
-require('./resources');
 require('./directives');
 require('./services');
 require('./components');
@@ -12,7 +11,6 @@ var requires = [
 	'ngRoute',
 	'app.templates',
 	'app.controllers',
-	'app.resoureces',
 	'app.dirctives',
 	'app.services',
 	'app.components',

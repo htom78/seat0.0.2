@@ -1,87 +1,98 @@
 var services = require('./index');
 
-var signService = function(signResource, $q, callSocket) {
+var signService = function($http, $q, callSocket) {
 	var service = {
 
 		parentId: null,
 
 		getParentId: function() {
-			if (service.parentId) {
-				return service.parentId;	
+			if (this.parentId) {
+				return this.parentId;	
 			}	
-			var parentId = localStorage.getItem('parentId');
+			var parentId = this.parentId = localStorage.getItem('parentId');
 			return parentId;
 		},
 
 		addParentId: function(parentId) {
-			service.parentId = parentId;	
+			this.parentId = parentId;	
 			localStorage.setItem('parentId', parentId);
 		},
 		
 		clearParentId: function() {
-			service.parentId = null;
+			this.parentId = null;
 			localStorage.removeItem('parentId');	
 		},
 
 		signIn: function() {
 			callSocket.signIn();
-			return signResource.signIn();	
+			return $http.post('sign/1.htm', {parentId: 0});	
 		},
 
 		signOut: function() {
 			callSocket.signOut();
-			return signResource.signOut();	
+			return $http.post('sign/2.htm', {parentId: 0});	
 		},
 
+		//小休
 		rest: function() {
+			var self = this;
 			callSocket.sayRest();
-			return signResource.rest()
-				.then(function(id) {
-					service.addParentId(id);
+			return $http.post('sign/3.htm', {parentId: 0})
+				.then(function(response) {
+					self.addParentId(response.data.msg);	
 				});
 		},
+
+		//取消休息
 		unrest: function() {
-			callSocket.sayFree();
-			var parentId = service.getParentId();
-			if (parentId) {
-				return signResource.unrest(parentId)
-					.then(function() {
-						service.clearParentId();
-					});
+			var self = this;
+			var parentId = this.getParentId();
+			if (!parentId) {
+				return $q.reject();
 			}
+			callSocket.sayFree();
+			return $http.post('sign/4.htm', {parentId: parentId})
+				.then(function() {
+					self.clearParentId();	
+				});
 		},
 
+		//示忙
 		busy: function() {
+			var self = this;
 			callSocket.sayBusy();
-			return signResource.busy()
-					.then(function(id) {
-						service.addParentId(id);
-					});	
+			return $http.post('sign/5.htm', {parentId: 0})
+				.then(function(response) {
+					self.addParentId(response.data.msg);	
+				});
 		},
+
+		//取消示忙
 		unbusy: function() {
-			var defer = $q.defer();
-			callSocket.sayFree();
-			var parentId = service.getParentId();
-			if (parentId) {
-				return signResource.unbusy(parentId)
-					.then(function() {
-						service.clearParentId();
-					});
+			var self = this;
+			var parentId = this.getParentId();
+			if (!parentId) {
+				return $q.reject();	
 			}
+			callSocket.sayFree();
+			return $http.post('sign/6.htm', {parentId: parentId})
+				.then(function() {
+					self.clearParentId();	
+				});
 		},
 
 		getCurrentState: function() {
 			return callSocket.getCurrentState();	
 		},
 
-		loginOut: function() {
-			callSocket.loginOut();	
+		logout: function() {
+			callSocket.logout();	
 		}	
 	};
 
 	return service;
 };
 
-signService.$inject = ['signResource', '$q', 'callSocket'];
+signService.$inject = ['$http', '$q', 'callSocket'];
 
 services.factory('signService', signService);

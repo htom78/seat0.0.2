@@ -11,22 +11,12 @@ var handleAlarmDialog = function(quanDialog, $q) {
 		open: function(scope) {
 			if (!this.isOpen()) {
 				if (scope.order.status === 1) {
-				
 					return alarmDialog.open('component/unhandleAlarmDialog.html', 'policeCtrl', scope);
 				} else {
-				
 					return alarmDialog.open('component/handleAlarmDialog.html', 'policeCtrl', scope);
 				}
 			}	
 			return $q.reject();
-		},
-
-		openUnhandleDialog: function() {
-		
-		},
-
-		openHandleDialog: function() {
-		
 		},
 
 		close: function() {
@@ -51,7 +41,6 @@ var handleAlarmDialog = function(quanDialog, $q) {
 		isOpen: function() {
 			return alarmDialog.isOpen();	
 		}
-
 
 	};
 };

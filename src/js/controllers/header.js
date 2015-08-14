@@ -70,7 +70,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 	//security
 	//###############################################################
 	$scope.logout = function() {
-		signService.loginOut();
+		signService.logout();
 		security.logout();
 		socket.close();
 	};

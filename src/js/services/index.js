@@ -1,6 +1,5 @@
 module.exports = angular.module('app.services', []);
 require('./statistics');
-require('./assign');
 require('./map');
 require('./seatMap');
 require('./chartUser');
