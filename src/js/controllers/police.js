@@ -51,16 +51,16 @@ var policeCtrl = function($scope, policeService) {
 	$scope.$on('newAlarmMessage', function(ev, orders) {
 		if ($scope.isUnhandleOrderTab() || 
 			$scope.isAllOrderTab()) {
-			$scope.$apply(function() {
-				angular.forEach(orders, function(order) {
-					if (!policeService.hasOrderExist(order)) {
-						$scope.orders.unshift(order);	
-					}
+				$scope.$apply(function() {
+					angular.forEach(orders, function(order) {
+						if (!policeService.hasOrderExist(order)) {
+							$scope.orders.unshift(order);	
+						}
+					});
 				});
-			});
-		} else {
-			$scope.cutUnhandleOrderTab();	
-		}
+			} else {
+				$scope.cutUnhandleOrderTab();	
+			}
 	});
 
 	$scope.$on('alarmItemSelect', function(ev, id) {

@@ -16,6 +16,7 @@ var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orde
 			this.exceptionOrderCount = 0;
 			this.averageTimer = 0;
 			this.orders = [];
+			this.currentOrderIndex = -1;
 		},
 
 		selectSpecialCar: function() {
@@ -54,6 +55,7 @@ var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orde
 				}
 			})
 				.then(function(response) {
+					self.currentOrderIndex = -1;
 					angular.copy(response.data.list, self.orders);
 					var total = response.data.total;
 					if (self.currentOrderType === 0) {
@@ -69,6 +71,26 @@ var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orde
 						self.isPauseSearch = false;	
 					}, 3000);
 				});
+		},
+
+		toggleShowBtns: function(order) {
+			if (this.currentOrderIndex === -1) {
+				order.isBtnShow = true;	
+				this.currentOrderIndex = this.getCurrentOrderIndex(order);
+			} else {
+				if (order.isBtnShow) {
+					order.isBtnShow = false;	
+					this.currentOrderIndex = -1;
+				} else {
+					this.orders[this.currentOrderIndex].isBtnShow = false;	
+					this.currentOrderIndex = this.getCurrentOrderIndex(order);
+					order.isBtnShow = true;
+				}
+			}
+		},
+
+		getCurrentOrderIndex: function(order) {
+			return this.orders.indexOf(order);	
 		},
 
 		getOrders: function(status) {
@@ -273,6 +295,46 @@ var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orde
 					return $q.reject();	
 				}
 			});	
+		},
+
+
+		handlePassengerFuckOrder: function(order) {
+			var self = this;
+			return $http.post('cancel/6.htm', {sn: order.sn})
+				.then(function() {
+					order.isBtnShow = false;	
+					self.currentOrderIndex = -1;
+				});
+		},
+
+		handleDriverFuckOrder: function(order) {
+			var self = this;
+			return $http.post('cancel/7.htm', {sn: order.sn})
+				.then(function() {
+					order.isBtnShow = false;	
+					self.currentOrderIndex = -1;
+				});
+		},
+
+		handleCancelOrder: function(order) {
+			var self = this;
+			return $http.post('cancel/1.htm', {sn: order.sn})
+				.then(function() {
+					order.isBtnShow = false;	
+					self.currentOrderIndex = -1;
+				});
+		},
+
+		assignOrderToCarPlate: function(order, carPlate) {
+			var self = this;
+			return $http.post('assign.htm', {
+				sn: order.sn,
+				number: carPlate	 
+			})
+				.then(function() {
+					order.isBtnShow = false;	
+					self.currentOrderIndex = -1;
+				});	
 		}
 
 	};
