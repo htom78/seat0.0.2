@@ -169,7 +169,7 @@
 			</ul>
 			<div class='btns text-center'>
 				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>
-				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>
+				<a href='javascript:;' class='btn-normal' ng-click='clearOrderForm()'>取消</a>
 				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>
 			</div>
 		</form>
@@ -294,11 +294,14 @@
 							<th>乘客地址</th>
 							<th>目的地</th>
 							<th ng-if='isCurrentTab("exception")'>状态</th>
-							<th>操作</th>
+							<th ng-if='!isDoneCurrentTab()'>操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{"add-new": item.isNewAdd}'>
+						<tr 
+							ng-repeat='item in orders' 
+							ng-if='$index < 6' 
+							ng-class='{"add-new": item.isNewAdd, active: item.isBtnShow}'>
 							<td class='ellipsis'>{{item.sn}}</td>
 							<td class='ellipsis'>{{item.timeCreated}}</td>
 							<td class='ellipsis'>{{item.user}}</td>
@@ -307,7 +310,62 @@
 							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
 							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
 							<td ng-if='isCurrentTab("exception")'>{{item.statusName}}</td>
-							<td>111</td>
+							<td class='seat-operate-td' ng-if='!isDoneCurrentTab()'>
+								<div class='seat-order-operate'>
+									<a 
+										href='javascript:;' 
+										class='show-more'
+										ng-click='showBtns(item)'>&gt;&gt;</a>
+									<ul class='operate-list' ng-show='item.isBtnShow'>
+										<li	
+											class='operate-list-li'
+											ng-show='isCancelBtnShow()'>
+											<a 
+												href='javascript:;' 
+												confirm-dialog
+												box-ctrl='seatCtrl'
+												message-box='确认处理?'
+												ensure-fn='handleCancelOrder(item)'
+												class='operate-btn'>取消</a>
+										</li>
+										<li	
+											class='operate-list-li'
+											ng-show='isAssignBtnShow()'>
+											<a 
+												confirm-dialog
+												box-ctrl='seatCtrl'
+												message-box='指派'
+												input-show='true'
+												label-name='指派车辆'
+												ensure-fn='assignCar(item, input)'
+												href='javascript:;' 
+												class='operate-btn'>指派</a>
+										</li>
+										<li	
+											class='operate-list-li'
+											ng-show='isPassengerFuckBtnShow()'>
+											<a 
+												confirm-dialog
+												box-ctrl='seatCtrl'
+												message-box='确认处理?'
+												ensure-fn='handlePassengerFuckOrder(item)'
+												href='javascript:;' 
+												class='operate-btn'>乘客放空</a>
+										</li>
+										<li	
+											class='operate-list-li'
+											ng-show='isDriverFuckBtnShow()'>
+											<a 
+												confirm-dialog
+												box-ctrl='seatCtrl'
+												message-box='确认处理?'
+												ensure-fn='handleDriverFuckOrder(item)'
+												href='javascript:;' 
+												class='operate-btn'>司机爽约</a>
+										</li>
+									</ul>
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>

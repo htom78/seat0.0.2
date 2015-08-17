@@ -1071,7 +1071,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "			</ul>\n" +
     "			<div class='btns text-center'>\n" +
     "				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>\n" +
-    "				<a href='javascript:;' class='btn-normal' ng-click='cancelOrder()'>取消</a>\n" +
+    "				<a href='javascript:;' class='btn-normal' ng-click='clearOrderForm()'>取消</a>\n" +
     "				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>\n" +
     "			</div>\n" +
     "		</form>\n" +
@@ -1196,11 +1196,14 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							<th>乘客地址</th>\n" +
     "							<th>目的地</th>\n" +
     "							<th ng-if='isCurrentTab(\"exception\")'>状态</th>\n" +
-    "							<th>操作</th>\n" +
+    "							<th ng-if='!isDoneCurrentTab()'>操作</th>\n" +
     "						</tr>\n" +
     "					</thead>\n" +
     "					<tbody>\n" +
-    "						<tr ng-repeat='item in orders' ng-if='$index < 6' ng-class='{\"add-new\": item.isNewAdd}'>\n" +
+    "						<tr \n" +
+    "							ng-repeat='item in orders' \n" +
+    "							ng-if='$index < 6' \n" +
+    "							ng-class='{\"add-new\": item.isNewAdd, active: item.isBtnShow}'>\n" +
     "							<td class='ellipsis'>{{item.sn}}</td>\n" +
     "							<td class='ellipsis'>{{item.timeCreated}}</td>\n" +
     "							<td class='ellipsis'>{{item.user}}</td>\n" +
@@ -1209,7 +1212,62 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>\n" +
     "							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>\n" +
     "							<td ng-if='isCurrentTab(\"exception\")'>{{item.statusName}}</td>\n" +
-    "							<td>111</td>\n" +
+    "							<td class='seat-operate-td' ng-if='!isDoneCurrentTab()'>\n" +
+    "								<div class='seat-order-operate'>\n" +
+    "									<a \n" +
+    "										href='javascript:;' \n" +
+    "										class='show-more'\n" +
+    "										ng-click='showBtns(item)'>&gt;&gt;</a>\n" +
+    "									<ul class='operate-list' ng-show='item.isBtnShow'>\n" +
+    "										<li	\n" +
+    "											class='operate-list-li'\n" +
+    "											ng-show='isCancelBtnShow()'>\n" +
+    "											<a \n" +
+    "												href='javascript:;' \n" +
+    "												confirm-dialog\n" +
+    "												box-ctrl='seatCtrl'\n" +
+    "												message-box='确认处理?'\n" +
+    "												ensure-fn='handleCancelOrder(item)'\n" +
+    "												class='operate-btn'>取消</a>\n" +
+    "										</li>\n" +
+    "										<li	\n" +
+    "											class='operate-list-li'\n" +
+    "											ng-show='isAssignBtnShow()'>\n" +
+    "											<a \n" +
+    "												confirm-dialog\n" +
+    "												box-ctrl='seatCtrl'\n" +
+    "												message-box='指派'\n" +
+    "												input-show='true'\n" +
+    "												label-name='指派车辆'\n" +
+    "												ensure-fn='assignCar(item, input)'\n" +
+    "												href='javascript:;' \n" +
+    "												class='operate-btn'>指派</a>\n" +
+    "										</li>\n" +
+    "										<li	\n" +
+    "											class='operate-list-li'\n" +
+    "											ng-show='isPassengerFuckBtnShow()'>\n" +
+    "											<a \n" +
+    "												confirm-dialog\n" +
+    "												box-ctrl='seatCtrl'\n" +
+    "												message-box='确认处理?'\n" +
+    "												ensure-fn='handlePassengerFuckOrder(item)'\n" +
+    "												href='javascript:;' \n" +
+    "												class='operate-btn'>乘客放空</a>\n" +
+    "										</li>\n" +
+    "										<li	\n" +
+    "											class='operate-list-li'\n" +
+    "											ng-show='isDriverFuckBtnShow()'>\n" +
+    "											<a \n" +
+    "												confirm-dialog\n" +
+    "												box-ctrl='seatCtrl'\n" +
+    "												message-box='确认处理?'\n" +
+    "												ensure-fn='handleDriverFuckOrder(item)'\n" +
+    "												href='javascript:;' \n" +
+    "												class='operate-btn'>司机爽约</a>\n" +
+    "										</li>\n" +
+    "									</ul>\n" +
+    "								</div>\n" +
+    "							</td>\n" +
     "						</tr>\n" +
     "					</tbody>\n" +
     "				</table>\n" +
