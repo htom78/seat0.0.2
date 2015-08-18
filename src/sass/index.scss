@@ -1,5 +1,7 @@
 @import './helpers/variables';
 
+@import './variables';
+
 //mixins
 @import './mixins/opacity';
 @import './mixins/float';
@@ -24,6 +26,9 @@
 @import './base/reset';
 
 //component
+@import './btn';
+
+
 @import './components/buttons';
 @import './components/form';
 @import './components/global';

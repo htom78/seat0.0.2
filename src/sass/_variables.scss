@@ -1,0 +1,47 @@
+//color
+$color-primary:									#ffba58;
+$color-secondary:								#23a249;
+$color-disabled:								#ccc;
+
+
+//size
+$icon-btn-large-size:						42px;
+
+//font family
+$font-family:										'Microsoft YaHei', 'Helvetica Neue', Helvetica, Tahoma, sans-serif;
+
+//btn
+$btn-bg:												#ccc;
+$btn-hover-bg:									darken($btn-bg, 10%);
+$btn-active-bg:									darken($btn-bg, 20%);
+
+
+//border
+$border-color:									#fff;
+$border-small-width:						4px;
+$border-width:									8px;
+
+
+//radius
+$radius-small-size:							4px;					
+$radius-large-size:							8px;
+
+
+//margin
+$margin-horizontal:							10px;
+$margin-vertical:								10px;
+$margin-small-horizontal:				4px;
+
+
+//padding
+$padding-horizontal:						10px;
+$padding-vertical:							10px;
+$padding-large-vertical:				20px;
+$padding-large-horizontal:			20px;
+
+
+//layout width
+$layout-left-width:							620px;
+
+
+//icon url

@@ -366,20 +366,34 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "<section class='flex'>\n" +
     "	<nav class='nav'>\n" +
     "		<ul class='flex'>\n" +
-    "			<li><a ng-href='{{appRoot}}/' class='btn-icon-large file-btn'></a></li>\n" +
-    "			<li ng-show='hasLeaderBtn()'><a ng-href='{{appRoot}}/leader.htm' class='btn-icon-large file-search'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/searchMore.htm' class='btn-icon-large police'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/special.htm' class='btn-icon-large car-track'></a></li>\n" +
-    "			<li><a ng-href='{{appRoot}}/police.htm' class='btn-icon-large listen'></a></li>\n" +
+    "			<li><a ng-href='index.htm' class='icon-btn file-btn'></a></li>\n" +
+    "			<li ng-show='hasLeaderBtn()'>\n" +
+    "				<a ng-href='leader.htm' class='icon-btn search-btn'></a>\n" +
+    "			</li>\n" +
+    "			<li>\n" +
+    "				<a ng-href='searchMore.htm' class='icon-btn police-btn'></a>\n" +
+    "			</li>\n" +
+    "			<li>\n" +
+    "				<a ng-href='special.htm' class='icon-btn track-btn'></a>\n" +
+    "			</li>\n" +
+    "			<li>\n" +
+    "				<a ng-href='police.htm' class='icon-btn listen-btn'></a>\n" +
+    "			</li>\n" +
     "		</ul>\n" +
     "	</nav>\n" +
     "\n" +
     "	<div class='call-operate'>\n" +
     "		<ul class='flex'>\n" +
     "			<li><span class='call-count'>24</span></li>\n" +
-    "			<li><button class='btn-bg-icon call-btn'></button></li>\n" +
-    "			<li><button class='btn-bg-icon transform-btn'></button></li>\n" +
-    "			<li><button class='btn-bg-icon list-btn'></button></li>\n" +
+    "			<li>\n" +
+    "				<button class='icon-btn-bg call-btn'></button>\n" +
+    "			</li>\n" +
+    "			<li>\n" +
+    "				<button class='icon-btn-bg transform-btn'></button>\n" +
+    "			</li>\n" +
+    "			<li>\n" +
+    "				<button class='icon-btn-bg list-btn'></button>\n" +
+    "			</li>\n" +
     "		</ul>\n" +
     "	</div>\n" +
     "\n" +
@@ -387,25 +401,26 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "\n" +
     "		<div class='status-icon' ng-class='{signIn: isSignIn()}'>\n" +
     "			<i\n" +
-    "				class='more-state'\n" +
+    "				class='current-state'\n" +
     "				ng-class='{\n" +
-    "					vain: isFreeState(), \n" +
+    "					free: isFreeState(), \n" +
     "					busy: isBusyState(), \n" +
     "					rest: isRestState(), \n" +
     "					signOut:!isSignIn()}'></i>\n" +
     "		</div>\n" +
     "\n" +
     "		<div class='user-info-timer'>\n" +
-    "			<div class='user-number'><i></i><span>{{username}}</span></div>\n" +
+    "			<div class='username'><i></i><span>{{username}}</span></div>\n" +
     "			<div class='timer'><i></i><span>{{currentTimer}}</span></div>\n" +
     "		</div>\n" +
     "\n" +
     "		<div class='status-btns'>\n" +
     "			<button\n" +
-    "				title='{{firstBtnTitle}}'\n" +
+    "				class='icon-btn'\n" +
     "				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'\n" +
-    "				ng-click='toggleFirstCallingStateBtn()'></button><button \n" +
-    "				title='{{secondBtnTitle}}'\n" +
+    "				ng-click='toggleFirstCallingStateBtn()'></button>\n" +
+    "			<button \n" +
+    "				class='icon-btn'\n" +
     "				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'\n" +
     "				ng-click='toggleSecondCallingStateBtn()'></button>\n" +
     "		</div>\n" +
@@ -415,7 +430,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "				class='sign-state'\n" +
     "				ng-class='{\"sign-out\": !isSignIn(), \"sign-in\": isSingIn()}' \n" +
     "				ng-click='toggleSignState()'></a></li>\n" +
-    "			<li><a href='javascript:;' class='exit-btn btn-icon-large' ng-click='logout()'></a></li>\n" +
+    "			<li><a href='javascript:;' class='exit-btn icon-btn' ng-click='logout()'></a></li>\n" +
     "		</ul>\n" +
     "\n" +
     "	</div>\n" +

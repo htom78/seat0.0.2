@@ -72,12 +72,6 @@
 	}
 }
 
-@mixin icon-content($content) {
-	&:before {
-		content: $content;
-	}
-}
-
 @mixin icon-bg($size, $color) {
 	color: $color;
 	line-height: $size;
@@ -88,3 +82,12 @@
 		}
 	}
 }
+
+
+//########################
+@mixin icon-content($content) {
+	&:before {
+		content: $content;
+	}
+}
+

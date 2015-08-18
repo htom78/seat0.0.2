@@ -7,3 +7,8 @@
 	background-image: url(../imgs/car-status.png);
 	background-repeat: no-repeat;
 }
+
+@mixin background-image() {
+	background-image: url(../imgs/icons.png);
+	background-repeat: no-repeat;
+}
