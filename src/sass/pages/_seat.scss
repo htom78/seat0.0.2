@@ -22,27 +22,24 @@
 	
 	.chart {
 		position: absolute;
-		top: $padding-base-vertical;
-		left: $padding-base-horizontal + $border-large-width;
-		@include border-box($seat-chart-width, $seat-chart-height);
-		border:$border-small-width solid $border-color;
-		border-radius: $radius-base;
+		top: $padding-vertical;
+		left: $padding-base-horizontal + $border-width;
+		border:$border-small-width solid #fff;
+		border-radius: $radius-small-size;
 		background-color: $chart-bg;
-		z-index: $zindex-base;
-		.info {
-			padding: $padding-base-vertical $padding-base-horizontal;
+		z-index: 10;
+		@include border-box($seat-chart-width, $seat-chart-height);
+		.user-info {
+			padding: $padding-vertical $padding-horizontal;
+			color: $text-color;
+			font-size: 12px;
 		}
 		.graph {
 			width: 100%;
 			height: $seat-chart-height - ($padding-base-vertical + $height-small + $border-small-width) * 2;
 		}
 		.justify {
-			@include height-hidden($height-small);
-		}
-		.info {
-			@extend %font-ms;
-			color: $color-text;
-			font-size: 12px;
+			@include height-hidden(24px);
 		}
 		.info-item{
 			cursor: Default;
@@ -55,19 +52,20 @@
 		.timer {
 			@include icon-content('\e617');
 		}
-		.serial {
+		.serial-number {
 			@include icon-content('\e616');
 		}
 		.legend-dot {
 			margin-right: $margin-small-horizontal;
 		}
 		.dot-order-count {
-			background-color: $chart-order-count-bg;
+			background-color: $color-secondary;
 		}
 		.dot-fuck-count {
-			background-color: #ff7c3c;
+			background-color: $color-third;
 		}
 	}
+
 	.cartype-selects {
 		display: inline-block;
 		width: $seat-chart-width - $label-base-width - 8px;
@@ -108,34 +106,40 @@
 }
 
 .seat-top-form {
+	.icon-img-bg {
+		&:before {
+			font-size: 28px;	
+		}
+		background-color: #ccc;
+	}
 
-	.calling-label i {
+	.calling-label {
 		@include icon-content('\e605');
 	}
-	.actual-label i {
+	.actual-label {
 		@include icon-content('\e614');
 	}
 	.username-label {
 		background-color: $color-primary;
-		i {
+		& {
 			@include icon-content('\e618');
 		}
 	}
 	
 	.start-label {
-		background-color: $color-second;
-		i {
+		background-color: $color-secondary;
+		& {
 			@include icon-content('\e622');
 		}
 	}
 
-	.around-label i {
+	.around-label {
 		@include icon-content('\e626');
 	}
 
 	.destination-label {
 		margin-left: $padding-base-horizontal - 8px;
-		i {
+		& {
 			@include icon-content('\e623');
 		}
 	}
@@ -148,11 +152,11 @@
 		@include icon-content('\e61c');
 	}
 
-	.remark-label i {
+	.remark-label {
 		@include icon-content('\e624');
 	}
 
-	.count-label i {
+	.count-label {
 		@include icon-content('\e62b');
 	}
 

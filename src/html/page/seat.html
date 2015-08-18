@@ -1,15 +1,14 @@
-
 <section class='seat-above flex'>
 
 	<div class='seat-top-left' listen-call>
 		<div class='chart'>
-			<div class='info'>
+			<div class='user-info'>
 				<div class='justify'>
 					<span  class='info-item'><i class='custom-type'></i>{{userData.rank}}</span>
 					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>
 				</div>
 				<div class='justify'>
-					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial'></i>{{userData.sn}}</span>
+					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial-number'></i>{{userData.sn}}</span>
 					<span class='info-item'>
 						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
 						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
@@ -22,7 +21,7 @@
 		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>
 			<ul class='seat-field1'>
 				<li>
-					<label class='icon-label calling-label'><i></i></label>
+					<label class='icon-img-bg calling-label'></label>
 					<input 
 						type='text' 
 						class='input-normal' 
@@ -30,7 +29,7 @@
 						ng-model='orderData.callingTel'/>
 				</li>
 				<li>
-					<label class='icon-label actual-label'><i></i></label>
+					<label class='icon-img-bg actual-label'></label>
 					<input 
 						type='text' 
 						class='input-normal' 
@@ -41,7 +40,7 @@
 					<span class='mobile-position'>{{mobilePosition}}</span>
 				</li>
 				<li>
-					<label class='icon-label username-label'><i></i></label>
+					<label class='icon-img-bg username-label'></label>
 					<input 
 						type='text' 
 						class='input-normal'
@@ -67,7 +66,7 @@
 					<label class='label-radio male' for='maleRadio'></label>
 				</li>
 				<li>
-					<label class='icon-label start-label'><i></i></label>
+					<label class='icon-img-bg start-label'></label>
 					<input 
 						type='text' 
 						class='input-normal long-width'
@@ -80,7 +79,7 @@
 						start-list='orderData.poiList'/>
 				</li>
 				<li>
-					<label class='icon-label around-label'><i></i></label>
+					<label class='icon-img-bg around-label'></label>
 					<input 
 						type='text' 
 						class='input-normal long-width'
@@ -109,7 +108,7 @@
 							<option>车数</option>
 						</select>
 					</span>
-					<label class='icon-label destination-label'><i></i></label>
+					<label class='icon-img-bg destination-label'></label>
 					<input 
 						list='orderDestination' 
 						class='input-normal long-width'
@@ -150,7 +149,7 @@
 							selected='orderData.minute'>{{orderData.minute}}</em>
 					</span>
 
-					<label class='icon-label count-label'><i></i></label>
+					<label class='icon-img-bg count-label'></label>
 					<input 
 						type='text'
 						class='input-normal long-width'
@@ -159,7 +158,7 @@
 
 				</li>
 				<li>
-					<label class='icon-label remark-label'><i></i></label>
+					<label class='icon-img-bg remark-label'></label>
 					<input 
 						type='text' 
 						class='input-normal large-width'

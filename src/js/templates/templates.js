@@ -920,13 +920,13 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "\n" +
     "	<div class='seat-top-left' listen-call>\n" +
     "		<div class='chart'>\n" +
-    "			<div class='info'>\n" +
+    "			<div class='user-info'>\n" +
     "				<div class='justify'>\n" +
     "					<span  class='info-item'><i class='custom-type'></i>{{userData.rank}}</span>\n" +
     "					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>\n" +
     "				</div>\n" +
     "				<div class='justify'>\n" +
-    "					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial'></i>{{userData.sn}}</span>\n" +
+    "					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial-number'></i>{{userData.sn}}</span>\n" +
     "					<span class='info-item'>\n" +
     "						<span><b class='legend-dot dot-order-count'></b>订单次数</span>\n" +
     "						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>\n" +
@@ -939,7 +939,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>\n" +
     "			<ul class='seat-field1'>\n" +
     "				<li>\n" +
-    "					<label class='icon-label calling-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg calling-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal' \n" +
@@ -947,7 +947,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						ng-model='orderData.callingTel'/>\n" +
     "				</li>\n" +
     "				<li>\n" +
-    "					<label class='icon-label actual-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg actual-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal' \n" +
@@ -958,7 +958,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<span class='mobile-position'>{{mobilePosition}}</span>\n" +
     "				</li>\n" +
     "				<li>\n" +
-    "					<label class='icon-label username-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg username-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal'\n" +
@@ -984,7 +984,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<label class='label-radio male' for='maleRadio'></label>\n" +
     "				</li>\n" +
     "				<li>\n" +
-    "					<label class='icon-label start-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg start-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal long-width'\n" +
@@ -997,7 +997,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						start-list='orderData.poiList'/>\n" +
     "				</li>\n" +
     "				<li>\n" +
-    "					<label class='icon-label around-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg around-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal long-width'\n" +
@@ -1026,7 +1026,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							<option>车数</option>\n" +
     "						</select>\n" +
     "					</span>\n" +
-    "					<label class='icon-label destination-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg destination-label'></label>\n" +
     "					<input \n" +
     "						list='orderDestination' \n" +
     "						class='input-normal long-width'\n" +
@@ -1067,7 +1067,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "							selected='orderData.minute'>{{orderData.minute}}</em>\n" +
     "					</span>\n" +
     "\n" +
-    "					<label class='icon-label count-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg count-label'></label>\n" +
     "					<input \n" +
     "						type='text'\n" +
     "						class='input-normal long-width'\n" +
@@ -1076,7 +1076,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "\n" +
     "				</li>\n" +
     "				<li>\n" +
-    "					<label class='icon-label remark-label'><i></i></label>\n" +
+    "					<label class='icon-img-bg remark-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
     "						class='input-normal large-width'\n" +
