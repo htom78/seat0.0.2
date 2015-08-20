@@ -74,7 +74,7 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
     "	        	<div class='current' style='width:{{hourWidth}}px'>\n" +
     "	    		<div class='overflow' style='width:{{hourWidth - lastHourWidth}}px' ng-if='isHourOverflow()'></div>\n" +
     "	    	</div>\n" +
-    "	        	<div class='info'><span>{{lastHour}}</span></div>\n" +
+    "	        	<div class='info'><span class='text'>{{lastHour}}</span></div>\n" +
     "	        </div>\n" +
     "	        <span class='text-info'>{{showHour}}<b ng-if='isHourOverflow()'> + {{hourOverflow}}</b></span>\n" +
     "	    </div>\n" +
@@ -83,12 +83,12 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
     "	    	<div class='current' style='width:{{dayWidth}}px'>\n" +
     "	    		<div class='overflow' style='width:{{dayWidth - lastDayWidth}}px' ng-if='isDayOverflow()'></div>\n" +
     "	    	</div>\n" +
-    "	        	<div class='info'><span>{{lastDay}}</span></div>\n" +
+    "	        	<div class='info'><span class='text'>{{lastDay}}</span></div>\n" +
     "	        </div>\n" +
     "	        <span class='text-info'>{{showDay}}<b ng-if='isDayOverflow()'> + {{dayOverflow}}</b></span>\n" +
     "	    </div>\n" +
     "	</div>\n" +
-    "	<ul class='flex legend'>\n" +
+    "	<ul class='flex legend-wrap'>\n" +
     "		<li><i class='legend-dot hour'></i><span>当前小时电召数量</span></li>\n" +
     "		<li><i class='legend-dot day'></i><span>当前天电召数量</span></li>\n" +
     "		<li><i class='legend-dot predict'></i><span>预计数量</span></li>\n" +
@@ -130,19 +130,22 @@ angular.module("component/messageBox.html", []).run(["$templateCache", function(
   $templateCache.put("component/messageBox.html",
     "<div class='box-wrap'>\n" +
     "	<h1 class='box-title'>{{message}}</h1>\n" +
-    "	<div class='message-input-wrap' ng-show='isInputShow()'>\n" +
-    "		<label>{{labelName}}</label>\n" +
-    "		<input \n" +
-    "			type='input'\n" +
-    "			ng-model='input'/>\n" +
-    "	</div>\n" +
-    "	<div class='message-box-btns'>\n" +
-    "		<button \n" +
-    "			class='message-box-ensure btn-normal'\n" +
-    "			ng-click='ensure()'>确认</button>\n" +
-    "		<button \n" +
-    "			class='message-box-cancel btn-normal'\n" +
-    "			ng-click='cancel()'>取消</button>\n" +
+    "	<div class='box-container'>\n" +
+    "		<div class='message-input-wrap' ng-show='isInputShow()'>\n" +
+    "			<label class='message-label'>{{labelName}}</label>\n" +
+    "			<input \n" +
+    "				class='text-input'\n" +
+    "				type='input'\n" +
+    "				ng-model='input'/>\n" +
+    "		</div>\n" +
+    "		<div class='message-box-btns'>\n" +
+    "			<button \n" +
+    "				class='message-box-ensure btn'\n" +
+    "				ng-click='ensure()'>确认</button>\n" +
+    "			<button \n" +
+    "				class='message-box-cancel btn'\n" +
+    "				ng-click='cancel()'>取消</button>\n" +
+    "		</div>\n" +
     "	</div>\n" +
     "</div>\n" +
     "");
@@ -152,51 +155,59 @@ angular.module("component/pagination.html", []).run(["$templateCache", function(
   $templateCache.put("component/pagination.html",
     "<div class='pagination'>\n" +
     "	<ul>\n" +
-    "		<li><a \n" +
+    "		<li class='btn-li'>\n" +
+    "			<a \n" +
     "				href='javascript:;' \n" +
-    "				class='prev'\n" +
+    "				class='prev pagination-btn'\n" +
     "				ng-class='{disabled: noPrevious()}'\n" +
-    "				ng-click='selectPrevious()'><i></i></a></li>\n" +
-    "		<li><a \n" +
+    "				ng-click='selectPrevious()'><i class='prev-icon'></i></a>\n" +
+    "		</li>\n" +
+    "		<li class='btn-li page-btns'>\n" +
+    "			<a \n" +
     "				href='javascript:;' \n" +
-    "				class='page'\n" +
+    "				class='page-btn pagination-btn'\n" +
     "				ng-class='{active: isCurrentPage(item)}'\n" +
     "				ng-click='selectPage(item)'\n" +
-    "				ng-repeat='item in pages'>{{item}}</a></li>\n" +
-    "		<li><a \n" +
+    "				ng-repeat='item in pages'>{{item}}</a>\n" +
+    "		</li>\n" +
+    "		<li class='btn-li'>\n" +
+    "			<a \n" +
     "				href='javascript:;' \n" +
-    "				class='next'\n" +
+    "				class='next pagination-btn'\n" +
     "				ng-class='{disabled: noNext()}'\n" +
-    "				ng-click='selectNext()'><i></i></a></li>\n" +
+    "				ng-click='selectNext()'><i class='next-icon'></i></a>\n" +
+    "		</li>\n" +
     "	</ul>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("component/stepInfo.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/stepInfo.html",
     "<div class='step'>\n" +
-    "	<ul class='flex'>\n" +
-    "		<li>\n" +
+    "	<ul class='step-ul flex'>\n" +
+    "		<li class='step-li'>\n" +
     "			<p>{{orderInfo.createTime}}</p>\n" +
     "			<p>乘客电话召车</p>\n" +
     "		</li>\n" +
-    "		<li>\n" +
+    "		<li class='step-li'>\n" +
     "			<p>司机抢单成功</p>\n" +
     "			<p>{{orderInfo.orderTime}}</p>\n" +
     "		</li>\n" +
-    "		<li>\n" +
+    "		<li class='step-li'>\n" +
     "			<p>{{orderInfo.pickupTime}}</p>\n" +
     "			<p>司机接到乘客</p>\n" +
     "		</li>\n" +
-    "		<li>\n" +
+    "		<li class='step-li'>\n" +
     "			<p>到达目的</p>\n" +
     "			<p>{{orderInfo.endTime}}</p>\n" +
     "		</li>\n" +
     "	</ul>\n" +
     "</div>\n" +
     "\n" +
-    "<div class='btns'>\n" +
+    "<div class='btns-wrap'>\n" +
     "	<button \n" +
+    "		class='btn'\n" +
     "		confirm-dialog\n" +
     "		box-ctrl='leaderCtrl'\n" +
     "		message-box='指派'\n" +
@@ -205,18 +216,21 @@ angular.module("component/stepInfo.html", []).run(["$templateCache", function($t
     "		ensure-fn='assignCar(input)'\n" +
     "		ng-show='isAssignBtnShow()'>指派</button>\n" +
     "	<button \n" +
+    "		class='btn'\n" +
     "		confirm-dialog\n" +
     "		box-ctrl='leaderCtrl'\n" +
     "		message-box='确认处理?'\n" +
     "		ensure-fn='cancelOrder()'\n" +
     "		ng-show='isCancelBtnShow()'>取消</button>\n" +
     "	<button \n" +
+    "		class='btn'\n" +
     "		confirm-dialog\n" +
     "		box-ctrl='leaderCtrl'\n" +
     "		message-box='确认处理?'\n" +
     "		ensure-fn='passengerFuck()'\n" +
     "		ng-show='isPassengerFuckBtnShow()'>乘客放空</button>\n" +
     "	<button \n" +
+    "		class='btn'\n" +
     "		confirm-dialog\n" +
     "		box-ctrl='leaderCtrl'\n" +
     "		message-box='确认处理?'\n" +
@@ -452,44 +466,79 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "		<div class='employ-chart flex'>\n" +
     "			<div chart-employ class='graph' employ-data='employChart'>\n" +
     "			</div>\n" +
-    "			<div class='employ-legend'>\n" +
-    "				<ul class='dots'>\n" +
-    "					<li ng-class='{active: isEmployerActiveTab(\"busy\")}'><i class='legend-dot dot-busy'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"busy\")'>示忙</a></li>\n" +
-    "					<li ng-class='{active: isEmployerActiveTab(\"reset\")}'><i class='legend-dot dot-reset'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"reset\")'>小休</a></li>\n" +
-    "					<li ng-class='{active: isEmployerActiveTab(\"respond\")}'><i class='legend-dot dot-respond'></i><a href='javascript:;'  ng-click='toggleEmplyerTab(\"respond\")'>应答</a></li>\n" +
-    "					<li ng-class='{active: isEmployerActiveTab(\"vain\")}'><i class='legend-dot dot-vain'></i><a href='javascript:;' ng-click='toggleEmplyerTab(\"vain\")'>空闲</a></li>\n" +
+    "			<div class='employ-legend-wrap'>\n" +
+    "				<ul class='dots-ul'>\n" +
+    "					<li	class='dot-li' ng-class='{active: isEmployerActiveTab(\"busy\")}'>\n" +
+    "						<a \n" +
+    "							class='tab-btn'\n" +
+    "							href='javascript:;' \n" +
+    "							ng-click='toggleEmplyerTab(\"busy\")'>\n" +
+    "							<i class='legend-dot dot-busy'></i>\n" +
+    "							<span>示忙</span>\n" +
+    "						</a>\n" +
+    "					</li>\n" +
+    "					<li	class='dot-li' ng-class='{active: isEmployerActiveTab(\"reset\")}'>\n" +
+    "						<a \n" +
+    "							class='tab-btn'\n" +
+    "							href='javascript:;' \n" +
+    "							ng-click='toggleEmplyerTab(\"reset\")'>\n" +
+    "							<i class='legend-dot dot-rest'></i>\n" +
+    "							<span>小休</span>\n" +
+    "						</a>\n" +
+    "					</li>\n" +
+    "					<li	class='dot-li' ng-class='{active: isEmployerActiveTab(\"respond\")}'>\n" +
+    "						<a \n" +
+    "							class='tab-btn'\n" +
+    "							href='javascript:;' \n" +
+    "							ng-click='toggleEmplyerTab(\"respond\")'>\n" +
+    "							<i class='legend-dot dot-respond'></i>\n" +
+    "							<span>应答</span>\n" +
+    "						</a>\n" +
+    "					<li	class='dot-li' ng-class='{active: isEmployerActiveTab(\"vain\")}'>\n" +
+    "						<a \n" +
+    "							class='tab-btn'\n" +
+    "							href='javascript:;' \n" +
+    "							ng-click='toggleEmplyerTab(\"vain\")'>\n" +
+    "							<i class='legend-dot dot-free'></i>\n" +
+    "							<span>空闲</span>\n" +
+    "						</a>\n" +
+    "					</li>\n" +
     "				</ul>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "		<div class='employ-info'>\n" +
-    "			<ul class='flex'>\n" +
+    "			<ul class='employ-info-ul flex'>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "				<li class='item'>\n" +
-    "					<div><i class='user-icon'></i><span>0000</span></div>\n" +
-    "					<div><i class='timer-icon'></i><span>12:21</span></div>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
+    "				</li>\n" +
+    "				<li class='item'>\n" +
+    "					<div><i class='icon-img user-icon'></i><span>0000</span></div>\n" +
+    "					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>\n" +
     "				</li>\n" +
     "			</ul>\n" +
     "		</div>\n" +
@@ -517,15 +566,19 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "		<nav class='tabs'>\n" +
     "			<div class='fr search-wrap'>\n" +
     "				<form class='flex' ng-submit='searchOrder()'>\n" +
-    "					<div class='input-wrap'><input \n" +
-    "												type='text' \n" +
-    "												class='search-input' \n" +
-    "												ng-required='true'\n" +
-    "												ng-model='words'/></div>\n" +
-    "					<div><button class='btn-normal search-btn'><i></i></button></div>\n" +
+    "					<div class='input-wrap'></div>\n" +
+    "					<input \n" +
+    "						type='text' \n" +
+    "						class='search-input' \n" +
+    "						ng-required='true'\n" +
+    "						ng-model='words'/>\n" +
+    "					<div><button class='icon-btn-bg search-btn'></button></div>\n" +
     "				</form>\n" +
     "			</div>\n" +
-    "			<a href='javascript:;' class='leader-reservation' ng-click='toggleImmediateOrReservation()'>\n" +
+    "			<a \n" +
+    "				href='javascript:;' \n" +
+    "				class='immediate-reservation-btn' \n" +
+    "				ng-click='toggleImmediateOrReservation()'>\n" +
     "				<span class='btn-word'>{{immediateOrReservation}}</span>\n" +
     "			</a>\n" +
     "			<ul class='flex'>\n" +
@@ -534,35 +587,60 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "					href='javascript:;' \n" +
     "					class='tab'\n" +
     "					ng-class='{active: isCurrentOrderTab(\"prepared\")}'\n" +
-    "					ng-click='cutOrderTabPrepared()'><i class='prepared-icon'></i><span><b>{{preparedOrderTabCount[0]}}</b><b>{{preparedOrderTabCount[1]}}</b><b>{{preparedOrderTabCount[2]}}</b></span></a>\n" +
+    "					ng-click='cutOrderTabPrepared()'>\n" +
+    "						<i class='icon-img-bg prepared-icon'></i>\n" +
+    "						<b>{{preparedOrderTabCount[0]}}</b>\n" +
+    "						<b>{{preparedOrderTabCount[1]}}</b>\n" +
+    "						<b>{{preparedOrderTabCount[2]}}</b>\n" +
+    "				</a>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentOrderTab(\"received\")}'\n" +
-    "						ng-click='cutOrderTabReceived()'><i class='received-icon'></i><span><b>{{receivedOrderTabCount[0]}}</b><b>{{receivedOrderTabCount[1]}}</b><b>{{receivedOrderTabCount[2]}}</b></span></a>\n" +
+    "						ng-click='cutOrderTabReceived()'>\n" +
+    "							<i class='icon-img-bg received-icon'></i>\n" +
+    "							<b>{{receivedOrderTabCount[0]}}</b>\n" +
+    "							<b>{{receivedOrderTabCount[1]}}</b>\n" +
+    "							<b>{{receivedOrderTabCount[2]}}</b>\n" +
+    "						</a>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentOrderTab(\"started\")}'\n" +
-    "						ng-click='cutOrderTabStarted()'><i class='started-icon'></i><span><b>{{startedOrderTabCount[0]}}</b><b>{{startedOrderTabCount[1]}}</b><b>{{startedOrderTabCount[2]}}</b></span></a>\n" +
+    "						ng-click='cutOrderTabStarted()'>\n" +
+    "							<i class='icon-img-bg started-icon'></i>\n" +
+    "							<b>{{startedOrderTabCount[0]}}</b>\n" +
+    "							<b>{{startedOrderTabCount[1]}}</b>\n" +
+    "							<b>{{startedOrderTabCount[2]}}</b>\n" +
+    "					</a>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentOrderTab(\"done\")}'\n" +
-    "						ng-click='cutOrderTabDone()'><i class='done-icon'></i><span><b>{{doneOrderTabCount[0]}}</b><b>{{doneOrderTabCount[1]}}</b><b>{{doneOrderTabCount[2]}}</b></span></a>\n" +
+    "						ng-click='cutOrderTabDone()'>\n" +
+    "							<i class='icon-img-bg done-icon'></i>\n" +
+    "							<b>{{doneOrderTabCount[0]}}</b>\n" +
+    "							<b>{{doneOrderTabCount[1]}}</b>\n" +
+    "							<b>{{doneOrderTabCount[2]}}</b>\n" +
+    "						</a>\n" +
     "				</li>\n" +
     "				<li>\n" +
     "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentOrderTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabException()'><i class='exception-icon'></i><span><b>{{exceptionOrderTabCount[0]}}</b><b>{{exceptionOrderTabCount[1]}}</b><b>{{exceptionOrderTabCount[2]}}</b></span></a>\n" +
+    "						ng-click='cutOrderTabException()'>\n" +
+    "						<i class='icon-img-bg exception-icon'></i>\n" +
+    "						<b>{{exceptionOrderTabCount[0]}}</b>\n" +
+    "						<b>{{exceptionOrderTabCount[1]}}</b>\n" +
+    "						<b>{{exceptionOrderTabCount[2]}}</b>\n" +
+    "					</a>\n" +
     "				</li>\n" +
     "			</ul>\n" +
     "		</nav>\n" +
@@ -616,10 +694,6 @@ angular.module("page/leader.html", []).run(["$templateCache", function($template
     "			</table>\n" +
     "		</div>\n" +
     "		<div class='map-wrapper' ng-show='mapShow'>\n" +
-    "			<a \n" +
-    "				href='javascript:;' \n" +
-    "				class='btn-bg-icon map-close-btn'\n" +
-    "				ng-click='closeMapView()'>X</a>\n" +
     "			<div class='leader-map' leader-map></div>	\n" +
     "		</div>\n" +
     "		<div class='paging' ng-show='orderItemCount > 10'>\n" +
@@ -676,7 +750,7 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "					<a \n" +
     "					href='javascript:;' \n" +
     "					class='normal-tab'\n" +
-    "					ng-click='toggleTab(\"callPolice\")'><i class='prepared-icon'>报警记录查询</a>\n" +
+    "					ng-click='toggleTab(\"callPolice\")'>报警记录查询</a>\n" +
     "			</li>\n" +
     "		</ul>\n" +
     "	</div>\n" +
@@ -686,15 +760,15 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "			<div class='simple'>\n" +
     "				<input \n" +
     "					type='text' \n" +
-    "					class='input-text'\n" +
-    "					ng-model='keywords'/><button class='search-btn btn-normal'>搜索</button>\n" +
+    "					class='search-input-text'\n" +
+    "					ng-model='keywords'/><button class='search-btn btn'>搜索</button>\n" +
     "				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>\n" +
     "			</div>\n" +
     "			<div class='more' ng-show='isShowMore'>\n" +
     "				<div>\n" +
     "					<span class='field-wraper'>\n" +
     "						<label>接线员:</label>\n" +
-    "						<input type='text' class='input-normal'/>\n" +
+    "						<input type='text' class='input-text'/>\n" +
     "					</span>\n" +
     "					<span class='field-wraper'>\n" +
     "						<label>状态</label>\n" +
@@ -704,12 +778,12 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "						<label>订单时间:</label>\n" +
     "						<input \n" +
     "							type='text' \n" +
-    "							class='input-normal'\n" +
+    "							class='input-text'\n" +
     "							ng-model='search.beginTime'/>\n" +
     "						<b>-</b>\n" +
     "						<input \n" +
     "							type='text' \n" +
-    "							class='input-normal'\n" +
+    "							class='input-text'\n" +
     "							ng-model='search.endTime'/>\n" +
     "					</span>\n" +
     "				</div>\n" +
@@ -722,15 +796,15 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "\n" +
     "		<div class='toggle-btns'>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutAllOrderTab()'\n" +
     "				ng-class='{active: isAllOrderTab()}'>全部({{getAllOrderTotal()}})</button>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutUnhandleOrderTab()'\n" +
     "				ng-class='{active: isUnhandleOrderTab()}'>未处理({{getUnhandleOrderTotal()}})</button>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutHandleOrderTab()'\n" +
     "				ng-class='{active: isHandleOrderTab()}'>已处理({{getHandleOrderTotal()}})</button>\n" +
     "		</div>\n" +
@@ -800,7 +874,7 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "					<a \n" +
     "					href='javascript:;' \n" +
     "					class='normal-tab'\n" +
-    "					ng-click='toggleTab(\"prepared\")'><i class='prepared-icon'>订单记录查询</a>\n" +
+    "					ng-click='toggleTab(\"prepared\")'>订单记录查询</a>\n" +
     "			</li>\n" +
     "		</ul>\n" +
     "	</div>\n" +
@@ -810,30 +884,30 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "			<div class='simple'>\n" +
     "				<input \n" +
     "					type='text' \n" +
-    "					class='input-text'\n" +
-    "					ng-model='words'/><button class='search-btn btn-normal'>搜索</button>\n" +
+    "					class='search-input-text'\n" +
+    "					ng-model='words'/><button class='search-btn btn'>搜索</button>\n" +
     "				<a href='javascript:;' class='more-link' ng-click='filterMoreOrderSearchBtn()'>更多筛选条件</a>\n" +
     "			</div>\n" +
     "			<div class='more' ng-show='isShowMore'>\n" +
     "				<div>\n" +
     "					<span class='field-wraper'>\n" +
     "						<label>接线员:</label>\n" +
-    "						<input type='text' class='input-normal'/>\n" +
+    "						<input type='text' class='text-input'/>\n" +
     "					</span>\n" +
     "					<span class='field-wraper'>\n" +
     "						<lable>状态</label>\n" +
-    "						<select class='select-normal'><option>请选择</option></select>\n" +
+    "						<select class='select'><option>请选择</option></select>\n" +
     "					</span>\n" +
     "					<span  class='field-wraper'>\n" +
     "						<label>订单时间:</label>\n" +
     "						<input \n" +
     "							type='text' \n" +
-    "							class='input-normal'\n" +
+    "							class='text-input'\n" +
     "							ng-model='searchOrderBeginTime'/>\n" +
     "						<b>-</b>\n" +
     "						<input \n" +
     "							type='text' \n" +
-    "							class='input-normal'\n" +
+    "							class='text-input'\n" +
     "							ng-model='searchOrderEndTime'/>\n" +
     "					</span>\n" +
     "				</div>\n" +
@@ -846,15 +920,15 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "\n" +
     "		<div class='toggle-btns'>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutAllOrderTab()'\n" +
     "				ng-class='{active:isCurrentTab(\"all\")}'>全部({{allOrderCount()}})</button>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutImmediateOrderTab()'\n" +
     "				ng-class='{active:isCurrentTab(\"immediate\")}'>即时({{immediateOrderCount()}})</button>\n" +
     "			<button \n" +
-    "				class='btn-normal' \n" +
+    "				class='btn' \n" +
     "				ng-click='cutReservationOrderTab()'\n" +
     "				ng-class='{active:isCurrentTab(\"reservation\")}'>预约({{reservationOrderCount()}})</button>\n" +
     "		</div>\n" +
@@ -922,11 +996,11 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		<div class='chart'>\n" +
     "			<div class='user-info'>\n" +
     "				<div class='justify'>\n" +
-    "					<span  class='info-item'><i class='custom-type'></i>{{userData.rank}}</span>\n" +
-    "					<span class='info-item'><i class='timer'></i>{{userData.timeCreated}}</span>\n" +
+    "					<span  class='info-item'><i class='icon-img custom-type'></i>{{userData.rank}}</span>\n" +
+    "					<span class='info-item'><i class='icon-img timer'></i>{{userData.timeCreated}}</span>\n" +
     "				</div>\n" +
     "				<div class='justify'>\n" +
-    "					<span class='info-item' ng-click='queryOrderBySn()'><i class='serial-number'></i>{{userData.sn}}</span>\n" +
+    "					<span class='info-item' ng-click='queryOrderBySn()'><i class='icon-img serial-number'></i>{{userData.sn}}</span>\n" +
     "					<span class='info-item'>\n" +
     "						<span><b class='legend-dot dot-order-count'></b>订单次数</span>\n" +
     "						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>\n" +
@@ -938,30 +1012,30 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		</div>\n" +
     "		<form class='seat-top-form' name='newOrder' ng-submit='addOrderFromForm()'>\n" +
     "			<ul class='seat-field1'>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg calling-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal' \n" +
+    "						class='text-input' \n" +
     "						disabled='disabled'\n" +
     "						ng-model='orderData.callingTel'/>\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg actual-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal' \n" +
+    "						class='text-input' \n" +
     "						maxlength='11'\n" +
     "						ng-required='true'\n" +
     "						ng-model='orderData.actualTel'\n" +
     "						ng-pattern='/1\\d{10}/'/>\n" +
     "					<span class='mobile-position'>{{mobilePosition}}</span>\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg username-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal'\n" +
+    "						class='text-input'\n" +
     "						maxlength='30'\n" +
     "						ng-required='true'\n" +
     "						ng-model='orderData.fullName'\n" +
@@ -973,7 +1047,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						id='femaleRadio'\n" +
     "						ng-model='orderData.gender'\n" +
     "						value='1'/>\n" +
-    "					<label class='label-radio female' for='femaleRadio'></label>\n" +
+    "					<label class='female' for='femaleRadio'></label>\n" +
     "					<input \n" +
     "						type='radio' \n" +
     "						name='gender' \n" +
@@ -981,13 +1055,13 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						id='maleRadio'\n" +
     "						ng-model='orderData.gender'\n" +
     "						value='2'/>\n" +
-    "					<label class='label-radio male' for='maleRadio'></label>\n" +
+    "					<label class='male' for='maleRadio'></label>\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg start-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal long-width'\n" +
+    "						class='text-input long-width'\n" +
     "						id='startInput'\n" +
     "						maxlength='50'\n" +
     "						ng-required='true'\n" +
@@ -996,40 +1070,39 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						words-place='orderData.start'\n" +
     "						start-list='orderData.poiList'/>\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg around-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal long-width'\n" +
+    "						class='text-input long-width'\n" +
     "						maxlength='50'\n" +
     "						ng-model='orderData.aroundRoadName'\n" +
     "						placeholder='周围道路名称'/>\n" +
     "				</li>\n" +
     "			</ul>\n" +
     "			<ul>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<input\n" +
     "						type='checkbox'\n" +
     "						id='carTypeSelect'\n" +
-    "						class='input-checkbox'\n" +
-    "						ng-model='orderData.isCarType'\n" +
-    "						/>\n" +
-    "					<label class='icon-label cartype-label checkbox-label' for='carTypeSelect'><i></i></label>\n" +
+    "						class='checkbox-in-label'\n" +
+    "						ng-model='orderData.isCarType' />\n" +
+    "					<label class='icon-img-bg cartype-label' for='carTypeSelect'></label>\n" +
     "					<span class='cartype-selects'>\n" +
-    "						<select class='select-normal car-select' ng-disabled='!orderData.isCarType'>\n" +
+    "						<select class='select car-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>汽车类型</option>\n" +
     "						</select>\n" +
-    "						<select class='select-normal price-select' ng-disabled='!orderData.isCarType'>\n" +
+    "						<select class='select price-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>价格</option>\n" +
     "						</select>\n" +
-    "						<select class='select-normal count-select' ng-disabled='!orderData.isCarType'>\n" +
+    "						<select class='select count-select' ng-disabled='!orderData.isCarType'>\n" +
     "							<option>车数</option>\n" +
     "						</select>\n" +
     "					</span>\n" +
     "					<label class='icon-img-bg destination-label'></label>\n" +
     "					<input \n" +
     "						list='orderDestination' \n" +
-    "						class='input-normal long-width'\n" +
+    "						class='text-input long-width'\n" +
     "						ng-model='orderData.end'\n" +
     "						ng-required='true'\n" +
     "						placeholder='目的地'/>\n" +
@@ -1037,57 +1110,60 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						<option  ng-repeat='item in orderData.targetpoiList' value='{{item}}'>\n" +
     "					</datalist>\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<input \n" +
     "						type='checkbox' \n" +
     "						id='reservationSelect' \n" +
-    "						class='input-checkbox'\n" +
+    "						class='checkbox-in-label'\n" +
     "						ng-model='orderData.isReservation'/>\n" +
-    "					<label class='icon-label prepare-label checkbox-label' for='reservationSelect'><i></i></label>\n" +
-    "					<input \n" +
-    "						type='text' \n" +
-    "						class='input-normal input-calendar'  \n" +
-    "						ng-disabled='!orderData.isReservation'\n" +
-    "						ng-model='orderData.reservationCalendar'/>\n" +
-    "						<div calendar selected='orderData.reservationCalendar' class='calendar'></div>\n" +
+    "					<label class='icon-img-bg reservation-label' for='reservationSelect'></label>\n" +
     "\n" +
-    "						<span \n" +
-    "							class='time-select' \n" +
-    "							ng-class='{disabled: !orderData.isReservation}'>\n" +
-    "						<em \n" +
-    "							class='hour' \n" +
-    "							time-select='24'\n" +
-    "							selected='orderData.hour'\n" +
-    "							reservation='orderData.isReservation'\n" +
-    "							>{{orderData.hour}}</em><i class='colon'>:</i><em \n" +
-    "							class='minute' \n" +
-    "							time-select='60'\n" +
-    "							number-mod='5'\n" +
-    "							reservation='orderData.isReservation'\n" +
-    "							selected='orderData.minute'>{{orderData.minute}}</em>\n" +
-    "					</span>\n" +
+    "					<span class='date-pickup-wrap'>\n" +
+    "						<input \n" +
+    "							type='text' \n" +
+    "							class='text-input input-calendar'  \n" +
+    "							ng-disabled='!orderData.isReservation'\n" +
+    "							ng-model='orderData.reservationCalendar'/>\n" +
+    "							<div calendar selected='orderData.reservationCalendar' class='calendar'></div>\n" +
+    "\n" +
+    "							<span \n" +
+    "								class='time-select' \n" +
+    "								ng-class='{disabled: !orderData.isReservation}'>\n" +
+    "							<em \n" +
+    "								class='hour' \n" +
+    "								time-select='24'\n" +
+    "								selected='orderData.hour'\n" +
+    "								reservation='orderData.isReservation'\n" +
+    "								>{{orderData.hour}}</em><i class='colon'>:</i><em \n" +
+    "								class='minute' \n" +
+    "								time-select='60'\n" +
+    "								number-mod='5'\n" +
+    "								reservation='orderData.isReservation'\n" +
+    "								selected='orderData.minute'>{{orderData.minute}}</em>\n" +
+    "							</span>\n" +
+    "						</span>\n" +
     "\n" +
     "					<label class='icon-img-bg count-label'></label>\n" +
     "					<input \n" +
     "						type='text'\n" +
-    "						class='input-normal long-width'\n" +
+    "						class='text-input long-width'\n" +
     "						ng-model='orderData.count'\n" +
     "						placeholder='叫车数'/>\n" +
     "\n" +
     "				</li>\n" +
-    "				<li>\n" +
+    "				<li class='field-li'>\n" +
     "					<label class='icon-img-bg remark-label'></label>\n" +
     "					<input \n" +
     "						type='text' \n" +
-    "						class='input-normal large-width'\n" +
+    "						class='text-input large-width'\n" +
     "						ng-model='orderData.remark'\n" +
     "						placeholder='附加信息'/>\n" +
-    "				</il>\n" +
+    "				</li>\n" +
     "			</ul>\n" +
     "			<div class='btns text-center'>\n" +
-    "				<button class='btn-normal' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>\n" +
-    "				<a href='javascript:;' class='btn-normal' ng-click='clearOrderForm()'>取消</a>\n" +
-    "				<a href='javascript:;' class='btn-normal'>转咨询投诉</a>\n" +
+    "				<button class='btn' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>\n" +
+    "				<a href='javascript:;' class='btn' ng-click='clearOrderForm()'>取消</a>\n" +
+    "				<a href='javascript:;' class='btn'>转咨询投诉</a>\n" +
     "			</div>\n" +
     "		</form>\n" +
     "	</div>\n" +
@@ -1096,9 +1172,15 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "	<div class='seat-top-right'>\n" +
     "		<nav class='nav'>\n" +
     "			<ul class='flex'>\n" +
-    "				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>\n" +
-    "				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>\n" +
-    "				<li><a href='javascript:;' class='btn-icon-small zoom'></a></li>\n" +
+    "				<li class='operate-btn-wrap'>\n" +
+    "					<a href='javascript:;' class='icon-btn zoom'></a>\n" +
+    "				</li>\n" +
+    "				<li class='operate-btn-wrap'>\n" +
+    "					<a href='javascript:;' class='icon-btn zoom'></a>\n" +
+    "				</li>\n" +
+    "				<li class='operate-btn-wrap'>\n" +
+    "					<a href='javascript:;' class='icon-btn zoom'></a>\n" +
+    "				</li>\n" +
     "			</ul>\n" +
     "		</nav>\n" +
     "		<div class='map' seat-map-view>\n" +
@@ -1120,7 +1202,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<div><span>0152</span></div>\n" +
     "					<div><span>15%</span></div>\n" +
     "				</li>\n" +
-    "				<li class='car-icon big-icon'>\n" +
+    "				<li class='car-icon heavy-icon'>\n" +
     "					<div><span>0152</span></div>\n" +
     "					<div><span>15%</span></div>\n" +
     "				</li>\n" +
@@ -1129,10 +1211,10 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "					<div><span>15%</span></div>\n" +
     "				</li>\n" +
     "			</ul>\n" +
-    "			<ul class='flex legend'>\n" +
+    "			<ul class='flex legend-wrap'>\n" +
     "				<li><i class='legend-dot stop'></i><span>未登录车/停运</span></li>\n" +
     "				<li><i class='legend-dot empty'></i><span>空车</span></li>\n" +
-    "				<li><i class='legend-dot big'></i><span>重车</span></li>\n" +
+    "				<li><i class='legend-dot heavy'></i><span>重车</span></li>\n" +
     "				<li><i class='legend-dot task'></i><span>任务车</span></li>\n" +
     "			</ul>\n" +
     "		</section>\n" +
@@ -1144,19 +1226,29 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "	<div class='seat-bottom-right'>\n" +
     "		<section class='search-bar'>\n" +
     "			<div class='fl'>\n" +
-    "				<button class='btn-normal toggle-btn' ng-click='toggleImmediateOrReservation()'>{{immediateOrReservation}}</button>\n" +
+    "				<button class='btn toggle-btn' ng-click='toggleImmediateOrReservation()'>{{immediateOrReservation}}</button>\n" +
     "			</div>\n" +
     "			<ul class='flex fl tabs'>\n" +
-    "				<li><a \n" +
+    "				<li>\n" +
+    "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: !isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabPrepared()'><i class='normal'></i>({{normalOrderCount()}})</a></li>\n" +
-    "				<li><a \n" +
+    "						ng-click='cutOrderTabPrepared()'>\n" +
+    "							<i class='icon-img-bg normal'></i>\n" +
+    "							<em>({{normalOrderCount()}})</em>\n" +
+    "						</a>\n" +
+    "				</li>\n" +
+    "				<li>\n" +
+    "					<a \n" +
     "						href='javascript:;' \n" +
     "						class='tab'\n" +
     "						ng-class='{active: isCurrentTab(\"exception\")}'\n" +
-    "						ng-click='cutOrderTabException()'><i class='error'></i>({{exceptionOrderCount()}})</a></li>\n" +
+    "						ng-click='cutOrderTabException()'>\n" +
+    "						<i class='icon-img-bg error'></i>\n" +
+    "						<em>({{exceptionOrderCount()}})</em>\n" +
+    "					</a>\n" +
+    "				</li>\n" +
     "			</ul>\n" +
     "			<div class='fr'>\n" +
     "				<form ng-submit='searchCurrentOrderByKeywords()'>\n" +
@@ -1165,7 +1257,7 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "						class='search-input'\n" +
     "						ng-required='true'\n" +
     "						ng-model='inputOrderWords'\n" +
-    "						pause-emit='pause'/><button class='btn-normal search-btn'><i></i></button>\n" +
+    "						pause-emit='pause'/><button class='btn search-btn'><i class='icon-img'></i></button>\n" +
     "					<select class='search-select'>\n" +
     "						<option>个人</option>\n" +
     "					</select>\n" +
@@ -1178,24 +1270,36 @@ angular.module("page/seat.html", []).run(["$templateCache", function($templateCa
     "		<section class='order-content flex'>\n" +
     "			<div class='order-nav-var' ng-show='!isCurrentTab(\"exception\")'>\n" +
     "				<h1 class='title'>状态</h1>\n" +
-    "				<nav>\n" +
+    "				<nav class='order-nav'>\n" +
     "					<ul>\n" +
-    "						<li><a \n" +
+    "						<li class='order-nav-li'>\n" +
+    "							<a \n" +
     "								href='javascript:;' \n" +
+    "								class='nav-btn'\n" +
     "								ng-class='{active: isCurrentTab(\"prepared\")}'\n" +
-    "								ng-click='cutOrderTabPrepared()'>调派中</a></li>\n" +
-    "						<li><a \n" +
+    "								ng-click='cutOrderTabPrepared()'>调派中</a>\n" +
+    "						</li>\n" +
+    "						<li class='order-nav-li'>\n" +
+    "							<a \n" +
     "								href='javascript:;' \n" +
+    "								class='nav-btn'\n" +
     "								ng-class='{active: isCurrentTab(\"received\")}'\n" +
-    "								ng-click='cutOrderTabReceived()'>已接单</a></li>\n" +
-    "						<li><a \n" +
+    "								ng-click='cutOrderTabReceived()'>已接单</a>\n" +
+    "						</li>\n" +
+    "						<li class='order-nav-li'>\n" +
+    "							<a \n" +
     "								href='javascript:;' \n" +
+    "								class='nav-btn'\n" +
     "								ng-class='{active: isCurrentTab(\"started\")}'\n" +
-    "								ng-click='cutOrderTabStarted()'>已出发</a></li>\n" +
-    "						<li><a \n" +
+    "								ng-click='cutOrderTabStarted()'>已出发</a>\n" +
+    "						</li>\n" +
+    "						<li class='order-nav-li'>\n" +
+    "							<a \n" +
     "								href='javascript:;' \n" +
+    "								class='nav-btn'\n" +
     "								ng-class='{active: isCurrentTab(\"done\")}'\n" +
-    "								ng-click='cutOrderTabDone()'>已完成</a></li>\n" +
+    "								ng-click='cutOrderTabDone()'>已完成</a>\n" +
+    "						</li>\n" +
     "					</ul>\n" +
     "				</nav>\n" +
     "			</div>\n" +

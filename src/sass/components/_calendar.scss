@@ -1,23 +1,23 @@
-$secondary-color:						$color-primary;
 
-@mixin vertical-centre($height) {
-	height: $height;
-	line-height: $height;
-	text-align: center;
-}
 
 .calendar {
+
+	$calendar-width: 300px;
+	$grid-size: 28px;
+
+
+	font-family: $font-family;
+	font-size: 12px;
 	position: absolute;
 	z-index: 20;
-	display: block;
 	background: #fff;
-	width: 300px;
+	width: $calendar-width;
 	box-sizing: border-box;
-	div.calendar-header {
-		background: $secondary-color;		
+	.calendar-header {
+		background: $color-primary;		
 		color: #fff;
 		overflow: hidden;
-		@include vertical-centre(40px);
+		@include vertical-centre($grid-size);
 		.fa {
 			font-style: normal;	
 			cursor: pointer;
@@ -25,19 +25,19 @@ $secondary-color:						$color-primary;
 		}
 		.fa-angle-left {
 			float: left;	
-			margin-left: 10px;
+			margin-left: $margin-horizontal;
 		}
 		.fa-angle-right {
 			float: right;	
-			margin-right: 10px;
+			margin-right: $margin-horizontal;
 		}
 	}
-	div.week {
+	.week {
 		overflow:hidden;
 		&.names .day{
-			color: $secondary-color;
+			color: $color-primary;
 		}
-		span.day {
+		.day {
 			float: left;
 			width: (100%/7);
 			box-sizing: border-box;
@@ -49,9 +49,9 @@ $secondary-color:						$color-primary;
 			}
 			background: #fff;
 			cursor: pointer;
-			color: #333;	
+			color: $text-color;	
 			display: inline-block;
-			@include vertical-centre(30px);
+			@include vertical-centre($grid-size);
 
 			&.today {
 				background: #E3F2FF;	
@@ -62,7 +62,7 @@ $secondary-color:						$color-primary;
 			}
 
 			&.selected {
-				background: $secondary-color;	
+				background: $color-primary;	
 				color: #fff;
 			}
 		}	

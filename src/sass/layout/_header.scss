@@ -97,7 +97,7 @@
 		.exit-btn {
 			&:before {
 				font-size: $icon-btn-large-size;
-				color: $color-secondary;
+				color: $color-forth;
 			}
 			@include icon-content('\e610');
 		}

@@ -1,0 +1,87 @@
+label {
+	display: inline-block;
+	max-width: 100%;
+}
+
+%text-input {
+	outline: none;
+	font-size: $input-text-font-size;
+	padding: $input-padding-vertical $input-padding-horizontal;
+	min-height: $input-min-height;
+	font-family: $font-family;	
+	color: $input-text-color;
+	background-color: #fff;
+}
+
+%select {
+	font-family: $font-family;	
+	font-size: $select-font-size;
+	height: $select-height;
+	cursor: pointer;
+	background-color: $select-bg;
+	color: $select-color;
+	outline: none;
+	border: 1px solid $select-border-color;
+}
+
+.text-input {
+	@extend %text-input;
+	border-radius: $radius-small-size;
+	border: 1px solid $input-border-color;
+	&:focus {
+		border-color: $input-focus-border-color;	
+	}
+	&:disabled {
+		background-color: $input-text-disabled-bg;
+		color: $input-text-disabled-color;	
+	}
+	&:invalid {
+	//	border-color: $input-error-border-color;	
+	}
+}
+
+.select{
+	@extend %select;
+	border-radius: $radius-small-size;
+	&:disabled {
+		background-color: $select-disabled-bg;
+		color: $select-disabled-color;	
+		cursor: Default;
+	}
+}
+
+.checkbox-in-label {
+	position: absolute;
+	visibility: hidden;
+	&:checked + label {
+		background-color: $color-primary;
+	}
+}
+
+.gender-radio {
+	position: absolute;
+	visibility: hidden;
+	&:checked + label{
+		color: $color-primary;
+	}
+	& + label{
+		@extend %icon-font;
+		color: #ccc;
+		vertical-align: middle;
+		overflow: hidden;
+		&:before {
+			font-size: 24px;	
+		}
+		&.female {
+			@include icon-content('\e628');
+		}
+		&.male {
+			@include icon-content('\e611');
+		}	
+	}
+}
+
+.input-calendar {
+	@include form-icons();
+	background-position: 100% 7px;
+}

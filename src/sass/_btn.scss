@@ -1,3 +1,18 @@
+%btn-normal {
+	border: 0;
+	border-radius: $radius-small-size;
+	text-decoration: none;
+	outline: 0;
+	background-color: $btn-bg;
+	color: #fff;
+	&:hover {
+		background-color: $btn-hover-bg;	
+	}
+	&:active {
+		background-color: $btn-active-bg;	
+	}
+}
+
 .icon-btn{
 	@extend %icon-font;
 	border: 0;
@@ -15,17 +30,17 @@
 
 .icon-btn-bg {
 	@extend %icon-font;
-	border: 0;
-	border-radius: $radius-small-size;
-	text-decoration: none;
-	outline: 0;
-	background-color: $btn-bg;
-	color: #fff;
+	@extend %btn-normal;
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-	&:hover {
-		background-color: $btn-hover-bg;	
-	}
-	&:active {
-		background-color: $btn-active-bg;	
-	}
+}
+
+.btn {
+	@extend %btn-normal;
+	font-size: $btn-font-size;
+	font-family: $font-family;
+	text-align: center;
+	vertical-align: bottom;
+	display: inline-block;
+	height: $btn-height;
+	line-height: $btn-height;
 }

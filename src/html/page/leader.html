@@ -3,44 +3,79 @@
 		<div class='employ-chart flex'>
 			<div chart-employ class='graph' employ-data='employChart'>
 			</div>
-			<div class='employ-legend'>
-				<ul class='dots'>
-					<li ng-class='{active: isEmployerActiveTab("busy")}'><i class='legend-dot dot-busy'></i><a href='javascript:;' ng-click='toggleEmplyerTab("busy")'>示忙</a></li>
-					<li ng-class='{active: isEmployerActiveTab("reset")}'><i class='legend-dot dot-reset'></i><a href='javascript:;' ng-click='toggleEmplyerTab("reset")'>小休</a></li>
-					<li ng-class='{active: isEmployerActiveTab("respond")}'><i class='legend-dot dot-respond'></i><a href='javascript:;'  ng-click='toggleEmplyerTab("respond")'>应答</a></li>
-					<li ng-class='{active: isEmployerActiveTab("vain")}'><i class='legend-dot dot-vain'></i><a href='javascript:;' ng-click='toggleEmplyerTab("vain")'>空闲</a></li>
+			<div class='employ-legend-wrap'>
+				<ul class='dots-ul'>
+					<li	class='dot-li' ng-class='{active: isEmployerActiveTab("busy")}'>
+						<a 
+							class='tab-btn'
+							href='javascript:;' 
+							ng-click='toggleEmplyerTab("busy")'>
+							<i class='legend-dot dot-busy'></i>
+							<span>示忙</span>
+						</a>
+					</li>
+					<li	class='dot-li' ng-class='{active: isEmployerActiveTab("reset")}'>
+						<a 
+							class='tab-btn'
+							href='javascript:;' 
+							ng-click='toggleEmplyerTab("reset")'>
+							<i class='legend-dot dot-rest'></i>
+							<span>小休</span>
+						</a>
+					</li>
+					<li	class='dot-li' ng-class='{active: isEmployerActiveTab("respond")}'>
+						<a 
+							class='tab-btn'
+							href='javascript:;' 
+							ng-click='toggleEmplyerTab("respond")'>
+							<i class='legend-dot dot-respond'></i>
+							<span>应答</span>
+						</a>
+					<li	class='dot-li' ng-class='{active: isEmployerActiveTab("vain")}'>
+						<a 
+							class='tab-btn'
+							href='javascript:;' 
+							ng-click='toggleEmplyerTab("vain")'>
+							<i class='legend-dot dot-free'></i>
+							<span>空闲</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 		<div class='employ-info'>
-			<ul class='flex'>
+			<ul class='employ-info-ul flex'>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 				<li class='item'>
-					<div><i class='user-icon'></i><span>0000</span></div>
-					<div><i class='timer-icon'></i><span>12:21</span></div>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
+				</li>
+				<li class='item'>
+					<div><i class='icon-img user-icon'></i><span>0000</span></div>
+					<div><i class='icon-img timer-icon'></i><span>12:21</span></div>
 				</li>
 			</ul>
 		</div>
@@ -68,15 +103,19 @@
 		<nav class='tabs'>
 			<div class='fr search-wrap'>
 				<form class='flex' ng-submit='searchOrder()'>
-					<div class='input-wrap'><input 
-												type='text' 
-												class='search-input' 
-												ng-required='true'
-												ng-model='words'/></div>
-					<div><button class='btn-normal search-btn'><i></i></button></div>
+					<div class='input-wrap'></div>
+					<input 
+						type='text' 
+						class='search-input' 
+						ng-required='true'
+						ng-model='words'/>
+					<div><button class='icon-btn-bg search-btn'></button></div>
 				</form>
 			</div>
-			<a href='javascript:;' class='leader-reservation' ng-click='toggleImmediateOrReservation()'>
+			<a 
+				href='javascript:;' 
+				class='immediate-reservation-btn' 
+				ng-click='toggleImmediateOrReservation()'>
 				<span class='btn-word'>{{immediateOrReservation}}</span>
 			</a>
 			<ul class='flex'>
@@ -85,35 +124,60 @@
 					href='javascript:;' 
 					class='tab'
 					ng-class='{active: isCurrentOrderTab("prepared")}'
-					ng-click='cutOrderTabPrepared()'><i class='prepared-icon'></i><span><b>{{preparedOrderTabCount[0]}}</b><b>{{preparedOrderTabCount[1]}}</b><b>{{preparedOrderTabCount[2]}}</b></span></a>
+					ng-click='cutOrderTabPrepared()'>
+						<i class='icon-img-bg prepared-icon'></i>
+						<b>{{preparedOrderTabCount[0]}}</b>
+						<b>{{preparedOrderTabCount[1]}}</b>
+						<b>{{preparedOrderTabCount[2]}}</b>
+				</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentOrderTab("received")}'
-						ng-click='cutOrderTabReceived()'><i class='received-icon'></i><span><b>{{receivedOrderTabCount[0]}}</b><b>{{receivedOrderTabCount[1]}}</b><b>{{receivedOrderTabCount[2]}}</b></span></a>
+						ng-click='cutOrderTabReceived()'>
+							<i class='icon-img-bg received-icon'></i>
+							<b>{{receivedOrderTabCount[0]}}</b>
+							<b>{{receivedOrderTabCount[1]}}</b>
+							<b>{{receivedOrderTabCount[2]}}</b>
+						</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentOrderTab("started")}'
-						ng-click='cutOrderTabStarted()'><i class='started-icon'></i><span><b>{{startedOrderTabCount[0]}}</b><b>{{startedOrderTabCount[1]}}</b><b>{{startedOrderTabCount[2]}}</b></span></a>
+						ng-click='cutOrderTabStarted()'>
+							<i class='icon-img-bg started-icon'></i>
+							<b>{{startedOrderTabCount[0]}}</b>
+							<b>{{startedOrderTabCount[1]}}</b>
+							<b>{{startedOrderTabCount[2]}}</b>
+					</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentOrderTab("done")}'
-						ng-click='cutOrderTabDone()'><i class='done-icon'></i><span><b>{{doneOrderTabCount[0]}}</b><b>{{doneOrderTabCount[1]}}</b><b>{{doneOrderTabCount[2]}}</b></span></a>
+						ng-click='cutOrderTabDone()'>
+							<i class='icon-img-bg done-icon'></i>
+							<b>{{doneOrderTabCount[0]}}</b>
+							<b>{{doneOrderTabCount[1]}}</b>
+							<b>{{doneOrderTabCount[2]}}</b>
+						</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
 						ng-class='{active: isCurrentOrderTab("exception")}'
-						ng-click='cutOrderTabException()'><i class='exception-icon'></i><span><b>{{exceptionOrderTabCount[0]}}</b><b>{{exceptionOrderTabCount[1]}}</b><b>{{exceptionOrderTabCount[2]}}</b></span></a>
+						ng-click='cutOrderTabException()'>
+						<i class='icon-img-bg exception-icon'></i>
+						<b>{{exceptionOrderTabCount[0]}}</b>
+						<b>{{exceptionOrderTabCount[1]}}</b>
+						<b>{{exceptionOrderTabCount[2]}}</b>
+					</a>
 				</li>
 			</ul>
 		</nav>
@@ -167,10 +231,6 @@
 			</table>
 		</div>
 		<div class='map-wrapper' ng-show='mapShow'>
-			<a 
-				href='javascript:;' 
-				class='btn-bg-icon map-close-btn'
-				ng-click='closeMapView()'>X</a>
 			<div class='leader-map' leader-map></div>	
 		</div>
 		<div class='paging' ng-show='orderItemCount > 10'>

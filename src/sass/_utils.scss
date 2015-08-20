@@ -52,10 +52,29 @@
 	}
 }
 
+.icon-img {
+	@extend %icon-font;
+	vertical-align: bottom;
+}
+
 .icon-img-bg {
 	@extend %icon-font;
 	border-radius: $radius-small-size;
-	display: inline-block;
 	color: #fff;
 	vertical-align: bottom;
 }
+
+.dialog-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	background-color: #000000;
+	opacity: 0.8;
+}
+
+
+
+

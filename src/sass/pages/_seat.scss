@@ -1,34 +1,33 @@
 .seat-above {
-	padding-right: $padding-base-horizontal;
-	border-right: $border-large-width solid $border-color;
+	padding-right: $padding-horizontal;
+	border-right: $border-width solid #fff;
 }
 
 //# top left part
 .seat-top-left{
 	$seat-chart-width:			300px;
-	$seat-chart-height:			($label-base-height + $margin-base-vertical) * 5 - $margin-base-vertical;
-	$input-large-width:			$layout-left-width - $padding-base-horizontal * 2 - $label-base-height - $input-padding-horizontal * 2  - 6px;
-	$input-long-width:			$input-large-width - $seat-chart-width - $padding-base-horizontal;
-
-	//6px = 2 input border + inline = >\n = 4px 
+	$seat-chart-height:			($input-height + $margin-vertical) * 5 - $margin-vertical;
+	$input-large-width:			$layout-left-width - $input-height - 5px - $padding-horizontal - $border-width - ($input-padding-horizontal + 1px) * 2;
+	$input-long-width:			$input-large-width - $seat-chart-width - $margin-small-horizontal;
 
 	position: relative;
-	margin-right: $border-base-width;
-	border: $border-large-width solid $border-color;
+	font-family: $font-family;
+	margin-right: $margin-small-horizontal;
+	border: $border-width solid #fff;
 	border-left:0;
-	width: $layout-left-width - $border-large-width;
-
-	padding: $padding-base-vertical 0 $padding-large-vertical ($padding-base-horizontal + $border-large-width);
+	width: $layout-left-width - $border-width;
+	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-width);
 	
 	.chart {
 		position: absolute;
 		top: $padding-vertical;
-		left: $padding-base-horizontal + $border-width;
+		left: $padding-horizontal + $border-width;
 		border:$border-small-width solid #fff;
 		border-radius: $radius-small-size;
 		background-color: $chart-bg;
 		z-index: 10;
-		@include border-box($seat-chart-width, $seat-chart-height);
+		height: $seat-chart-height - $border-small-width * 2;
+		width: $seat-chart-width - $border-small-width * 2;
 		.user-info {
 			padding: $padding-vertical $padding-horizontal;
 			color: $text-color;
@@ -44,7 +43,9 @@
 		.info-item{
 			cursor: Default;
 			display: inline-block;
-			@include icon-bg($icon-small-size, $color-text);
+		}
+		.icon-img {
+			font-size: 24px;	
 		}
 		.custom-type {
 			@include icon-content('\e615');
@@ -59,22 +60,15 @@
 			margin-right: $margin-small-horizontal;
 		}
 		.dot-order-count {
-			background-color: $color-secondary;
+			background-color: $color-forth;
 		}
 		.dot-fuck-count {
-			background-color: $color-third;
+			background-color: $color-fifth;
 		}
 	}
 
-	.cartype-selects {
-		display: inline-block;
-		width: $seat-chart-width - $label-base-width - 8px;
-	}
 	.seat-field1 {
-		padding-left: $seat-chart-width + $padding-base-horizontal;
-	}
-	.input-normal {
-		width: $input-base-width;
+		padding-left: $seat-chart-width + $margin-small-horizontal;
 	}
 	.long-width {
 		width: $input-long-width;
@@ -89,26 +83,75 @@
 		font-size: 12px;
 		color: $color-primary;	
 	}
+
 	.sending {
-	    background-color: #ccc;	
+	    background-color: $color-disabled;	
 	    text-indent: 9999px;
 	    background-image: url(../imgs/loading.gif);
 	    background-position: center center;
 	    background-repeat: no-repeat;
 	    pointer-events: none;
 	}
-}
 
-.seat-top-form{
-	li {
-		margin-bottom: $margin-base-vertical;
+	.time-select {
+		display: inline-block;
+		border: 1px solid $input-border-color;
+		height: $input-height;
+		line-height: $input-height;
+		box-sizing: border-box;
+		border-radius: $radius-small-size;
+		background-color: $select-bg;
+		vertical-align: bottom;
+		font-size: $input-text-font-size;
+		color: $input-text-color;
+		
+		&.disabled {
+			background-color: $input-text-disabled-bg;	
+			color: $input-text-disabled-color;
+		}
+
+		.hour,
+		.minute {
+			display: inline-block;
+			width: 28px;
+			text-align: center;	
+			cursor: Default;
+		}
+	}
+	
+	$wrap-width: $seat-chart-width - $input-height - 5px;
+	.cartype-selects {
+		display: inline-block;
+		width: $wrap-width;
+		$select-width: ($wrap-width - 10px) / 3;
+		.car-select {
+			width: $select-width;
+		}
+		.price-select {
+			width: $select-width;
+		}
+
+		.count-select {
+			width: $select-width;
+		}
+	}
+
+	.date-pickup-wrap {
+		display: inline-block;	
+		width: $wrap-width; 
+		.input-calendar {
+			width: $wrap-width - 62px - 5px - ($input-padding-horizontal + 1) * 2;	
+		}
 	}
 }
 
 .seat-top-form {
+	.field-li {
+		margin-bottom: $margin-base-vertical;
+	}
 	.icon-img-bg {
 		&:before {
-			font-size: 28px;	
+			font-size: $input-height;	
 		}
 		background-color: #ccc;
 	}
@@ -127,7 +170,7 @@
 	}
 	
 	.start-label {
-		background-color: $color-secondary;
+		background-color: $color-forth;
 		& {
 			@include icon-content('\e622');
 		}
@@ -138,17 +181,14 @@
 	}
 
 	.destination-label {
-		margin-left: $padding-base-horizontal - 8px;
-		& {
-			@include icon-content('\e623');
-		}
+		@include icon-content('\e623');
 	}
 
-	.prepare-label i {
+	.reservation-label {
 		@include icon-content('\e629');
 	}
 
-	.cartype-label i {
+	.cartype-label {
 		@include icon-content('\e61c');
 	}
 
@@ -159,82 +199,38 @@
 	.count-label {
 		@include icon-content('\e62b');
 	}
-
-	.btn-normal{
-		width: $btn-large-width;
-		height: 30px;
-		line-height: 30px;
-		box-sizing: border-box;
-	}
-
-	.car-select {
-		width: 92px;
-	}
-
-	.price-select {
-		width: 92px;
-	}
-
-	.count-select {
-		width: 63px;
-	}
-
-	.time-select {
-		display: inline-block;
-		border: 1px solid #ccc;
-		height: 28px;
-		line-height: 28px;
-		box-sizing: border-box;
-		border-radius: 4px;
-		background-color: #fff;
-		vertical-align: bottom;
-		@extend %font-ms;
-		font-size: 13px;
-		color: #333;
-		
-		&.disabled {
-			background-color: #EBEBE4;	
-			color: #ccc;
-		}
-
-		.hour,
-		.minute {
-			display: inline-block;
-			width: 30px;
-			text-align: center;	
-			cursor: Default;
-		}
-
-	}
-	.input-calendar {
-		width: 180px;
-	}
-
-	.auto-call-label,
-	.auto-checked-label {
-		font-size: $input-font-size;
-		color:	$input-color;
+	.btn{
+		width: 140px;
 	}
 }
 
 //#####top right part
 .seat-top-right {
 	flex: 2 1;
-	border-top: $border-large-width solid $border-color;
+	border-top: $border-width solid #fff;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
+
+	$nav-height: 30px;
 	.nav {
-		li {
-			height: $height-base;
-			line-height: $height-base;
-			margin-left: $margin-large-horizontal;
+		height: $nav-height;
+		line-height: $nav-height;	
+	}
+
+	.operate-btn-wrap {
+		margin-left: $margin-large-horizontal;
+		.icon-btn {
+			&:before {
+				font-size: 18px;	
+			}	
 		}
 		.zoom {
 			@include icon-content('\e61f');
 		}
 	}
+
 	.map {
-		height: ($label-base-width + $margin-base-vertical) * 8 + $height-base + $padding-large-vertical + $padding-base-vertical - $height-base + $border-large-width;
+		height: ($input-height + $margin-vertical) * 8 + $input-height + $padding-vertical * 2  + $border-width - $nav-height;
 		background-color: $chart-bg;
 	}
 }
@@ -243,17 +239,20 @@
 // # below
 .seat-bottom-left {
 
-	$bottom-left-width:		350px;
+	$container-width:		350px;
 	$car-icon-width:		60px;
 	$car-icon-height:		47px;
-	width: $bottom-left-width;
-	border-left: $border-large-width solid $border-color;
-	border-bottom: $border-large-width solid $border-color;
-	padding:$padding-base-horizontal ($padding-large-vertical - $border-large-width);
-	@extend %font-ms;
+
+	font-family: $font-family;
+	width: $container-width;
+	border-left: $border-width solid #fff;
+	border-bottom: $border-width solid #fff;
+	padding: $padding-vertical $padding-horizontal;
+
 	.car-status {
+
 		background-color: $chart-bg;
-		border-radius: $radius-large;
+		border-radius: $radius-large-size;
 		margin-bottom: $margin-base-vertical;
 		padding: $padding-large-vertical 0;
 		font-size: $font-small-size;
@@ -263,40 +262,40 @@
 		.car-icon {
 			width: $car-icon-width;
 			height: $car-icon-height;
-			@include bg-car-status;
+			@include background-image(); 
 			text-align: center;
 			color: #fff;
 			&.stop-icon {
-				background-position:0 0;
+				background-position:0 -41px;
 			}
 			&.empty-icon {
-				background-position:0 -64px;
+				background-position:0 -89px;
 			}
-			&.big-icon {
-				background-position:0 -126px;
+			&.heavy-icon {
+				background-position:0 -138px;
 			}
 			&.task-icon {
-				background-position:0 -197px;
+				background-position:0 -185px;
 			}
 		}
-		.legend {
-			color: $color-text;
-			margin-top: $margin-base-vertical;
+		.legend-wrap {
+			color: $text-color;
+			padding-top: $padding-vertical;
 		}
 		
 		.legend-dot {
 			margin-right: $margin-small-horizontal;
 			&.stop {
-				background-color: $legend-stop-color;
+				background-color: $car-stop-color;
 			}
 			&.empty {
-				background-color: $legend-empty-color;
+				background-color: $car-empty-color;
 			}
-			&.big {
-				background-color: $legend-big-color;
+			&.heavy{
+				background-color: $car-heavy-color;
 			}
 			&.task {
-				background-color: $legend-task-color;
+				background-color: $car-task-color;
 			}
 		}
 
@@ -305,35 +304,44 @@
 
 //# bottom right
 .seat-bottom-right {
+
+	$search-bar-height: 46px;
+	$search-bar-tab-height: 40px;
+
 	flex: 2 1;
-	@extend %font-ms;
-	margin-top: $margin-base-vertical;
-	padding:$padding-base-vertical 0 $padding-base-vertical $padding-base-horizontal;
-	border: $border-large-width solid $border-color; 
+	font-family: $font-family;
+	margin-top: $margin-vertical;
+	padding:$padding-vertical 0 0 $padding-horizontal;
+	border: $border-width solid #fff; 
 	border-bottom: 0;
 	border-right: 0;
 	.search-bar {
-		height: $height-big;
-		line-height: $height-big;
+		height: $search-bar-height;
+		line-height: $search-bar-height;
 		overflow: hidden;
-		background-color: $chart-bg;
-		padding: 0 $padding-large-horizontal;
+		background-color: $color-third;
+		padding: 0 $padding-horizontal;
 		.tabs {
-			margin-top: ($height-big - 40px) / 2;
+			margin-top: ($search-bar-height - $search-bar-tab-height) / 2;
 		}
 		.tab {
-			@include box-info(90px, 40px);
+			@include box-in-middle($search-bar-tab-height, 90px);
 			text-decoration: none;
-			color: $color-default;
+			color: #ccc;
 			font-size: 14px;
 			&.active {
-				background-color: $bg-body;
+				background-color: $color-secondary;
 			}
 
-			i {
-				@include icon-radius() {
-					color: $btn-default-color;
-					background-color: $btn-default-bg;
+			.icon-img-bg {
+				border-radius: 50%;
+				background-color: #ccc;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				vertical-align: middle;
+				&:before {
+					font-size: 30px;	
 				}
 				&.normal {
 					@include icon-content('\e61a');
@@ -345,69 +353,71 @@
 		}
 
 		.search-input {
-			@include input-text();
+			@extend %text-input;
+			min-height: 20px;
+			border: 0;
 		}
 		.search-btn {
-			width: $width-base;
-			height:	$height-base;
+			width: $input-height;
+			height:	$input-height;
 			vertical-align: baseline;
 			border-radius: 0;
-			@include icon-bg($font-large-size, $btn-default-color);
-			i {
+			.icon-img {
+				&:before {
+					font-size: 16px;	
+				}
 				@include icon-content('\e61f');
 			}
 		}
 		.search-select {
-			border: 0;
-			height: $height-base;
-			font-size: $font-input-size;
-			color: $input-color;
+			@extend %select;
+			width: 64px;
 		}
 		.tick-timer {
 			background-color: $color-primary;
 			color: #fff;
-			font-size: $font-default-size;
-			@include box-info(60px, $height-base);
-			margin-right: $margin-base-horizontal;
+			@include box-in-middle($input-height, 60px);
+			margin-right: $margin-horizontal;
+			font-size: 13px;
 		}
 		.toggle-btn {
-			height: $height-base;
 			width: 40px;
 			vertical-align: baseline;
-			border-radius: 0;
 			margin-right: $margin-large-horizontal;
 		}
 	}
 
+	$order-content-height: 220px;
+	$order-nav-bar-width:	64px;
 	.order-content {
-		font-size: $font-small-size;
-		color: $color-text;
-		padding-top: $padding-base-vertical;
-		height: 210px;
+		font-size: 12px;
+		color: $text-color;
+		padding-top: $padding-vertical;
+		height: $order-content-height;
 	}
 
 	.order-nav-var {
-		width: 64px;
-		background-color: $chart-bg;
-		margin-right: $margin-base-horizontal;
+		width: $order-nav-bar-width;
+		background-color: $color-third;
+		margin-right: $margin-horizontal;
 		.title {
-			line-height: $height-base;
+			line-height: 30px;
 			text-align: center;
-			font-size: $font-large-size;
+			font-size: 16px;
 		}
-		nav {
+		.order-nav {
 			margin-top: $margin-base-vertical;
 		}
-		li {
+		.order-nav-li {
 			text-align: right;
 		}
-		a {
+		.nav-btn {
 			&.active {
-				background-color: $bg-body;
+				background-color: $color-secondary;
 			}
 			text-decoration:none;
-			@include box-info(60px, $height-base);
-			color: $color-text;
+			@include box-in-middle($input-height, 60px);
+			color: $text-color;
 
 		}
 	}
@@ -429,10 +439,7 @@
 		display: inline-block;
 		background: #DA8000;	
 		color: #fff;
-		width: 60px;
-		text-align: center;
-		height: 24px;
-		line-height: 24px;
+		@include box-in-middle($input-height, 60px);
 	}
 	.operate-list-li {
 		border-top: 1px solid #fff;	

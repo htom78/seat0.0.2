@@ -1,20 +1,26 @@
 <div class='pagination'>
 	<ul>
-		<li><a 
+		<li class='btn-li'>
+			<a 
 				href='javascript:;' 
-				class='prev'
+				class='prev pagination-btn'
 				ng-class='{disabled: noPrevious()}'
-				ng-click='selectPrevious()'><i></i></a></li>
-		<li><a 
+				ng-click='selectPrevious()'><i class='prev-icon'></i></a>
+		</li>
+		<li class='btn-li page-btns'>
+			<a 
 				href='javascript:;' 
-				class='page'
+				class='page-btn pagination-btn'
 				ng-class='{active: isCurrentPage(item)}'
 				ng-click='selectPage(item)'
-				ng-repeat='item in pages'>{{item}}</a></li>
-		<li><a 
+				ng-repeat='item in pages'>{{item}}</a>
+		</li>
+		<li class='btn-li'>
+			<a 
 				href='javascript:;' 
-				class='next'
+				class='next pagination-btn'
 				ng-class='{disabled: noNext()}'
-				ng-click='selectNext()'><i></i></a></li>
+				ng-click='selectNext()'><i class='next-icon'></i></a>
+		</li>
 	</ul>
 </div>

@@ -5,7 +5,7 @@
 					<a 
 					href='javascript:;' 
 					class='normal-tab'
-					ng-click='toggleTab("callPolice")'><i class='prepared-icon'>报警记录查询</a>
+					ng-click='toggleTab("callPolice")'>报警记录查询</a>
 			</li>
 		</ul>
 	</div>
@@ -15,15 +15,15 @@
 			<div class='simple'>
 				<input 
 					type='text' 
-					class='input-text'
-					ng-model='keywords'/><button class='search-btn btn-normal'>搜索</button>
+					class='search-input-text'
+					ng-model='keywords'/><button class='search-btn btn'>搜索</button>
 				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>
 			</div>
 			<div class='more' ng-show='isShowMore'>
 				<div>
 					<span class='field-wraper'>
 						<label>接线员:</label>
-						<input type='text' class='input-normal'/>
+						<input type='text' class='input-text'/>
 					</span>
 					<span class='field-wraper'>
 						<label>状态</label>
@@ -33,12 +33,12 @@
 						<label>订单时间:</label>
 						<input 
 							type='text' 
-							class='input-normal'
+							class='input-text'
 							ng-model='search.beginTime'/>
 						<b>-</b>
 						<input 
 							type='text' 
-							class='input-normal'
+							class='input-text'
 							ng-model='search.endTime'/>
 					</span>
 				</div>
@@ -51,15 +51,15 @@
 
 		<div class='toggle-btns'>
 			<button 
-				class='btn-normal' 
+				class='btn' 
 				ng-click='cutAllOrderTab()'
 				ng-class='{active: isAllOrderTab()}'>全部({{getAllOrderTotal()}})</button>
 			<button 
-				class='btn-normal' 
+				class='btn' 
 				ng-click='cutUnhandleOrderTab()'
 				ng-class='{active: isUnhandleOrderTab()}'>未处理({{getUnhandleOrderTotal()}})</button>
 			<button 
-				class='btn-normal' 
+				class='btn' 
 				ng-click='cutHandleOrderTab()'
 				ng-class='{active: isHandleOrderTab()}'>已处理({{getHandleOrderTotal()}})</button>
 		</div>

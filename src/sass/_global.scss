@@ -1,0 +1,84 @@
+.list-page {
+	$tab-height: 40px;
+	font-family: $font-family;
+	padding: $padding-large-vertical $padding-horizontal;
+	border-top: $border-large-width solid #fff;
+	border-right: $border-large-width solid #fff;
+	font-size: 14px;
+	.tabs {
+		padding-left: $tab-height + $padding-horizontal;
+	}
+	.search-input-text {
+		@extend %text-input;
+		border: 1px solid $input-border-color;
+		border-right: 0;
+		border-radius: $radius-small-size 0 0 $radius-small-size;
+		width: 350px;
+		&:focus {
+			border-color: $color-primary;
+		}
+	}
+	.search-btn {
+		border-radius: 0 $radius-small-size $radius-small-size 0;
+		width: 70px; 
+	}
+
+	.more-link {
+		font-size: 14px;
+		color: $text-color;
+		text-decoration: none;
+	}
+
+	.select {
+		width: 180px;
+	}
+
+	.more-btn-wrap {
+		padding: $padding-vertical $padding-horizontal;
+	}
+
+	.more-btn {
+		font-family: $font-family;
+		height: $input-height;
+		width: 90px;
+		background: $color-primary;
+		color: #fff;
+		font-size: 14px;
+		border: none;
+		border-radius: $radius-small-size;
+		outline: none;
+		&:hover {
+			background-color: darken($color-primary, 10%);	
+		}
+		&:active {
+			background-color: darken($color-primary, 20%);	
+		}
+	}
+
+	.simple {
+		padding:$padding-large-vertical $padding-horizontal $padding-vertical;
+		background-color: #fff;
+	}
+	.more {
+		background-color: #fff;
+		padding-left: $padding-horizontal * 2;
+	}
+	.field-wraper {
+		display: inline-block;
+		margin-right: $margin-base-horizontal;
+	}
+	.search {
+		position: relative;
+	}
+	.toggle-btns {
+		position: absolute;
+		right: $padding-large-horizontal;
+		top: $padding-large-vertical;
+		.btn{
+			width: 96px;
+		}
+		.active {
+			background-color: $color-primary;
+		}
+	}
+}

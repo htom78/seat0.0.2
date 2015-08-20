@@ -1,39 +1,51 @@
 .call-status {
-	background-color: $chart-bg;
-	border-radius: $radius-large;
-	padding: $padding-large-vertical $padding-base-horizontal;
-	font-size: $font-small-size;
-	@extend %font-ms;
-	color: $color-text;
+	$hour-color:#97c255;
+	$day-color: #ff9663;
+	$predict-color: darken($chart-bg, 10%);
+	$process-height: 28px;
+	$process-chart-width: 288px;
+	$process-hour-width: 160px;
+	$process-day-width: 240px;
+
+	font-family: $font-family;
+	font-size: 12px;
+	color: $text-color;
+	background-color: $color-third;
+	border-radius: $radius-large-size;
+	padding: $padding-large-vertical $padding-horizontal;
+
 	.flex {
 		justify-content: space-around;
 	}
+
 	.legend-dot{
 		margin-right: $margin-small-horizontal;
 		&.hour {
-			background-color: $legend-hour-color;
+			background-color: $hour-color;
 		}
 		&.day {
-			background-color: $legend-day-color;
+			background-color: $day-color;
 		}
 		&.predict {
-			background-color: $legend-predict-color;
+			background-color: $predict-color;
 		}
 	}
+
 	.process-chart {
-	    width: 288px;
+	    width: $process-chart-width;
 	    margin: 0 auto;	    
 	}
+
 	.process {
 		position: relative;
-		background: $legend-predict-color;
+		background: $predict-color;
 		height: $process-height;
-		margin-bottom: $margin-big-horizontal;
-		border-radius: $radius-large 0 0 $radius-large;
+		margin-bottom: 24px;
+		border-radius: $radius-large-size 0 0 $radius-large-size;
 		.current {
 			position: relative;
 			height: 100%;
-			border-radius: $radius-large 0 0 $radius-large;
+			border-radius: $radius-large-size 0 0 $radius-large-size;
 			.overflow {
 			    position: absolute;
 			    top: 0;
@@ -42,15 +54,16 @@
 			    background: rgba(0,0,0,.2);
 			}
 		}
+
 		.info {
 			position: absolute;
 			text-align: center;
 			width: 100%;
 			top: 100%;
 			left: 0;
-			line-height: $process-info-height;
-			border-left: 1px solid $color-default;
-			border-right: 1px solid $color-default;
+			line-height: 16px;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
 			box-sizing: border-box;
 			&:after {
 				content: '';
@@ -59,13 +72,13 @@
 				height: 1px;
 				top: 50%;
 				left: 0;
-				background: $color-default;
+				background: #ccc;
 			}
-			span {
+			.text {
 				position: relative;
 				display: inline-block;
-				padding: 0 $padding-small-horizontal;
-				z-index: $zindex-base;
+				padding: 0 4px;
+				z-index: 10;
 				background: $chart-bg;
 				text-align: center;
 			}
@@ -74,29 +87,27 @@
 	.process-hour {
 		width: $process-hour-width;
 		.current {
-			background-color: $legend-hour-color;
+			background-color: $hour-color;
 		}
 	}
 	.process-day {
 		width: $process-day-width;
 		.current {
-			background-color: $legend-day-color;
+			background-color: $day-color;
 		}
 	}
 	.day-process-wrapper {
 	    position: relative;
-	    width: 288px;	    
 	}
 	.hour-process-wrapper {
 	    position: relative;
-	    width: 192px;	    
 	}
 	.text-info {
 		position: absolute;
 		color: #fff;
 		top: 50%;
 		left: 50%;
-		z-index: $zindex-base;
+		z-index: 10;
 		transform: translate(-50%, -50%);
 	}
 }

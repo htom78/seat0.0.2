@@ -26,31 +26,26 @@
 @import './base/reset';
 
 //component
-@import './btn';
-
 
 @import './components/buttons';
-@import './components/form';
 @import './components/global';
 @import './components/call-chart';
-@import './components/table';
 @import './components/pagination';
 @import './components/order';
-@import './components/order-step';
 @import './components/assign-dialog';
 @import './components/address-list';
 @import './components/map-dialog';
 @import './components/tabs';
-@import './components/list-page';
 @import './components/calendar';
-@import './components/handle-alarm-dialog';
 @import './components/message-box';
 @import './components/time-select';
 
 
-//utils
+@import './global.scss';
+@import './table';
+@import './btn';
+@import './form';
 @import './utils';
-@import './helpers/global';
 
 //layout
 @import './layout/header';

@@ -5,7 +5,7 @@
 	        	<div class='current' style='width:{{hourWidth}}px'>
 	    		<div class='overflow' style='width:{{hourWidth - lastHourWidth}}px' ng-if='isHourOverflow()'></div>
 	    	</div>
-	        	<div class='info'><span>{{lastHour}}</span></div>
+	        	<div class='info'><span class='text'>{{lastHour}}</span></div>
 	        </div>
 	        <span class='text-info'>{{showHour}}<b ng-if='isHourOverflow()'> + {{hourOverflow}}</b></span>
 	    </div>
@@ -14,12 +14,12 @@
 	    	<div class='current' style='width:{{dayWidth}}px'>
 	    		<div class='overflow' style='width:{{dayWidth - lastDayWidth}}px' ng-if='isDayOverflow()'></div>
 	    	</div>
-	        	<div class='info'><span>{{lastDay}}</span></div>
+	        	<div class='info'><span class='text'>{{lastDay}}</span></div>
 	        </div>
 	        <span class='text-info'>{{showDay}}<b ng-if='isDayOverflow()'> + {{dayOverflow}}</b></span>
 	    </div>
 	</div>
-	<ul class='flex legend'>
+	<ul class='flex legend-wrap'>
 		<li><i class='legend-dot hour'></i><span>当前小时电召数量</span></li>
 		<li><i class='legend-dot day'></i><span>当前天电召数量</span></li>
 		<li><i class='legend-dot predict'></i><span>预计数量</span></li>

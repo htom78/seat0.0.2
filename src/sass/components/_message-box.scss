@@ -1,31 +1,50 @@
 .message-box {
+	font-family: $font-family;
 	position: absolute;
 	background-color:#fff;
 	border: 1px solid #ccc;
+	border-radius: $radius-large-size;
+	overflow: hidden;
 	top: 20%;
 	left: 50%;
 	transform:translateX(-50%);
 	z-index: 1001;
 
 	.box-title {
-		height: 36px;
-		line-height: 36px;	
+		height: 32px;
+		line-height: 32px;	
 		background-color: $color-primary;
 		color: #fff;
-		font-size: 16px;
-		padding-left: 20px;
+		font-size: 14px;
+		padding-left: $padding-large-horizontal;
+		font-weight: bold;
+	}
+
+	.box-container {
+		padding: $padding-large-vertical $padding-large-horizontal;	
+	}
+
+	.message-input-wrap {
+		margin-bottom: $margin-vertical;	
+	}
+
+	.message-label {
+		font-size: 13px;		
+		color: $text-color;
 	}
 
 	.message-box-btns {
-		padding: 20px 30px;	
+		text-align: center;
 	}
 
 	.message-box-ensure {
 		background-color: $color-primary;	
+		&:hover {
+			background-color: darken($color-primary, 10%);	
+		}
 	}
 	.message-box-ensure,
 	.message-box-cancel {
-		padding: 6px 12px;
-		font-size: 14px;
+		width: 60px;
 	}
 }

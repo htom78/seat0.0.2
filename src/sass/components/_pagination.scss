@@ -1,44 +1,61 @@
 .pagination {
+	$pagination-height: 28px;
+
 	height: $pagination-height;
 	overflow: hidden;
-	li {
+	.btn-li {
 		float: left;
+		height: $pagination-height;
+		line-height: $pagination-height;
 	}
-	a {
-		text-decoration: none;
-		@include box-info($pagination-link-width, $pagination-link-height);
-		color: $color-text;
-		i {
-			display: inline-block;
-			width: 6px;
-			height: 12px;
-			background-image: url(../imgs/pagination.png);
+	.pagination-btn {
+		text-decoration: none;	
+		color: $text-color;
+		font-size: 14px;
+		display: inline-block;
+		&.disabled {
+			cursor: Default;	
 		}
+	}
+	
+	.page-btns {
+		margin: 0 $margin-small-horizontal;	
+	}
+
+	.prev,
+	.next {
+		@include box-in-middle($pagination-height, $pagination-height);	
+		box-sizing: border-box;
+		border: 1px solid $color-primary;
+		border-radius: $radius-small-size;
+		&.disabled {
+			border-color: #ccc;	
+		}
+	}
+
+	.prev-icon {
+		@include background-image();
+		display: inline-block;
+		width: 6px;
+		height: 12px;
+		background-position:0 -238px;
+	}
+
+	.next-icon {
+		@include background-image();	
+		display: inline-block;
+		width: 6px;
+		height: 12px;
+		background-position:-15px -238px;
+	}
+	
+	.page-btn {
+		@include box-in-middle(20px, 20px);
+		border-radius: $radius-small-size;	
 		&.active {
+			background-color: $color-primary;	
 			color: #fff;
-			background: $color-primary;
-			border-radius: $radius-base;
 			cursor: Default;
 		}
-	}
-	.next,
-	.prev {
-		width: 28px;
-		height: 28px;
-		border: 1px solid $color-primary;
-		line-height: 30px;
-		border-radius: $radius-base;
-	}
-	.next {
-		i {
-			background-position: -15px 0
-		}
-	}
-	.page {
-		margin: ($pagination-height - $pagination-link-width)/2 $margin-small-horizontal 0 $margin-small-horizontal;
-	}
-	.disabled {
-		border-color: $disabled-color;
-  		cursor: Default;
 	}
 }

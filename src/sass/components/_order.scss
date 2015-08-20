@@ -3,12 +3,12 @@
 	padding: $padding-base-vertical $padding-base-horizontal;
 	background-color: #fff;
 	.table-wrapper {
-		height: $leader-order-height;
+		height: 360px;
 	}
 	.paging {
 		position: absolute;
-		bottom: $padding-base-vertical;
-		right: $padding-base-horizontal;
+		bottom: $padding-vertical;
+		right: $padding-horizontal;
 	}
 }
 
@@ -16,6 +16,7 @@ tr.add-new {
 	animation: newOrder 5s;	
 	-webkit-animation: newOrder 5s;	
 }
+
 @keyframes newOrder
 {
 	from {background: $color-primary;}
@@ -32,6 +33,7 @@ tr.add-new {
 	animation: addTab 5s;
 	-webkit-animation: addTab 5s;
 }
+
 @keyframes addTab
 {
 	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}

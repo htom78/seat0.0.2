@@ -1,8 +1,10 @@
 //color
 $color-primary:									#ffba58;
-$color-secondary:								#23a249;
-$color-third:										#ff7c3c;
-$color-disabled:								#ccc;
+$color-secondary:								#f4f2f2;
+$color-third:										#e5e5e5;
+$color-forth:										#23a249;
+$color-fifth:										#ff7c3c;
+$color-disabled:								#EBEBE4;
 
 $text-color:										#333;
 
@@ -12,12 +14,36 @@ $icon-btn-large-size:						42px;
 
 //font family
 $font-family:										'Microsoft YaHei', 'Helvetica Neue', Helvetica, Tahoma, sans-serif;
+$font-select-size:							13px;
+$font-input-size:								13px;
+
+//input
+$input-height:									28px;
+$input-padding-vertical:				4px;
+$input-padding-horizontal:			6px;
+$input-min-height:   						18px;
+$input-text-font-size:					13px;
+$input-text-color:							#555;
+$input-border-color:						#ccc;
+$input-focus-border-color:			$color-primary;
+$input-text-disabled-bg:				$color-disabled;
+$input-text-disabled-color:			#ccc;	
+$input-error-border-color:			#f00;
+
 
 //btn
 $btn-bg:												#ccc;
 $btn-hover-bg:									darken($btn-bg, 10%);
 $btn-active-bg:									darken($btn-bg, 20%);
-
+$btn-font-size:									14px;
+$btn-height:										$input-height;
+$select-font-size:							13px;
+$select-bg:											#f3ecec;
+$select-border-color:						#ccc;
+$select-disabled-bg:						$color-disabled;
+$select-disabled-color:					#ccc;
+$select-height:									$input-height;
+$select-color:									#555;
 
 //border
 $border-color:									#fff;
@@ -34,6 +60,7 @@ $radius-large-size:							8px;
 $margin-horizontal:							10px;
 $margin-vertical:								10px;
 $margin-small-horizontal:				4px;
+$margin-large-horizontal:				20px;
 
 
 //padding
@@ -51,4 +78,24 @@ $dot-width:											8px;
 $dot-height:										8px;
 
 //chart
-$chart-bg:											#e5e5e5;
+$chart-bg:											$color-third;
+
+
+$car-stop-color: 								#aaaaaa;
+$car-empty-color: 							#5db300;
+$car-heavy-color: 								#ff7800;
+$car-task-color: 								#4194ff;
+
+$employ-rest-color:							#e6c707;
+$employ-respond-color:					#97c255;
+$employ-free-color:							#649626;
+$employ-busy-color:							#ff7c3c;
+
+
+//police page
+$self-select-bg:								#f00;
+$other-select-bg:								#5B6AD3;
+
+
+$handle-bar-bg: 								#fbf2de; 
+

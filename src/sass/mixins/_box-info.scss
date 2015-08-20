@@ -11,6 +11,12 @@
 	overflow: hidden;
 }
 
+@mixin vertical-centre($height) {
+	height: $height;
+	line-height: $height;
+	text-align: center;
+}
+
 @mixin box-in-middle($height, $width) {
 	display: inline-block;
 	width: $width;
