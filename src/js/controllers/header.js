@@ -7,18 +7,18 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 		if (!$scope.isSignIn()) {
 			signService.signIn()
 				.then(function() {
-					$scope.signInfo = 'signIn';	
+					$scope.currentSignState = 'signIn';	
 				});	
 		} else {
 			signService.signOut()
 				.then(function() {
-					$scope.signInfo = 'signOut';	
+					$scope.currentSignState = 'signOut';	
 				});	
 		}
 	};
 
 	$scope.isSignIn = function() {
-		return $scope.signInfo === 'signIn';
+		return $scope.currentSignState === 'signIn';
 	};
 
 	$scope.isFreeState = function() {
@@ -70,27 +70,33 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 	//security
 	//###############################################################
 	$scope.logout = function() {
+		socket.close();
 		signService.logout();
 		security.logout();
-		socket.close();
 	};
 
-	security.requestCurrentUser()
-		.then(function(response) {
-			$scope.username = response; 	
-			$scope.isHeaderShow = true;
-			socket.connection();
-			$scope.isLeader = security.isLeader();
-			signService.getCurrentState()
-			.then(function(response) {
-				if (response.isSignIn) {
-					$scope.signInfo = 'signIn';	
-					$scope.currentState = response.currentCallingState;
-				}	
-			});
-		}, function() {
+	$scope.$watch(function() {
+		return security.isAuthenticated();	
+	}, function(isAuthenticated) {
+		if (isAuthenticated) {
+			security.requestCurrentUser()
+				.then(function(response) {
+					socket.connection();
+					$scope.isHeaderShow = true;	
+					$scope.username = response; 	
+					$scope.isLeader = security.isLeader();
+					return signService.getCurrentState();
+				})
+				.then(function(response) {
+					if (response.isSignIn) {
+						$scope.currentSignState = 'signIn';	
+						$scope.currentState = response.currentCallingState;
+					}	
+				});
+		} else {
 			$scope.isHeaderShow = false;	
-		});
+		}	
+	});
 
 	$scope.hasHeader = function() {
 		return $scope.isHeaderShow;	

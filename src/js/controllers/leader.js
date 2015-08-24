@@ -128,7 +128,7 @@ var leaderCtrl = function($scope, $timeout, $location, security, leaderService) 
 	$scope.$watch(function() {
 		return security.isLeader();	
 	}, function(isLeader) {
-		if (!isLeader) {
+		if (security.isAuthenticated() && !isLeader) {
 			$location.path('/');	
 		}	
 	});
