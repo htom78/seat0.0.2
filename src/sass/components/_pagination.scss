@@ -34,7 +34,7 @@
 	}
 
 	.prev-icon {
-		@include background-image();
+		@extend %background-image;
 		display: inline-block;
 		width: 6px;
 		height: 12px;
@@ -42,7 +42,7 @@
 	}
 
 	.next-icon {
-		@include background-image();	
+		@extend %background-image;	
 		display: inline-block;
 		width: 6px;
 		height: 12px;

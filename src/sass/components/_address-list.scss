@@ -1,22 +1,22 @@
 .address-list {
+	@extend %font-family;
 	position: absolute;
 	top: 0;
 	left: 0;
 	background-color: #fff;
-	border: 1px solid #000;
+	border: 1px solid #999;
 	z-index: 50;
 	.link {
 		text-decoration: none;
-		color: $text-default-color;
+		color: $text-color;
 		display: block;
 		height: 20px;
 	 	line-height: 20px;
 	  	padding: 0 $padding-small-horizontal;
-	  	font-size: $font-small-size;
-	  	@extend %font-ms;
+	  	font-size: 12px;
 	  	&:hover,
 	  	&.active {
-	  		background-color: $color-default;
+	  		background-color: #ccc;
 	  	}
 	}
 }

@@ -4,17 +4,17 @@ label {
 }
 
 %text-input {
+	@extend %font-family;
 	outline: none;
 	font-size: $input-text-font-size;
 	padding: $input-padding-vertical $input-padding-horizontal;
 	min-height: $input-min-height;
-	font-family: $font-family;	
 	color: $input-text-color;
 	background-color: #fff;
 }
 
 %select {
-	font-family: $font-family;	
+	@extend %font-family;
 	font-size: $select-font-size;
 	height: $select-height;
 	cursor: pointer;
@@ -82,6 +82,6 @@ label {
 }
 
 .input-calendar {
-	@include form-icons();
+	@extend %form-icons;
 	background-position: 100% 7px;
 }

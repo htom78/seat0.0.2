@@ -7,7 +7,8 @@ $color-fifth:										#ff7c3c;
 $color-disabled:								#EBEBE4;
 
 $text-color:										#333;
-
+$body-bg:												$color-secondary;
+$normal-size:										28px;
 
 //size
 $icon-btn-large-size:						42px;
@@ -18,7 +19,7 @@ $font-select-size:							13px;
 $font-input-size:								13px;
 
 //input
-$input-height:									28px;
+$input-height:									$normal-size;
 $input-padding-vertical:				4px;
 $input-padding-horizontal:			6px;
 $input-min-height:   						18px;
@@ -36,19 +37,19 @@ $btn-bg:												#ccc;
 $btn-hover-bg:									darken($btn-bg, 10%);
 $btn-active-bg:									darken($btn-bg, 20%);
 $btn-font-size:									14px;
-$btn-height:										$input-height;
+$btn-height:										$normal-size;
 $select-font-size:							13px;
 $select-bg:											#f3ecec;
 $select-border-color:						#ccc;
-$select-disabled-bg:						$color-disabled;
+$select-disabled-bg:						$normal-size;
 $select-disabled-color:					#ccc;
-$select-height:									$input-height;
+$select-height:									$normal-size;
 $select-color:									#555;
 
 //border
-$border-color:									#fff;
-$border-small-width:						4px;
-$border-width:									8px;
+$border-main-size:							10px;
+$border-main-color:							#fff;
+$border-small-size:							4px;
 
 
 //radius
@@ -65,6 +66,7 @@ $margin-large-horizontal:				20px;
 
 //padding
 $padding-horizontal:						10px;
+$padding-small-horizontal:			4px;
 $padding-vertical:							10px;
 $padding-large-vertical:				20px;
 $padding-large-horizontal:			20px;
@@ -99,3 +101,5 @@ $other-select-bg:								#5B6AD3;
 
 $handle-bar-bg: 								#fbf2de; 
 
+$legend-dot-width:							8px;
+$legend-dot-height:							8px;

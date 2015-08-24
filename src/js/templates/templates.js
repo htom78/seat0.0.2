@@ -415,7 +415,7 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "\n" +
     "		<div class='status-icon' ng-class='{signIn: isSignIn()}'>\n" +
     "			<i\n" +
-    "				class='current-state'\n" +
+    "				class='current-state icon-img'\n" +
     "				ng-class='{\n" +
     "					free: isFreeState(), \n" +
     "					busy: isBusyState(), \n" +
@@ -424,8 +424,8 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		</div>\n" +
     "\n" +
     "		<div class='user-info-timer'>\n" +
-    "			<div class='username'><i></i><span>{{username}}</span></div>\n" +
-    "			<div class='timer'><i></i><span>{{currentTimer}}</span></div>\n" +
+    "			<div class='username'><i class='icon-img'></i><span>{{username}}</span></div>\n" +
+    "			<div class='timer'><i class='icon-img'></i><span>{{currentTimer}}</span></div>\n" +
     "		</div>\n" +
     "\n" +
     "		<div class='status-btns'>\n" +
@@ -789,7 +789,7 @@ angular.module("page/police.html", []).run(["$templateCache", function($template
     "				</div>\n" +
     "\n" +
     "				<div class='more-btn-wrap'>\n" +
-    "					<button class='more-btn'>搜索</button>\n" +
+    "					<button class='more-btn btn'>搜索</button>\n" +
     "				</div>\n" +
     "			</div>\n" +
     "		</form>\n" +
@@ -913,7 +913,7 @@ angular.module("page/search.html", []).run(["$templateCache", function($template
     "				</div>\n" +
     "\n" +
     "				<div class='more-btn-wrap'>\n" +
-    "					<button class='more-btn'>搜索</button>\n" +
+    "					<button class='more-btn btn'>搜索</button>\n" +
     "				</div>\n" +
     "			</div>\n" +
     "		</form>\n" +

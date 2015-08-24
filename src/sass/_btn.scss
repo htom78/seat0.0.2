@@ -36,8 +36,8 @@
 
 .btn {
 	@extend %btn-normal;
+	@extend %font-family;
 	font-size: $btn-font-size;
-	font-family: $font-family;
 	text-align: center;
 	vertical-align: bottom;
 	display: inline-block;

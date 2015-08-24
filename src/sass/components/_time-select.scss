@@ -10,7 +10,7 @@
 	.time-number {
 		@include box-in-middle($grid-size, $grid-size);
 		font-size: 12px;
-		color: $text-default-color;
+		color: $text-color;
 		cursor: Default;
 		&:hover {
 			background-color: $color-primary;	

@@ -1,9 +1,10 @@
 .list-page {
 	$tab-height: 40px;
-	font-family: $font-family;
+
+	@extend %font-family;
 	padding: $padding-large-vertical $padding-horizontal;
-	border-top: $border-large-width solid #fff;
-	border-right: $border-large-width solid #fff;
+	border-top: $border-main-size solid $border-main-color;
+	border-right: $border-main-size solid $border-main-color;
 	font-size: 14px;
 	.tabs {
 		padding-left: $tab-height + $padding-horizontal;
@@ -38,15 +39,8 @@
 	}
 
 	.more-btn {
-		font-family: $font-family;
-		height: $input-height;
 		width: 90px;
 		background: $color-primary;
-		color: #fff;
-		font-size: 14px;
-		border: none;
-		border-radius: $radius-small-size;
-		outline: none;
 		&:hover {
 			background-color: darken($color-primary, 10%);	
 		}
@@ -65,7 +59,7 @@
 	}
 	.field-wraper {
 		display: inline-block;
-		margin-right: $margin-base-horizontal;
+		margin-right: $margin-horizontal;
 	}
 	.search {
 		position: relative;
@@ -81,4 +75,135 @@
 			background-color: $color-primary;
 		}
 	}
+}
+
+//#################
+.normal-tab {
+
+	$tab-height: 40px;
+
+	position:relative;
+	text-decoration: none;
+	display: block;
+	height: $tab-height;
+	line-height: $tab-height;
+	background-color: #fff;
+	margin-right: $tab-height;
+	color: $color-primary;
+	font-weight: bold;
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 100%;
+		border-left: $tab-height solid #fff;
+		border-top: $tab-height solid transparent;
+		z-index: 10;
+	}
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 100%;
+		border-right: $tab-height solid #fff;
+		border-top: $tab-height solid transparent;
+	}
+}
+
+
+//#########################
+.orders {
+	position: relative;
+	padding: $padding-vertical $padding-horizontal;
+	background-color: #fff;
+	.table-wrapper {
+		height: 360px;
+	}
+	.paging {
+		position: absolute;
+		bottom: $padding-vertical;
+		right: $padding-horizontal;
+	}
+}
+
+tr.add-new {
+	animation: newOrder 5s;	
+	-webkit-animation: newOrder 5s;	
+}
+
+@keyframes newOrder {
+	from {background: $color-primary;}
+	to {background: transparent;}
+}
+
+@-webkit-keyframes newOrder {
+	from {background: $color-primary;}
+	to {background: transparent;}
+}
+
+.add-tab {
+	animation: addTab 5s;
+	-webkit-animation: addTab 5s;
+}
+
+@keyframes addTab
+{
+	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
+	25% {box-shadow: inset 0px 0px 6px rgba(255, 186, 88, 1);}
+	50% {box-shadow: inset 0px 0px 5px rgba(255, 186, 88, 1);}
+	80% {box-shadow: inset 0px 0px 4px rgba(255, 186, 88, 1);}
+	100% {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
+}
+
+@-webkit-keyframes addTab
+{
+	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
+	25% {box-shadow: inset 0px 0px 6px rgba(255, 186, 88, 1);}
+	50% {box-shadow: inset 0px 0px 5px rgba(255, 186, 88, 1);}
+	80% {box-shadow: inset 0px 0px 4px rgba(255, 186, 88, 1);}
+	100% {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
+}
+
+.dialog-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	background-color: #000000;
+	opacity: 0.8;
+}
+
+.legend-dot {
+	display:inline-block;
+	width: $legend-dot-width;
+	height: $legend-dot-width;
+}
+
+.icon-img {
+	@extend %icon-font;
+	vertical-align: bottom;
+}
+
+.icon-img-bg {
+	@extend %icon-font;
+	border-radius: $radius-small-size;
+	color: #fff;
+	vertical-align: bottom;
+}
+
+%form-icons {
+	background-image: url(../imgs/form-icons.png);
+	background-repeat: no-repeat;
+}
+
+%background-image {
+	background-image: url(../imgs/icons.png);
+	background-repeat: no-repeat;
+}
+
+%login-icons {
+	background-image: url(../imgs/form-icons.png);
+	background-repeat: no-repeat;
 }

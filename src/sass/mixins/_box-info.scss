@@ -1,16 +1,3 @@
-@mixin box-info($width, $height) {
-	display: inline-block;
-	@include size($width, $height);
-	text-align: center;
-	line-height: $height;
-}
-
-@mixin height-hidden($height) {
-	height: $height;
-	line-height: $height;
-	overflow: hidden;
-}
-
 @mixin vertical-centre($height) {
 	height: $height;
 	line-height: $height;

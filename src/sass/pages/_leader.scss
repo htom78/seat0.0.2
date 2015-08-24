@@ -2,11 +2,11 @@
 
 	$chart-height: 200px;
 
-	font-family: $font-family;
+	@extend %font-family;
 	font-size: 12px;
 
-	padding: $padding-vertical $padding-horizontal;
-	border: $border-width solid #fff;
+	padding: 0 $padding-horizontal $padding-vertical;
+	border: $border-main-size solid $border-main-color;
 	border-top: 0;
 
 	.employ,
@@ -19,20 +19,126 @@
 
 	.employ {
 		width:50%;
-		border: $border-small-width solid #fff;
+		border: $border-small-size solid #fff;
 		box-sizing: border-box;
 		margin-right: $margin-large-horizontal;
+
+		.employ-chart {
+			position: relative;
+			width: 410px;
+			border-right: 2px solid #fff;
+			.graph {
+				width: 350px;
+			}
+			.dot-busy {
+				background-color: $employ-busy-color;
+			}
+			.dot-rest {
+				background-color: $employ-rest-color;
+			}
+			.dot-respond {
+				background-color: $employ-respond-color;
+			}
+			.dot-free {
+				background-color: $employ-free-color;
+			}
+		}
+
+		.employ-legend-wrap {
+			flex: 2 1;
+			.dots-ul {
+				display: flex;
+				flex-direction: column;
+				height: $chart-height - $border-small-size * 2;
+				justify-content: center;
+			}
+			.dot-li {
+				position: relative;
+				&.active:before {
+					content: '';
+					position: absolute;
+					right: 0;
+					top: 50%;
+					margin-top: -6px;
+					border-right:6px solid #fff;
+					border-top:6px solid transparent;
+					border-bottom: 6px solid transparent;
+				}
+
+				&.active:after {
+					content: '';
+					position: absolute;
+					right: 0;
+					top: 50%;
+					margin-top: -6px;
+					margin-right: -2px;
+					border-right:6px solid $chart-bg;
+					border-top:6px solid transparent;
+					border-bottom: 6px solid transparent;
+					z-index: 10;
+				}
+			}
+		}
+
+		.tab-btn {
+			display: block;
+			line-height: 40px;
+			font-size: 12px;
+			text-decoration: none;
+			color: $text-color;
+		}
+		.legend-dot {
+			margin-right: $margin-horizontal;
+		}
+
+		.employ-info {
+			flex: 2 1;
+			padding: $padding-vertical 0;
+			overflow: auto;
+			overflow-x: hidden;
+			@extend %scroll-bar;
+			.employ-info-ul {
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.item {
+				background-color: darken($chart-bg, 10%);
+				border-radius: $radius-small-size;
+				color: #fff;
+				font-size: 12px;
+				width: 100px;
+				box-sizing: border-box;
+				padding: 6px $padding-horizontal;
+				margin: $margin-small-horizontal;
+			}
+			.user-icon,
+			.timer-icon {
+				vertical-align: baseline;
+				margin-right: $margin-small-horizontal;
+				&:before {
+					color: #fff;
+					font-size: 20px;
+				}
+			}
+			.user-icon {
+				@include icon-content('\e627');
+			}
+			.timer-icon {
+				@include icon-content('\e617');
+			}
+		}
 	}
 
-	$legend-wrap-height: 28px;
 	.car {
+		$legend-wrap-height: $normal-size;
+
 		flex: 2 1;
 		position: relative;
 		margin-right: $margin-horizontal;
 		color: $text-color;
 		line-height: $legend-wrap-height;
 		.flex {
-			  justify-content: space-around;
+				justify-content: space-around;
 		}
 		.graph {
 			position: absolute;
@@ -57,131 +163,42 @@
 			background-color: $car-task-color;
 		}
 	}
+
 	.call {
 		flex: 2 1;
-	}
-	.employ-chart {
-		position: relative;
-		width: 410px;
-		border-right: 2px solid #fff;
-		.graph {
-			width: 350px;
-		}
-		.dot-busy {
-			background-color: $employ-busy-color;
-		}
-		.dot-rest {
-			background-color: $employ-rest-color;
-		}
-		.dot-respond {
-			background-color: $employ-respond-color;
-		}
-		.dot-free {
-			background-color: $employ-free-color;
-		}
-	}
-
-	.employ-legend-wrap {
-		flex: 2 1;
-		.dots-ul {
-			display: flex;
-			flex-direction: column;
-			height: $chart-height - $border-small-width* 2;
-			justify-content: center;
-		}
-		.dot-li {
-			position: relative;
-			&.active:before {
-				content: '';
-				position: absolute;
-				right: 0;
-				top: 50%;
-				margin-top: -6px;
-				border-right:6px solid #fff;
-				border-top:6px solid transparent;
-				border-bottom: 6px solid transparent;
-			}
-
-			&.active:after {
-				content: '';
-				position: absolute;
-				right: 0;
-				top: 50%;
-				margin-top: -6px;
-				margin-right: -2px;
-				border-right:6px solid $chart-bg;
-				border-top:6px solid transparent;
-				border-bottom: 6px solid transparent;
-				z-index: 10;
-			}
-		}
-
-		.tab-btn {
-			display: block;
-			line-height: 40px;
-			font-size: 12px;
-			text-decoration: none;
-			color: $text-color;
-		}
-		.legend-dot {
-			margin-right: $margin-horizontal;
-		}
-	}
-
-	.employ-info {
-		flex: 2 1;
-		padding: $padding-base-vertical 0;
-		overflow: auto;
-  		overflow-x: hidden;
-  		@include scroll-bar();
-		.employ-info-ul {
-			flex-wrap: wrap;
-			justify-content: center;
-		}
-		.item {
-			background-color: darken($chart-bg, 10%);
-			border-radius: $radius-small-size;
-			color: #fff;
-			font-size: 12px;
-			width: 100px;
-			box-sizing: border-box;
-			padding: 6px $padding-horizontal;
-			margin: $margin-small-horizontal;
-		}
-		.user-icon,
-		.timer-icon {
-			vertical-align: baseline;
-			margin-right: $margin-small-horizontal;
-			&:before {
-				color: #fff;
-				font-size: 20px;
-			}
-		}
-		.user-icon {
-			@include icon-content('\e627');
-		}
-		.timer-icon {
-			@include icon-content('\e617');
-		}
 	}
 }
 
 .leader-orders {
 
-	font-family: $font-family;
-	border-right: $border-large-width solid #fff;
-	padding: $padding-large-vertical $padding-horizontal $padding-vertical ($padding-horizontal + $border-large-width);
+	$tab-size: 40px;
+	$tab-bg: #ccc;
+	$tab-active-bg: #fff;
+	$tab-icon-bg: #fff;
+	$tab-icon-active-bg: $color-primary;
+	$tab-icon-color: #ccc;
+	$tab-icon-active-color: #fff;
+	$tab-num-bg: #fff;
+	$tab-num-active-bg: $color-primary;
+	$tab-num-color: $color-primary;
+	$tab-num-active-color: #fff;
+	$search-wrap-height: 30px;
+
+	@extend %font-family;
+	border-right: $border-main-size solid $border-main-color;
+	padding: $padding-large-vertical $padding-horizontal $padding-vertical ($padding-horizontal + $border-main-size);
 	.nav-bar {
 		position: relative;
-		padding: 0 50px;
+		padding: 0 ($tab-size + $padding-horizontal);
 	}
 
 	.immediate-reservation-btn {
+		$btn-size: 30px;
 		position: absolute;
 		left: 0;
 		bottom: 5px;
 		width: 10px;
-		height: 30px;
+		height: $btn-size;
 		background-color: $btn-bg;
 		color: #fff;
 		&:after {
@@ -189,8 +206,8 @@
 			position: absolute;
 			left:100%;
 			top:0;
-			border-left: 30px solid $btn-bg;
-			border-bottom: 30px solid transparent;	
+			border-left: $btn-size solid $btn-bg;
+			border-bottom: $btn-size solid transparent;	
 		}
 		z-index: 50;
 		.btn-word {
@@ -218,27 +235,13 @@
 	}
 
 	.tab {
-	
-		$tab-height: 40px;
-		$tab-bg: #ccc;
-		$tab-active-bg: #fff;
-		$tab-icon-bg: #fff;
-		$tab-icon-active-bg: $color-primary;
-		$tab-icon-color: #ccc;
-		$tab-icon-active-color: #fff;
-		$tab-num-bg: #fff;
-		$tab-num-active-bg: $color-primary;
-		$tab-num-color: $color-primary;
-		$tab-num-active-color: #fff;
-
-
 		position:relative;
 		text-decoration: none;
 		display: block;
-		height: $tab-height;
-		line-height: $tab-height;
+		height: $tab-size;
+		line-height: $tab-size;
 		background-color: $tab-bg;
-		margin-right: $tab-height;
+		margin-right: $tab-size;
 		.icon-img-bg {
 			width: 28px;
 			height: 28px;
@@ -267,7 +270,7 @@
 			@include icon-content('\e619');
 		}
 		b {
-			@include box-in-middle($leader-num-height, $leader-num-height);
+			@include box-in-middle(20px, 20px);
 			background-color: $tab-num-bg;
 			font-size: 13px;
 			border-radius: $radius-small-size;
@@ -279,8 +282,8 @@
 			position: absolute;
 			top: 0;
 			left: 100%;
-			border-left: $tab-height solid $tab-bg;
-			border-top: $tab-height solid transparent;
+			border-left: $tab-size solid $tab-bg;
+			border-top: $tab-size solid transparent;
 			z-index: 10;
 		}
 		&:before {
@@ -288,8 +291,8 @@
 			position: absolute;
 			top: 0;
 			right: 100%;
-			border-right: $tab-height solid $tab-bg;
-			border-top: $tab-height solid transparent;
+			border-right: $tab-size solid $tab-bg;
+			border-top: $tab-size solid transparent;
 		}
 		&.active {
 			background-color: $tab-active-bg;
@@ -312,11 +315,11 @@
 
 	.search-wrap {
 		position: relative;
-		margin-top: ($leader-tab-height - $input-base-height) / 2;
+		margin-top: ($tab-size - $search-wrap-height) / 2;
 	}
 
 	.input-wrap {
-		height: 30px;
+		height: $search-wrap-height;
   	width: 200px;
   	background-color: #fff;
   	transform: skew(45deg);
@@ -336,7 +339,7 @@
 		position: relative;
 		outline: none;
 		width: 60px;
-		height:	30px;
+		height:	$search-wrap-height;
 		vertical-align: baseline;
 		border-radius: 0;
 		transform-origin: 50% 50%;
@@ -402,9 +405,9 @@
 //order step
 .order-step {
 	
-	$dot-width: 8px;
+	$dot-size: 8px;
 
-	font-family: $font-family;
+	@extend %font-family;
 	position: absolute;
 	font-size: 14px;
 	color: $text-color;
@@ -428,18 +431,18 @@
 			flex: 2 1;
 			position: relative;
 			text-align: center;
-			line-height: $input-height;
+			line-height: $normal-size;
 			&:before {
 				content: '';
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				width: $dot-width;
-				height: $dot-width;
-				margin-left: -$dot-width;
-				margin-top: -$dot-width;
+				width: $dot-size;
+				height: $dot-size;
+				margin-left: -$dot-size;
+				margin-top: -$dot-size;
 				background: #ccc;
-				border: $border-small-width solid $handle-bar-bg;
+				border: $border-small-size solid $handle-bar-bg;
 				border-radius: 50%;
 				z-index: 10;
 			}

@@ -1,5 +1,5 @@
 .message-box {
-	font-family: $font-family;
+	@extend %font-family;
 	position: absolute;
 	background-color:#fff;
 	border: 1px solid #ccc;

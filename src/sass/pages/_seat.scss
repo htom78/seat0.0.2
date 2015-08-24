@@ -1,33 +1,35 @@
 .seat-above {
 	padding-right: $padding-horizontal;
-	border-right: $border-width solid #fff;
+	border-right: $border-main-size solid $border-main-color;
 }
 
 //# top left part
 .seat-top-left{
 	$seat-chart-width:			300px;
-	$seat-chart-height:			($input-height + $margin-vertical) * 5 - $margin-vertical;
-	$input-large-width:			$layout-left-width - $input-height - 5px - $padding-horizontal - $border-width - ($input-padding-horizontal + 1px) * 2;
+	$seat-chart-height:			($normal-size + $margin-vertical) * 5 - $margin-vertical;
+	$input-large-width:			$layout-left-width - $normal-size - 5px - $padding-horizontal - $border-main-size - ($input-padding-horizontal + 1px) * 2;
 	$input-long-width:			$input-large-width - $seat-chart-width - $margin-small-horizontal;
 
+	@extend %font-family;
 	position: relative;
-	font-family: $font-family;
 	margin-right: $margin-small-horizontal;
-	border: $border-width solid #fff;
+	border: $border-main-size solid $border-main-color;
 	border-left:0;
-	width: $layout-left-width - $border-width;
-	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-width);
+	width: $layout-left-width - $border-main-size;
+	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-main-size);
 	
 	.chart {
+		$info-height: 24px;
+
 		position: absolute;
 		top: $padding-vertical;
-		left: $padding-horizontal + $border-width;
-		border:$border-small-width solid #fff;
+		left: $padding-horizontal + $border-main-size;
+		border:$border-small-size solid #fff;
 		border-radius: $radius-small-size;
 		background-color: $chart-bg;
 		z-index: 10;
-		height: $seat-chart-height - $border-small-width * 2;
-		width: $seat-chart-width - $border-small-width * 2;
+		height: $seat-chart-height - $border-small-size * 2;
+		width: $seat-chart-width - $border-small-size * 2;
 		.user-info {
 			padding: $padding-vertical $padding-horizontal;
 			color: $text-color;
@@ -35,10 +37,12 @@
 		}
 		.graph {
 			width: 100%;
-			height: $seat-chart-height - ($padding-base-vertical + $height-small + $border-small-width) * 2;
+			height: $seat-chart-height - ($padding-vertical + $info-height + $border-small-size) * 2;
 		}
 		.justify {
-			@include height-hidden(24px);
+			height: $info-height;
+			line-height: $info-height;
+			overflow: hidden;
 		}
 		.info-item{
 			cursor: Default;
@@ -96,8 +100,8 @@
 	.time-select {
 		display: inline-block;
 		border: 1px solid $input-border-color;
-		height: $input-height;
-		line-height: $input-height;
+		height: $normal-size;
+		line-height: $normal-size;
 		box-sizing: border-box;
 		border-radius: $radius-small-size;
 		background-color: $select-bg;
@@ -119,7 +123,7 @@
 		}
 	}
 	
-	$wrap-width: $seat-chart-width - $input-height - 5px;
+	$wrap-width: $seat-chart-width - $normal-size - 5px;
 	.cartype-selects {
 		display: inline-block;
 		width: $wrap-width;
@@ -147,11 +151,11 @@
 
 .seat-top-form {
 	.field-li {
-		margin-bottom: $margin-base-vertical;
+		margin-bottom: $margin-vertical;
 	}
 	.icon-img-bg {
 		&:before {
-			font-size: $input-height;	
+			font-size: $normal-size;	
 		}
 		background-color: #ccc;
 	}
@@ -207,7 +211,7 @@
 //#####top right part
 .seat-top-right {
 	flex: 2 1;
-	border-top: $border-width solid #fff;
+	border-top: $border-main-size solid $border-main-color;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 
@@ -230,7 +234,7 @@
 	}
 
 	.map {
-		height: ($input-height + $margin-vertical) * 8 + $input-height + $padding-vertical * 2  + $border-width - $nav-height;
+		height: ($normal-size + $margin-vertical) * 8 + $normal-size + $padding-vertical * 2  + $border-main-size - $nav-height;
 		background-color: $chart-bg;
 	}
 }
@@ -243,26 +247,26 @@
 	$car-icon-width:		60px;
 	$car-icon-height:		47px;
 
-	font-family: $font-family;
+	@extend %font-family;
 	width: $container-width;
-	border-left: $border-width solid #fff;
-	border-bottom: $border-width solid #fff;
+	border-left: $border-main-size solid $border-main-color;
+	border-bottom: $border-main-size solid $border-main-color;
 	padding: $padding-vertical $padding-horizontal;
 
 	.car-status {
 
 		background-color: $chart-bg;
 		border-radius: $radius-large-size;
-		margin-bottom: $margin-base-vertical;
+		margin-bottom: $margin-vertical;
 		padding: $padding-large-vertical 0;
-		font-size: $font-small-size;
+		font-size: 12px;
 		.flex {
 			justify-content: space-around;
 		}
 		.car-icon {
 			width: $car-icon-width;
 			height: $car-icon-height;
-			@include background-image(); 
+			@extend %background-image; 
 			text-align: center;
 			color: #fff;
 			&.stop-icon {
@@ -308,11 +312,11 @@
 	$search-bar-height: 46px;
 	$search-bar-tab-height: 40px;
 
+	@extend %font-family;
 	flex: 2 1;
-	font-family: $font-family;
 	margin-top: $margin-vertical;
 	padding:$padding-vertical 0 0 $padding-horizontal;
-	border: $border-width solid #fff; 
+	border: $border-main-size solid $border-main-color; 
 	border-bottom: 0;
 	border-right: 0;
 	.search-bar {
@@ -358,8 +362,8 @@
 			border: 0;
 		}
 		.search-btn {
-			width: $input-height;
-			height:	$input-height;
+			width: $normal-size;
+			height:	$normal-size;
 			vertical-align: baseline;
 			border-radius: 0;
 			.icon-img {
@@ -376,7 +380,7 @@
 		.tick-timer {
 			background-color: $color-primary;
 			color: #fff;
-			@include box-in-middle($input-height, 60px);
+			@include box-in-middle($normal-size, 60px);
 			margin-right: $margin-horizontal;
 			font-size: 13px;
 		}
@@ -406,7 +410,7 @@
 			font-size: 16px;
 		}
 		.order-nav {
-			margin-top: $margin-base-vertical;
+			margin-top: $margin-vertical;
 		}
 		.order-nav-li {
 			text-align: right;
@@ -416,7 +420,7 @@
 				background-color: $color-secondary;
 			}
 			text-decoration:none;
-			@include box-in-middle($input-height, 60px);
+			@include box-in-middle($normal-size, 60px);
 			color: $text-color;
 
 		}
@@ -439,7 +443,7 @@
 		display: inline-block;
 		background: #DA8000;	
 		color: #fff;
-		@include box-in-middle($input-height, 60px);
+		@include box-in-middle($normal-size, 60px);
 	}
 	.operate-list-li {
 		border-top: 1px solid #fff;	
