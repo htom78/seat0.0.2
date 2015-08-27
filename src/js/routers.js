@@ -5,7 +5,7 @@ var routers = function ($routeProvider) {
 		controller: 'seatCtrl',
 		title: '坐席',
 		resolve: {
-			store: ['seatOrderStorageService', '$location', function(seatService, $location) {
+			store: ['seatService', '$location', function(seatService, $location) {
 				if ($location.url() === '/special.htm') {
 					seatService.selectSpecialCar();
 				} else {

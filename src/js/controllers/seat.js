@@ -279,7 +279,7 @@ seatCtrl.$inject = [
 '$scope', 
 	'userService', 
 	'seatMap', 
-	'seatOrderStorageService',
+	'seatService',
 	'utils'
 	];
 

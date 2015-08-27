@@ -113,7 +113,11 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 								.then(function(response) {
 									seatMap.setMarkerPosition(response.lng, response.lat);
 									//火星转gps
-									return gpsGcjExchangeUtils.gcj02ToGps84(response.lng, response.lat);
+									//return gpsGcjExchangeUtils.gcj02ToGps84(response.lng, response.lat);
+									return {
+										lng: response.lng,
+										lat: response.lat	
+									};
 								})
 								.then(function(gps) {
 									return map.getNearCars(gps.lng + ',' + gps.lat);

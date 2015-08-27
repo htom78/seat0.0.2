@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $rootScope) {
+var seatService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $rootScope) {
 
 	var store = {
 
@@ -341,6 +341,6 @@ var seatOrderStorageService = function($http, $q, map, gpsGcjExchangeUtils, orde
 	return store;
 };
 
-seatOrderStorageService.$inject = ['$http', '$q', 'map', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
+seatService.$inject = ['$http', '$q', 'map', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
 
-services.factory('seatOrderStorageService', seatOrderStorageService);
+services.factory('seatService', seatService);

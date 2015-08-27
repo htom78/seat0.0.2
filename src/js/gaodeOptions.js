@@ -10,5 +10,9 @@ module.exports = {
 	circleWeight: 2,
 	circleRadius: 500,
 	markerTaxiIcon: 'static/imgs/car-marker.png',
+	markerSize: {
+		width: 22,
+		height: 32 	
+	},
 	nearCarUrl: window.aspath + '/rest/instant/vnearby?myjsonp=JSON_CALLBACK'
 };

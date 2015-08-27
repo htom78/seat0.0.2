@@ -9,7 +9,7 @@ require('./leaderMap');
 require('./socket');
 require('./sign');
 require('./callSocket');
-require('./seatOrderStorageService');
+require('./seatService');
 require('./leaderOrderStorageService');
 require('./searchOrderStorageService');
 require('./policeService');
