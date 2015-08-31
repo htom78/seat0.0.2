@@ -9,6 +9,8 @@
 	left: 50%;
 	transform:translateX(-50%);
 	z-index: 1001;
+	color: $text-color;
+	font-size: 13px;		
 
 	.box-title {
 		height: 32px;
@@ -28,11 +30,6 @@
 		margin-bottom: $margin-vertical;	
 	}
 
-	.message-label {
-		font-size: 13px;		
-		color: $text-color;
-	}
-
 	.message-box-btns {
 		text-align: center;
 	}
@@ -46,5 +43,37 @@
 	.message-box-ensure,
 	.message-box-cancel {
 		width: 60px;
+	}
+
+	.radios-wrap {
+		text-align: center;	
+		margin-bottom: $margin-vertical;
+	}
+	.radio-wrap {
+		display: inline-block;	
+		&.first {
+			margin-right: $margin-horizontal;	
+		}
+	}
+	.input-wrap {
+		margin-bottom: $margin-vertical;	
+	}
+	.message-label {
+		color: #aaa;	
+	}
+	.select-wrap {
+		margin-bottom: $margin-vertical;	
+	}
+	.target-select {
+		height: $normal-size;	
+		color: $text-color;
+		border-radius: $radius-small-size;
+		border: 1px solid $color-primary;
+		width: 166px;
+		outline: 0;
+	}
+	.tripartite-checkbox {
+		margin-left: 6px;
+		vertical-align: middle;	
 	}
 }

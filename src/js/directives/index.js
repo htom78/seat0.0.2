@@ -14,3 +14,6 @@ require('./handleAlarmOrder');
 require('./confirmDialog');
 require('./timeSelect');
 require('./leaderOrderInfo');
+require('./callNumber');
+require('./callTransform');
+require('./tripartiteConference');

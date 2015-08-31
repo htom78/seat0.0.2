@@ -1,4 +1,4 @@
-angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callStatus.html', 'component/handleAlarmDialog.html', 'component/messageBox.html', 'component/pagination.html', 'component/stepInfo.html', 'component/unhandleAlarmDialog.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
+angular.module('app.templates', ['component/addressList.html', 'component/assignDialog.html', 'component/calendar.html', 'component/callNumber.html', 'component/callStatus.html', 'component/callTransform.html', 'component/handleAlarmDialog.html', 'component/messageBox.html', 'component/pagination.html', 'component/stepInfo.html', 'component/tripartiteConference.html', 'component/unhandleAlarmDialog.html', 'header.html', 'page/leader.html', 'page/login.html', 'page/police.html', 'page/search.html', 'page/seat.html']);
 
 angular.module("component/addressList.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/addressList.html",
@@ -65,6 +65,50 @@ angular.module("component/calendar.html", []).run(["$templateCache", function($t
     "");
 }]);
 
+angular.module("component/callNumber.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/callNumber.html",
+    "<div class='box-wrap'>\n" +
+    "	<h1 class='box-title'>拨号</h1>\n" +
+    "	<div class='box-container'>\n" +
+    "		<form ng-submit='call()' name='callForm'>\n" +
+    "			<div class='radios-wrap'>\n" +
+    "				<span class='radio-wrap first'>\n" +
+    "					<label for='outerLine'>外线</label>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='callType' \n" +
+    "						value='outerLine'\n" +
+    "						id='outerLine'\n" +
+    "						ng-model='callType'/>\n" +
+    "				</span>\n" +
+    "				<span class='radio-wrap'>\n" +
+    "					<label for='ternimalNumber'>终端号码</label>\n" +
+    "					<input \n" +
+    "						type='radio' \n" +
+    "						name='callType' \n" +
+    "						value='terminalNumber'\n" +
+    "						id='terminalNumber'\n" +
+    "						ng-model='callType'/>\n" +
+    "				</span>\n" +
+    "			</div>\n" +
+    "			<div class='input-wrap'>\n" +
+    "				<label class='message-label'>{{labelName}}</label>\n" +
+    "				<input \n" +
+    "					type='text' \n" +
+    "					class='text-input'\n" +
+    "					ng-required='true'\n" +
+    "					ng-pattern='/\\d{4,15}/'\n" +
+    "					ng-model='diviceNumber'/>\n" +
+    "			</div>\n" +
+    "			<div class='message-box-btns'>\n" +
+    "				<button class='message-box-ensure btn'>拨号</button>\n" +
+    "			</div>\n" +
+    "		</form>\n" +
+    "	</div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
 angular.module("component/callStatus.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("component/callStatus.html",
     "<section class='call-status'>\n" +
@@ -94,6 +138,27 @@ angular.module("component/callStatus.html", []).run(["$templateCache", function(
     "		<li><i class='legend-dot predict'></i><span>预计数量</span></li>\n" +
     "	</ul>\n" +
     "</section>\n" +
+    "");
+}]);
+
+angular.module("component/callTransform.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/callTransform.html",
+    "<div class='box-wrap'>\n" +
+    "	<h1 class='box-title'>电话转接</h1>\n" +
+    "	<div class='box-container'>\n" +
+    "		<form>\n" +
+    "			<div class='select-wrap'>\n" +
+    "				<label class='message-label'>转接对象</label>\n" +
+    "				<select class='target-select'>\n" +
+    "					<option>6006(甄洋)</option>	\n" +
+    "				</select>\n" +
+    "			</div>\n" +
+    "			<div class='message-box-btns'>\n" +
+    "				<button class='message-box-ensure btn'>转接</button>\n" +
+    "			</div>\n" +
+    "		</form>\n" +
+    "	</div>\n" +
+    "</div>\n" +
     "");
 }]);
 
@@ -236,6 +301,32 @@ angular.module("component/stepInfo.html", []).run(["$templateCache", function($t
     "		message-box='确认处理?'\n" +
     "		ensure-fn='driverFuck()'\n" +
     "		ng-show='isDriverFuckBtnShow()'>司机爽约</button>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("component/tripartiteConference.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("component/tripartiteConference.html",
+    "<div class='box-wrap'>\n" +
+    "	<h1 class='box-title'>三方会议</h1>\n" +
+    "	<div class='box-container'>\n" +
+    "		<form>\n" +
+    "			<div class='select-wrap'>\n" +
+    "				<label class='message-label'>第三方会话对象</label>\n" +
+    "				<input \n" +
+    "					type='checkbox' \n" +
+    "					class='tripartite-checkbox'\n" +
+    "					id='innerLineCheckbox'/>\n" +
+    "				<label class='message-label' for='innerLineCheckbox'>内线</label>\n" +
+    "				<select class='target-select'>\n" +
+    "					<option>6006(甄洋)</option>	\n" +
+    "				</select>\n" +
+    "			</div>\n" +
+    "			<div class='message-box-btns'>\n" +
+    "				<button class='message-box-ensure btn'>转接</button>\n" +
+    "			</div>\n" +
+    "		</form>\n" +
+    "	</div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -400,13 +491,19 @@ angular.module("header.html", []).run(["$templateCache", function($templateCache
     "		<ul class='flex'>\n" +
     "			<li><span class='call-count'>24</span></li>\n" +
     "			<li>\n" +
-    "				<button class='icon-btn-bg call-btn'></button>\n" +
+    "				<button \n" +
+    "					class='icon-btn-bg call-btn'\n" +
+    "					call-number></button>\n" +
     "			</li>\n" +
     "			<li>\n" +
-    "				<button class='icon-btn-bg transform-btn'></button>\n" +
+    "				<button \n" +
+    "					class='icon-btn-bg transform-btn'\n" +
+    "					call-transform></button>\n" +
     "			</li>\n" +
     "			<li>\n" +
-    "				<button class='icon-btn-bg list-btn'></button>\n" +
+    "				<button \n" +
+    "					class='icon-btn-bg list-btn'\n" +
+    "					tripartite-conference></button>\n" +
     "			</li>\n" +
     "		</ul>\n" +
     "	</div>\n" +

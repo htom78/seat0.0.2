@@ -1,6 +1,6 @@
 var service = require('./index');
 
-var callSocket = function() {
+var ocxSocket = function() {
 
 	var socketOptions = {};
 
@@ -101,4 +101,4 @@ var callSocket = function() {
 	}];
 
 };
-service.provider('callSocket', callSocket);
+service.provider('ocxSocket', ocxSocket);

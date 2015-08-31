@@ -90,7 +90,7 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 				.then(function(response) {
 					if (response.isSignIn) {
 						$scope.currentSignState = 'signIn';	
-						$scope.currentState = response.currentCallingState;
+						$scope.currentState = response.currentState;
 					}	
 				});
 		} else {

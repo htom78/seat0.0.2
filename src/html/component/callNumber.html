@@ -1,0 +1,39 @@
+<div class='box-wrap'>
+	<h1 class='box-title'>拨号</h1>
+	<div class='box-container'>
+		<form ng-submit='call()' name='callForm'>
+			<div class='radios-wrap'>
+				<span class='radio-wrap first'>
+					<label for='outerLine'>外线</label>
+					<input 
+						type='radio' 
+						name='callType' 
+						value='outerLine'
+						id='outerLine'
+						ng-model='callType'/>
+				</span>
+				<span class='radio-wrap'>
+					<label for='ternimalNumber'>终端号码</label>
+					<input 
+						type='radio' 
+						name='callType' 
+						value='terminalNumber'
+						id='terminalNumber'
+						ng-model='callType'/>
+				</span>
+			</div>
+			<div class='input-wrap'>
+				<label class='message-label'>{{labelName}}</label>
+				<input 
+					type='text' 
+					class='text-input'
+					ng-required='true'
+					ng-pattern='/\d{4,15}/'
+					ng-model='diviceNumber'/>
+			</div>
+			<div class='message-box-btns'>
+				<button class='message-box-ensure btn'>拨号</button>
+			</div>
+		</form>
+	</div>
+</div>

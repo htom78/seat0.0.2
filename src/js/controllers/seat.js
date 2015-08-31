@@ -171,10 +171,10 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 		}
 	});
 
-	$scope.$on('order:receive', function(ev, data) {
+	$scope.$on('order:received', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
 			seatService.receiveOrderUpdate(data.sn).then(function() {
-				$scope.currentOrderTab = 'receive';	
+				$scope.currentOrderTab = 'received';	
 			});
 		}
 	});
@@ -182,7 +182,7 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 	$scope.$on('order:depart', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
 			seatService.startedOrderUpdate(data.sn).then(function() {
-				$scope.currentOrderTab = 'stated';	
+				$scope.currentOrderTab = 'started';	
 			});
 		}
 	});

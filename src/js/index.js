@@ -5,7 +5,8 @@ require('./services');
 require('./components');
 require('./filters');
 require('./utils');
-
+require('./dialogs');	
+require('./ocx');
 
 var requires = [
 	'ngRoute',
@@ -15,22 +16,21 @@ var requires = [
 	'app.services',
 	'app.components',
 	'app.filters',
-	'app.utils'
+	'app.utils',
+	'app.dialogs',
+	'app.ocx'
 ];
 
 var app = angular.module('app', requires)
 	.config(require('./routers'))
 	.config(require('./config'))
 	.run(['$rootScope', 'callSocket', function($rootScope, callSocket) {
-
 		callSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
-
 		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
 			$rootScope.title = current.$$route.title;	
 		});
 	}]);
-
 
 module.exports = app;
 

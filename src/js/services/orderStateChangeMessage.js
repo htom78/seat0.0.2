@@ -7,7 +7,7 @@ var orderStateChangeMessage = function($rootScope) {
 
 			switch (status) {
 				case 2: //receive
-					$rootScope.$broadcast('order:receive', msg);
+					$rootScope.$broadcast('order:received', msg);
 					break;
 
 				case 4:	

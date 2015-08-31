@@ -1,4 +1,4 @@
-var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider, callSocketProvider, leaderMapProvider) {
+var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider, callSocketProvider, leaderMapProvider, ocxCallProvider) {
 	$locationProvider.html5Mode(true);
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$httpProvider.defaults.transformRequest = [function(data) {
@@ -11,6 +11,10 @@ var config = function($locationProvider, $httpProvider, socketProvider, mapProvi
 
 	callSocketProvider.options({
 		socketUrl: 'ws://localhost:8844',
+		baseUrl: 'localhost:8822'	
+	});
+
+	ocxCallProvider.options({
 		baseUrl: 'localhost:8822'	
 	});
 
@@ -30,7 +34,8 @@ config.$inject = [
 	'myHttpInterceptorProvider',
 	'seatMapProvider',
 	'callSocketProvider',
-	'leaderMapProvider'
+	'leaderMapProvider',
+	'ocxCallProvider'
 	];
 
 module.exports = config;
