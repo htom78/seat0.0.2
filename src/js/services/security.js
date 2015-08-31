@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var security = function($http, $q, $location, callSocket) {
+var security = function($http, $q, $location, ocxSign) {
 
 	function redirect(url) {
 		url = url || '/';
@@ -19,7 +19,7 @@ var security = function($http, $q, $location, callSocket) {
 			})
 				.then(function(response) {
 					if (response.data.isSuccess) {
-						callSocket.login({username: username, password: password});
+						ocxSign.login({username: username, password: password});
 					} else {
 						var errorInfo;
 						switch (parseInt(response.data.code)) {
@@ -79,6 +79,6 @@ var security = function($http, $q, $location, callSocket) {
 	return service;
 };
 
-security.$inject = ['$http', '$q', '$location', 'callSocket'];
+security.$inject = ['$http', '$q', '$location', 'ocxSign'];
 
 services.factory('security', security);

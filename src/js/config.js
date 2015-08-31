@@ -1,4 +1,4 @@
-var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider, callSocketProvider, leaderMapProvider, ocxCallProvider) {
+var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider, ocxSocketProvider, leaderMapProvider, ocxCallProvider, ocxSignProvider) {
 	$locationProvider.html5Mode(true);
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$httpProvider.defaults.transformRequest = [function(data) {
@@ -7,15 +7,20 @@ var config = function($locationProvider, $httpProvider, socketProvider, mapProvi
 
 
 	var socketUrl = 'ws://' + location.host + window.appRoot + '/ws/server';
+
+	var ocxBaseUrl = 'http://localhost:8822';
 	socketProvider.setSocketUrl(socketUrl);
 
-	callSocketProvider.options({
-		socketUrl: 'ws://localhost:8844',
-		baseUrl: 'localhost:8822'	
+	ocxSocketProvider.options({
+		socketUrl: 'ws://localhost:8844'
 	});
 
 	ocxCallProvider.options({
-		baseUrl: 'localhost:8822'	
+		baseUrl: ocxBaseUrl	
+	});
+
+	ocxSignProvider.options({
+		baseUrl: ocxBaseUrl	
 	});
 
 	mapProvider.options(require('./gaodeOptions'));
@@ -33,9 +38,10 @@ config.$inject = [
 	'mapProvider',
 	'myHttpInterceptorProvider',
 	'seatMapProvider',
-	'callSocketProvider',
+	'ocxSocketProvider',
 	'leaderMapProvider',
-	'ocxCallProvider'
+	'ocxCallProvider',
+	'ocxSignProvider'
 	];
 
 module.exports = config;

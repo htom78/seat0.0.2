@@ -1,4 +1,4 @@
-var service = require('./index');
+var services = require('./index');
 
 var ocxSocket = function() {
 
@@ -58,47 +58,11 @@ var ocxSocket = function() {
 
 			isConnection: function() {
 				return socket.status === 'connection';	
-			},
-
-			signIn: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/signIn?callback=JSON_CALLBACK');
-			},
-
-			signOut: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/signOut?callback=JSON_CALLBACK');
-			},
-
-			sayRest: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/sayRest?callback=JSON_CALLBACK');
-			},
-
-			sayBusy: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/sayBusy?callback=JSON_CALLBACK');
-			},
-
-			sayFree: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/sayFree?callback=JSON_CALLBACK');
-			},	
-
-			login: function(data) {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/login?callback=JSON_CALLBACK', {params: data});
-			},
-
-			logout: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/logout?callback=JSON_CALLBACK');
-			},
-
-			getCurrentState: function() {
-				return $http.jsonp('http://' + socketOptions.baseUrl + '/currentStatus?callback=JSON_CALLBACK')
-					.then(function(response) {
-						return response.data;	
-					});
 			}
-
 		};
 		
 		return socket;
 	}];
 
 };
-service.provider('ocxSocket', ocxSocket);
+services.provider('ocxSocket', ocxSocket);

@@ -24,8 +24,8 @@ var requires = [
 var app = angular.module('app', requires)
 	.config(require('./routers'))
 	.config(require('./config'))
-	.run(['$rootScope', 'callSocket', function($rootScope, callSocket) {
-		callSocket.connection();	
+	.run(['$rootScope', 'ocxSocket', function($rootScope, ocxSocket) {
+		ocxSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
 		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
 			$rootScope.title = current.$$route.title;	

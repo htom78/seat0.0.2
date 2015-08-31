@@ -8,7 +8,6 @@ require('./chartCar');
 require('./leaderMap');
 require('./socket');
 require('./sign');
-require('./callSocket');
 require('./seatService');
 require('./leaderOrderStorageService');
 require('./searchOrderStorageService');

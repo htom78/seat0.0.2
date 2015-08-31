@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var signService = function($http, $q, callSocket) {
+var signService = function($http, $q, ocxSign) {
 	var service = {
 
 		parentId: null,
@@ -24,19 +24,19 @@ var signService = function($http, $q, callSocket) {
 		},
 
 		signIn: function() {
-			callSocket.signIn();
+			ocxSign.signIn();
 			return $http.post('sign/1.htm', {parentId: 0});	
 		},
 
 		signOut: function() {
-			callSocket.signOut();
+			ocxSign.signOut();
 			return $http.post('sign/2.htm', {parentId: 0});	
 		},
 
 		//小休
 		rest: function() {
 			var self = this;
-			callSocket.sayRest();
+			ocxSign.sayRest();
 			return $http.post('sign/3.htm', {parentId: 0})
 				.then(function(response) {
 					self.addParentId(response.data.msg);	
@@ -50,7 +50,7 @@ var signService = function($http, $q, callSocket) {
 			if (!parentId) {
 				return $q.reject();
 			}
-			callSocket.sayFree();
+			ocxSign.sayFree();
 			return $http.post('sign/4.htm', {parentId: parentId})
 				.then(function() {
 					self.clearParentId();	
@@ -60,7 +60,7 @@ var signService = function($http, $q, callSocket) {
 		//示忙
 		busy: function() {
 			var self = this;
-			callSocket.sayBusy();
+			ocxSign.sayBusy();
 			return $http.post('sign/5.htm', {parentId: 0})
 				.then(function(response) {
 					self.addParentId(response.data.msg);	
@@ -74,7 +74,7 @@ var signService = function($http, $q, callSocket) {
 			if (!parentId) {
 				return $q.reject();	
 			}
-			callSocket.sayFree();
+			ocxSign.sayFree();
 			return $http.post('sign/6.htm', {parentId: parentId})
 				.then(function() {
 					self.clearParentId();	
@@ -82,17 +82,17 @@ var signService = function($http, $q, callSocket) {
 		},
 
 		getCurrentState: function() {
-			return callSocket.getCurrentState();	
+			return ocxSign.getCurrentState();	
 		},
 
 		logout: function() {
-			callSocket.logout();	
+			ocxSign.logout();	
 		}	
 	};
 
 	return service;
 };
 
-signService.$inject = ['$http', '$q', 'callSocket'];
+signService.$inject = ['$http', '$q', 'ocxSign'];
 
 services.factory('signService', signService);

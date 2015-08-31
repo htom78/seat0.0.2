@@ -11,7 +11,7 @@ var ocxCall = function() {
 
 		var service = {
 			callOutByPhone: function(phone) {
-				return $http.jsonp('http://' + ocxOptions.baseUrl +  '/callOutByPhone?callback=JSON_CALLBACK', {
+				return $http.jsonp(ocxOptions.baseUrl +  '/callOutByPhone?callback=JSON_CALLBACK', {
 							params: {
 								phone: phone	
 							}	
