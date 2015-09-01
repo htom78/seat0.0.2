@@ -1,28 +1,4 @@
 var services = require('./index');
-/*
-var some = [
-	{
-		vehicleNumber: '浙B1234',
-		refDistance: '22',
-		location: '121.605131 29.865629'	
-	},
-	{
-		vehicleNumber: '浙B1235',
-		refDistance: '28',
-		location:	'121.609131 29.866629'
-	},
-	{
-		vehicleNumber: '浙B1236',
-		refDistance: '20',
-		location:	'121.610131 29.864629'	
-	},
-	{
-		vehicleNumber: '浙B1237',
-		refDistance: '25',
-		location: '121.607131 29.864629'
-	}
-];
-*/
 
 var map = function() {
 
@@ -74,9 +50,8 @@ var map = function() {
 							if (response.data.geocodes.length > 0) {
 								var lngLat = response.data.geocodes[0].location.split(',');
 								return {lng: lngLat[0], lat: lngLat[1]};
-							} else {
-								return $q.reject();
 							}
+							return {lng: 0, lat: 0};
 						});	
 			}
 
