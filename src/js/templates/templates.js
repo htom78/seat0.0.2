@@ -146,12 +146,14 @@ angular.module("component/callTransform.html", []).run(["$templateCache", functi
     "<div class='box-wrap'>\n" +
     "	<h1 class='box-title'>电话转接</h1>\n" +
     "	<div class='box-container'>\n" +
-    "		<form>\n" +
+    "		<form ng-submit='callTransform()' name='transformForm'>\n" +
     "			<div class='select-wrap'>\n" +
     "				<label class='message-label'>转接对象</label>\n" +
-    "				<select class='target-select'>\n" +
-    "					<option>6006(甄洋)</option>	\n" +
-    "				</select>\n" +
+    "				<input \n" +
+    "					type='text' \n" +
+    "					class='text-input'\n" +
+    "					ng-required='true'\n" +
+    "					ng-model='employerNumber'/>\n" +
     "			</div>\n" +
     "			<div class='message-box-btns'>\n" +
     "				<button class='message-box-ensure btn'>转接</button>\n" +

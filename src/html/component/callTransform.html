@@ -1,12 +1,18 @@
 <div class='box-wrap'>
 	<h1 class='box-title'>电话转接</h1>
 	<div class='box-container'>
-		<form>
+		<form ng-submit='callTransform()' name='transformForm'>
 			<div class='select-wrap'>
 				<label class='message-label'>转接对象</label>
-				<select class='target-select'>
-					<option>6006(甄洋)</option>	
-				</select>
+				<input 
+					list='employerNumbers'
+					type='text' 
+					class='text-input'
+					ng-required='true'
+					ng-model='employerNumber'/>
+					<datalist id='employerNumbers'>
+						<option ng-repeat='item in numbers' value='{{item}}'></option>
+					</datalist>
 			</div>
 			<div class='message-box-btns'>
 				<button class='message-box-ensure btn'>转接</button>

@@ -32,7 +32,6 @@ var callNumber = function(callNumberDialog, ocxCall) {
 						.then(function(response) {
 							console.log(response);	
 						});
-					callNumberDialog.close();
 				}
 			};
 		}	

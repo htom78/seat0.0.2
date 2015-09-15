@@ -1,5 +1,5 @@
 var directives = require('./index');
-var callTransformDirective = function(callTransform) {
+var callTransformDirective = function(callTransform, ocxCall) {
 	return {
 		scope: {
 		
@@ -7,17 +7,25 @@ var callTransformDirective = function(callTransform) {
 
 		link: function(scope, elem) {
 			elem.on('click', function() {
-				console.log('11111');
 				callTransform.open(scope)
 					.then(function() {
-					
+						scope.employerNumber = '';	
 					});	
 			});
+
+			scope.callTransform = function() {
+				if (scope.transformForm.$valid) {
+					ocxCall.callTransform(scope.employerNumber)
+						.then(function() {
+								
+						});	
+				}	
+			};
 		
 		}	
 	};
 };
 
-callTransformDirective.$inject = ['callTransform'];
+callTransformDirective.$inject = ['callTransform', 'ocxCall'];
 
 directives.directive('callTransform', callTransformDirective);

@@ -22,8 +22,12 @@ var ocxCall = function() {
 			
 			},
 
-			trasformTarget: function(targetName) {
-			
+			callTransform: function(employerNumber) {
+				return $http.jsonp(ocxOptions.baseUrl + '/callTransform?callback=JSON_CALLBACK', {
+					params: {
+						employerNumber: employerNumber
+					}	
+				});
 			},
 
 			tripartiteConference: function(targetName) {
