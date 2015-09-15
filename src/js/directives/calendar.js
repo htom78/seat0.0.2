@@ -40,7 +40,7 @@ function removeTime(date) {
 
 var calendar = function($document) {
 	return {
-		templateUrl: 'component/calendar.html',
+		template: require('../../html/component/calendar.html'),
 		scope: {
 			selected: '='	
 		},

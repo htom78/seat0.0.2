@@ -68,7 +68,7 @@ var pagination = function() {
 				}
 			};
 		},
-		templateUrl: 'component/pagination.html'
+		template: require('../../html/component/pagination.html'),
 	};
 };
 

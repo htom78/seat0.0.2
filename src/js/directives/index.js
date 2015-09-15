@@ -1,3 +1,4 @@
+import angular from 'angular';
 module.exports = angular.module('app.dirctives', []);
 require('./seatMapView');
 require('./chartUser');

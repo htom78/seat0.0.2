@@ -50,11 +50,6 @@ var map = function() {
 							if (response.data.geocodes.length > 0) {
 								var lngLat = response.data.geocodes[0].location.split(',');
 								return {lng: lngLat[0], lat: lngLat[1]};
-<<<<<<< HEAD
-=======
-							} else {
-								return $q.reject({lng: 0, lat: 0});
->>>>>>> ocx
 							}
 							return {lng: 0, lat: 0};
 						});	

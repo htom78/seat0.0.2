@@ -9,7 +9,7 @@ module.exports = {
 	circleOpacity: 0.35,
 	circleWeight: 2,
 	circleRadius: 500,
-	markerTaxiIcon: 'static/imgs/car-marker.png',
+	markerTaxiIcon: 'static/' + require('../assets/imgs/car-marker.png'),
 	markerSize: {
 		width: 22,
 		height: 32 	

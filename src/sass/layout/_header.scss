@@ -82,16 +82,15 @@
 		border-bottom-right-radius: $radius-small-size;
 		.sign-state {
 			display: inline-block;
-			width: 33px;
+			width: 32px;
 			height: 33px;
 			margin: 4px 6px 0;
-			@extend %background-image; 
+			background-image: url(../assets/imgs/sign-out.png);
 		}
 		.sign-in {
-			background-position:0 0;
+			background-image: url(../assets/imgs/sign-in.png);
 		}
 		.sign-out {
-			background-position:-35px 0;
 		}
 
 		.exit-btn {

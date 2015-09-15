@@ -30,7 +30,7 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 
 			scope.element = elem;
 
-			$http.get('component/addressList.html', {cache: $templateCache})
+			$http.get('addressList.html', {cache: $templateCache})
 				.then(function(response) {
 					$compile('<address-list input="element" addresses="addresses">' + response.data + '</address-list>')(scope, function(clone) {
 						clone.appendTo($document.find('body'));

@@ -9,8 +9,7 @@
 		width: 14px;
 		height: 14px;
 		margin-top: -7px;
-		@extend %background-image;
-		background-position:-27px -236px;
+		background-image: url(../assets/imgs/warn-icon.png);
 	}
 
 	.table tr.selfSelected{

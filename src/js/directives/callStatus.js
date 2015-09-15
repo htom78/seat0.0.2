@@ -74,7 +74,7 @@ var callStatusDirective = function(statisticsService, $timeout) {
 			});
 		},
 		
-		templateUrl: 'component/callStatus.html'
+		template: require('../../html/component/callStatus.html')
 	};
 };
 

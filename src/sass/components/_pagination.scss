@@ -34,19 +34,17 @@
 	}
 
 	.prev-icon {
-		@extend %background-image;
 		display: inline-block;
 		width: 6px;
 		height: 12px;
-		background-position:0 -238px;
+		background-image: url(../assets/imgs/pagination-prev-icon.png);
 	}
 
 	.next-icon {
-		@extend %background-image;	
 		display: inline-block;
 		width: 6px;
 		height: 12px;
-		background-position:-15px -238px;
+		background-image: url(../assets/imgs/pagination-next-icon.png);
 	}
 	
 	.page-btn {

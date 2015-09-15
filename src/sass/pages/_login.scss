@@ -7,7 +7,7 @@
 	bottom: 0;
 	background-size: cover;
 	z-index:50;
-	background-image: url(../imgs/login-bg.jpg);
+	background-image: url(../assets/imgs/login-bg.jpg);
 }
 
 .login-box {
@@ -70,13 +70,16 @@
 		&:focus {
 			border-color: $color-primary;	
 		}
-		@extend %login-icons;
 	}
 	.username-input {
-		background-position: 10px -143px;
+		background-image: url(../assets/imgs/input-username-icon.png);
+		background-repeat: no-repeat;
+		background-position: 7px;
 	}
 	.password-input {
-		 background-position: 10px -104px;
+		background-image: url(../assets/imgs/input-password-icon.png);
+		background-repeat: no-repeat;
+		background-position: 7px;
 	}
 	.login-btn {
 		border: 0;

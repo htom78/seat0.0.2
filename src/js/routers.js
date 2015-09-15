@@ -1,7 +1,7 @@
 var routers = function ($routeProvider) {
 
 	var seatRouteConfig = {
-		templateUrl: 'page/seat.html',
+		template: require('../html/page/seat.html'),
 		controller: 'seatCtrl',
 		title: '坐席',
 		resolve: {
@@ -19,7 +19,7 @@ var routers = function ($routeProvider) {
 	};
 
 	var leadRouteConfig = {
-		templateUrl: 'page/leader.html',
+		template:  require('../html/page/leader.html'),
 		controller: 'leaderCtrl',
 		title: '班长',
 		resolve: {
@@ -32,7 +32,7 @@ var routers = function ($routeProvider) {
 	};
 
 	var searchRouteConfig = {
-		templateUrl: 'page/search.html',
+		template:  require('../html/page/search.html'),
 		controller: 'searchCtrl',
 		title: '搜索',
 		resolve: {
@@ -45,7 +45,7 @@ var routers = function ($routeProvider) {
 	};
 
 	var policeRouteConfig = {
-		templateUrl: 'page/police.html',
+		template:  require('../html/page/police.html'),
 		controller: 'policeCtrl',
 		title: '报警',
 		resolve: {
@@ -63,7 +63,7 @@ var routers = function ($routeProvider) {
 		.when('/leader.htm', leadRouteConfig)
 		.when('/searchMore.htm', searchRouteConfig)
 		.when('/login.htm', {
-			templateUrl: 'page/login.html',
+			template: require('../html/page/login.html'),
 			controller: 'loginCtrl',
 			title: '登录',
 			resolve: {

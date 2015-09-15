@@ -1,4 +1,6 @@
-require('./templates/templates');
+import angular from 'angular';
+import 'angular-route';
+
 require('./controllers');
 require('./directives');
 require('./services');
@@ -10,7 +12,6 @@ require('./ocx');
 
 var requires = [
 	'ngRoute',
-	'app.templates',
 	'app.controllers',
 	'app.dirctives',
 	'app.services',
@@ -31,6 +32,10 @@ var app = angular.module('app', requires)
 			$rootScope.title = current.$$route.title;	
 		});
 	}]);
+
+
+require('../html/header.html');
+require('../html/component/addressList.html');
 
 module.exports = app;
 
