@@ -57,6 +57,12 @@ var routers = function ($routeProvider) {
 		}
 	};
 
+	var representConfig = {
+		template: require('../html/page/represent.html'),
+		controller: 'representCtrl',
+		title: '代驾'	
+	};
+
 	$routeProvider
 		.when('/', seatRouteConfig)
 		.when('/index.htm', seatRouteConfig)
@@ -73,7 +79,8 @@ var routers = function ($routeProvider) {
 			}
 		})
 		.when('/police.htm', policeRouteConfig)
-		.when('/special.htm', seatRouteConfig);
+		.when('/special.htm', seatRouteConfig)
+		.when('/represent.htm', representConfig);
 };
 
 routers.$inject = ['$routeProvider'];

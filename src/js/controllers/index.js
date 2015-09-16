@@ -6,3 +6,4 @@ require('./leader');
 require('./search');
 require('./login');
 require('./police');
+require('./represent');
