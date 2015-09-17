@@ -1,4 +1,9 @@
-var routers = function ($routeProvider) {
+
+router.$inject = ['$locationProvider', '$routeProvider'];
+
+export default function router($locationProvider, $routeProvider) {
+
+	$locationProvider.html5Mode(true);
 
 	var seatRouteConfig = {
 		template: require('../html/page/seat.html'),
@@ -81,8 +86,4 @@ var routers = function ($routeProvider) {
 		.when('/police.htm', policeRouteConfig)
 		.when('/special.htm', seatRouteConfig)
 		.when('/represent.htm', representConfig);
-};
-
-routers.$inject = ['$routeProvider'];
-
-module.exports = routers;
+}

@@ -1,0 +1,176 @@
+.represent-above {
+	padding-right: $padding-horizontal;
+	border-right: $border-main-size solid $border-main-color;
+}
+
+.represent-form {
+	
+	$input-normal-width: $layout-left-width - $normal-size - 5px - $padding-horizontal - $border-main-size - ($input-padding-horizontal + 1px) * 2;
+
+	@extend %font-family;
+	position: relative;
+	margin-right: $margin-small-horizontal;
+	border: $border-main-size solid $border-main-color;
+	border-left: 0;
+	width: $layout-left-width - $border-main-size;
+	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-main-size);
+
+	.input-normal-width {
+		width: $input-normal-width;	
+	}
+
+	.input-sub-width {
+		width: 170px;
+	}
+
+	.field-li {
+		margin-bottom: $margin-vertical;	
+	}
+
+	.icon-img-bg {
+		&:before {
+			font-size: $normal-size;	
+		}	
+		background-color: #ccc;
+	}
+
+	.calling-label {
+		@include icon-content('\e605');	
+	}
+
+	.actual-label {
+		@include icon-content('\e614');	
+	}
+
+	.username-label {
+		background-color: $color-primary;	
+		@include icon-content('\e618');
+	}
+
+	.start-label {
+		background-color: $color-forth;
+		@include icon-content('\e622');	
+	}
+
+	.around-label {
+		@include icon-content('\e626');	
+	}
+
+	.destination-label {
+		@include icon-content('\e623');	
+	}
+
+	.reservation-label {
+		@include icon-content('\e629');	
+	}
+
+	.time-select {		
+		display: inline-block;	
+		border: 1px solid $input-border-color;
+		height: $normal-size;
+		line-height: $normal-size;
+		box-sizing: border-box;
+		border-radius: $radius-small-size;
+		background-color: $select-bg;
+		vertical-align: bottom;
+		font-size: $input-text-font-size;
+		color: $input-text-color;
+
+		&.disabled {
+			background-color: $input-text-disabled-bg;	
+			color: $input-text-disabled-color;
+		}
+		.hour,
+		.minute {
+			display: inline-block;	
+			width: 28px;
+			text-align: center;
+			cursor: Default;
+		}
+	}
+
+	.btn {
+		width: 140px;	
+		&.sending {
+			background-color: $color-disabled;	
+			text-indent: -9999px;
+			background-image: url(../assets/imgs/loading.gif);
+			background-repeat: no-repeat;
+			background-position: center;
+			pointer-events: none;
+		}
+	}
+
+	.person-count-input {
+		width: 160px;	
+	}
+	
+	.input-calendar {
+		width: 276px;	
+	}
+
+}
+
+.represent-map {
+	$nav-height: 30px;
+	$map-view-height: ($normal-size + $margin-vertical) * 7 + $normal-size + $padding-vertical * 2  + $border-main-size - $nav-height;
+
+	flex: 2 1;
+	border-top: $border-main-size solid $border-main-color;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+
+	.nav {
+		height: $nav-height;	
+		line-height: $nav-height;
+	}
+
+	.operate-btn-wrap {
+		margin-left: $margin-large-horizontal;	
+		.icon-btn {
+			&:before {
+				font-size: 18px;	
+			}	
+		}
+		.zoom {
+			@include icon-content('\e61f');	
+		}
+	}
+
+	.map {
+		background-color: $chart-bg;	
+		height: $map-view-height;
+	}
+}
+
+.represent-order-list {
+	$search-bar-height: 46px;
+
+	@extend %font-family;
+	margin-top: $margin-vertical;
+	padding: $padding-vertical 0 0 $padding-horizontal;
+	border: $border-main-size solid $border-main-color;
+	border-bottom: 0;
+	border-right: 0;
+
+	.search-bar {
+		height: $search-bar-height;	
+		.search-input {
+			@extend %text-input;	
+			border: 1px solid $input-border-color;
+			border-radius: $radius-small-size 0 0 $radius-small-size;
+			width: 320px;
+			&:focus {
+				border-color: $color-primary;	
+			}
+		}
+		.search-btn {
+			border-radius: 0 $radius-small-size $radius-small-size 0;	
+			width: 70px;
+		}
+	}
+
+	.order-list {
+		height: 260px;	
+	}
+}

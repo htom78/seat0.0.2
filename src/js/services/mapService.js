@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var map = function() {
+var mapService = function() {
 
 	var mapOptions = {};
 	this.options = function(value) {
@@ -62,4 +62,4 @@ var map = function() {
 
 };
 
-services.provider('map', map);
+services.provider('mapService', mapService);

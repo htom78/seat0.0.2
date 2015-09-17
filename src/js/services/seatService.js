@@ -1,6 +1,6 @@
 var services = require('./index');
 
-var seatService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $rootScope) {
+var seatService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
 
 	var store = {
 
@@ -162,9 +162,9 @@ var seatService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $roo
 
 		addNewOrder: function(orderData) {
 			var self = this;
-			orderData = orderUtils.convertOrderServerData(orderData);
+			orderData = orderUtils.convertSeatOrderDataToServerData(orderData);
 			orderData.callType = this.callType;
-			return $q.all([map.geocode(orderData.start), map.geocode(orderData.end)])
+			return $q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
 				.then(function(lngLats) {
 					var startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
 					var destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
@@ -341,6 +341,6 @@ var seatService = function($http, $q, map, gpsGcjExchangeUtils, orderUtils, $roo
 	return store;
 };
 
-seatService.$inject = ['$http', '$q', 'map', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
+seatService.$inject = ['$http', '$q', 'mapService', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
 
 services.factory('seatService', seatService);

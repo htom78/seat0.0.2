@@ -25,7 +25,7 @@ var alarmMessageService = function($rootScope, $location, quanDialog) {
 				var scope = $rootScope.$new();
 				this.bindDialogEvents(scope);
 				scope.message = '有新的报警信息是否去查看?';
-				dialog.open('component/messageBox.html', 'headerCtrl', scope);	
+				dialog.open('messageBox.html', 'headerCtrl', scope);	
 			}	
 		},
 

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	key: 'd64e2c774ba08ec5d8fd282640cd546e',
 	version: 'rsv3',
 	city: 'ningbo',
@@ -9,10 +9,10 @@ module.exports = {
 	circleOpacity: 0.35,
 	circleWeight: 2,
 	circleRadius: 500,
-	markerTaxiIcon: 'static/' + require('../assets/imgs/car-marker.png'),
+	markerTaxiIcon: `static/${require('../assets/imgs/car-marker.png')}`,
 	markerSize: {
 		width: 22,
 		height: 32 	
 	},
-	nearCarUrl: window.aspath + '/rest/instant/vnearby?myjsonp=JSON_CALLBACK'
+	nearCarUrl: `${window.aspath}/rest/instant/vnearby?myjsonp=JSON_CALLBACK`
 };

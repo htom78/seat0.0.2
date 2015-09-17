@@ -1,8 +1,11 @@
 import angular from 'angular';
+import represent from './represent';
 
-module.exports = angular.module('app.services', []);
+module.exports = angular.module('app.services', [])
+	.service('representService', represent);
+
 require('./statistics');
-require('./map');
+require('./mapService');
 require('./seatMap');
 require('./chartUser');
 require('./chartEmploy');

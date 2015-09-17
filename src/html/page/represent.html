@@ -1,21 +1,220 @@
 <section class='represent-above flex'>
 	<div class='represent-form'>
-		<form name='newOrder' ng-submit='addOrder()'>
+		<form name='newOrder' ng-submit='addOrderFromForm()'>
 			<ul>
-				<li>
-					<label></label>
+				<li class='field-li'>
+					<label class='icon-img-bg calling-label'></label>
 					<input
 						type='text'
-						class='text-input'
+						class='text-input input-sub-width'
+						disabled='disabled'
+						placeholder='叫车人电话号码'
+						ng-required='true'
+						ng-model='orderData.callPhone'
+					/>
+					<label class='icon-img-bg username-label'></label>
+					<input
+						type='text'
+						class='text-input input-sub-width'
+						placeholder='叫车人姓名'
+						ng-model='orderData.callName'
+						ng-required='true'
 					/>
 				</li>
+				<li class='field-li'>
+					<label class='icon-img-bg actual-label'></label>
+					<input
+						type='text'
+						class='text-input input-sub-width'
+						placeholder='联系人电话号码'
+						ng-model='orderData.contactPhone'
+						ng-required='true'
+					/>
+					<label class='icon-img-bg username-label'></label>
+					<input
+						type='text'
+						class='text-input input-sub-width'
+						placeholder='联系人姓名'
+						ng-model='orderData.contactName'
+					/>
+					<input 
+						type='radio' 
+						name='gender' 
+						class='gender-radio' 
+						id='femaleSelect'
+						ng-model='orderData.gender'
+						value='1'/>
+					<label class='female' for='femaleSelect'></label>
+					<input 
+						type='radio' 
+						name='gender' 
+						class='gender-radio input-normal-width' 
+						id='maleSelect'
+						ng-model='orderData.gender'
+						value='2'/>
+					<label class='male' for='maleSelect'></label>
+				</li>
+				<li class='field-li'>
+					<label class='icon-img-bg start-label'></label>
+					<input
+						type='text'
+						class='text-input input-normal-width'
+						placeholder='出发位置'
+						ng-model='orderData.startPoint'
+						words-place='orderData.startPoint'
+						start-list='orderData.poiList'
+						ng-required='true'
+					/>
+				</li>
+				<li class='field-li'>
+					<label class='icon-img-bg around-label'></label>
+					<input
+						type='text'
+						class='text-input input-normal-width'
+						placeholder='出发地描述'
+						ng-model='orderData.startPointDesc'
+					/>
+				</li>
+				<li class='field-li'>
+					<label class='icon-img-bg destination-label'></label>
+					<input
+						list='representDestination'
+						class='text-input input-normal-width'
+						placeholder='目的地'
+						ng-required='true'
+						ng-model='orderData.destination'
+						ng-required='true'
+					/>
+					<datalist id='representDestination'>
+						<option 
+						ng-repeat='item in orderData.targetpoiList' value='{{item}}' />
+						/>
+					</dataList>
+				</li>
+				<li class='field-li'>
+					<label class='icon-img-bg around-label'></label>
+					<input
+						type='text'
+						class='text-input input-normal-width'
+						placeholder='目的地描述'
+						ng-model='orderData.destinationDesc'
+					/>
+				</li>
+				<li class='field-li'>
+					<input 
+						type='checkbox' 
+						id='reservationBox' 
+						class='checkbox-in-label'
+						ng-model='orderData.isReserved'
+						/>
+					<label class='icon-img-bg reservation-label' for='reservationBox'></label>
+					<span class='date-pickup-wrap'>
+						<input 
+							type='text' 
+							class='text-input input-calendar'  
+							ng-disabled='!orderData.isReserved'
+							ng-model='orderData.reservedDate'
+							/>
+							<div calendar selected='orderData.reservedDate' class='calendar'></div>
+
+							<span 
+								class='time-select' 
+								ng-class='{disabled: !orderData.isReserved}'>
+							<em 
+								class='hour' 
+								time-select='24'
+								selected='orderData.hour'
+								reservation='orderData.isReserved'
+								>{{orderData.hour}}</em><i class='colon'>:</i><em 
+								class='minute' 
+								time-select='60'
+								number-mod='5'
+								reservation='orderData.isReserved'
+								selected='orderData.minute'>{{orderData.minute}}</em>
+							</span>
+						</span>
+						<label class='icon-img-bg around-label'></label>
+						<input 
+							type='text'	
+							class='text-input person-count-input'
+							placeholder='人数'
+							ng-model='orderData.number'
+							/>
+				</li>
 			</ul>
+			<div class='btns text-center'>
+				<button 
+					class='btn'
+					ng-class='{sending: !shouldSubmitOrder}'>保存</button>
+				<a href='javascript:;' class='btn' ng-click='initOrderData()'>取消</a>
+			</div>
 		</form>
 	</div>
 
 	<div class='represent-map'>
+		<nav class='nav'>
+			<ul class='flex'>
+				<li class='operate-btn-wrap'>
+					<a href='javascript:;' class='icon-btn zoom'></a>
+				</li>
+				<li class='operate-btn-wrap'>
+					<a href='javascript:;' class='icon-btn zoom'></a>
+				</li>
+				<li class='operate-btn-wrap'>
+					<a href='javascript:;' class='icon-btn zoom'></a>
+				</li>
+			</ul>
+		</nav>
+		<div class='map' seat-map-view>
+		</div>
 	</div>
-</secion>
+</section>
 
 <section class='represent-order-list'>
+	<div class='search-bar'>
+		<form>
+			<input 
+				type='text'
+				class='search-input'
+				/><button class='search-btn btn'>搜索</button>
+		</form>
+	</div>
+	<div class='order-list'>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>NO</th>
+					<th>订单编号</th>
+					<th>用车时间</th>
+					<th>乘客</th>
+					<th>乘客号码</th>
+					<th>车牌号</th>
+					<th>乘客地址</th>
+					<th>目的地</th>
+					<th>类型</th>
+					<th>订单状态</th>
+					<th>接线员</th>
+					<th>作业员</th>
+					<th>订单形式</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+					<td>sdfsf</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>

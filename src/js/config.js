@@ -1,15 +1,26 @@
-var config = function($locationProvider, $httpProvider, socketProvider, mapProvider, myHttpInnterceptor, seatMapProvider, ocxSocketProvider, leaderMapProvider, ocxCallProvider, ocxSignProvider) {
-	$locationProvider.html5Mode(true);
+import gaodeOptions from './gaodeOptions';
+
+config.$inject = [
+	'$httpProvider', 
+	'socketProvider', 
+	'mapServiceProvider',
+	'myHttpInterceptorProvider',
+	'seatMapProvider',
+	'ocxSocketProvider',
+	'leaderMapProvider',
+	'ocxCallProvider',
+	'ocxSignProvider',
+	];
+
+export default function config($httpProvider, socketProvider, mapServiceProvider, myHttpInnterceptor, seatMapProvider, ocxSocketProvider, leaderMapProvider, ocxCallProvider, ocxSignProvider) {
+
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-	$httpProvider.defaults.transformRequest = [function(data) {
+	$httpProvider.defaults.transformRequest = [(data) => {
 		return angular.isObject(data) ? $.param(data) : data;
 	}];
 
-
-	var socketUrl = 'ws://' + location.host + window.appRoot + '/ws/server';
-
 	var ocxBaseUrl = 'http://localhost:8822';
-	socketProvider.setSocketUrl(socketUrl);
+	socketProvider.setSocketUrl(`ws:\/\/${location.host}${window.appRoot}/ws/server`);
 
 	ocxSocketProvider.options({
 		socketUrl: 'ws://localhost:8844'
@@ -23,25 +34,10 @@ var config = function($locationProvider, $httpProvider, socketProvider, mapProvi
 		baseUrl: ocxBaseUrl	
 	});
 
-	mapProvider.options(require('./gaodeOptions'));
-	myHttpInnterceptor.options(require('./gaodeOptions'));
-	seatMapProvider.options(require('./gaodeOptions'));
-	leaderMapProvider.options(require('./gaodeOptions'));
+	mapServiceProvider.options(gaodeOptions);
+	myHttpInnterceptor.options(gaodeOptions);
+	seatMapProvider.options(gaodeOptions);
+	leaderMapProvider.options(gaodeOptions);
 
 	$httpProvider.interceptors.push('myHttpInterceptor');
-};
-
-config.$inject = [
-	'$locationProvider', 
-	'$httpProvider', 
-	'socketProvider', 
-	'mapProvider',
-	'myHttpInterceptorProvider',
-	'seatMapProvider',
-	'ocxSocketProvider',
-	'leaderMapProvider',
-	'ocxCallProvider',
-	'ocxSignProvider'
-	];
-
-module.exports = config;
+}

@@ -12,7 +12,7 @@ var messageBoxService = function(quanDialog) {
 
 		open: function(controller, scope) {
 			if (!this.isOpen()) {
-				messageBox.open('component/messageBox.html', controller, scope);
+				messageBox.open('messageBox.html', controller, scope);
 			}	
 		},
 

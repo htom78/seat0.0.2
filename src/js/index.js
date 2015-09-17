@@ -1,5 +1,7 @@
 import angular from 'angular';
 import 'angular-route';
+import router from './router';
+import config from './config';
 
 require('./controllers');
 require('./directives');
@@ -23,8 +25,8 @@ var requires = [
 ];
 
 var app = angular.module('app', requires)
-	.config(require('./routers'))
-	.config(require('./config'))
+	.config(router)
+	.config(config)
 	.run(['$rootScope', 'ocxSocket', function($rootScope, ocxSocket) {
 		ocxSocket.connection();	
 		$rootScope.appRoot = window.appRoot;
@@ -33,9 +35,11 @@ var app = angular.module('app', requires)
 		});
 	}]);
 
-
 require('../html/header.html');
 require('../html/component/addressList.html');
+require('../html/component/messageBox.html')
+require('../html/component/unhandleAlarmDialog.html')
+require('../html/component/handleAlarmDialog.html')
 
 module.exports = app;
 

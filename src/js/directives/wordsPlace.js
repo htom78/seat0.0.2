@@ -1,6 +1,6 @@
 var directives = require('./index');
 
-var wordsPlace = function(map, $http, $templateCache, $compile, $document, $timeout, seatMap, gpsGcjExchangeUtils) {
+var wordsPlace = function($rootScope, $q, mapService, $http, $templateCache, $compile, $document, $timeout, seatMap, gpsGcjExchangeUtils) {
 	return {
 		scope: {
 			words: '=wordsPlace',
@@ -11,7 +11,7 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 			scope.$watch('words', function(words) {
 				if (words && scope.isSearch) {
 					scope.initIndex();
-					map.queryByKeyword(words)
+					mapService.queryByKeyword(words)
 						.then(function(data) {
 							scope.addresses = data;
 						});
@@ -74,8 +74,9 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 				scope.updateAddress(address.name);
 			};
 
-			elem.on({
+			scope.initIndex();
 
+			elem.on({
 				focus: function() {
 					//scope.addresses
 					if (!$(this).val()) {
@@ -109,8 +110,11 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 				blur: function() {
 					$timeout(function() {
 						if ($.trim(scope.words)) {
-							map.geocode(scope.words)
+							mapService.geocode(scope.words)
 								.then(function(response) {
+									if (response.lng === 0) {
+										return $q.reject();	
+									}
 									seatMap.setMarkerPosition(response.lng, response.lat);
 									//火星转gps
 									//return gpsGcjExchangeUtils.gcj02ToGps84(response.lng, response.lat);
@@ -120,7 +124,7 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 									};
 								})
 								.then(function(gps) {
-									return map.getNearCars(gps.lng + ',' + gps.lat);
+									return mapService.getNearCars(gps.lng + ',' + gps.lat);
 								})
 								.then(function(response) {
 									seatMap.addCarMarker(response);
@@ -133,7 +137,7 @@ var wordsPlace = function(map, $http, $templateCache, $compile, $document, $time
 	};
 };
 
-wordsPlace.$inject = ['map', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMap', 'gpsGcjExchangeUtils'];
+wordsPlace.$inject = ['$rootScope', '$q', 'mapService', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMap', 'gpsGcjExchangeUtils'];
 
 directives.directive('wordsPlace', wordsPlace);
 
@@ -169,8 +173,9 @@ var addressList = function($document) {
 				},
 
 				blur: function() {
-					if (document.activeElement !== document.body && elem.has($(document.activeElement)).length === 0) {
-						scope.$apply(function(){
+					if (document.activeElement !== document.body && 
+								elem.has($(document.activeElement)).length === 0) {
+						scope.$apply(() => {
 							scope.show = false;
 						});
 					}

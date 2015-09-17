@@ -147,7 +147,7 @@ var quanDialog = function($http, $q, $compile, $templateCache, $document, $rootS
 
 		messageBox: function(title, message, buttons) {
 			return new Dialog({
-				templateUrl: 'component/messageBox.html',
+				templateUrl: 'messageBox.html',
 				controller: 'messageBoxController',
 				modalClass: 'message-box',
 				backdrop: true,
