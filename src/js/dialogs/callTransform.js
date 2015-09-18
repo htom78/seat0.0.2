@@ -10,7 +10,7 @@ var callTransform = function(quanDialog) {
 	return {
 		open: function(scope) {
 			if (!this.isOpen()) {
-				return messageBox.open('component/callTransform.html', 'headerCtrl', scope);	
+				return messageBox.open('callTransform.html', 'headerCtrl', scope);	
 			}	
 		},
 

@@ -35,11 +35,7 @@ var app = angular.module('app', requires)
 		});
 	}]);
 
-require('../html/header.html');
-require('../html/component/addressList.html');
-require('../html/component/messageBox.html')
-require('../html/component/unhandleAlarmDialog.html')
-require('../html/component/handleAlarmDialog.html')
+require('./templates');
 
 module.exports = app;
 

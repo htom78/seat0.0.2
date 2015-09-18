@@ -74,8 +74,10 @@ var orderUtils = function($filter, mapService, $q, gpsGcjExchangeUtils) {
 					]).then((lngLats) => {
 						let startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
 						let destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
-						orderData.startPointLocation = `${startLngLat.lng},${startLngLat.lat}`;
-						orderData.destinationLocation = `${destinationLngLat.lng},${destinationLngLat.lat}`;
+						orderData.startPointX = startLngLat.lng;
+						orderData.startPointY = startLngLat.lat;
+						orderData.destinationX = destinationLngLat.lng;
+						orderData.destinationY = destinationLngLat.lat;
 						defer.resolve(orderData);
 					}, (err) => {
 						defer.reject(err);	
