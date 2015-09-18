@@ -1,8 +1,9 @@
 var utils = require('./index');
 
-var orderUtils = function($filter, mapService, $q, gpsGcjExchangeUtils) {
+var orderUtils = function($filter, mapService, $q) {
 	return {
-		convertSeatOrderDataToServerData: function(rawFormData, mapService) {
+		convertSeatOrderDataToServerData: function(rawFormData) {
+			let defer = $q.defer();
 			var orderData = {
 				callingTel: rawFormData.callingTel || '',
 				actualTel: rawFormData.actualTel,
@@ -21,23 +22,34 @@ var orderUtils = function($filter, mapService, $q, gpsGcjExchangeUtils) {
 			};
 
 			//指派车辆
-			if (rawFormData.vehicleNumber && rawFormData.vehicleNumber.trim()) {
+			if (rawFormData.vehicleNumber && 
+					rawFormData.vehicleNumber.trim()) {
 				orderData.vehicleNumber = rawFormData.vehicleNumber;
 			}
 
 			//预约
-			if (rawFormData.isReservation && rawFormData.reservationCalendar) {
+			if (rawFormData.isReservation && 
+					rawFormData.reservationCalendar) {
 				var reservationCalendar = new Date(rawFormData.reservationCalendar);
 				if (!isNaN(reservationCalendar.valueOf())) {
-					orderData.reservationTime = '' + $filter('date')(reservationCalendar, 'yyyy-MM-dd') + 
-						' ' + rawFormData.hour + ':' + rawFormData.minute;
+					orderData.reservationTime = `${$filter('date')(reservationCalendar, 'yyyy-MM-dd')} ${rawFormData.hour}:${rawFormData.minute}`;
 				}
 			}
-			//专车单
-			if (rawFormData.isCarType) {
-				orderData.callType = 2;	
-			}
-			return orderData;
+
+			$q.all([
+						mapService.geocode(orderData.start), 
+						mapService.geocode(orderData.end)
+					]).then((lngLats) => {
+						orderData.startLongitude = lngLats[0].lng;
+						orderData.startLatitude = lngLats[0].lat;
+						orderData.destinationLongitude = lngLats[1].lng;
+						orderData.destinationLatitude = lngLats[1].lat;
+						defer.resolve(orderData);
+					}, (err) => {
+						defer.reject(err);	
+					});
+
+			return defer.promise;
 		},
 
 		convertRepresentOrderDataToServerData: function(rawFormData) {
@@ -72,12 +84,10 @@ var orderUtils = function($filter, mapService, $q, gpsGcjExchangeUtils) {
 						mapService.geocode(orderData.startPoint), 
 						mapService.geocode(orderData.destination)
 					]).then((lngLats) => {
-						let startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
-						let destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
-						orderData.startPointX = startLngLat.lng;
-						orderData.startPointY = startLngLat.lat;
-						orderData.destinationX = destinationLngLat.lng;
-						orderData.destinationY = destinationLngLat.lat;
+						orderData.startPointX = lngLats[0].lng;
+						orderData.startPointY = lngLats[0].lat;
+						orderData.destinationX = lngLats[1].lng;
+						orderData.destinationY = lngLats[1].lat;
 						defer.resolve(orderData);
 					}, (err) => {
 						defer.reject(err);	
@@ -102,6 +112,6 @@ var orderUtils = function($filter, mapService, $q, gpsGcjExchangeUtils) {
 	};
 };
 
-orderUtils.$inject = ['$filter', 'mapService', '$q', 'gpsGcjExchangeUtils'];
+orderUtils.$inject = ['$filter', 'mapService', '$q'];
 
 utils.factory('orderUtils', orderUtils);

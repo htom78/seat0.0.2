@@ -15,7 +15,7 @@ module.exports = {
 	},
 	output: {
 		path: 'E:/work/aladdin-seat/src/main/webapp/static',
-	//	path: 'E:/work/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/aladdin-seat/static',
+		//path: 'E:/work/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/aladdin-seat/static',
 		publicPaht: '/dist/',
 		filename: 'app.js',
 		sourceMapFilename: '[file].map'	

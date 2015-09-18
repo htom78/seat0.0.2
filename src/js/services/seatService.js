@@ -162,21 +162,10 @@ var seatService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtil
 
 		addNewOrder: function(orderData) {
 			var self = this;
-			orderData = orderUtils.convertSeatOrderDataToServerData(orderData);
-			orderData.callType = this.callType;
-			return $q.all([mapService.geocode(orderData.start), mapService.geocode(orderData.end)])
-				.then(function(lngLats) {
-					var startLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[0].lng, lngLats[0].lat);
-					var destinationLngLat = gpsGcjExchangeUtils.gcj02ToGps84(lngLats[1].lng, lngLats[1].lat);
-					orderData.startLongitude = startLngLat.lng;
-					orderData.startLatitude = startLngLat.lat;
-					orderData.destinationLongitude = destinationLngLat.lng;
-					orderData.destinationLatitude = destinationLngLat.lat;
-
-					return orderData;
-				})
-				.then(function(orderData) {
-					return self.create(orderData);
+			return orderUtils.convertSeatOrderDataToServerData(orderData)
+				.then((orderData) => {
+					orderData.callType = self.callType;
+					return self.create(orderData);	
 				})
 				.then(function(sn) {
 					if (orderData.reservationTime) {
