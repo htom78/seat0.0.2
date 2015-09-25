@@ -1,3 +1,4 @@
+import angular from 'angular';
 var service = require('./index');
 
 var orderSearchDefaultParams = {

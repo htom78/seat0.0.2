@@ -24,6 +24,16 @@ export default class Represent {
 				self.state = Represent.state.FREE;	
 			});	
 	}
+
+	getNearCar(lng, lat) {
+		return this.$http.get('sinbad/nearList', {
+			params: {
+				x: lng,
+				y: lat,
+				distance: 1000	 
+			}	
+		});
+	}
 }
 
 Represent.$inject = ['orderUtils', '$http', '$q'];

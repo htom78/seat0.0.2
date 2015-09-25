@@ -1,6 +1,18 @@
 var directives = require('./index');
 
-var wordsPlace = function($rootScope, $q, mapService, $http, $templateCache, $compile, $document, $timeout, seatMap, gpsGcjExchangeUtils) {
+var wordsPlace = function(
+		$rootScope, 
+		$q, 
+		mapService, 
+		$http, 
+		$templateCache, 
+		$compile, 
+		$document, 
+		$timeout, 
+		seatMap, 
+		gpsGcjExchangeUtils,
+		$location
+		) {
 	return {
 		scope: {
 			words: '=wordsPlace',
@@ -115,19 +127,20 @@ var wordsPlace = function($rootScope, $q, mapService, $http, $templateCache, $co
 									if (response.lng === 0) {
 										return $q.reject();	
 									}
-									seatMap.setMarkerPosition(response.lng, response.lat);
+
+									response.path = $location.$$path;
+									$rootScope.$broadcast('mapPosition', response);
 									//火星转gps
 									//return gpsGcjExchangeUtils.gcj02ToGps84(response.lng, response.lat);
+									/*
 									return {
 										lng: response.lng,
 										lat: response.lat	
 									};
-								})
-								.then(function(gps) {
+									seatMap.setMarkerPosition(response.lng, response.lat);
 									return mapService.getNearCars(gps.lng + ',' + gps.lat);
-								})
-								.then(function(response) {
 									seatMap.addCarMarker(response);
+									*/
 								});
 						}
 					}, 200);
@@ -137,7 +150,7 @@ var wordsPlace = function($rootScope, $q, mapService, $http, $templateCache, $co
 	};
 };
 
-wordsPlace.$inject = ['$rootScope', '$q', 'mapService', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMap', 'gpsGcjExchangeUtils'];
+wordsPlace.$inject = ['$rootScope', '$q', 'mapService', '$http', '$templateCache', '$compile', '$document', '$timeout', 'seatMap', 'gpsGcjExchangeUtils', '$location'];
 
 directives.directive('wordsPlace', wordsPlace);
 

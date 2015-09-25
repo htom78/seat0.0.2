@@ -174,3 +174,41 @@
 		height: 260px;	
 	}
 }
+
+.represent-info-window {
+
+	position: relative;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: $padding-vertical $padding-horizontal;
+
+	.portrait {
+		display: block;	
+		margin-right: 6px;
+		width: 40px;
+		height: 40px;
+		border: 1px solid #ccc;
+		border-radius: 50%;
+	}
+
+	.info {
+		font-size: 12px;	
+		color: #777;
+		line-height: 20px;
+
+		.star {
+			color: $color-primary;	
+		}
+	}
+
+	&:before {
+		content: '';	
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -8px;
+		border-top: 10px solid #fff;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+	}
+}

@@ -1,3 +1,4 @@
+import angular from 'angular';
 var controllers = require('./index');
 var policeCtrl = function($scope, policeService) {
 	$scope.orders = policeService.orders;

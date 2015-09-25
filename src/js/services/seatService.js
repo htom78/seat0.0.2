@@ -1,3 +1,4 @@
+import angular from 'angular';
 var services = require('./index');
 
 var seatService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {

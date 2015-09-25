@@ -1,7 +1,14 @@
+import angular from 'angular';
 var controllers = require('./index');
 var moment = require('moment');
 
-var representCtrl = ($scope, userService, representService) => {
+var representCtrl = (
+		$scope, 
+		userService, 
+		representService, 
+		$location,
+		representMap
+		) => {
 
 	let currentTimer = new Date();
 
@@ -20,7 +27,8 @@ var representCtrl = ($scope, userService, representService) => {
 	$scope.initOrderData = () => {
 		$scope.orderData = angular.copy(initOrderData);
 		$scope.newOrder.$setPristine();
-	}
+		representMap.clear();
+	};
 
 	$scope.shouldSubmitOrder = true;
 
@@ -53,8 +61,24 @@ var representCtrl = ($scope, userService, representService) => {
 				$scope.orderData.poiList =response.poiList;
 			});
 	});
+
+	$scope.$on('mapPosition', (ev, data) => {
+		if ($location.$$path === data.path) {
+			representMap.setCenter(data.lng, data.lat);	
+			representService.getNearCar(data.lng, data.lat)
+				.then( response => {
+					representMap.addCarMarks(response.data.msg);
+				});
+		}
+	});
 };
 
-representCtrl.$inject = ['$scope', 'userService', 'representService'];
+representCtrl.$inject = [
+	'$scope', 
+	'userService', 
+	'representService', 
+	'$location',
+	'representMap'
+];
 
 controllers.controller('representCtrl', representCtrl);

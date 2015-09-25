@@ -1,0 +1,21 @@
+{
+	"esnext": true,
+	"eqnull": true,
+	"curly": true,
+	"maxlen": 200,
+	"sub": true,
+	"indent": 2,
+	"eqnull": true,
+	"node": true,
+	"quotmark": "single",
+	"undef": "true",
+	"browser": "true",
+	"globals": {
+		"require": true,
+		"alert": true,
+		"$": true,
+		"AMap": true
+	},
+	"predef": [
+	]
+}

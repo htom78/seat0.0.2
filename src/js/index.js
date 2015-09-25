@@ -2,6 +2,7 @@ import angular from 'angular';
 import 'angular-route';
 import router from './router';
 import config from './config';
+import './map';
 
 require('./controllers');
 require('./directives');
@@ -21,7 +22,8 @@ var requires = [
 	'app.filters',
 	'app.utils',
 	'app.dialogs',
-	'app.ocx'
+	'app.ocx',
+	'app.map'
 ];
 
 var app = angular.module('app', requires)

@@ -1,4 +1,5 @@
 import gaodeOptions from './gaodeOptions';
+import angular from 'angular';
 
 config.$inject = [
 	'$httpProvider', 
@@ -10,9 +11,21 @@ config.$inject = [
 	'leaderMapProvider',
 	'ocxCallProvider',
 	'ocxSignProvider',
+	'representMapProvider'
 	];
 
-export default function config($httpProvider, socketProvider, mapServiceProvider, myHttpInnterceptor, seatMapProvider, ocxSocketProvider, leaderMapProvider, ocxCallProvider, ocxSignProvider) {
+export default function config(
+			$httpProvider, 
+			socketProvider, 
+			mapServiceProvider, 
+			myHttpInnterceptor, 
+			seatMapProvider, 
+			ocxSocketProvider, 
+			leaderMapProvider, 
+			ocxCallProvider, 
+			ocxSignProvider,
+			representMapProvider
+		) {
 
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	$httpProvider.defaults.transformRequest = [(data) => {
@@ -38,6 +51,7 @@ export default function config($httpProvider, socketProvider, mapServiceProvider
 	myHttpInnterceptor.options(gaodeOptions);
 	seatMapProvider.options(gaodeOptions);
 	leaderMapProvider.options(gaodeOptions);
+	representMapProvider.options(gaodeOptions);
 
 	$httpProvider.interceptors.push('myHttpInterceptor');
 }

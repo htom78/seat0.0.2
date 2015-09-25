@@ -1,3 +1,4 @@
+import angular from 'angular';
 var services = require('./index');
 
 var PAGE_SIZE = 10;

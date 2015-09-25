@@ -29,8 +29,7 @@ var socket = function() {
 
 						/*
 						setTimeout(function() {
-							socketMessageService.message({type: 2, msg: [{"note":"ddddd","isTransfered":0,"terminalMobile":"15257483078","corpName":"\r\n宁波大众出租汽车有限公司","poi":"近宁兴财富广场","rTypeLabel":"实警","isRevecatory":1,"oemStatus":"空车","opName":"","vehicleNumber":"浙BT3288","driverMobile":"15257483078","timeCreated":"2015-07-09 01:47:11","driverName":"杨健","id":8,"terminalCode":"2143506","status":1}]});
-						}, 3000);
+							socketMessageService.message({}, 3000);
 
 						setTimeout(function() {
 							socketMessageService.message({
