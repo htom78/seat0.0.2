@@ -73,10 +73,8 @@ export default function SeatMap() {
 			function carMarkerEventFn(ev) {
 				let $scope = $rootScope.$new();	
 				let info = ev.target.info;
+				angular.extend($scope, info);
 
-				angular.extend(info, $scope);
-
-				$scope.vehicleNumber = info.vehicleNumber;
 				$scope.assign = function(carPlate) {
 					$rootScope.$broadcast('addNewOrder', carPlate);
 				};
