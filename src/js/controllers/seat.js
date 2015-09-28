@@ -3,7 +3,7 @@ import angular from 'angular';
 var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
+var seatCtrl = function ($scope,  userService, seatMap, seatService, utils, $location, mapService) {
 
 	$scope.orders = seatService.orders;
 
@@ -51,7 +51,7 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 		$scope.orderData = angular.copy(initOrderData);
 		$scope.userData = {};
 		$scope.newOrder.$setPristine();
-		seatMap.resetMap();
+		seatMap.clear();
 		$scope.clearSearchWords();
 	};
 
@@ -197,10 +197,6 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 		}
 	});
 
-	$scope.$on('$destroy', function() {
-		seatMap.clearMap();	
-	});
-
 	$scope.showBtns = function(order) {
 		seatService.toggleShowBtns(order);
 	};
@@ -275,14 +271,26 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils) {
 				}	
 	};
 
+	$scope.$on('mapPosition', (ev, data) => {
+		if ($location.$$path === data.path) {
+			seatMap.setCenter(data.lng, data.lat);	
+			mapService.getNearCars(`${data.lng},${data.lat}`)
+				.then(response => {
+					seatMap.addCarMarks(response);
+				});
+		}
+	});
+
 };
 
 seatCtrl.$inject = [
-'$scope', 
+	'$scope', 
 	'userService', 
 	'seatMap', 
 	'seatService',
-	'utils'
+	'utils',
+	'$location',
+	'mapService'
 	];
 
 	controllers.controller('seatCtrl', seatCtrl);

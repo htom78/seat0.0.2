@@ -67,7 +67,7 @@ var representCtrl = (
 			representMap.setCenter(data.lng, data.lat);	
 			representService.getNearCar(data.lng, data.lat)
 				.then( response => {
-					representMap.addCarMarks(response.data.msg);
+					representMap.addCarMarks(response);
 				});
 		}
 	});

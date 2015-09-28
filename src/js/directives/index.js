@@ -1,8 +1,11 @@
 import angular from 'angular';
 import representMap from './representMap';
+import seatMap from './seatMap';
+
 module.exports = angular.module('app.dirctives', [])
-	.directive('representMap', representMap);
-require('./seatMapView');
+	.directive('representMap', representMap)
+	.directive('seatMap', seatMap);
+
 require('./chartUser');
 require('./callStatus');
 require('./pagination');

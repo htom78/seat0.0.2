@@ -19,7 +19,7 @@ export default function RepresentMap() {
 					`
 						<div class='represent-info-window flex'>
 							<div>
-								<img data-src='{{portrait}}' class='portrait'/>
+								<img class='portrait'/>
 							</div>
 							<div class='info'>
 								<p>{{name}}师傅</p>
@@ -74,7 +74,6 @@ export default function RepresentMap() {
 			let $scope = $rootScope.$new();
 			let info = ev.target.info;
 			$scope.name = info.familyName;
-			$scope.portrait = 'http://pic38.nipic.com/20140220/13597469_211002639000_2.jpg';
 			let stars = [
 				'\u2606\u2606\u2606\u2606\u2606',
 				'\u2605\u2606\u2606\u2606\u2606',
@@ -86,6 +85,7 @@ export default function RepresentMap() {
 			$scope.stars = stars[info.rank];
 			$compile(template)($scope, function(clone) {
 				infoWindow.setContent(clone.get(0));
+				clone.find('.portrait').attr('src', info.picUrl);
 				infoWindow.open(map, ev.target.getPosition());
 			});
 		}
@@ -114,13 +114,14 @@ export default function RepresentMap() {
 			},
 
 			setCenter(lng, lat) {
+				this.clearMarkers();
 				var pointer = new AMap.LngLat(lng, lat);
 				setMarker(pointer);
 				setCircle(pointer);
 				map.setCenter(pointer);	
 			},
 
-			clear() {
+			clearMarkers() {
 				if (marker) {
 					marker.setMap(null);	
 					marker = null;
@@ -131,6 +132,10 @@ export default function RepresentMap() {
 				}
 				clearCarMarkers();
 				map.clearInfoWindow();	
+			},
+
+			clear() {
+				this.clearMarkers();
 				map.setCenter(new AMap.LngLat(mapOptions.lng, mapOptions.lat));
 			},	
 
@@ -145,9 +150,6 @@ export default function RepresentMap() {
 			addCarMarks(data) {
 				let coordinate;
 				data.forEach(item => {
-					coordinate = item.coordinates.split(',');
-					item.lng = coordinate[0];
-					item.lat = coordinate[1];
 					addCarMark(item);
 				});	
 			}

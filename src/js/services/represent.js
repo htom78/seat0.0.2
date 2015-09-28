@@ -32,6 +32,20 @@ export default class Represent {
 				y: lat,
 				distance: 1000	 
 			}	
+		})
+		.then( response => {
+			if (response.data.msg.length === 0) {
+				return this.$q.reject();	
+			}
+			let carInfos = response.data.msg;
+			let [item, coordinate] = [];
+			for (let i = 0 ,len = carInfos.length; i < len; i ++) {
+				item = carInfos[i];
+				coordinate = item.coordinates.split(',');
+				item.lng = coordinate[0];
+				item.lat = coordinate[1];
+			}
+			return carInfos;	
 		});
 	}
 }

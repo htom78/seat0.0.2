@@ -6,7 +6,6 @@ module.exports = angular.module('app.services', [])
 
 require('./statistics');
 require('./mapService');
-require('./seatMap');
 require('./chartUser');
 require('./chartEmploy');
 require('./chartCar');
