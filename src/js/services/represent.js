@@ -1,3 +1,4 @@
+import angular from 'angular';
 export default class Represent {
 
 	constructor(orderUtils, $http, $q) {
@@ -5,6 +6,7 @@ export default class Represent {
 		this.orderUtils = orderUtils;
 		this.$http = $http;
 		this.$q = $q;
+		this.orderss = [];
 	}
 
 	addNewOrder(orderData) {
@@ -30,7 +32,7 @@ export default class Represent {
 			params: {
 				x: lng,
 				y: lat,
-				distance: 1000	 
+				distance: 500	 
 			}	
 		})
 		.then( response => {
@@ -47,6 +49,32 @@ export default class Represent {
 			}
 			return carInfos;	
 		});
+	}
+
+	getOrdersFromService(keyword = '', page = 1, pagesize = 10) {
+		return this.$http.get('sinbad/order/list.htm', {
+				params:	{
+					keyword,
+				 	page,
+					pagesize	 
+				}
+			})
+			.then(response => {
+				return response.data.msg;
+			});			
+	}
+
+	getOrders(keywords) {
+		return this.getOrdersFromService(keywords)
+			.then(orders => {
+				if (angular.isArray(orders)) {
+					angular.copy(orders, this.orderss);
+
+					return this.orderss;
+				} else {
+					return [];	
+				}	
+			});	
 	}
 }
 

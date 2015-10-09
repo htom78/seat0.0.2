@@ -171,12 +171,15 @@
 
 <section class='represent-order-list'>
 	<div class='search-bar'>
-		<form>
-			<input 
-				type='text'
-				class='search-input'
-				/><button class='search-btn btn'>搜索</button>
-		</form>
+		<div class='search-wrapper'>
+			<form ng-submit='searchOrder()'>
+				<input 
+					type='text'
+					class='search-input'
+					ng-model='searchKeywords'
+					/><button class='search-btn btn'>搜索</button>
+			</form>
+		</div>
 	</div>
 	<div class='order-list'>
 		<table class='table'>
@@ -187,31 +190,37 @@
 					<th>用车时间</th>
 					<th>乘客</th>
 					<th>乘客号码</th>
-					<th>车牌号</th>
 					<th>乘客地址</th>
 					<th>目的地</th>
-					<th>类型</th>
-					<th>订单状态</th>
-					<th>接线员</th>
-					<th>作业员</th>
-					<th>订单形式</th>
+					<th>驾驶员姓名</th>
+					<th>驾驶员号码</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
-					<td>sdfsf</td>
+				<tr ng-repeat='item in orders'
+						ng-if='$index < 6'>
+					<td>{{$index + 1}}</td>
+					<td>{{item.sn}}</td>
+					<td>{{item.timeCreated}}</td>
+					<td>{{item.contactName}}</td>
+					<td>{{item.contactPhone}}</td>
+					<td>{{item.startPoint}}</td>
+					<td class='some-list-before'>{{item.destination}}</td>
+					<td colspan='3'>
+						<table class='inner-table'>
+							<colgroup>
+								<col class='col1'>
+								<col class='col2'>
+								<col class='col3'>
+							</colgroup>
+							<tr ng-repeat='inner in item.assignedList'>
+								<td>{{inner.name}}</td>
+								<td>{{inner.mobile}}</td>
+								<td>operate</td>
+							</tr>
+						</table>	
+					</td>
 				</tr>
 			</tbody>
 		</table>

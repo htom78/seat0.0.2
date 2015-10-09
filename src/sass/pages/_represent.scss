@@ -168,10 +168,35 @@
 			border-radius: 0 $radius-small-size $radius-small-size 0;	
 			width: 70px;
 		}
+		.search-wrapper {
+			float: right;	
+			margin-right: $margin-horizontal;
+		}
 	}
 
-	.order-list {
-		height: 260px;	
+	.table {
+		.some-list-before {
+			border-right: 1px dashed $table-border-color;	
+		}	
+		.inner-table {
+			width: 100%;
+			tbody {
+				background-color: transparent;	
+			}
+			tr:last-child {
+				border-bottom: none;	
+			}
+			td {
+				overflow: hidden;	
+			}
+			.col1,
+		 	.col2	{
+				width: 35%;
+			}
+			.col3 {
+				width: 30%;	
+			}
+		}
 	}
 }
 

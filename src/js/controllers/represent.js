@@ -10,6 +10,8 @@ var representCtrl = (
 		representMap
 		) => {
 
+	$scope.orders = representService.orderss;
+
 	let currentTimer = new Date();
 
 	let initOrderData = {
@@ -63,7 +65,7 @@ var representCtrl = (
 	});
 
 	$scope.$on('mapPosition', (ev, data) => {
-		if ($location.$$path === data.path) {
+		if ($location.url() === data.path) {
 			representMap.setCenter(data.lng, data.lat);	
 			representService.getNearCar(data.lng, data.lat)
 				.then( response => {
@@ -71,6 +73,10 @@ var representCtrl = (
 				});
 		}
 	});
+
+	$scope.searchOrder = function() {
+		representService.getOrders($scope.searchKeywords);	
+	};
 };
 
 representCtrl.$inject = [

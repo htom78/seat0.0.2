@@ -72,7 +72,7 @@ var security = function($http, $q, $location, ocxSign) {
 		},
 
 		isLeader: function() {
-			return !!(service.currentUser && (window.userType === 'superadmin' || !window.userType));	
+			return !!(service.currentUser && (window.userType === 'superadmin' || !window.userType || window.userType === 'company'));	
 		}
 	};
 

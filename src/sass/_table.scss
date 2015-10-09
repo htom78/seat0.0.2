@@ -16,7 +16,7 @@
 	tbody {
 		background-color: $color-secondary;
 		tr {
-			border-bottom: 1px dashed #ccc;
+			border-bottom: 1px dashed $table-border-color;
 			&:hover,
 			&.active {
 				color: #fff;

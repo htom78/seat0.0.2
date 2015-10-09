@@ -58,7 +58,7 @@ export default function SeatMap() {
 				let carMarker = new AMap.Marker({
 					icon: new AMap.Icon({
 						size: new AMap.Size(mapOptions.markerSize.width, mapOptions.markerSize.height),
-						image: mapOptions.markerTaxiIcon 
+						image: `static/${mapOptions.markerTaxiIcon}` 
 					}),
 					position: new AMap.LngLat(info.lng, info.lat)		
 				});	

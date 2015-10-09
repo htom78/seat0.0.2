@@ -59,8 +59,8 @@ export default function RepresentMap() {
 		function addCarMark(info) {
 			let carMarker = new AMap.Marker({
 				icon: new AMap.Icon({
-					size: new AMap.Size(mapOptions.markerSize.width, mapOptions.markerSize.height),
-					image: mapOptions.markerTaxiIcon 
+					size: new AMap.Size(mapOptions.driverMarkderSize.width, mapOptions.driverMarkderSize.height),
+					image: `static/${mapOptions.markerDriverIcon}`
 				}),
 				position: new AMap.LngLat(info.lng, info.lat)	
 			});
@@ -109,7 +109,7 @@ export default function RepresentMap() {
 
 				infoWindow =	new AMap.InfoWindow({
 					isCustom: true,
-					offset: new AMap.Pixel(0, -42)	
+					offset: new AMap.Pixel(6, -42)	
 				});
 			},
 

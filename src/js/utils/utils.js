@@ -13,7 +13,6 @@ var utils = function($http) {
 					return response.data;	
 				});	
 		}
-
 	};
 };
 

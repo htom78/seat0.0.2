@@ -121,26 +121,14 @@ var wordsPlace = function(
 
 				blur: function() {
 					$timeout(function() {
-						if ($.trim(scope.words)) {
+						if (scope.words && scope.words.trim()) {
 							mapService.geocode(scope.words)
 								.then(function(response) {
 									if (response.lng === 0) {
 										return $q.reject();	
 									}
-
-									response.path = $location.$$path;
+									response.path = $location.url();
 									$rootScope.$broadcast('mapPosition', response);
-									//火星转gps
-									//return gpsGcjExchangeUtils.gcj02ToGps84(response.lng, response.lat);
-									/*
-									return {
-										lng: response.lng,
-										lat: response.lat	
-									};
-									seatMap.setMarkerPosition(response.lng, response.lat);
-									return mapService.getNearCars(gps.lng + ',' + gps.lat);
-									seatMap.addCarMarker(response);
-									*/
 								});
 						}
 					}, 200);

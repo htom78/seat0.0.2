@@ -100,6 +100,6 @@ var calendar = function($document) {
 	};
 };
 
-calendar.$inect = ['$document'];
+calendar.$inject = ['$document'];
 
 directives.directive('calendar', calendar);

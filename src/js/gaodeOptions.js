@@ -9,10 +9,15 @@ export default {
 	circleOpacity: 0.35,
 	circleWeight: 2,
 	circleRadius: 500,
-	markerTaxiIcon: `static/${require('../assets/imgs/car-marker.png')}`,
+	markerTaxiIcon: require('../assets/imgs/car-marker.png'),
+	markerDriverIcon: require('../assets/imgs/driver-icon.png'),
 	markerSize: {
 		width: 22,
 		height: 32 	
+	},
+	driverMarkderSize: {
+		width: 24,
+		height: 24	
 	},
 	nearCarUrl: `${window.aspath}/rest/instant/vnearby?myjsonp=JSON_CALLBACK`
 };

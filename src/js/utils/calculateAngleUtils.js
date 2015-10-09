@@ -23,6 +23,6 @@ var calculateAngleUtils = function($filter) {
 	};
 };
 
-utils.$inject = ['$filter'];
+calculateAngleUtils.$inject = ['$filter'];
 
 utils.factory('calculateAngleUtils', calculateAngleUtils);

@@ -14,6 +14,7 @@ config.$inject = [
 	'representMapProvider'
 	];
 
+
 export default function config(
 			$httpProvider, 
 			socketProvider, 
@@ -32,11 +33,11 @@ export default function config(
 		return angular.isObject(data) ? $.param(data) : data;
 	}];
 
-	var ocxBaseUrl = 'http://localhost:8822';
+	var ocxBaseUrl = 'http://192.168.0.106:8822';
 	socketProvider.setSocketUrl(`ws:\/\/${location.host}${window.appRoot}/ws/server`);
 
 	ocxSocketProvider.options({
-		socketUrl: 'ws://localhost:8844'
+		socketUrl: 'ws://192.168.0.106:8844'
 	});
 
 	ocxCallProvider.options({

@@ -272,7 +272,7 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils, $loc
 	};
 
 	$scope.$on('mapPosition', (ev, data) => {
-		if ($location.$$path === data.path) {
+		if ($location.url() === data.path) {
 			seatMap.setCenter(data.lng, data.lat);	
 			mapService.getNearCars(`${data.lng},${data.lat}`)
 				.then(response => {

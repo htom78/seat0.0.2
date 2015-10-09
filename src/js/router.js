@@ -65,7 +65,13 @@ export default function router($locationProvider, $routeProvider) {
 	var representConfig = {
 		template: require('../html/page/represent.html'),
 		controller: 'representCtrl',
-		title: '代驾'	
+		title: '代驾',
+		resolve: {
+			store: ['representService', function(representService) {
+				representService.getOrders();
+				return representService;	
+			}]	
+		}	
 	};
 
 	$routeProvider
