@@ -192,32 +192,43 @@
 					<th>乘客号码</th>
 					<th>乘客地址</th>
 					<th>目的地</th>
+					<th>即时/预约</th>
+					<th>订单状态</th>
 					<th>驾驶员姓名</th>
 					<th>驾驶员号码</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat='item in orders'
 						ng-if='$index < 6'>
-					<td>{{$index + 1}}</td>
+					<td>{{item.id}}</td>
 					<td>{{item.sn}}</td>
-					<td>{{item.timeCreated}}</td>
+					<td class='ellipsis' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
 					<td>{{item.contactName}}</td>
 					<td>{{item.contactPhone}}</td>
-					<td>{{item.startPoint}}</td>
-					<td class='some-list-before'>{{item.destination}}</td>
-					<td colspan='3'>
+					<td class='ellipsis' title='{{item.startPoint}}'>{{item.startPoint}}</td>
+					<td class='ellipsis' title='{{item.destination}}'>{{item.destination}}</td>
+					<td>{{item.immediateOrReservation}}</td>
+					<td class='some-list-before'>{{item.statusLabel}}</td>
+					<td colspan='4'>
 						<table class='inner-table'>
 							<colgroup>
 								<col class='col1'>
 								<col class='col2'>
 								<col class='col3'>
+								<col class='col4'>
 							</colgroup>
 							<tr ng-repeat='inner in item.assignedList'>
 								<td>{{inner.name}}</td>
 								<td>{{inner.mobile}}</td>
-								<td>operate</td>
+								<td>{{inner.statusLabel}}</td>
+								<td>
+									<button>乘客违约</button>
+									<button>司机违约</button>
+									<button>轨迹</button>
+								</td>
 							</tr>
 						</table>	
 					</td>

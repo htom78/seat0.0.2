@@ -69,7 +69,14 @@ export default class Represent {
 			.then(orders => {
 				if (angular.isArray(orders)) {
 					angular.copy(orders, this.orderss);
-
+					this.orderss
+						.forEach(item => {
+							if (item.isReserved === 0) {
+								item.immediateOrReservation = '即时';	
+							} else if (item.isReserved === 1) {
+								item.immediateOrReservation = '预约';	
+							}	
+						});
 					return this.orderss;
 				} else {
 					return [];	

@@ -91,5 +91,5 @@ export default function router($locationProvider, $routeProvider) {
 		})
 		.when('/police.htm', policeRouteConfig)
 		.when('/special.htm', seatRouteConfig)
-		.when('/represent.htm', representConfig);
+		.when('/sinbad.htm', representConfig);
 }
