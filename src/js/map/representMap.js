@@ -12,7 +12,7 @@ export default function RepresentMap() {
 	this.$get = ['$rootScope', '$compile', 
 		function($rootScope, $compile) {
 
-		let [circle, marker, map, infoWindow] = [];
+		let [circle, marker, map, infoWindow, polyline] = [];
 		let carMarkers = [];
 
 		let template = 
@@ -98,6 +98,27 @@ export default function RepresentMap() {
 			}
 		}
 
+		function queryTrack(arr) {
+			let lineArr = [];
+
+			arr.forEach(item => {
+				lineArr.push([item.longtitude, item.latitude]);	
+			});
+
+			polyline = new AMap.Polyline({
+				path: lineArr,
+				strokeColor: '#3366FF',
+				strokeOpacity: 1,
+				strokeWeight: 2,
+				strokeStyle: 'solid',
+				strokeDasharray: [10, 5],
+				geodesic: true	 
+			});
+			polyline.setMap(map);
+			let a = arr[0];
+			map.setCenter(new AMap.LngLat(a.longtitude, a.latitude));
+		}
+
 		let m = {
 			init(elem) {
 				map = new AMap.Map(elem, {
@@ -130,6 +151,10 @@ export default function RepresentMap() {
 					circle.setMap(null);	
 					circle = null;
 				}
+				if (polyline) {
+					polyline.setMap(null);	
+					polyline = null;
+				}
 				clearCarMarkers();
 				map.clearInfoWindow();	
 			},
@@ -152,6 +177,13 @@ export default function RepresentMap() {
 				data.forEach(item => {
 					addCarMark(item);
 				});	
+			},
+
+			drawTrack(arr) {
+				if (angular.isArray(arr) && arr.length > 1) {
+					this.clearMarkers();
+					queryTrack(arr);
+				}		
 			}
 
 		};

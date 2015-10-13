@@ -183,6 +183,21 @@
 	</div>
 	<div class='order-list'>
 		<table class='table'>
+			<colgroup>
+				<col class='col1'>
+				<col class='col2'>
+				<col class='col3'>
+				<col class='col4'>
+				<col class='col5'>
+				<col class='col6'>
+				<col class='col7'>
+				<col class='col8'>
+				<col class='col9'>
+				<col class='col10'>
+				<col class='col11'>
+				<col class='col12'>
+				<col class='col13'>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>NO</th>
@@ -215,19 +230,37 @@
 					<td colspan='4'>
 						<table class='inner-table'>
 							<colgroup>
-								<col class='col1'>
-								<col class='col2'>
-								<col class='col3'>
-								<col class='col4'>
+								<col class='i-col1'>
+								<col class='i-col2'>
+								<col class='i-col3'>
+								<col class='i-col4'>
 							</colgroup>
 							<tr ng-repeat='inner in item.assignedList'>
 								<td>{{inner.name}}</td>
 								<td>{{inner.mobile}}</td>
 								<td>{{inner.statusLabel}}</td>
 								<td>
-									<button>乘客违约</button>
-									<button>司机违约</button>
-									<button>轨迹</button>
+									<button
+										ng-hide='inner.noHandlerBtn'
+										confirm-dialog
+										box-ctrl='representCtrl'
+										message-box='乘客违约'
+										input-show='true'
+										label-name='理由'
+										ensure-fn='passengerFuck(inner, input)'
+										>乘客违约</button>
+									<button
+										ng-hide='inner.noHandlerBtn'
+										confirm-dialog
+										box-ctrl='representCtrl'
+										message-box='司机违约'
+										input-show='true'
+										label-name='理由'
+										ensure-fn='driverFuck(inner, input)'
+										>司机违约</button>
+									<button
+										ng-click='queryTrack(inner.id)'
+										>轨迹</button>
 								</td>
 							</tr>
 						</table>	

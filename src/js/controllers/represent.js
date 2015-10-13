@@ -77,6 +77,29 @@ var representCtrl = (
 	$scope.searchOrder = function() {
 		representService.getOrders($scope.searchKeywords);	
 	};
+
+	$scope.passengerFuck = function(item, remark) {
+		representService.passengerFuck(item.id, remark)
+			.then(response => {
+				item.statusLabel = '乘客违约';	
+				item.noHandlerBtn = true;
+			});
+	};
+
+	$scope.driverFuck = function(item, remark) {
+		representService.driverFuck(item.id, remark)
+			.then(response => {
+				item.statusLabel = '司机违约';	
+				item.noHandlerBtn = true;
+			});	
+	};
+
+	$scope.queryTrack = function (id) {
+		representService.queryTrack(id)
+			.then(response => {
+				representMap.drawTrack(response.data.msg);
+			});	
+	};
 };
 
 representCtrl.$inject = [

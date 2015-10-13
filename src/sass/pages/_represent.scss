@@ -175,6 +175,48 @@
 	}
 
 	.table {
+		.col1 {
+			width: 3%;
+		}
+		.col2 {
+			width:5%;	
+		}
+		.col3 {
+			width: 10%;	
+		}
+		.col4 {
+			width: 4%;	
+		}
+		.col5 {
+			width: 6.4%;	
+		}
+		.col6 {
+			width: 14.2%;	
+		}
+		.col7 {
+			width: 14.2%;	
+		}
+		.col8 {
+			width: 4%;	
+		}
+		.col9 {
+			width: 6.8%;	
+		}
+		.col10 {
+			width: 5%;	
+		}
+		.col11 {
+			width: 6.4%;	
+		}
+		.col12 {
+			width: 6.8%;	
+		}
+		.col13 {
+			width: 14.2%;	
+		}
+
+
+
 		.some-list-before {
 			border-right: 1px dashed $table-border-color;	
 		}	
@@ -189,15 +231,17 @@
 			td {
 				overflow: hidden;	
 			}
-			.col1,
-		 	.col2	{
-				width: 20%;
+			.i-col1 {
+				width: 15.43%;	
 			}
-			.col3 {
-				width: 20%;	
+		 	.i-col2	{
+				width: 19.75%;
 			}
-			.col4 {
-				width: 40%;	
+			.i-col3 {
+				width: 21%;	
+			}
+			.i-col4 {
+				width: 43.82%;	
 			}
 		}
 	}

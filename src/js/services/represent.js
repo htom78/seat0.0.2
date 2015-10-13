@@ -76,12 +76,41 @@ export default class Represent {
 							} else if (item.isReserved === 1) {
 								item.immediateOrReservation = '预约';	
 							}	
+							item.assignedList.forEach( assign => {
+								if (assign.status === 13 ||
+									assign.status === 14) {
+									assign.noHandlerBtn = true;	
+								}	
+							});
 						});
 					return this.orderss;
 				} else {
 					return [];	
 				}	
 			});	
+	}
+
+	passengerFuck(id, remark) {
+		return this.$http.post('sinbad/renege/customer.htm', {
+			id,
+			remark
+		});	
+	}
+
+
+	driverFuck(id, remark) {
+		return this.$http.post('sinbad/renege/driver.htm', {
+			id,
+			remark	 
+		});	
+	}
+
+	queryTrack(id) {
+		return this.$http.get('sinbad/track', {
+			params: {
+				id	
+			}	
+		});	
 	}
 }
 
