@@ -19,5 +19,13 @@ export default {
 		width: 24,
 		height: 24	
 	},
+	polyline: {
+		strokeColor: '#3366ff',
+		strokeOpacity: 1,
+		strokeWeight: 2,
+		strokeStyle: 'solid',
+		strokeDasharray: [10, 5],
+		geodesic: true	
+	},
 	nearCarUrl: `${window.aspath}/rest/instant/vnearby?myjsonp=JSON_CALLBACK`
 };

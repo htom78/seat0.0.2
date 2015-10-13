@@ -102,21 +102,21 @@ export default function RepresentMap() {
 			let lineArr = [];
 
 			arr.forEach(item => {
-				lineArr.push([item.longtitude, item.latitude]);	
+				lineArr.push([item.lgt, item.lat]);	
 			});
 
 			polyline = new AMap.Polyline({
 				path: lineArr,
-				strokeColor: '#3366FF',
-				strokeOpacity: 1,
-				strokeWeight: 2,
-				strokeStyle: 'solid',
-				strokeDasharray: [10, 5],
-				geodesic: true	 
+				strokeColor: mapOptions.polyline.strokeColor,
+				strokeOpacity: mapOptions.polyline.strokeOpacity,
+				strokeWeight: mapOptions.polyline.strokeWeight,
+				strokeStyle: mapOptions.polyline.strokeStyle,
+				strokeDasharray: mapOptions.polyline.strokeDasharray,
+				geodesic: mapOptions.polyline.geodesic	 
 			});
 			polyline.setMap(map);
 			let a = arr[0];
-			map.setCenter(new AMap.LngLat(a.longtitude, a.latitude));
+			map.setCenter(new AMap.LngLat(a.lgt, a.lat));
 		}
 
 		let m = {
