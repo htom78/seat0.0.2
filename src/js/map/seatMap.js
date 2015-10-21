@@ -1,3 +1,5 @@
+'use strict';
+
 import angular from 'angular';
 
 export default function SeatMap() {
@@ -58,7 +60,7 @@ export default function SeatMap() {
 				let carMarker = new AMap.Marker({
 					icon: new AMap.Icon({
 						size: new AMap.Size(mapOptions.markerSize.width, mapOptions.markerSize.height),
-						image: `static/${mapOptions.markerTaxiIcon}` 
+						image: mapOptions.markerTaxiIcon 
 					}),
 					position: new AMap.LngLat(info.lng, info.lat)		
 				});	

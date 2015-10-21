@@ -1,3 +1,5 @@
+'use strict';
+
 export default {
 	key: 'd64e2c774ba08ec5d8fd282640cd546e',
 	version: 'rsv3',
@@ -9,8 +11,8 @@ export default {
 	circleOpacity: 0.35,
 	circleWeight: 2,
 	circleRadius: 500,
-	markerTaxiIcon: require('../assets/imgs/car-marker.png'),
-	markerDriverIcon: require('../assets/imgs/driver-icon.png'),
+	markerTaxiIcon: 'http://localhost:3000/imgs/car-marker.png',
+	markerDriverIcon: 'http://localhost:3000/imgs/driver-marker.png',
 	markerSize: {
 		width: 22,
 		height: 32 	

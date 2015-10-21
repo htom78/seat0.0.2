@@ -1,3 +1,4 @@
+'use strict';
 
 router.$inject = ['$locationProvider', '$routeProvider'];
 
@@ -6,7 +7,7 @@ export default function router($locationProvider, $routeProvider) {
 	$locationProvider.html5Mode(true);
 
 	var seatRouteConfig = {
-		template: require('../html/page/seat.html'),
+		templateUrl: 'page/seat.html',
 		controller: 'seatCtrl',
 		title: '坐席',
 		resolve: {
@@ -24,7 +25,7 @@ export default function router($locationProvider, $routeProvider) {
 	};
 
 	var leadRouteConfig = {
-		template:  require('../html/page/leader.html'),
+		templateUrl: 'page/leader.html',
 		controller: 'leaderCtrl',
 		title: '班长',
 		resolve: {
@@ -37,7 +38,7 @@ export default function router($locationProvider, $routeProvider) {
 	};
 
 	var searchRouteConfig = {
-		template:  require('../html/page/search.html'),
+		templateUrl: 'page/search.html',
 		controller: 'searchCtrl',
 		title: '搜索',
 		resolve: {
@@ -50,7 +51,7 @@ export default function router($locationProvider, $routeProvider) {
 	};
 
 	var policeRouteConfig = {
-		template:  require('../html/page/police.html'),
+		templateUrl: 'page/police.html',
 		controller: 'policeCtrl',
 		title: '报警',
 		resolve: {
@@ -63,7 +64,7 @@ export default function router($locationProvider, $routeProvider) {
 	};
 
 	var representConfig = {
-		template: require('../html/page/represent.html'),
+		templateUrl: 'page/represent.html',
 		controller: 'representCtrl',
 		title: '代驾',
 		resolve: {
@@ -80,7 +81,7 @@ export default function router($locationProvider, $routeProvider) {
 		.when('/leader.htm', leadRouteConfig)
 		.when('/searchMore.htm', searchRouteConfig)
 		.when('/login.htm', {
-			template: require('../html/page/login.html'),
+			templateUrl: 'page/login.html',
 			controller: 'loginCtrl',
 			title: '登录',
 			resolve: {

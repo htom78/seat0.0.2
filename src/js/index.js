@@ -1,3 +1,4 @@
+'use strict';
 import angular from 'angular';
 import 'angular-route';
 import router from './router';
@@ -12,9 +13,11 @@ require('./filters');
 require('./utils');
 require('./dialogs');	
 require('./ocx');
+require('./templates');
 
 var requires = [
 	'ngRoute',
+	'templates',
 	'app.controllers',
 	'app.dirctives',
 	'app.services',
@@ -31,13 +34,11 @@ var app = angular.module('app', requires)
 	.config(config)
 	.run(['$rootScope', 'ocxSocket', function($rootScope, ocxSocket) {
 		ocxSocket.connection();	
-		$rootScope.appRoot = window.appRoot;
 		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
 			$rootScope.title = current.$$route.title;	
 		});
 	}]);
 
-require('./templates');
 
 module.exports = app;
 

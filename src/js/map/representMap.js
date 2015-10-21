@@ -1,3 +1,5 @@
+'use strict';
+
 import angular from 'angular';
 
 export default function RepresentMap() {
@@ -60,7 +62,7 @@ export default function RepresentMap() {
 			let carMarker = new AMap.Marker({
 				icon: new AMap.Icon({
 					size: new AMap.Size(mapOptions.driverMarkderSize.width, mapOptions.driverMarkderSize.height),
-					image: `static/${mapOptions.markerDriverIcon}`
+					image: mapOptions.markerDriverIcon
 				}),
 				position: new AMap.LngLat(info.lng, info.lat)	
 			});

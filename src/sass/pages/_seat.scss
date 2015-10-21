@@ -91,7 +91,7 @@
 	.sending {
 	    background-color: $color-disabled;	
 	    text-indent: 9999px;
-		 	background-image: url(../assets/imgs/loading.gif);
+		 	background-image: url(/imgs/loading.gif);
 	    background-position: center center;
 	    background-repeat: no-repeat;
 	    pointer-events: none;
@@ -264,23 +264,11 @@
 			justify-content: space-around;
 		}
 		.car-icon {
-			width: $car-icon-width;
-			height: $car-icon-height;
+			width: 60px;;
+			height: 46px;
 			text-align: center;
 			color: #fff;
 			background-repeat: no-repeat;
-			&.stop-icon {
-				background-image: url(../assets/imgs/car-stop-icon.png);
-			}
-			&.empty-icon {
-				background-image: url(../assets/imgs/car-empty-icon.png);
-			}
-			&.heavy-icon {
-				background-image: url(../assets/imgs/car-heavy-icon.png);
-			}
-			&.task-icon {
-				background-image: url(../assets/imgs/car-task-icon.png);
-			}
 		}
 		.legend-wrap {
 			color: $text-color;

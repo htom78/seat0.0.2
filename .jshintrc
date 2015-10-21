@@ -1,21 +1,26 @@
 {
+  "bitwise": true,
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "trailing": true,
+  "maxlen": 200,
+  "boss": true,
+  "eqnull": true,
+  "expr": true,
+  "globalstrict": true,
+  "laxbreak": true,
+  "loopfunc": true,
+  "sub": true,
+  "undef": true,
+  "indent": 2,
 	"esnext": true,
-	"eqnull": true,
-	"curly": true,
-	"maxlen": 200,
-	"sub": true,
-	"indent": 2,
-	"eqnull": true,
 	"node": true,
-	"quotmark": "single",
-	"undef": "true",
-	"browser": "true",
+	"browser": true,
 	"globals": {
-		"require": true,
-		"alert": true,
 		"$": true,
 		"AMap": true
-	},
-	"predef": [
-	]
+	}
 }

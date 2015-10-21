@@ -2,14 +2,12 @@
 	.first-field{
 		position: relative;	
 	}
-	.unhandle{
+	
+	.icon-warn {
 		position: absolute;
 		top: 50%;
 		left: 10px;
-		width: 14px;
-		height: 14px;
 		margin-top: -7px;
-		background-image: url(../assets/imgs/warn-icon.png);
 	}
 
 	.table tr.selfSelected{

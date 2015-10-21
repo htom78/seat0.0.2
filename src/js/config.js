@@ -1,3 +1,5 @@
+'use strict';
+
 import gaodeOptions from './gaodeOptions';
 import angular from 'angular';
 

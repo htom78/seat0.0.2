@@ -80,17 +80,10 @@
 		border: $border-small-size solid #fff;
 		border-top: 0px;
 		border-bottom-right-radius: $radius-small-size;
-		.sign-state {
+
+		.sign-state{
 			display: inline-block;
-			width: 32px;
-			height: 33px;
 			margin: 4px 6px 0;
-			background-image: url(../assets/imgs/sign-out.png);
-		}
-		.sign-in {
-			background-image: url(../assets/imgs/sign-in.png);
-		}
-		.sign-out {
 		}
 
 		.exit-btn {

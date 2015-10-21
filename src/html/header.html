@@ -63,7 +63,7 @@
 		<ul class='flex'>
 			<li><a href='javascript:;' 
 				class='sign-state'
-				ng-class='{"sign-in": isSignIn()}' 
+				ng-class='{"icon-sign-in": isSignIn(), "icon-sign-out": !isSignIn()}' 
 				ng-click='toggleSignState()'></a></li>
 			<li><a href='javascript:;' class='exit-btn icon-btn' ng-click='logout()'></a></li>
 		</ul>

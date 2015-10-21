@@ -2,5 +2,8 @@
 bower_components
 node_modules
 *.swp
-templates
+templates.js
 dist
+build
+*.log
+_sprites.scss

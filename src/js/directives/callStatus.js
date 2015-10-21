@@ -1,3 +1,5 @@
+'use strict';
+
 var directives = require('./index');
 
 function calculateFactory(now, last) {
@@ -73,8 +75,8 @@ var callStatusDirective = function(statisticsService, $timeout) {
 				}
 			});
 		},
-		
-		template: require('../../html/component/callStatus.html')
+
+		templateUrl: 'component/callStatus.html'
 	};
 };
 

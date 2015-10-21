@@ -1,3 +1,4 @@
+'use strict';
 var directives = require('./index');
 
 //分页大小
@@ -68,7 +69,7 @@ var pagination = function() {
 				}
 			};
 		},
-		template: require('../../html/component/pagination.html'),
+		templateUrl: 'component/pagination.html'
 	};
 };
 

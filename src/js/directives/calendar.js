@@ -1,3 +1,5 @@
+'use strict';
+
 var directives = require('./index');
 var moment = require('moment');
 
@@ -40,7 +42,7 @@ function removeTime(date) {
 
 var calendar = function($document) {
 	return {
-		template: require('../../html/component/calendar.html'),
+		templateUrl: 'component/calendar.html',
 		scope: {
 			selected: '='	
 		},

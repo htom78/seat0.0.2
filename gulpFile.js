@@ -1,14 +1,4 @@
-var gulp = require('gulp');
-var del = require('del');
+'use strict';
 
-const paths = {
-	distFile: 'dist'
-};
-
-gulp.task('clean', () => {
-	del(paths.distFile);
-});
-
-gulp.task('default', ['clean'], () => {
-//	gulp.start();
-});
+global.isProd = false;
+require('./gulp');	
