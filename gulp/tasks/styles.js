@@ -8,6 +8,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var handleErrors = require('../utils/handleErrors');
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
+var rename = require('gulp-rename');
 
 gulp.task('styles', () => {
 	const createSourcemap = !global.isProd || config.styles.prodSourcemap;
@@ -24,6 +25,7 @@ gulp.task('styles', () => {
 			createSourcemap,
 			sourcemaps.write(global.isProd ? './' : null)		
 		))
+		.pipe(rename(`${config.outputName}.css`))
 		.pipe(gulp.dest(config.styles.dest))
 		.pipe(browserSync.stream({once: true}));
 });

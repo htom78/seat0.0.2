@@ -11,8 +11,8 @@ export default {
 	circleOpacity: 0.35,
 	circleWeight: 2,
 	circleRadius: 500,
-	markerTaxiIcon: 'http://localhost:3000/imgs/car-marker.png',
-	markerDriverIcon: 'http://localhost:3000/imgs/driver-marker.png',
+	markerTaxiIcon: 'static/imgs/car-marker.png',
+	markerDriverIcon: 'static/imgs/driver-marker.png',
 	markerSize: {
 		width: 22,
 		height: 32 	

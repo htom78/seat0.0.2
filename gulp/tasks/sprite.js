@@ -1,8 +1,11 @@
 'use strict';
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
+var imagemin = require('gulp-imagemin');
 var config = require('../config');
 var spritesmith = require('gulp.spritesmith');
+var browserSync = require('browser-sync');
 
 gulp.task('sprite', () => {
 	const spriteData = gulp.src(config.sprites.src)
@@ -23,8 +26,10 @@ gulp.task('sprite', () => {
 		}));
 
 	spriteData.img
+		.pipe(gulpif(global.isProd, imagemin()))
 		.pipe(gulp.dest(config.images.dest));
 
 	return spriteData.css
-		.pipe(gulp.dest(config.styles.srcdir));
+		.pipe(gulp.dest(config.styles.srcdir))
+		.pipe(browserSync.stream({once: true}));
 });

@@ -2,6 +2,7 @@
 
 const sourceDir = './src';
 const buildDir = './build';
+const productionAssets = `${buildDir}/production/assets`;
 
 module.exports = {
 
@@ -10,6 +11,8 @@ module.exports = {
 
 	sourceDir: sourceDir,
 	buildDir: buildDir,
+
+	outputName: 'app',
 
 	styles: {
 		src: 'src/sass/index.scss',
@@ -43,8 +46,50 @@ module.exports = {
 	},
 
 	sprites: {
-		src: 'src/assets/icons/*.png',
+		src: 'src/assets/icons/**/*.png',
 		dest: `${buildDir}/imgs`	
+	},
+
+	revision: {
+		src: {
+			assets: [
+				buildDir + '/css/*.css',
+				buildDir + '/js/*.js',
+				buildDir + '/imgs/**/*'
+			],
+			base: buildDir	
+		},
+		dest: {
+			assets: buildDir,
+			manifest: {
+				name: 'manifest.json',
+				path: productionAssets
+			}	
+		}	
+	},
+
+	collect: {
+		src: [
+			`${productionAssets}/manifest.json`,
+			buildDir + '/**/*.{html,json,css,js}'	
+		],
+		dest: buildDir	
+	},
+
+	postcss: {
+		src: buildDir + '/css/*.css',
+		dest: buildDir + '/css'	
+	},
+
+	iconfont: {
+		src: 'src/iconfont/*.woff',
+		dest: buildDir + '/iconfont'	
+	},
+
+	copy: {
+		src: buildDir + '/**/*',
+		outputFile: 'E:\\work\\aladdin-seat\\src\\main\\webapp\\static\\'	
 	}
+
 };
 

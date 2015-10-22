@@ -16,6 +16,7 @@ var handleErrors = require('../utils/handleErrors');
 var browserSync = require('browser-sync');
 var debowerify = require('debowerify');
 var ngAnnotate = require('browserify-ngannotate');
+var rename = require('gulp-rename');
 
 function buildScript(file) {
 	var bundler = browserify({
@@ -55,9 +56,10 @@ function buildScript(file) {
 			.pipe(gulpif(createSourcemap, buffer()))
 			.pipe(gulpif(createSourcemap, sourcemaps.init()))
 			.pipe(gulpif(global.isProd, streamify(uglify({
-				cmpress: {drop_console: true}	
+				compress: {drop_console: true}	
 			}))))
 			.pipe(gulpif(createSourcemap, sourcemaps.write('./')))
+			.pipe(rename(`${config.outputName}.js`))
 			.pipe(gulp.dest(config.scripts.dest))
 			.pipe(browserSync.stream({once: true}));
 	}
