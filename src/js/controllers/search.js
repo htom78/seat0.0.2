@@ -1,18 +1,22 @@
 'use strict';
-var controllers = require('./index');
+function SearchCtrl($scope, searchService, initCount) {
+	$scope.orders = searchService.orderss;
 
-var searchCtrl = function($scope, searchOrderStorageService) {
+	$scope.allOrderCount = initCount;
+	$scope.immediateOrderCount = 0;
+	$scope.reservationOrderCount = 0;
 
-	$scope.orders = searchOrderStorageService.orders;
+	let isSearch = false;
+	let searchData = {
+		keywords: '',
+		beginTime: '',
+		endTime: ''	
+	};
 
-	$scope.allOrderCount = searchOrderStorageService.getAllOrderCount;
-	$scope.immediateOrderCount = searchOrderStorageService.getImmediateOrderCount;
-	$scope.reservationOrderCount = searchOrderStorageService.getReservationOrderCount;
-
-	$scope.$watch('orders', function() {
-		$scope.currentOrderPage = searchOrderStorageService.currentOrderPage;
-		$scope.orderItemCount = searchOrderStorageService.orderItemCount;
-	}, true);
+	$scope.$watch( () => searchService.shoudUpdate, function() {
+		$scope.currentOrderPage = searchService.currentPage;
+		$scope.orderItemCount = searchService.total;
+	});
 
 	$scope.currentOrderTab = 'all';
 	$scope.isCurrentTab = function(type) {
@@ -20,23 +24,30 @@ var searchCtrl = function($scope, searchOrderStorageService) {
 	};
 
 	$scope.cutAllOrderTab = function() {
+		isSearch = false;
 		$scope.currentOrderTab = 'all';
-		return searchOrderStorageService.getAllOrders();
+		searchService.getAllOrders()
+			.then((total) => {
+				$scope.allOrderCount = total;	
+			});
 	};
 
 	$scope.cutImmediateOrderTab = function() {
+		isSearch = false;
 		$scope.currentOrderTab = 'immediate';
-		return searchOrderStorageService.getImmediatOrders();
+		searchService.getImmediatOrders()
+			.then((total) => {
+				$scope.immediateOrderCount = total;
+			});
 	};
 
 	$scope.cutReservationOrderTab = function() {
+		isSearch = false;
 		$scope.currentOrderTab = 'reservation';	
-		return searchOrderStorageService.getReservationOrders();
-	};
-
-	//点击分页按钮
-	$scope.onSelectPage = function(page) {
-		searchOrderStorageService.getSelectPageOrder(page);
+		searchService.getReservationOrders()
+			.then((total) => {
+				$scope.reservationOrderCount = total;
+			});
 	};
 
 	//更多筛选条件
@@ -46,22 +57,30 @@ var searchCtrl = function($scope, searchOrderStorageService) {
 
 	//点击搜索按钮
 	$scope.searchOrder = function() {
-		var filterData = {
-			beginTime: '',
-			endTime: ''	
-		};
+		isSearch = true;
+		let [beginTime, endTime] = ['', ''];
 		if ($scope.isShowMore) {
-			filterData.beginTime = $scope.searchOrderBeginTime;
-			filterData.endTime = $scope.searchOrderEndTime;	
+			beginTime = $scope.searchOrderBeginTime;
+			endTime =$scope.searchOrderEndTime;
 		}
-		searchOrderStorageService.searchOrderForKeywords($scope.words, filterData);
+
+		searchData.beginTime = beginTime;
+		searchData.endTime = endTime;
+		searchData.keywords = $scope.words;
+		searchService.queryOrderByKeyWords($scope.words, beginTime, endTime);
 	};
 
+	//点击分页按钮
+	$scope.onSelectPage = function(page) {
+		if (isSearch) {
+			searchService.getSelectPageOrder(page, searchData.keywords, searchData.beginTime, searchData.endTime);
+		} else {
+			searchService.getSelectPageOrder(page);
+		}
+	};
+}
+
+export default {
+	name: 'searchCtrl',
+	fn: SearchCtrl
 };
-
-searchCtrl.$inject = [
-	'$scope', 
-	'searchOrderStorageService'
-	];
-
-controllers.controller('searchCtrl', searchCtrl);

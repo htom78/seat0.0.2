@@ -1,3 +1,4 @@
+'use strict';
 import angular from 'angular';
 export default class Represent {
 
@@ -59,7 +60,7 @@ export default class Represent {
 					pagesize	 
 				}
 			})
-			.then(response => {
+			.then((response) => {
 				return response.data.msg;
 			});			
 	}

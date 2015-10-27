@@ -1,6 +1,7 @@
+'use strict';
 import angular from 'angular';
-var controllers = require('./index');
-var policeCtrl = function($scope, policeService) {
+
+function PoliceCtrl ($scope, policeService) {
 	$scope.orders = policeService.orders;
 
 	$scope.getAllOrderTotal = policeService.getAllOrderTotal;
@@ -73,9 +74,9 @@ var policeCtrl = function($scope, policeService) {
 			});	
 		});
 	});
+}
 
+export default {
+	name: 'policeCtrl',
+	fn: PoliceCtrl
 };
-
-policeCtrl.$inject = ['$scope', 'policeService'];
-
-controllers.controller('policeCtrl', policeCtrl);

@@ -1,3 +1,4 @@
+'use strict';
 var directives = require('./index');
 
 var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) {
@@ -127,6 +128,6 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 	};
 };
 
-leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderOrderStorageService', 'leaderMap'];
+leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderService', 'leaderMap'];
 
 directives.directive('leaderOrderInfo', leaderOrderInfo);

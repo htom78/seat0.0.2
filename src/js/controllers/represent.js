@@ -1,17 +1,9 @@
 'use strict';
 
 import angular from 'angular';
-var controllers = require('./index');
 var moment = require('moment');
 
-var representCtrl = (
-		$scope, 
-		userService, 
-		representService, 
-		$location,
-		representMap
-		) => {
-
+function RepresentCtrl($scope, userService, representService, $location, representMap) {
 	$scope.orders = representService.orderss;
 
 	let currentTimer = new Date();
@@ -102,14 +94,10 @@ var representCtrl = (
 				representMap.drawTrack(response.data.msg);
 			});	
 	};
+		
+}
+
+export default {
+	name: 'representCtrl',
+	fn: RepresentCtrl
 };
-
-representCtrl.$inject = [
-	'$scope', 
-	'userService', 
-	'representService', 
-	'$location',
-	'representMap'
-];
-
-controllers.controller('representCtrl', representCtrl);

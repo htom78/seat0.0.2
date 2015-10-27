@@ -1,6 +1,6 @@
-var controllers = require('./index');
+'use strict';
 
-var loginCtrl = function($scope, $location, security) {
+function LoginCtrl($scope, $location, security) {
 	/*
 	$rootScope.isLoginPage = true;
 	$scope.$on('$destroy', function() {
@@ -25,9 +25,9 @@ var loginCtrl = function($scope, $location, security) {
 			$location.path('/');	
 		}	
 	});
+}
 
+export default {
+	name: 'loginCtrl',
+	fn: LoginCtrl
 };
-
-loginCtrl.$inject = ['$scope', '$location', 'security'];
-
-controllers.controller('loginCtrl', loginCtrl);

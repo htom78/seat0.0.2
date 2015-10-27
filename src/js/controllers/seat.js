@@ -1,11 +1,9 @@
 'use strict';
 
 import angular from 'angular';
-
-var controllers = require('./index');
 var moment = require('moment');
 
-var seatCtrl = function ($scope,  userService, seatMap, seatService, utils, $location, mapService) {
+function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, mapService) {
 
 	$scope.orders = seatService.orders;
 
@@ -282,17 +280,9 @@ var seatCtrl = function ($scope,  userService, seatMap, seatService, utils, $loc
 				});
 		}
 	});
+}
 
+export default {
+	name: 'seatCtrl',
+	fn: SeatCtrl
 };
-
-seatCtrl.$inject = [
-	'$scope', 
-	'userService', 
-	'seatMap', 
-	'seatService',
-	'utils',
-	'$location',
-	'mapService'
-	];
-
-	controllers.controller('seatCtrl', seatCtrl);

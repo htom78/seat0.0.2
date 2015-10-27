@@ -1,7 +1,6 @@
-var controllers = require('./index');
+'use strict';
 
-var leaderCtrl = function($scope, $timeout, $location, security, leaderService) {
-
+function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 
 	$scope.orders = leaderService.orders;
 	
@@ -142,16 +141,9 @@ var leaderCtrl = function($scope, $timeout, $location, security, leaderService) 
 			$scope.mapShow = false;	
 		}	
 	});
+}
 
-
+export default {
+	name: 'leaderCtrl',
+	fn: LeaderCtrl
 };
-
-leaderCtrl.$inject = [
-	'$scope',
- 	'$timeout',
- 	'$location',
-	'security',
-	'leaderOrderStorageService'
-	];
-
-controllers.controller('leaderCtrl', leaderCtrl);

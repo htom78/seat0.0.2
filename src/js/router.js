@@ -29,7 +29,7 @@ export default function router($locationProvider, $routeProvider) {
 		controller: 'leaderCtrl',
 		title: '班长',
 		resolve: {
-			store: ['leaderOrderStorageService', function(leaderService) {
+			store: ['leaderService', function(leaderService) {
 				leaderService.initService();
 				leaderService.get();
 				return leaderService;	
@@ -42,10 +42,8 @@ export default function router($locationProvider, $routeProvider) {
 		controller: 'searchCtrl',
 		title: '搜索',
 		resolve: {
-			store: ['searchOrderStorageService', function(searchOrderStorageService) {
-				searchOrderStorageService.initOrderSearchParams();
-				searchOrderStorageService.getAllOrders();
-				return searchOrderStorageService;	
+			initCount: ['searchService', function(searchService) {
+				return searchService.getAllOrders();	
 			}]	
 		}	
 	};

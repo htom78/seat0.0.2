@@ -1,8 +1,12 @@
+'use strict';
 import angular from 'angular';
 import represent from './represent';
+import searchService from './searchService';
 
 module.exports = angular.module('app.services', [])
-	.service('representService', represent);
+	.service('representService', represent)
+	.service('searchService', searchService)
+	.factory('seatService', require('./seatService').fn);
 
 require('./statistics');
 require('./mapService');
@@ -12,9 +16,7 @@ require('./chartCar');
 require('./leaderMap');
 require('./socket');
 require('./sign');
-require('./seatService');
-require('./leaderOrderStorageService');
-require('./searchOrderStorageService');
+require('./leaderService');
 require('./policeService');
 require('./security');
 require('./user');

@@ -1,7 +1,8 @@
+'use strict';
 import angular from 'angular';
 var services = require('./index');
 
-var leaderOrderStorageService = function($http) {
+var leaderService = function($http) {
 
 	var store = {
 
@@ -155,6 +156,6 @@ var leaderOrderStorageService = function($http) {
 	return store;
 };
 
-leaderOrderStorageService.$inject = ['$http'];
+leaderService.$inject = ['$http'];
 
-services.factory('leaderOrderStorageService', leaderOrderStorageService);
+services.factory('leaderService', leaderService);

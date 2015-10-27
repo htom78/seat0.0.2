@@ -1,8 +1,7 @@
+'use strict';
 import angular from 'angular';
-var services = require('./index');
 
-var seatService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
-
+function SeatService($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
 	var store = {
 
 		initParams: function() {
@@ -328,9 +327,11 @@ var seatService = function($http, $q, mapService, gpsGcjExchangeUtils, orderUtil
 		}
 
 	};
+
 	return store;
+}
+
+export default {
+	name: 'seatService',
+	fn: SeatService
 };
-
-seatService.$inject = ['$http', '$q', 'mapService', 'gpsGcjExchangeUtils', 'orderUtils', '$rootScope'];
-
-services.factory('seatService', seatService);

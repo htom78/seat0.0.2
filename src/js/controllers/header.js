@@ -1,7 +1,5 @@
-var controllers = require('./index');
-
-var headerCtrl = function($scope, $timeout, $filter, signService, security, socket) {
-
+'use strict';
+function HeaderCtrl ($scope, $timeout, $filter, signService, security, socket) {
 	$scope.toggleSignState = function() {
 		$scope.currentState = 'free';
 		if (!$scope.isSignIn()) {
@@ -111,16 +109,9 @@ var headerCtrl = function($scope, $timeout, $filter, signService, security, sock
 		$scope.currentTimer = $filter('date')(new Date(), 'HH:mm');
 		$timeout(tickTimer, 30000);
 	})();
+}
 
+export default {
+	name: 'headerCtrl',
+	fn: HeaderCtrl
 };
-
-headerCtrl.$inject = [
-	'$scope', 
-	'$timeout',
- 	'$filter',
- 	'signService',
-	'security',
-	'socket'
-	];
-
-controllers.controller('headerCtrl', headerCtrl);
