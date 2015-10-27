@@ -1,3 +1,4 @@
+'use strict';
 var dialogs = require('./index');
 var tripartiteConference = function(quanDialog) {
 
@@ -10,7 +11,7 @@ var tripartiteConference = function(quanDialog) {
 	return {
 		open: function(scope) {
 			if (!this.isOpen()) {
-				return messageBox.open('tripartiteConference.html', 'headerCtrl', scope);	
+				return messageBox.open('component/tripartiteConference.html', 'headerCtrl', scope);	
 			}	
 		},
 

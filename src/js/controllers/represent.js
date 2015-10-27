@@ -1,3 +1,5 @@
+'use strict';
+
 import angular from 'angular';
 var controllers = require('./index');
 var moment = require('moment');

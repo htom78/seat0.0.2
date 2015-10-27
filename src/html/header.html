@@ -2,12 +2,12 @@
 <section class='flex'>
 	<nav class='nav'>
 		<ul class='flex'>
-			<li><a ng-href='index.htm' class='icon-btn file-btn'></a></li>
-			<li ng-show='hasLeaderBtn()'><a ng-href='leader.htm' class='icon-btn search-btn'></a></li>
-			<li><a ng-href='searchMore.htm' class='icon-btn police-btn'></a></li>
-			<li><a ng-href='special.htm' class='icon-btn track-btn'></a></li>
-			<li><a ng-href='police.htm' class='icon-btn listen-btn'></a></li>
-			<li><a ng-href='sinbad.htm' class='icon-btn listen-btn'></a></li>
+			<li><a ng-href='index.htm' class='icon-btn file-btn' title='坐席'></a></li>
+			<li ng-show='hasLeaderBtn()'><a ng-href='leader.htm' class='icon-btn search-btn' title='班长' style='display:none'></a></li>
+			<li><a ng-href='searchMore.htm' class='icon-btn police-btn' title='订单查询'></a></li>
+			<li><a ng-href='special.htm' class='icon-btn track-btn' title='专车'></a></li>
+			<li><a ng-href='police.htm' class='icon-btn listen-btn' title='报警'></a></li>
+			<li><a ng-href='sinbad.htm' class='icon-btn represent-btn' title='代驾'></a></li>
 		</ul>
 	</nav>
 
@@ -17,17 +17,17 @@
 			<li>
 				<button 
 					class='icon-btn-bg call-btn'
-					call-number></button>
+					call-number title='拨号'></button>
 			</li>
 			<li>
 				<button 
 					class='icon-btn-bg transform-btn'
-					call-transform></button>
+					call-transform title='转接'></button>
 			</li>
 			<li>
 				<button 
 					class='icon-btn-bg list-btn'
-					tripartite-conference></button>
+					tripartite-conference title='三方通话会议'></button>
 			</li>
 		</ul>
 	</div>
@@ -53,19 +53,19 @@
 			<button
 				class='icon-btn'
 				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'
-				ng-click='toggleFirstCallingStateBtn()'></button>
+				ng-click='toggleFirstCallingStateBtn()' title='小休'></button>
 			<button 
 				class='icon-btn'
 				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'
-				ng-click='toggleSecondCallingStateBtn()'></button>
+				ng-click='toggleSecondCallingStateBtn()' title='示忙'></button>
 		</div>
 
 		<ul class='flex'>
 			<li><a href='javascript:;' 
 				class='sign-state'
 				ng-class='{"icon-sign-in": isSignIn(), "icon-sign-out": !isSignIn()}' 
-				ng-click='toggleSignState()'></a></li>
-			<li><a href='javascript:;' class='exit-btn icon-btn' ng-click='logout()'></a></li>
+				ng-click='toggleSignState()' title='签入/签出'></a></li>
+			<li><a href='javascript:;' class='exit-btn icon-btn' ng-click='logout()' title='退出登录'></a></li>
 		</ul>
 
 	</div>

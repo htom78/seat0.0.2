@@ -21,6 +21,7 @@
 	"browser": true,
 	"globals": {
 		"$": true,
-		"AMap": true
+		"AMap": true,
+		"alert": true
 	}
 }

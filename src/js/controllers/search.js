@@ -1,3 +1,4 @@
+'use strict';
 var controllers = require('./index');
 
 var searchCtrl = function($scope, searchOrderStorageService) {

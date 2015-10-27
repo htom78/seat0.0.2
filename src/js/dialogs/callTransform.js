@@ -1,3 +1,4 @@
+'use strict';
 var dialogs = require('./index');
 var callTransform = function(quanDialog) {
 
@@ -10,7 +11,7 @@ var callTransform = function(quanDialog) {
 	return {
 		open: function(scope) {
 			if (!this.isOpen()) {
-				return messageBox.open('callTransform.html', 'headerCtrl', scope);	
+				return messageBox.open('component/callTransform.html', 'headerCtrl', scope);	
 			}	
 		},
 

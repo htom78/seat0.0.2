@@ -1,3 +1,4 @@
+'use strict';
 var services = require('./index');
 
 var callNumber = function(quanDialog) {
@@ -9,7 +10,7 @@ var callNumber = function(quanDialog) {
 	return {
 		open: function(scope) {
 			if (!this.isOpen()) {
-				return messageBox.open('callNumber.html', 'headerCtrl', scope);	
+				return messageBox.open('component/callNumber.html', 'headerCtrl', scope);	
 			}	
 		},
 
