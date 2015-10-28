@@ -3,18 +3,28 @@
 import angular from 'angular';
 var moment = require('moment');
 
-function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, mapService) {
+function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, mapService, initCount) {
 
-	$scope.orders = seatService.orders;
+	$scope.orders = seatService.orderss;
 
-	$scope.normalOrderCount = seatService.getNormalOrderCount;
+	let tabTextName = ['预约', '即时'];
+	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
+	const state = {
+		immediateOrReservation: {
+			RESERVATION: 0,
+			IMMEDIATE: 1,	
+		}, 
+		currentTab: {
+			EXCEPTION: 0,
+			PREPARED: 1,
+			RECEIVED: 2,
+			STARTED: 3,
+			DONE: 4,
+		}
+	};
 
-	$scope.exceptionOrderCount = seatService.getExceptionOrderCount;
-
-	$scope.averageTimer = seatService.getAverageTimer;
-
-	var currentTimer = new Date();
-	var initOrderData = {
+	let currentTimer = new Date();
+	const initOrderData = {
 		gender: 1,
 		poiList: [],
 		targetpoiList: [],
@@ -28,19 +38,23 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 
 	$scope.orderData = angular.copy(initOrderData);
 
-	/*****************************************/
 	$scope.addNewOrder = function() {
 		if ($scope.newOrder.$valid) {
 			$scope.sendingOrderData = true;
 			seatService.addNewOrder($scope.orderData)
-				.then(function () {
+				.then((response) => {
+					$scope.currentOrderTab = state.currentTab.PREPARED;
+					$scope.immediateOrReservationSelect = 
+						$scope.orderData.isReservation ? state.immediateOrReservation.RESERVATION :
+						state.immediateOrReservation.IMMEDIATE;
+					$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+					$scope.normalOrderCount = response.total;	
+					$scope.averageTimer = response.average;
 					$scope.initOrderDataAndUserData();	
-					$scope.currentOrderTab = 'prepared';
-					$scope.updateOrderCallType();
-				}, function (err) {
+				}, (err) => {
 					alert('订单提交失败:' + err);
 				})
-			.finally(function() {
+			.finally(() => {
 				$scope.sendingOrderData = false;
 			});
 		}
@@ -70,90 +84,129 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 		$scope.addNewOrder();
 	});
 
-	$scope.currentOrderTab = 'prepared';
+	//---------------------------------------------------------
+
+	$scope.normalOrderCount = initCount.total;
+	$scope.averageTimer = initCount.average;
+	$scope.exceptionOrderCount = 0;
+
+	$scope.currentOrderTab = state.currentTab.PREPARED;
+	$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
+	$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+
 	$scope.cutOrderTabPrepared = function() {
-		$scope.currentOrderTab = 'prepared';
-		return seatService.getPreparedOrders();
+		$scope.currentOrderTab = state.currentTab.PREPARED;
+		seatService.getPreparedOrders($scope.immediateOrReservationSelect)
+			.then((response) => {
+				$scope.normalOrderCount = response.total;	
+				$scope.averageTimer = response.average;
+			});
 	};
 	$scope.cutOrderTabReceived = function() {
-		$scope.currentOrderTab = 'received';
-		return seatService.getReceivedOrders();
+		$scope.currentOrderTab = state.currentTab.RECEIVED;
+		seatService.getReceivedOrders($scope.immediateOrReservationSelect)
+			.then((response) => {
+				$scope.normalOrderCount = response.total;	
+				$scope.averageTimer = response.average;
+			});
 	};
 	$scope.cutOrderTabStarted = function() {
-		$scope.currentOrderTab = 'started';
-		return seatService.getStartedOrders();
+		$scope.currentOrderTab = state.currentTab.STARTED;
+		seatService.getStartedOrders($scope.immediateOrReservationSelect)
+			.then((response) => {
+				$scope.normalOrderCount = response.total;	
+				$scope.averageTimer = response.average;
+			});
+
 	};
 	$scope.cutOrderTabDone = function() {
-		$scope.currentOrderTab = 'done';
-		return seatService.getDoneOrders();
+		$scope.currentOrderTab = state.currentTab.DONE;
+		seatService.getDoneOrders($scope.immediateOrReservationSelect)
+			.then((response) => {
+				$scope.normalOrderCount = response.total;	
+				$scope.averageTimer = response.average;
+			});
 	};
 	$scope.cutOrderTabException = function() {
-		$scope.currentOrderTab = 'exception';
-		return seatService.getExceptionOrders();
-	};
-
-	$scope.isCurrentTab = function(tabName) {
-		return $scope.currentOrderTab === tabName;
+		$scope.currentOrderTab = state.currentTab.EXCEPTION;
+		seatService.getExceptionOrders($scope.immediateOrReservationSelect)
+			.then((response) => {
+				$scope.exceptionOrderCount = response.total;	
+				$scope.averageTimer = response.average;
+			});
 	};
 
 	$scope.searchCurrentOrderByKeywords = function() {
-		seatService.getCurrentOrdersByKeywords($scope.inputOrderWords);
+		seatService.queryOrderByKeywords($scope.inputOrderWords, $scope.immediateOrReservationSelect, $scope.currentOrderTab );
 	};
 
-	$scope.immediateOrReservation = '即时';
 	$scope.toggleImmediateOrReservation = function() {
-		if ($scope.immediateOrReservation === '即时') {
-			$scope.immediateOrReservation = '预约';	
-			seatService.selectReservation();
+		let isImmediate;
+		if ($scope.immediateOrReservationSelect === state.immediateOrReservation.IMMEDIATE) {
+			isImmediate = 0;
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.RESERVATION;
 		} else {
-			$scope.immediateOrReservation = '即时';	
-			seatService.selectImmediate();
+			isImmediate = 1;
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
 		}	
-		seatService.refreshCurrentOrder();
+		seatService['get' + tabsName[$scope.currentOrderTab] + 'Orders'](isImmediate)
+			.then((response) => {
+				if ($scope.isExceptionCurrentTab()) {
+					$scope.exceptionOrderCount = response.total;	
+				} else {
+					$scope.normalOrderCount = response.total;	
+				}
+				$scope.averageTimer = response.average;
+			});
+		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
 	};
 
-
-	$scope.queryOrderBySn = function() {
-		if ($scope.userData.sn) {
-			seatService.queryOrderBySn($scope.userData.sn, $scope.userData.isImmediate)
-				.then(function(order) {
-					$scope.updateOrderTab(order.status);
-					$scope.updateOrderCallType();
-					angular.copy([order], $scope.orders);
-					$scope.updateOrderCallType();
-				});	
-		}
+	$scope.isPreparedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.PREPARED;	
 	};
 
-	$scope.updateOrderCallType = function() {
-		if (seatService.isImmediateSelect()) {
-			$scope.immediateOrReservation = '即时';
-		} else {
-			$scope.immediateOrReservation = '预约';
-		}
+	$scope.isExceptionCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.EXCEPTION;
 	};
 
-	$scope.updateOrderTab = function(status) {
-		var tabsName = ['exception', 'prepared', 'received', 'started', 'done'];	
-		$scope.currentOrderTab = tabsName[status];
+	$scope.isDoneCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.DONE;
 	};
 
-	$scope.hasSearchWords = function() {
-		return $scope.inputOrderWords	&& $scope.inputOrderWords.trim().length > 0;
+	$scope.isReceivedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.RECEIVED;
 	};
+
+	$scope.isStartedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.STARTED;
+	};
+
+	//-------------------------------------------
 
 	$scope.clearSearchWords = function() {
 		$scope.inputOrderWords = '';
 	};
 
+	$scope.queryOrderBySn = function() {
+		if ($scope.userData.sn) {
+			seatService.queryOrderBySn($scope.userData.sn, $scope.userData.isImmediate)
+				.then(function(order) {
+					$scope.currentOrderTab = order.status;
+					$scope.immediateOrReservationSelect = Math.abs(order.isReserved - 1);
+					$scope.immediateOrReservation = tabTextName[Math.abs(order.isReserved - 1)];
+					$scope.normalOrderCount = 1;
+				});	
+		}
+	};
+
 	//用户拨打电话进来，异步
-	$scope.$on('userCall', function(ev, data) {
+	$scope.$on('userCall', (ev, data) => {
+		let mobile = data.mobile;
 		$scope.initOrderDataAndUserData();
-		var mobile = data.mobile;
 		$scope.orderData.callingTel = mobile;
 		$scope.orderData.actualTel = mobile;
 		userService.getUserInfoByMobile(mobile)
-		.then(function(response) {
+		.then((response) => {
 			$scope.userData = response;
 			$scope.orderData.fullName = response.contactName;
 			$scope.orderData.targetpoiList = response.targetpoiList;
@@ -165,74 +218,52 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 	$scope.$watch('orderData.actualTel', function(mobile) {
 		if (mobile) {
 			utils.getLocationByMobile(mobile)
-		.then(function(response) {
-			$scope.mobilePosition = response.carrier;
-		});	
+				.then(function(response) {
+					$scope.mobilePosition = response.carrier;
+				});	
 		} else {
 			$scope.mobilePosition = '';	
 		}
 	});
 
+
+	$scope.hasSearchWords = function() {
+		return $scope.inputOrderWords	&& $scope.inputOrderWords.trim().length > 0;
+	};
+
 	$scope.$on('order:received', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
-			seatService.receiveOrderUpdate(data.sn).then(function() {
-				$scope.currentOrderTab = 'received';	
-			});
+			seatService.shouldUpdateOrderItemList(state.currentTab.RECEIVED, $scope.immediateOrReservationSelect, data.sn)
+				.then((response) => {
+					$scope.currentOrderTab = state.currentTab.RECEIVED;	
+					$scope.normalOrderCount = response.total;	
+					$scope.averageTimer = response.average;
+				});
 		}
 	});
 
 	$scope.$on('order:depart', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
-			seatService.startedOrderUpdate(data.sn).then(function() {
-				$scope.currentOrderTab = 'started';	
-			});
+			seatService.shouldUpdateOrderItemList(state.currentTab.STARTED, $scope.immediateOrReservationSelect, data.sn)
+				.then((response) => {
+					$scope.currentOrderTab = state.currentTab.RECEIVED;	
+					$scope.normalOrderCount = response.total;	
+					$scope.averageTimer = response.average;
+				});
 		}
 	});
 
 	$scope.$on('order:done', function(ev, data) {
 		if (!$scope.hasSearchWords()) {
-			seatService.doneOrderUpdate(data.sn).then(function() {
-				$scope.currentOrderTab = 'done';	
-			});
+			seatService.shouldUpdateOrderItemList(state.currentTab.DONE, $scope.immediateOrReservationSelect, data.sn)
+				.then((response) => {
+					$scope.currentOrderTab = state.currentTab.DONE;	
+					$scope.normalOrderCount = response.total;	
+					$scope.averageTimer = response.average;
+				});
 		}
 	});
 
-	$scope.showBtns = function(order) {
-		seatService.toggleShowBtns(order);
-	};
-
-	$scope.handleCancelOrder = function(order) {
-		seatService.handleCancelOrder(order);
-	};
-
-	$scope.handleDriverFuckOrder = function(order) {
-		seatService.handleDriverFuckOrder(order);	
-	};
-
-	$scope.handlePassengerFuckOrder = function(order) {
-		seatService.handlePassengerFuckOrder(order);	
-	};
-
-	$scope.assignCar = function(order, carPlate) {
-		seatService.assignOrderToCarPlate(order, carPlate);
-	};
-
-
-	$scope.isExceptionCurrentTab = function() {
-		return $scope.currentOrderTab === 'exception';	
-	};
-
-	$scope.isDoneCurrentTab = function() {
-		return $scope.currentOrderTab === 'done';	
-	};
-
-	$scope.isReceivedCurrentTab = function() {
-		return $scope.currentOrderTab === 'received';	
-	};
-
-	$scope.isStartedCurrentTab = function() {
-		return $scope.currentOrderTab === 'started';	
-	};
 
 	$scope.isCancelBtnShow = function() {
 		if ($scope.isDoneCurrentTab() ||

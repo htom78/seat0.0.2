@@ -241,20 +241,20 @@
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: !isCurrentTab("exception")}'
+						ng-class='{active: !isExceptionCurrentTab()}'
 						ng-click='cutOrderTabPrepared()'>
 							<i class='icon-img-bg normal'></i>
-							<em>({{normalOrderCount()}})</em>
+							<em>({{normalOrderCount}})</em>
 						</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: isCurrentTab("exception")}'
+						ng-class='{active: isExceptionCurrentTab()}'
 						ng-click='cutOrderTabException()'>
 						<i class='icon-img-bg error'></i>
-						<em>({{exceptionOrderCount()}})</em>
+						<em>({{exceptionOrderCount}})</em>
 					</a>
 				</li>
 			</ul>
@@ -272,11 +272,11 @@
 				</form>
 			</div>
 			<div class='fr'>
-				<span class='tick-timer'>{{averageTimer()}}秒</span>
+				<span class='tick-timer'>{{averageTimer}}秒</span>
 			</div>
 		</section>
 		<section class='order-content flex'>
-			<div class='order-nav-var' ng-show='!isCurrentTab("exception")'>
+			<div class='order-nav-var' ng-show='!isExceptionCurrentTab()'>
 				<h1 class='title'>状态</h1>
 				<nav class='order-nav'>
 					<ul>
@@ -284,28 +284,28 @@
 							<a 
 								href='javascript:;' 
 								class='nav-btn'
-								ng-class='{active: isCurrentTab("prepared")}'
+								ng-class='{active: isPreparedCurrentTab()}'
 								ng-click='cutOrderTabPrepared()'>调派中</a>
 						</li>
 						<li class='order-nav-li'>
 							<a 
 								href='javascript:;' 
 								class='nav-btn'
-								ng-class='{active: isCurrentTab("received")}'
+								ng-class='{active: isReceivedCurrentTab()}'
 								ng-click='cutOrderTabReceived()'>已接单</a>
 						</li>
 						<li class='order-nav-li'>
 							<a 
 								href='javascript:;' 
 								class='nav-btn'
-								ng-class='{active: isCurrentTab("started")}'
+								ng-class='{active: isStartedCurrentTab()}'
 								ng-click='cutOrderTabStarted()'>已出发</a>
 						</li>
 						<li class='order-nav-li'>
 							<a 
 								href='javascript:;' 
 								class='nav-btn'
-								ng-class='{active: isCurrentTab("done")}'
+								ng-class='{active: isDoneCurrentTab()}'
 								ng-click='cutOrderTabDone()'>已完成</a>
 						</li>
 					</ul>
@@ -322,7 +322,7 @@
 							<th>车牌号</th>
 							<th>乘客地址</th>
 							<th>目的地</th>
-							<th ng-if='isCurrentTab("exception")'>状态</th>
+							<th ng-if='isExceptionCurrentTab()'>状态</th>
 							<th ng-if='!isDoneCurrentTab()'>操作</th>
 						</tr>
 					</thead>
@@ -338,62 +338,15 @@
 							<td class='ellipsis'>{{item.vehicleNumber}}</td>
 							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
 							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
-							<td ng-if='isCurrentTab("exception")'>{{item.statusName}}</td>
+							<td ng-if='isExceptionCurrentTab()'>{{item.statusName}}</td>
 							<td class='seat-operate-td' ng-if='!isDoneCurrentTab()'>
-								<div class='seat-order-operate'>
-									<a 
-										href='javascript:;' 
-										class='show-more'
-										ng-click='showBtns(item)'>&gt;&gt;</a>
-									<ul class='operate-list' ng-show='item.isBtnShow'>
-										<li	
-											class='operate-list-li'
-											ng-show='isCancelBtnShow()'>
-											<a 
-												href='javascript:;' 
-												confirm-dialog
-												box-ctrl='seatCtrl'
-												message-box='确认处理?'
-												ensure-fn='handleCancelOrder(item)'
-												class='operate-btn'>取消</a>
-										</li>
-										<li	
-											class='operate-list-li'
-											ng-show='isAssignBtnShow()'>
-											<a 
-												confirm-dialog
-												box-ctrl='seatCtrl'
-												message-box='指派'
-												input-show='true'
-												label-name='指派车辆'
-												ensure-fn='assignCar(item, input)'
-												href='javascript:;' 
-												class='operate-btn'>指派</a>
-										</li>
-										<li	
-											class='operate-list-li'
-											ng-show='isPassengerFuckBtnShow()'>
-											<a 
-												confirm-dialog
-												box-ctrl='seatCtrl'
-												message-box='确认处理?'
-												ensure-fn='handlePassengerFuckOrder(item)'
-												href='javascript:;' 
-												class='operate-btn'>乘客放空</a>
-										</li>
-										<li	
-											class='operate-list-li'
-											ng-show='isDriverFuckBtnShow()'>
-											<a 
-												confirm-dialog
-												box-ctrl='seatCtrl'
-												message-box='确认处理?'
-												ensure-fn='handleDriverFuckOrder(item)'
-												href='javascript:;' 
-												class='operate-btn'>司机爽约</a>
-										</li>
-									</ul>
-								</div>
+								<operate-more 
+									item='item'
+									cancel-btn='isCancelBtnShow()'
+									driver-btn='isDriverFuckBtnShow()'
+									passenger-btn='isPassengerFuckBtnShow()'
+									assign-btn='isAssignBtnShow()'
+									></operate-more>
 							</td>
 						</tr>
 					</tbody>

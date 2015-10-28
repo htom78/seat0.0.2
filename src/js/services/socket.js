@@ -1,3 +1,4 @@
+'use strict';
 var services = require('./index');
 
 var socket = function() {
@@ -28,9 +29,6 @@ var socket = function() {
 
 
 						/*
-						setTimeout(function() {
-							socketMessageService.message({}, 3000);
-
 						setTimeout(function() {
 							socketMessageService.message({
 								type: 1, 
@@ -70,13 +68,14 @@ var socket = function() {
 						}, 6000);
 
 						setTimeout(function() {
+								console.log(333);
 							socketMessageService.message({
 								type: 1, 
 								msg: {
 									clientSn: "2",
 									driverName: "",
 									refDistance: 0,
-									sn: "I5502D910B",
+									sn: "I4C1E6D642",
 									status: 9,
 									statusDesc: "系统异常",
 									tag: "DISP",

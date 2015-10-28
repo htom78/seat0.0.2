@@ -1,3 +1,4 @@
+'use strict';
 var utilsService = require('./index');
 
 var utils = function($http) {
@@ -12,6 +13,10 @@ var utils = function($http) {
 				.then(function(response) {
 					return response.data;	
 				});	
+		},
+
+		capitalizeFirstLetter(str) {
+			return str.charAt(0).toUpperCase() + str.slice(1);	
 		}
 	};
 };

@@ -1,337 +1,215 @@
 'use strict';
 import angular from 'angular';
 
-function SeatService($http, $q, mapService, gpsGcjExchangeUtils, orderUtils, $rootScope) {
-	var store = {
+export default class Seat {
 
-		initParams: function() {
-			this.searchOrderKeywords = '';
-			this.currentOrderType = 1;
-		},
+	constructor($http, $q, $filter, orderUtils) {
+		this.$http = $http;
+		this.$q = $q;
+		this.$filter = $filter;
+		this.orderss = [];
+		this.orderUtils = orderUtils;
+		this.isPauseSearch = false;
+	}
 
-		initService: function() {
-			this.initParams();		
-			this.isImmediate = true;
-			this.normalOrderCount = 0;
-			this.exceptionOrderCount = 0;
-			this.averageTimer = 0;
-			this.orders = [];
-			this.currentOrderIndex = -1;
-		},
+	getOrdersFromService({
+		all = 0,
+		page = 1,
+		pagesize = 6,
+		isImmediate = 1,
+		k = '',
+		status = 1,	
+	} = {}) {
+		return this.$http.get('search.htm', {params: {
+			all,
+			page,
+			pagesize,
+			isImmediate,
+			k,
+			status,			
+			callType: this.callType,
+		}});
+	}
 
-		selectSpecialCar: function() {
-			this.callType = 2;	
-		},
+	selectSpecialCar() {
+		this.callType = 2;	
+	}
 
-		selectNormalCar: function() {
-			this.callType = 1;	
-		},
+	selectNormalCar() {
+		this.callType = 1;	
+	}
 
-		selectImmediate: function() {
-			this.isImmediate = true;	
-		},
-
-		selectReservation: function() {
-			this.isImmediate = false;	
-		},
-
-		isImmediateSelect: function() {
-			return this.isImmediate;	
-		},
-
-		get: function() {
-			var self = this;
-			var immediateOrReservation = this.isImmediate ? 1 : 0;
-			this.isPauseSearch = true;
-			return $http.get('search.htm', {
-				params: {
-					all: 0,
-					page: 1,
-					pagesize: 6,
-					callType: this.callType,
-					isImmediate: immediateOrReservation,
-					k: this.searchOrderKeywords,
-					status: this.currentOrderType
+	getOrders(params) {
+		this.isPauseSearch = true;
+		return this.getOrdersFromService(params)
+			.then((response) => {
+				let orders = response.data.list;	
+				let total = 0;
+				if (angular.isArray(orders)) {
+					angular.copy(orders, this.orderss);	
+					total = response.data.total;
+				} else {
+					angular.copy([], this.orderss);		
 				}
+				return {
+					total: total,
+					average: response.data.sec,	
+				};
 			})
-				.then(function(response) {
-					self.currentOrderIndex = -1;
-					angular.copy(response.data.list, self.orders);
-					var total = response.data.total;
-					if (self.currentOrderType === 0) {
-						self.exceptionOrderCount = total;	
-					} else {
-						self.normalOrderCount = total;	
-					}
-					self.averageTimer = response.data.sec;//平局秒数
-					return self.orders;
-				})
-				.finally(function() {
-					setTimeout(function() {
-						self.isPauseSearch = false;	
-					}, 3000);
-				});
-		},
-
-		toggleShowBtns: function(order) {
-			if (this.currentOrderIndex === -1) {
-				order.isBtnShow = true;	
-				this.currentOrderIndex = this.getCurrentOrderIndex(order);
-			} else {
-				if (order.isBtnShow) {
-					order.isBtnShow = false;	
-					this.currentOrderIndex = -1;
-				} else {
-					this.orders[this.currentOrderIndex].isBtnShow = false;	
-					this.currentOrderIndex = this.getCurrentOrderIndex(order);
-					order.isBtnShow = true;
-				}
-			}
-		},
-
-		getCurrentOrderIndex: function(order) {
-			return this.orders.indexOf(order);	
-		},
-
-		getOrders: function(status) {
-			var immediateOrReservation = this.isImmediate ? 1 : 0;
-			return $http.get('search.htm', {
-				params: {
-					all: 0,
-					page: 1,
-					pagesize: 6,
-					callType: this.callType,
-					isImmediate: immediateOrReservation,
-					k: '',
-					status: status	 
-				}	
+			.finally(() => {
+				setTimeout(() => {
+					this.isPauseSearch = false;	
+				}, 3000);	
 			});	
-		},
+	}
 
-		getPreparedOrders: function() {
-			this.initParams();
-			this.currentOrderType = 1;
-			return this.get();
-		},
+	getPreparedOrders(isImmediate = 1) {
+		return this.getOrders({
+			isImmediate,
+			status: 1	
+		});	
+	}
 
-		getReceivedOrders: function() {
-			this.initParams();
-			this.currentOrderType = 2;
-			return this.get();
-		},
+	getReceivedOrders(isImmediate) {
+		return this.getOrders({
+			isImmediate,
+			status: 2	
+		});	
+	}
 
-		getStartedOrders: function() {
-			this.initParams();
-			this.currentOrderType = 3;
-			return this.get();
-		},
+	getStartedOrders(isImmediate) {
+		return this.getOrders({
+			isImmediate,
+			status: 3	
+		});	
+	}
 
-		getDoneOrders: function() {
-			this.initParams();
-			this.currentOrderType = 4;
-			return this.get();
-		},
+	getDoneOrders(isImmediate) {
+		return this.getOrders({
+			isImmediate,
+			status: 4		
+		});	
+	}
 
-		getExceptionOrders: function() {
-			this.initParams();
-			this.currentOrderType = 0;
-			return this.get();
-		},
+	getExceptionOrders(isImmediate) {
+		return this.getOrders({
+			isImmediate,
+			status: 0	
+		});
+	}
 
-		refreshCurrentOrder: function() {
-			this.searchOrderKeywords = '';
-			return this.get();
-		},
+	queryOrderByKeywords(k, isImmediate, status) {
+		return this.getOrders({
+			k,
+			isImmediate,
+			status	
+		});
+	}
 
-		getCurrentOrdersByKeywords: function(keywords) {
-			this.searchOrderKeywords = keywords || '';
-			return this.get();
-		},
-
-		getNormalOrderCount: function() {
-			return store.normalOrderCount;		
-		},
-
-		getExceptionOrderCount: function() {
-			return store.exceptionOrderCount;	
-		},
-
-		getAverageTimer: function() {
-			return store.averageTimer;	
-		},
-
-		addNewOrder: function(orderData) {
-			var self = this;
-			return orderUtils.convertSeatOrderDataToServerData(orderData)
-				.then((orderData) => {
-					orderData.callType = self.callType;
-					return self.create(orderData);	
-				})
-				.then(function(sn) {
-					if (orderData.reservationTime) {
-						self.selectReservation();
-					} else {
-						self.selectImmediate();	
-					}
-					var newOrder = {
-						sn: sn,
-						contactPhone: orderData.actualTel,
-						timeCreated: orderData.reservationTime || new Date(),
-						user: orderData.fullName,
-						poi: orderData.start,
-						'destination_poi': orderData.end,
-						isNewAdd: true
-					};
-					return newOrder;
-				})
-				.then(function(newOrder) {
-						return self.getPreparedOrders().then(function(orders) {
-							var hasOrder = false;
-							self.orders.forEach(function(order) {
-								if (order.sn === newOrder.sn) {
-									order.isNewAdd = true;
-									hasOrder = true;	
-								}
-							});
-							if (!hasOrder) {
-								self.orders.unshift(newOrder);	
-							}
-						});
-				});
-		},
-
-		create: function(orderData) {
-			var defer = $q.defer();
-			$http.post('call.htm', orderData)
-				.then(function(response) {
-					if (response.data.sn) {
-						defer.resolve(response.data.sn);	
-					}	else {
-						defer.reject();	
-					}
-				}, function() {
-					defer.reject();	
-				});	
-
-			return defer.promise;
-		},
-
-		receiveOrderUpdate: function(sn) {
-			return this.updateOrder(2, sn);
-		},
-
-		startedOrderUpdate: function(sn) {
-			return this.updateOrder(3, sn);	
-		},
-
-		doneOrderUpdate: function(sn) {
-			return this.updateOrder(4, sn);
-		},
-
-		updateOrder: function(status, sn) {
-			if (this.isPauseSearch) {
-				return $q.reject();	
-			}
-			var defer = $q.defer();	
-			var self = this;
-			this.getOrders(status).then(function(response) {
-				var orders = response.data.list;	
-				if (orders.length === 0) {
-					defer.reject();	
-				} else {
-					var shouldUpdate = false;
-					for (var i = 0, ii = orders.length; i < ii; i ++) {
-						if (orders[i].sn === sn) {
-							orders[i].isNewAdd = true;
-							shouldUpdate = true;	
-							break;
+	addNewOrder(orderData) {
+		return this.orderUtils.convertSeatOrderDataToServerData(orderData)	
+			.then((d) => {
+				d.callType = this.callType;
+				return this.$http.post('call.htm', d)
+					.then((response) => {
+						if (response.data.sn) {
+							return response.data.sn;	
+						} else {
+							return this.$q.reject();	
 						}	
-					}	
-					if (shouldUpdate) {
-						angular.copy(orders, self.orders);
-						self.currentOrderType = status;
-						defer.resolve();	
-					} else {
-						defer.reject();	
-					}
-				}
-			});
-
-			return defer.promise;
-		},
-
-		queryOrderBySn: function(sn, isImmediate) {
-			if (isImmediate === 1) {
-				this.selectImmediate();	
-			} else {
-				this.selectReservation();	
-			}
-			return $http.get('search.htm', {
-				params: {
-					all: 0,
-					page: 1,
-					pagesize: 6,
-					callType: this.callType,
-					isImmediate: isImmediate,
-					k: sn,
-					status: -1
-				}
-			}).then(function(response) {
-				var orders = response.data.list;
-				if (orders && orders.length > 0) {
-					return orders[0];	
-				} else {
-					return $q.reject();	
-				}
-			});	
-		},
-
-
-		handlePassengerFuckOrder: function(order) {
-			var self = this;
-			return $http.post('cancel/6.htm', {sn: order.sn})
-				.then(function() {
-					order.isBtnShow = false;	
-					self.currentOrderIndex = -1;
-				});
-		},
-
-		handleDriverFuckOrder: function(order) {
-			var self = this;
-			return $http.post('cancel/7.htm', {sn: order.sn})
-				.then(function() {
-					order.isBtnShow = false;	
-					self.currentOrderIndex = -1;
-				});
-		},
-
-		handleCancelOrder: function(order) {
-			var self = this;
-			return $http.post('cancel/1.htm', {sn: order.sn})
-				.then(function() {
-					order.isBtnShow = false;	
-					self.currentOrderIndex = -1;
-				});
-		},
-
-		assignOrderToCarPlate: function(order, carPlate) {
-			var self = this;
-			return $http.post('assign.htm', {
-				sn: order.sn,
-				number: carPlate	 
+					});
 			})
-				.then(function() {
-					order.isBtnShow = false;	
-					self.currentOrderIndex = -1;
-				});	
+			.then((sn) => {
+				return {
+					sn: sn,
+					contactPhone: orderData.actualTel,
+					timeCreated: orderData.reservationTime || this.$filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+					user: orderData.fullName,
+					poi: orderData.start,
+					'destination_poi': orderData.end,
+					isNewAdd: true,
+				};		
+			})
+			.then((d) => {
+				let hasOrder = false;
+				return this.getPreparedOrders(orderData.isReservation ? 0 : 1)
+					.then((orderInfo) => {
+						this.orderss.forEach( (order) => {
+							if (d.sn === order.sn) {
+								order.isNewAdd = true;	
+								hasOrder = true;
+							}	
+						});	
+						if (!hasOrder) {
+							orderInfo.total = orderInfo.total + 1;
+							this.orderss.unshift(d);	
+						}
+						return orderInfo;
+					});
+			});
+	}
+
+	shouldUpdateOrderItemList(status, isImmediate, sn) {
+		if (this.isPauseSearch) {
+			return this.$q.reject();	
 		}
+		return this.getOrdersFromService({
+			isImmediate,
+			status,			
+		})
+			.then((response) => {
+				let orders = response.data.list;	
+				if (!angular.isArray(orders) || orders.lenght < 1) {
+					return this.$q.reject();	
+				}
+				let shouldUpdate = false;
+				for (let i = 0, ii = orders.length; i < ii; i++) {
+					if (orders[i].sn === sn) {
+						orders[i].isNewAdd = true;	
+						shouldUpdate = true;
+						break;
+					}	
+				}
+				if (!shouldUpdate) {
+					return this.$q.reject();	
+				}
+				angular.copy(orders, this.orderss);
+				return {
+					total: response.data.total,
+					average: response.data.sec,	
+				};
+			});
+	}
 
-	};
+	queryOrderBySn(sn, isImmediate) {
+		return this.getOrdersFromService({
+			isImmediate,
+			k: sn,
+			status: -1,	
+		})
+		.then((response) => {
+			var orders = response.data.list;	
+			if (!angular.isArray(orders) && orders.length === 0) {
+				return this.$q.reject();	
+			}
+			angular.copy(orders, this.orderss);
+			return this.orderss[0];
+		});
+	}
 
-	return store;
+	handleCancelOrder(order) {
+		return this.$http.post('cancel/1.htm', {sn: order.sn});	
+	}
+
+	handlePassengerFuckOrder(order) {
+		return this.$http.post('cancel/6.htm', {sn: order.sn});	
+	}
+
+	handleDriverFuckOrder(order) {
+		return this.$http.post('cancel/7.htm', {sn: order.sn});	
+	}
+
+	assignOrderByCarPlate(order, number) {
+		return this.$http.post('assign.htm', {sn: order.sn, number});	
+	}
 }
-
-export default {
-	name: 'seatService',
-	fn: SeatService
-};

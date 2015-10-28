@@ -1,6 +1,5 @@
 'use strict';
 import angular from 'angular';
-var service = require('./index');
 
 export default class Search {
 	constructor($http) {
@@ -39,8 +38,8 @@ export default class Search {
 			}		
 		})
 		.then((response) => {
-			var orders =response.data.list; 
-			var total = 0;
+			let orders = response.data.list; 
+			let total = 0;
 			if (angular.isArray(orders)) {
 				angular.copy(orders, this.orderss);	
 				total = response.data.total;
@@ -68,7 +67,7 @@ export default class Search {
 		return this.getOrdersFromService({isImmediate: 2});	
 	}
 
-	queryOrderByKeyWords(k = '', beginTime = '', endTime = '') {
+	queryOrderByKeywords(k = '', beginTime = '', endTime = '') {
 		return this.getOrdersFromService({
 			k,
 			beginTime,

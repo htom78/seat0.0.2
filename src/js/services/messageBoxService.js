@@ -1,3 +1,4 @@
+'use strict';
 var services = require('./index');
 
 var messageBoxService = function(quanDialog) {
@@ -12,7 +13,7 @@ var messageBoxService = function(quanDialog) {
 
 		open: function(controller, scope) {
 			if (!this.isOpen()) {
-				messageBox.open('messageBox.html', controller, scope);
+				messageBox.open('component/messageBox.html', controller, scope);
 			}	
 		},
 

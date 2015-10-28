@@ -2,11 +2,12 @@
 import angular from 'angular';
 import represent from './represent';
 import searchService from './searchService';
+import seatService from './seatService';
 
 module.exports = angular.module('app.services', [])
 	.service('representService', represent)
 	.service('searchService', searchService)
-	.factory('seatService', require('./seatService').fn);
+	.service('seatService', seatService);
 
 require('./statistics');
 require('./mapService');

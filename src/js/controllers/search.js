@@ -67,7 +67,7 @@ function SearchCtrl($scope, searchService, initCount) {
 		searchData.beginTime = beginTime;
 		searchData.endTime = endTime;
 		searchData.keywords = $scope.words;
-		searchService.queryOrderByKeyWords($scope.words, beginTime, endTime);
+		searchService.queryOrderByKeywords($scope.words, beginTime, endTime);
 	};
 
 	//点击分页按钮
