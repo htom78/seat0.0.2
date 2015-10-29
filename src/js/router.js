@@ -28,9 +28,11 @@ export default function router($locationProvider, $routeProvider) {
 		title: '班长',
 		resolve: {
 			store: ['leaderService', function(leaderService) {
+				/*
 				leaderService.initService();
 				leaderService.get();
 				return leaderService;	
+				*/
 			}]	
 		}	
 	};

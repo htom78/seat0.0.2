@@ -10,48 +10,34 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 
 		link: function(scope, elem) {
 
-			scope.getCurrentTabName = leaderService.getCurrentTabName;
+
+			const $parent = scope.$parent;
 
 			elem.on('dblclick', function(ev) {
 				scope.order.isActive = true;
-				leaderService.showMap();	
-				leaderOrderInfoDialog.open(scope)
-					.then(function() {
-						scope.order.isActive = false;	
-						leaderService.closeMap();
-						leaderMap.clearPath();
-					});	
+				$parent.showMap();
 				leaderService.getOrderInfo(scope.order.sn)
-					.then(function(response) {
+					.then((response) => {
 						scope.orderInfo = response.data;	
-						if (scope.isDoneCurrentTab()) {
+						if ($parent.isDoneCurrentTab()) {
 							leaderMap.setPath(scope.orderInfo);
 						}
 					});
+				leaderOrderInfoDialog.open(scope)
+					.then(function() {
+						$parent.hideMap();
+						scope.order.isActive = false;	
+						leaderMap.clearPath();
+					});	
 				var pos = elem.offset();
 				leaderOrderInfoDialog.setDialogStyle(pos.top + elem.height(), pos.left, elem.width() - 680);
 			});	
 
-			scope.isExceptionCurrentTab = function() {
-				return scope.getCurrentTabName() === 'exception';	
-			};
-
-			scope.isDoneCurrentTab = function() {
-				return scope.getCurrentTabName() === 'done';	
-			};
-
-			scope.isReceivedCurrentTab = function() {
-				return scope.getCurrentTabName() === 'received';	
-			};
-
-			scope.isStartedCurrentTab = function() {
-				return scope.getCurrentTabName() === 'started';	
-			};
 
 			//双击表单出来的，控制按钮，权限控制
 			scope.isAssignBtnShow = function() {
-				if (scope.isDoneCurrentTab() ||
-					scope.isReceivedCurrentTab()) {
+				if ($parent.isDoneCurrentTab() ||
+					$parent.isReceivedCurrentTab()) {
 					return false;
 				} else {
 					return true;
@@ -59,8 +45,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 			};
 
 			scope.isCancelBtnShow = function() {
-				if (scope.isDoneCurrentTab() ||
-					scope.isStartedCurrentTab()) {
+				if ($parent.isDoneCurrentTab() ||
+					$parent.isStartedCurrentTab()) {
 					return false;
 				} else {
 					return true;
@@ -68,8 +54,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 			};
 
 			scope.isPassengerFuckBtnShow = function() {
-				if (scope.isExceptionCurrentTab() ||
-					scope.isReceivedCurrentTab()) {
+				if ($parent.isExceptionCurrentTab() ||
+					$parent.isReceivedCurrentTab()) {
 					return true;
 				} else {
 					return false;
@@ -77,9 +63,9 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 			};
 
 			scope.isDriverFuckBtnShow = function() {
-				if (scope.isExceptionCurrentTab() ||
-					scope.isStartedCurrentTab() ||
-					scope.isReceivedCurrentTab()) {
+				if ($parent.isExceptionCurrentTab() ||
+					$parent.isStartedCurrentTab() ||
+					$parent.isReceivedCurrentTab()) {
 					return true;
 				} else {
 					return false;
@@ -88,7 +74,7 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 
 			scope.cancelOrder = function() {
 				leaderService.handleCancelOrder(scope.order.sn)
-					.then(function() {
+					.then(() => {
 						leaderService.removeOrder(scope.order);
 						leaderOrderInfoDialog.close();
 					});
@@ -96,8 +82,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 
 			scope.passengerFuck = function() {
 				leaderService.handlePassengerFuckOrder(scope.order.sn)
-					.then(function() {
-						if (!scope.isExceptionCurrentTab()) {
+					.then(() => {
+						if (!$parent.isExceptionCurrentTab()) {
 							leaderService.removeOrder(scope.order);
 						}
 						scope.order.statusName = '乘客违约';
@@ -107,8 +93,8 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 
 			scope.driverFuck = function() {
 				leaderService.handleDriverFuckOrder(scope.order.sn)
-					.then(function() {
-						if (!scope.isExceptionCurrentTab()) {
+					.then(() => {
+						if (!$parent.isExceptionCurrentTab()) {
 							leaderService.removeOrder(scope.order);
 						}
 						scope.order.statusName = '司机违约';
@@ -116,9 +102,9 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 					});
 			};
 
-			scope.assignCar = function(name) {
-				leaderService.assignOrderToCarPlate(scope.order.sn, name)
-					.then(function() {
+			scope.assignCar = function(carPlate) {
+				leaderService.assignOrderByCarPlate(scope.order.sn, carPlate)
+					.then(() => {
 						leaderService.removeOrder(scope.order);
 						leaderOrderInfoDialog.close();
 					});

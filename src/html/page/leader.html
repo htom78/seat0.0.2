@@ -123,60 +123,50 @@
 					<a 
 					href='javascript:;' 
 					class='tab'
-					ng-class='{active: isCurrentOrderTab("prepared")}'
+					ng-class='{active: isPreparedCurrentTab()}'
 					ng-click='cutOrderTabPrepared()'>
 						<i class='icon-img-bg prepared-icon'></i>
-						<b>{{preparedOrderTabCount[0]}}</b>
-						<b>{{preparedOrderTabCount[1]}}</b>
-						<b>{{preparedOrderTabCount[2]}}</b>
+						<tab-count count='preparedCount'></tab-count>
 				</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: isCurrentOrderTab("received")}'
+						ng-class='{active: isReceivedCurrentTab()}'
 						ng-click='cutOrderTabReceived()'>
 							<i class='icon-img-bg received-icon'></i>
-							<b>{{receivedOrderTabCount[0]}}</b>
-							<b>{{receivedOrderTabCount[1]}}</b>
-							<b>{{receivedOrderTabCount[2]}}</b>
+							<tab-count count='receivedCount'></tab-count>
 						</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: isCurrentOrderTab("started")}'
+						ng-class='{active: isStartedCurrentTab()}'
 						ng-click='cutOrderTabStarted()'>
 							<i class='icon-img-bg started-icon'></i>
-							<b>{{startedOrderTabCount[0]}}</b>
-							<b>{{startedOrderTabCount[1]}}</b>
-							<b>{{startedOrderTabCount[2]}}</b>
+							<tab-count count='startedCount'></tab-count>
 					</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: isCurrentOrderTab("done")}'
+						ng-class='{active: isDoneCurrentTab()}'
 						ng-click='cutOrderTabDone()'>
 							<i class='icon-img-bg done-icon'></i>
-							<b>{{doneOrderTabCount[0]}}</b>
-							<b>{{doneOrderTabCount[1]}}</b>
-							<b>{{doneOrderTabCount[2]}}</b>
+							<tab-count count='doneCount'></tab-count>
 						</a>
 				</li>
 				<li>
 					<a 
 						href='javascript:;' 
 						class='tab'
-						ng-class='{active: isCurrentOrderTab("exception")}'
+						ng-class='{active: isExceptionCurrentTab()}'
 						ng-click='cutOrderTabException()'>
 						<i class='icon-img-bg exception-icon'></i>
-						<b>{{exceptionOrderTabCount[0]}}</b>
-						<b>{{exceptionOrderTabCount[1]}}</b>
-						<b>{{exceptionOrderTabCount[2]}}</b>
+						<tab-count count='exceptionCount'></tab-count>
 					</a>
 				</li>
 			</ul>
@@ -215,6 +205,8 @@
 					<tr 
 						ng-repeat='item in orders' 
 						leader-order-info='item'
+						show-map='showMap()'
+						hide-map='hideMap()'
 						ng-class='{active: item.isActive}'>
 						<td>{{$index + 1}}</td>
 						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
@@ -230,13 +222,13 @@
 				</tbody>
 			</table>
 		</div>
-		<div class='map-wrapper' ng-show='mapShow'>
+		<div class='map-wrapper' ng-show='isMapShow'>
 			<div class='leader-map' leader-map></div>	
 		</div>
 		<div class='paging' ng-show='orderItemCount > 10'>
 			<pagination 
 				num-items='orderItemCount' 
-				current-page='orderCurrentPage'
+				current-page='currentOrderPage'
 				on-select-page='onSelectPage(page)'></pagination>
 		</div>
 	</div>

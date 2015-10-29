@@ -13,7 +13,7 @@ function SearchCtrl($scope, searchService, initCount) {
 		endTime: ''	
 	};
 
-	$scope.$watch( () => searchService.shoudUpdate, function() {
+	$scope.$watch( () => searchService.shoudUpdate, () => {
 		$scope.currentOrderPage = searchService.currentPage;
 		$scope.orderItemCount = searchService.total;
 	});

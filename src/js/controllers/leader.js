@@ -2,7 +2,7 @@
 
 function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 
-	$scope.orders = leaderService.orders;
+	$scope.orders = leaderService.orderss;
 	
 	//图表 = > 员工tab切换
 	$scope.chartEmployer = {
@@ -19,77 +19,139 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 
 	//######################################################################################
 
-	$scope.isCurrentOrderTab = function(tabName) {
-		return tabName === $scope.currentOrderTab;
+	let isSearch = false;
+	const searchData = {
+		keywords: '',	
 	};
 
+	const tabTextName = ['预', '即'];
+	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
+	const state = {
+		immediateOrReservation: {
+			RESERVATION: 0,
+			IMMEDIATE: 1,	
+		}, 
+		currentTab: {
+			EXCEPTION: 0,
+			PREPARED: 1,
+			RECEIVED: 2,
+			STARTED: 3,
+			DONE: 4,
+		}
+	};
+
+	$scope.currentOrderTab = state.currentTab.PREPARED;
+	$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
+	$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+	$scope.preparedCount = 0;
+	$scope.receivedCount = 0;
+	$scope.startedCount = 0;
+	$scope.doneCount = 0;
+	$scope.exceptionCount = 0;
+
 	$scope.cutOrderTabPrepared = function() {
-		$scope.currentOrderTab = 'prepared';
-		leaderService.getPreparedOrders();	
+		isSearch = false;
+		$scope.currentOrderTab = state.currentTab.PREPARED;
+		leaderService.getPreparedOrders($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope.preparedCount = total;
+			});	
 	};
 
 	$scope.cutOrderTabReceived = function() {
-		$scope.currentOrderTab = 'received';
-		leaderService.getReceivedOrders();	
+		isSearch = false;
+		$scope.currentOrderTab = state.currentTab.RECEIVED;
+		leaderService.getReceivedOrders($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope.receivedCount = total;	
+			});	
 	};
 
 	$scope.cutOrderTabStarted = function() {
-		$scope.currentOrderTab = 'started';
-		leaderService.getStartedOrders();	
+		isSearch = false;
+		$scope.currentOrderTab = state.currentTab.STARTED;
+		leaderService.getStartedOrders($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope.startedCount = total;
+			});	
 	};
 
 	$scope.cutOrderTabDone = function() {
-		$scope.currentOrderTab = 'done';
-		leaderService.getDoneOrders();	
+		isSearch = false;
+		$scope.currentOrderTab = state.currentTab.DONE;
+		leaderService.getDoneOrders($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope.doneCount = total;
+			});
 	};
 
 	$scope.cutOrderTabException = function() {
-		$scope.currentOrderTab = 'exception';
-		leaderService.getExceptionOrders();	
-	};
-	$scope.currentOrderTab = 'prepared';
-
-	$scope.preparedOrderTabCount = [0, 0, 0];
-	$scope.receivedOrderTabCount = [0, 0, 0];
-	$scope.startedOrderTabCount = [0, 0, 0];
-	$scope.doneOrderTabCount = [0, 0, 0];
-	$scope.exceptionOrderTabCount = [0, 0, 0];
-
-	$scope.$watch('orders', function() {
-		$scope.orderCurrentPage = leaderService.currentPage;
-		$scope.orderItemCount = leaderService.currentOrderTotal;
-		$scope[$scope.currentOrderTab + 'OrderTabCount'] = leaderService.getShowOrderCount();
-	}, true);
-
-	//点击分页
-	$scope.onSelectPage = function(pageNumber) {
-		leaderService.getOrderByPageNumber(pageNumber);
+		isSearch = false;
+		$scope.currentOrderTab = state.currentTab.EXCEPTION;
+		leaderService.getExceptionOrders($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope.exceptionCount = total;
+			});	
 	};
 
-	//搜索
-	$scope.searchOrder = function() {
-		leaderService.getCurrentOrdersByKeywords($scope.words);
+	$scope.isPreparedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.PREPARED;	
 	};
 
-	$scope.immediateOrReservation = '即';
+	$scope.isStartedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.STARTED;	
+	};
+
+	$scope.isReceivedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.RECEIVED;	
+	};
+
+	$scope.isDoneCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.DONE;	
+	};
+
+	$scope.isExceptionCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.EXCEPTION;	
+	};
+
 	$scope.toggleImmediateOrReservation = function() {
-		if ($scope.immediateOrReservation === '即') {
-			$scope.immediateOrReservation = '预';	
-			leaderService.selectReservation();
+		let isImmediate;
+		isSearch = false;
+		if ($scope.immediateOrReservationSelect === state.immediateOrReservation.IMMEDIATE) {
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.RESERVATION;
 		} else {
-			$scope.immediateOrReservation = '即';	
-			leaderService.selectImmediate();
-		}	
-		leaderService.refreshCurrentOrder();
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
+		}
+		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+		leaderService['get' + tabsName[$scope.currentOrderTab] + 'Orders']($scope.immediateOrReservationSelect)
+			.then((total) => {
+				$scope[tabsName[$scope.currentOrderTab].toLowerCase() + 'Count'] = total;
+			});
 	};
 
-	$scope.showMap = function() {
-		$scope.mapShow = true;	
+	$scope.$watch(() => leaderService.shouldUpdate, () => {
+		$scope.currentOrderPage = leaderService.currentPage;
+		$scope.orderItemCount = leaderService.total;
+	});
+
+	$scope.onSelectPage = function(page) {
+		if (isSearch) {
+			leaderService.getSelectPageOrder(page, $scope.immediateOrReservationSelect, $scope.currentOrderTab, searchData.keywords);
+		} else {
+			leaderService.getSelectPageOrder(page, $scope.immediateOrReservationSelect, $scope.currentOrderTab, '');
+		}
 	};
 
-	$scope.closeMap = function() {
-		$scope.mapShow = false;	
+	$scope.searchOrder = function() {
+		isSearch = true;
+		searchData.keywords = $scope.words;
+		leaderService.queryOrderByKeywords($scope.words, $scope.immediateOrReservationSelect, $scope.currentOrderTab)
+			.then((response) => {
+				$scope[tabsName[$scope.currentOrderTab].toLowerCase() + 'Count'] = response;
+			});
 	};
+
+
 	//图表数据
 	$scope.employChart = {
 		busy: 1,
@@ -128,19 +190,16 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 		return security.isLeader();	
 	}, function(isLeader) {
 		if (security.isAuthenticated() && !isLeader) {
-			$location.path('/');	
+			$location.path('/index.htm');	
 		}	
 	});
 
-	$scope.$watch(function() {
-		return leaderService.isMapShow;	
-	}, function(isShow) {
-		if (isShow) {
-			$scope.mapShow = true;	
-		} else {
-			$scope.mapShow = false;	
-		}	
-	});
+	$scope.showMap = function() {
+		$scope.isMapShow = true;
+	};
+	$scope.hideMap = function() {
+		$scope.isMapShow = false;
+	};
 }
 
 export default {

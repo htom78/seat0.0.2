@@ -7,7 +7,7 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 
 	$scope.orders = seatService.orderss;
 
-	let tabTextName = ['预约', '即时'];
+	const tabTextName = ['预约', '即时'];
 	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
 	const state = {
 		immediateOrReservation: {
@@ -141,15 +141,13 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 	};
 
 	$scope.toggleImmediateOrReservation = function() {
-		let isImmediate;
 		if ($scope.immediateOrReservationSelect === state.immediateOrReservation.IMMEDIATE) {
-			isImmediate = 0;
 			$scope.immediateOrReservationSelect = state.immediateOrReservation.RESERVATION;
 		} else {
-			isImmediate = 1;
 			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
 		}	
-		seatService['get' + tabsName[$scope.currentOrderTab] + 'Orders'](isImmediate)
+		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+		seatService['get' + tabsName[$scope.currentOrderTab] + 'Orders']($scope.immediateOrReservationSelect)
 			.then((response) => {
 				if ($scope.isExceptionCurrentTab()) {
 					$scope.exceptionOrderCount = response.total;	
@@ -158,7 +156,6 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 				}
 				$scope.averageTimer = response.average;
 			});
-		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
 	};
 
 	$scope.isPreparedCurrentTab = function() {

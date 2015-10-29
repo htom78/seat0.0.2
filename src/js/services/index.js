@@ -3,11 +3,13 @@ import angular from 'angular';
 import represent from './represent';
 import searchService from './searchService';
 import seatService from './seatService';
+import leaderService from './leaderService';
 
 module.exports = angular.module('app.services', [])
 	.service('representService', represent)
 	.service('searchService', searchService)
-	.service('seatService', seatService);
+	.service('seatService', seatService)
+	.service('leaderService', leaderService);
 
 require('./statistics');
 require('./mapService');
@@ -17,7 +19,6 @@ require('./chartCar');
 require('./leaderMap');
 require('./socket');
 require('./sign');
-require('./leaderService');
 require('./policeService');
 require('./security');
 require('./user');
