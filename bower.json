@@ -1,0 +1,21 @@
+{
+  "name": "seat",
+  "description": "",
+  "main": "",
+  "authors": [
+    "quanxiaoxiao <quan_xiaoxiao@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/quanxiaoxiao/seat0.0.2",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5"
+  }
+}

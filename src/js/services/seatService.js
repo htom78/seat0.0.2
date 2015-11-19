@@ -10,6 +10,7 @@ export default class Seat {
 		this.orderss = [];
 		this.orderUtils = orderUtils;
 		this.isPauseSearch = false;
+		this.all = 0;
 	}
 
 	getOrdersFromService({
@@ -21,12 +22,12 @@ export default class Seat {
 		status = 1,	
 	} = {}) {
 		return this.$http.get('search.htm', {params: {
-			all,
 			page,
 			pagesize,
 			isImmediate,
 			k,
 			status,			
+			all: this.all,
 			callType: this.callType,
 		}});
 	}
@@ -37,6 +38,10 @@ export default class Seat {
 
 	selectNormalCar() {
 		this.callType = 1;	
+	}
+
+	setOrderType(type) {
+		this.all = type;	
 	}
 
 	getOrders(params) {

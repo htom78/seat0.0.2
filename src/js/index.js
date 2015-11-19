@@ -4,6 +4,7 @@ import 'angular-route';
 import router from './router';
 import config from './config';
 import './map';
+import './bootstrap';
 
 require('./controllers');
 require('./directives');
@@ -26,7 +27,10 @@ var requires = [
 	'app.utils',
 	'app.dialogs',
 	'app.ocx',
-	'app.map'
+	'app.map',
+	'ui.bootstrap.datepicker',
+	'ui.bootstrap.modal',
+	'ui.bootstrap.dropdown'
 ];
 
 var app = angular.module('app', requires)

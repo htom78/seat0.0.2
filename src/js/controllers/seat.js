@@ -1,7 +1,6 @@
 'use strict';
 
 import angular from 'angular';
-var moment = require('moment');
 
 function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, mapService, initCount) {
 
@@ -23,6 +22,18 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 		}
 	};
 
+	$scope.status = {
+		calendarOpened: false
+	};
+
+	$scope.minDate = new Date();
+
+
+	$scope.openCalendar = function() {
+		$scope.status.calendarOpened = true;
+	};
+
+
 	let currentTimer = new Date();
 	const initOrderData = {
 		gender: 1,
@@ -33,8 +44,9 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 		isCarType: false,
 		hour: currentTimer.getHours(),
 		minute: currentTimer.getMinutes(),	
-		reservationCalendar: moment().format('YYYY-MM-DD')
+		reservationCalendar: new Date()
 	};
+
 
 	$scope.orderData = angular.copy(initOrderData);
 
@@ -96,44 +108,27 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 
 	$scope.cutOrderTabPrepared = function() {
 		$scope.currentOrderTab = state.currentTab.PREPARED;
-		seatService.getPreparedOrders($scope.immediateOrReservationSelect)
-			.then((response) => {
-				$scope.normalOrderCount = response.total;	
-				$scope.averageTimer = response.average;
-			});
+		$scope.getOrders();
 	};
+
 	$scope.cutOrderTabReceived = function() {
 		$scope.currentOrderTab = state.currentTab.RECEIVED;
-		seatService.getReceivedOrders($scope.immediateOrReservationSelect)
-			.then((response) => {
-				$scope.normalOrderCount = response.total;	
-				$scope.averageTimer = response.average;
-			});
+		$scope.getOrders();
 	};
+
 	$scope.cutOrderTabStarted = function() {
 		$scope.currentOrderTab = state.currentTab.STARTED;
-		seatService.getStartedOrders($scope.immediateOrReservationSelect)
-			.then((response) => {
-				$scope.normalOrderCount = response.total;	
-				$scope.averageTimer = response.average;
-			});
-
+		$scope.getOrders();
 	};
+
 	$scope.cutOrderTabDone = function() {
 		$scope.currentOrderTab = state.currentTab.DONE;
-		seatService.getDoneOrders($scope.immediateOrReservationSelect)
-			.then((response) => {
-				$scope.normalOrderCount = response.total;	
-				$scope.averageTimer = response.average;
-			});
+		$scope.getOrders();
 	};
+
 	$scope.cutOrderTabException = function() {
 		$scope.currentOrderTab = state.currentTab.EXCEPTION;
-		seatService.getExceptionOrders($scope.immediateOrReservationSelect)
-			.then((response) => {
-				$scope.exceptionOrderCount = response.total;	
-				$scope.averageTimer = response.average;
-			});
+		$scope.getOrders();
 	};
 
 	$scope.searchCurrentOrderByKeywords = function() {
@@ -147,15 +142,7 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
 		}	
 		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
-		seatService['get' + tabsName[$scope.currentOrderTab] + 'Orders']($scope.immediateOrReservationSelect)
-			.then((response) => {
-				if ($scope.isExceptionCurrentTab()) {
-					$scope.exceptionOrderCount = response.total;	
-				} else {
-					$scope.normalOrderCount = response.total;	
-				}
-				$scope.averageTimer = response.average;
-			});
+		$scope.getOrders();
 	};
 
 	$scope.isPreparedCurrentTab = function() {
@@ -299,6 +286,29 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 				}	
 	};
 
+	$scope.handleCancelOrder = function(item) {
+		seatService.handleCancelOrder(item);
+	};
+
+	$scope.handleDriverFuckOrder = function(item) {
+		seatService.handleDriverFuckOrder(item)
+			.then((response) => {
+				item.statusName = '司机放空';	
+			});	
+	};
+
+	$scope.handlePassengerFuckOrder = function(item) {
+		seatService.handleCancelOrder(item)
+			.then((response) => {
+				item.statusName = '乘客放空';	
+			});	
+	};
+
+	$scope.assignOrderByCarPlate = function(item, input) {
+		seatService.assignOrderByCarPlate(item, input);
+	};
+
+
 	$scope.$on('mapPosition', (ev, data) => {
 		if ($location.url() === data.path) {
 			seatMap.setCenter(data.lng, data.lat);	
@@ -308,6 +318,28 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 				});
 		}
 	});
+
+
+	$scope.orderTypes = [{name: '个人', value: 0}, {name: '全部', value: 1}];
+	$scope.handleOrderTypeChange = function() {
+		seatService.setOrderType($scope.orderType.value);
+		$scope.getOrders();
+	};
+
+	$scope.getOrders = function() {
+		seatService['get' + tabsName[$scope.currentOrderTab] + 'Orders']($scope.immediateOrReservationSelect)
+			.then((response) => {
+				if ($scope.isExceptionCurrentTab()) {
+					$scope.exceptionOrderCount = response.total;	
+				} else {
+					$scope.normalOrderCount = response.total;	
+				}
+				$scope.averageTimer = response.average;
+			});
+	};
+
+
+
 }
 
 export default {

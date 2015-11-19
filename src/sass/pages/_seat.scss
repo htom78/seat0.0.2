@@ -1,43 +1,78 @@
-.seat-above {
-	padding-right: $padding-horizontal;
-	border-right: $border-main-size solid $border-main-color;
+body {
+	font-family: $font-family;
 }
 
-//# top left part
-.seat-top-left{
-	$seat-chart-width:			300px;
-	$seat-chart-height:			($normal-size + $margin-vertical) * 5 - $margin-vertical;
-	$input-large-width:			$layout-left-width - $normal-size - 5px - $padding-horizontal - $border-main-size - ($input-padding-horizontal + 1px) * 2;
-	$input-long-width:			$input-large-width - $seat-chart-width - $margin-small-horizontal;
+.seat-top-left {
+	padding: 10px 10px 10px (10px + $border-main-size);
+	.create-form {
 
-	@extend %font-family;
-	position: relative;
-	margin-right: $margin-small-horizontal;
-	border: $border-main-size solid $border-main-color;
-	border-left:0;
-	width: $layout-left-width - $border-main-size;
-	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-main-size);
-	
+		.form-group {
+			margin-bottom: 9px;	
+		}
+
+		.input-wrapper {
+			display: inline-block;
+		}	
+
+		.residue-width {
+			width: calc(100% - 35px);	
+		}
+
+		.inline-width {
+			width: 231px;	
+		}
+
+		.genders-wrapper,
+	 	.car-type-wrapper,
+		.timer-picker-wrapper	{
+			display: inline-block;	
+			vertical-align: bottom;	
+		}
+
+		.car-type-wrapper {
+			vertical-align: bottom;	
+		}
+
+		.car-count-select-wrapper {
+			margin-right: 8px;	
+		}
+
+		.reservation-checkbox-wrapper {
+			display: inline-block;	
+			vertical-align: bottom;
+		}
+
+		.select-wrapper {
+			display: inline-block;	
+			width: 82px;
+		}
+
+		.btn {
+			width: 140px;	
+		}
+
+	}	
+
 	.chart {
 		$info-height: 24px;
 
 		position: absolute;
-		top: $padding-vertical;
-		left: $padding-horizontal + $border-main-size;
-		border:$border-small-size solid #fff;
+		top: 10px;
+		left: 10px + $border-main-size;
+		border: 4px solid #fff;
 		border-radius: $radius-small-size;
 		background-color: $chart-bg;
 		z-index: 10;
-		height: $seat-chart-height - $border-small-size * 2;
-		width: $seat-chart-width - $border-small-size * 2;
+		height: 182px;
+		width: 292px;
 		.user-info {
-			padding: $padding-vertical $padding-horizontal;
+			padding: 10px;
 			color: $text-color;
 			font-size: 12px;
 		}
 		.graph {
 			width: 100%;
-			height: $seat-chart-height - ($padding-vertical + $info-height + $border-small-size) * 2;
+			height: 104px;
 		}
 		.justify {
 			height: $info-height;
@@ -61,7 +96,7 @@
 			@include icon-content('\e616');
 		}
 		.legend-dot {
-			margin-right: $margin-small-horizontal;
+			margin-right: 4px;
 		}
 		.dot-order-count {
 			background-color: $color-forth;
@@ -71,15 +106,36 @@
 		}
 	}
 
+}
+
+
+
+
+
+.seat-above {
+	padding-right: $padding-horizontal;
+	border-right: $border-main-size solid $border-main-color;
+}
+
+//# top left part
+.seat-top-left{
+	$seat-chart-width:			300px;
+	$seat-chart-height:			($normal-size + $margin-vertical) * 5 - $margin-vertical;
+	$input-large-width:			$layout-left-width - $normal-size - 5px - $padding-horizontal - $border-main-size - ($input-padding-horizontal + 1px) * 2;
+	$input-long-width:			$input-large-width - $seat-chart-width - $margin-small-horizontal;
+
+	@extend %font-family;
+	position: relative;
+	margin-right: $margin-small-horizontal;
+	border: $border-main-size solid $border-main-color;
+	border-left:0;
+	width: $layout-left-width - $border-main-size;
+	
+
 	.seat-field1 {
 		padding-left: $seat-chart-width + $margin-small-horizontal;
 	}
-	.long-width {
-		width: $input-long-width;
-	}
-	.large-width {
-		width: $input-large-width;
-	}
+
 	.clickable {
 		background-color: $color-primary;
 	}
@@ -124,88 +180,7 @@
 	}
 	
 	$wrap-width: $seat-chart-width - $normal-size - 5px;
-	.cartype-selects {
-		display: inline-block;
-		width: $wrap-width;
-		$select-width: ($wrap-width - 10px) / 3;
-		.car-select {
-			width: $select-width;
-		}
-		.price-select {
-			width: $select-width;
-		}
 
-		.count-select {
-			width: $select-width;
-		}
-	}
-
-	.date-pickup-wrap {
-		display: inline-block;	
-		width: $wrap-width; 
-		.input-calendar {
-			width: $wrap-width - 62px - 5px - ($input-padding-horizontal + 1) * 2;	
-		}
-	}
-}
-
-.seat-top-form {
-	.field-li {
-		margin-bottom: $margin-vertical;
-	}
-	.icon-img-bg {
-		&:before {
-			font-size: $normal-size;	
-		}
-		background-color: #ccc;
-	}
-
-	.calling-label {
-		@include icon-content('\e605');
-	}
-	.actual-label {
-		@include icon-content('\e614');
-	}
-	.username-label {
-		background-color: $color-primary;
-		& {
-			@include icon-content('\e618');
-		}
-	}
-	
-	.start-label {
-		background-color: $color-forth;
-		& {
-			@include icon-content('\e622');
-		}
-	}
-
-	.around-label {
-		@include icon-content('\e626');
-	}
-
-	.destination-label {
-		@include icon-content('\e623');
-	}
-
-	.reservation-label {
-		@include icon-content('\e629');
-	}
-
-	.cartype-label {
-		@include icon-content('\e61c');
-	}
-
-	.remark-label {
-		@include icon-content('\e624');
-	}
-
-	.count-label {
-		@include icon-content('\e62b');
-	}
-	.btn{
-		width: 140px;
-	}
 }
 
 //#####top right part
@@ -297,157 +272,87 @@
 //# bottom right
 .seat-bottom-right {
 
-	$search-bar-height: 46px;
-	$search-bar-tab-height: 40px;
-
-	@extend %font-family;
 	flex: 2 1;
-	margin-top: $margin-vertical;
-	padding:$padding-vertical 0 0 $padding-horizontal;
+	margin-top: 10px;
+	padding:10px 0 0 10px;
 	border: $border-main-size solid $border-main-color; 
 	border-bottom: 0;
 	border-right: 0;
 	.search-bar {
-		height: $search-bar-height;
-		line-height: $search-bar-height;
 		overflow: hidden;
 		background-color: $color-third;
-		padding: 0 $padding-horizontal;
-		.tabs {
-			margin-top: ($search-bar-height - $search-bar-tab-height) / 2;
-		}
-		.tab {
-			@include box-in-middle($search-bar-tab-height, 90px);
-			text-decoration: none;
-			color: #ccc;
-			font-size: 14px;
-			&.active {
-				background-color: $color-secondary;
-			}
+		padding: 6px 10px;
 
-			.icon-img-bg {
-				border-radius: 50%;
-				background-color: #ccc;
-				height: 30px;
-				width: 30px;
-				line-height: 30px;
-				vertical-align: middle;
-				&:before {
-					font-size: 30px;	
-				}
-				&.normal {
-					@include icon-content('\e61a');
-				}
-				&.error {
-					@include icon-content('\e619');
-				}
-			}
-		}
-
-		.search-input {
-			@extend %text-input;
-			min-height: 20px;
-			border: 0;
-		}
-		.search-btn {
-			width: $normal-size;
-			height:	$normal-size;
-			vertical-align: baseline;
-			border-radius: 0;
-			.icon-img {
-				&:before {
-					font-size: 16px;	
-				}
-				@include icon-content('\e61f');
-			}
-		}
-		.search-select {
-			@extend %select;
-			width: 64px;
-		}
-		.tick-timer {
-			background-color: $color-primary;
-			color: #fff;
-			@include box-in-middle($normal-size, 60px);
-			margin-right: $margin-horizontal;
-			font-size: 13px;
-			overflow: hidden;
-			vertical-align: middle;
-		}
 		.toggle-btn {
-			width: 40px;
-			vertical-align: baseline;
-			margin-right: $margin-large-horizontal;
+			margin-right: 10px;	
+		}
+
+		.keywords-input {
+			border-top-right-radius: 0;	
+			border-bottom-right-radius: 0;
+			border-right: 0;
+		}
+
+		button[type='submit'] {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			height: 34px;
+			.icon-search {
+				display: inline-block;	
+			}
+		}
+		.tab-btn {
+			padding: 6px 15px;	
+		}
+
+		.average-label {
+			margin-right: 8px;	
+			line-height: 34px;
 		}
 	}
 
-	$order-content-height: 210px;
-	$order-nav-bar-width:	64px;
 	.order-content {
 		font-size: 12px;
 		color: $text-color;
-		padding-top: $padding-vertical;
-		height: $order-content-height;
+		padding-top: 10px;
+		height: 210px;
 	}
 
 	.order-nav-var {
-		width: $order-nav-bar-width;
+		position: relative;
+		width: 76px;
 		background-color: $color-third;
-		margin-right: $margin-horizontal;
-		.title {
-			line-height: 30px;
-			text-align: center;
-			font-size: 16px;
-		}
-		.order-nav {
-			margin-top: $margin-vertical;
-		}
-		.order-nav-li {
-			text-align: right;
-		}
-		.nav-btn {
-			&.active {
-				background-color: $color-secondary;
-			}
-			text-decoration:none;
-			@include box-in-middle($normal-size, 60px);
-			color: $text-color;
+		margin-right: 10px;
+		padding-left: 6px;
+		padding-top: 36px;
 
+		&:after {
+			content: '状态';	
+			position: absolute;
+			top: 6px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 16px;
+			font-weight: bold;
+			color: #888;
 		}
 	}
+
 	.order-table {
 		flex: 2 1;
 	}
-}
 
-.seat-order-operate {
-	position: relative;	
-	.operate-list {
-		position: absolute;	
-		bottom: 100%;
-		margin-bottom: 2px;
-		left: 0;
+	.dropdown-menu {
+		left: auto;	
+		right: 0;
 	}
-	.operate-btn {
-		text-decoration: none;
-		display: inline-block;
-		background: #DA8000;	
-		color: #fff;
-		@include box-in-middle($normal-size, 60px);
-	}
-	.operate-list-li {
-		border-top: 1px solid #fff;	
-		&:first-child {
-			border-top: 0;	
+
+	.table {
+		table-layout: fixed;	
+		th,
+		td {
+			text-align: center;	
 		}
-	}
-}
-
-.seat-operate-td {
-	.show-more {
-		color: #fff;	
-		font-weight: bold;
-		text-decoration: none;
 	}
 }
 

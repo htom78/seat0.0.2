@@ -19,7 +19,7 @@ module.exports = {
 		srcdir: 'src/sass',
 		dest: `${buildDir}/css`,
 		prodSourcemap: false,
-		sassIncludePath: [],
+		sassIncludePaths: ['./bower_components/bootstrap-sass/assets/stylesheets'],
 		watch: 'src/sass/**/*.scss'
 	},
 

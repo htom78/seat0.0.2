@@ -2,15 +2,14 @@
 import angular from 'angular';
 import representMap from './representMap';
 import seatMap from './seatMap';
-import operateMore from './operateMore';
 import tabCount from './tabCount';
-
+import ensureBtn from './ensureBtn';
 
 module.exports = angular.module('app.dirctives', [])
 	.directive('representMap', representMap)
 	.directive('seatMap', seatMap)
-	.directive(operateMore.name, operateMore.fn)
-	.directive(tabCount.name, tabCount.fn);
+	.directive(tabCount.name, tabCount.fn)
+	.directive(ensureBtn.name, ensureBtn.fn);
 
 require('./chartUser');
 require('./callStatus');
@@ -21,7 +20,6 @@ require('./chartEmploy');
 require('./chartCar');
 require('./listenCall');
 require('./pauseEmit');
-require('./calendar');
 require('./handleAlarmOrder');
 require('./confirmDialog');
 require('./timeSelect');
