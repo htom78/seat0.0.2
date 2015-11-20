@@ -1,5 +1,5 @@
 'use strict';
-function Ensure ($uibModal) {
+function Ensure($uibModal) {
 	return {
 		scope: {
 			title: '@messageTitle',

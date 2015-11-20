@@ -1,5 +1,33 @@
 'use strict';
-var directives = require('./index');
+
+function Info($uibModal) {
+	return {
+		scope: {
+			order: '=leaderOrderInfo'	
+		},
+
+		link(scope, elem) {
+			elem.bind('dblclick', (ev) => {
+				console.log(scope.order);	
+				/*
+				var modalInstance = $uibModal.open({
+					animation: false,
+					backdrop: false,
+					appendTo: elem.closest('.table-wrapper');
+					templateUrl: ''	
+				});
+				*/
+			});		
+		}	
+	};
+}
+
+export default {
+	name: 'leaderOrderInfo',
+	fn: Info
+};
+
+/*
 
 var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) {
 	return {
@@ -114,6 +142,4 @@ var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) 
 	};
 };
 
-leaderOrderInfo.$inject = ['leaderOrderInfoDialog', 'leaderService', 'leaderMap'];
-
-directives.directive('leaderOrderInfo', leaderOrderInfo);
+*/

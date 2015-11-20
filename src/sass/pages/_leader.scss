@@ -171,195 +171,19 @@
 
 .leader-orders {
 
-	$tab-size: 40px;
-	$tab-bg: #ccc;
-	$tab-active-bg: #fff;
-	$tab-icon-bg: #fff;
-	$tab-icon-active-bg: $color-primary;
-	$tab-icon-color: #ccc;
-	$tab-icon-active-color: #fff;
-	$tab-num-bg: #fff;
-	$tab-num-active-bg: $color-primary;
-	$tab-num-color: $color-primary;
-	$tab-num-active-color: #fff;
-	$search-wrap-height: 30px;
 
-	@extend %font-family;
-	border-right: $border-main-size solid $border-main-color;
-	padding: $padding-large-vertical $padding-horizontal $padding-vertical ($padding-horizontal + $border-main-size);
-	.nav-bar {
-		position: relative;
-		padding: 0 ($tab-size + $padding-horizontal);
-	}
-
-	.immediate-reservation-btn {
-		$btn-size: 30px;
-		position: absolute;
-		left: 0;
-		bottom: 5px;
-		width: 10px;
-		height: $btn-size;
-		background-color: $btn-bg;
-		color: #fff;
-		&:after {
-			content: '';
-			position: absolute;
-			left:100%;
-			top:0;
-			border-left: $btn-size solid $btn-bg;
-			border-bottom: $btn-size solid transparent;	
-		}
-		z-index: 50;
-		.btn-word {
-			position: absolute;	
-			font-size: 14px;
-			color: #fff;
-			z-index: 55;
-			top: 5px;
-			left: 5px;
-			font-weight: bold;
-		}
-
-		&:hover {
-			background-color: $btn-hover-bg;	
-		}
-		&:hover:after {
-			border-left-color: $btn-hover-bg;	
-		}
-		&:active {
-			background-color: $btn-active-bg;	
-		}
-		&:active:after {
-			border-left-color: $btn-active-bg;	
-		}
-	}
-
-	.tab {
-		position:relative;
-		text-decoration: none;
-		display: block;
-		height: $tab-size;
-		line-height: $tab-size;
-		background-color: $tab-bg;
-		margin-right: $tab-size;
-		.icon-img-bg {
-			width: 28px;
-			height: 28px;
-			line-height: 28px;
-			border-radius: 50%;
-			background-color: $tab-icon-bg;
-			vertical-align: middle;
-			color: $tab-icon-color;	
-			&:before {
-				font-size: 28px;
-			}
-		}
-		.prepared-icon {
-			@include icon-content('\e61b');
-		}
-		.received-icon {
-			@include icon-content('\e61c');
-		}
-		.started-icon {
-			@include icon-content('\e61d');
-		}
-		.done-icon {
-			@include icon-content('\e61a');
-		}
-		.exception-icon {
-			@include icon-content('\e619');
-		}
-		b {
-			@include box-in-middle(20px, 20px);
-			background-color: $tab-num-bg;
-			font-size: 13px;
-			border-radius: $radius-small-size;
-			color: $tab-num-color;
-			font-weight: bold;
-		}
-		&:after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 100%;
-			border-left: $tab-size solid $tab-bg;
-			border-top: $tab-size solid transparent;
-			z-index: 10;
-		}
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 100%;
-			border-right: $tab-size solid $tab-bg;
-			border-top: $tab-size solid transparent;
-		}
-		&.active {
-			background-color: $tab-active-bg;
-			&:before {
-				border-right-color: $tab-active-bg;
-			}
-			&:after {
-				border-left-color: $tab-active-bg;
-			}
-			b {
-				color: $tab-num-active-color;
-				background-color: $color-primary;
-			}
-			.icon-img-bg {
-				color: $tab-icon-active-color;
-				background-color: $tab-icon-active-bg;
-			}
-		}
-	}
-
-	.search-wrap {
-		position: relative;
-		margin-top: ($tab-size - $search-wrap-height) / 2;
-	}
-
-	.input-wrap {
-		height: $search-wrap-height;
-  	width: 200px;
-  	background-color: #fff;
-  	transform: skew(45deg);
-	}
-
-	.search-input {
-		@extend %text-input;
-		position: absolute;
-		top: 50%;
-		left: 20px;
-		border: 0;
-		width: 160px;
-		transform: translateY(-50%);
-	}
-
-	.search-btn {
-		position: relative;
-		outline: none;
-		width: 60px;
-		height:	$search-wrap-height;
-		vertical-align: baseline;
-		border-radius: 0;
-		transform-origin: 50% 50%;
-		transform: skew(45deg);
-		@include icon-content('\e61f');
-		&:before {
-			font-size: 16px;	
-		}
-	}
 
 	.table-wrapper {
 		flex: 2 1;
 	}
+
 
 	.map-wrapper {
 		position: relative;
 		width: 670px;
 		height: 318px;
 		background: $chart-bg;
-		margin-left: $margin-horizontal;
+		margin-left: 10px;
 	}
 
 	.leader-map {
@@ -370,36 +194,7 @@
 		bottom: 0;
 	}
 
-	.col1 {
-		width: 5%;
-	}
-	.col2 {
-		width: 8.8%;
-	}
-	.col3 {
-		width: 11.2%;
-	}
-	.col4 {
-		width: 8.2%;
-	}
-	.col5 {
-		width: 12%;
-	}
-	.col6 {
-		width: 8.8%;
-	}
-	.col7 {
-		width: 16%;
-	}
-	.col8 {
-		width: 16%;
-	}
-	.col9 {
-		width: 7%;
-	}
-	.col10 {
-		width: 7%;
-	}
+
 }
 
 //order step
@@ -464,5 +259,11 @@
 				background-color: darken($color-primary, 20%);
 			}
 		}
+	}
+}
+
+.leader-nav-bar {
+	.immediate-reservation-toggle-btn {
+		margin-right: 10px;
 	}
 }

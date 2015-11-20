@@ -6,3 +6,4 @@ import './dateparser';
 import './datepicker';
 import './modal';
 import './dropdown';
+import './pagination';

@@ -1,119 +1,97 @@
 <section class='list-page police-page'>
-	<div class='tabs'>
-		<ul class='flex'>
-			<li>
-					<a 
-					href='javascript:;' 
-					class='normal-tab'
-					ng-click='toggleTab("callPolice")'>报警记录查询</a>
-			</li>
-		</ul>
-	</div>
 
-	<div class='search'>
-		<form ng-submit='searchOrder()'>
-			<div class='simple'>
+	<div class='search-nav-bar clearfix'>
+		<form ng-submit='searchOrder()' class='form-inline fl'>
+			<div class='form-group'>
 				<input 
 					type='text' 
-					class='search-input-text'
-					ng-model='keywords'/><button class='search-btn btn'>搜索</button>
-				<a href='javascript:;' class='more-link' ng-click='selectMore()'>更多筛选条件</a>
-			</div>
-			<div class='more' ng-show='isShowMore'>
-				<div>
-					<span class='field-wraper'>
-						<label>接线员:</label>
-						<input type='text' class='input-text'/>
-					</span>
-					<span class='field-wraper'>
-						<label>状态</label>
-						<select class='select-normal'><option>请选择</option></select>
-					</span>
-					<span  class='field-wraper'>
-						<label>订单时间:</label>
-						<input 
-							type='text' 
-							class='input-text'
-							ng-model='search.beginTime'/>
-						<b>-</b>
-						<input 
-							type='text' 
-							class='input-text'
-							ng-model='search.endTime'/>
-					</span>
-				</div>
-
-				<div class='more-btn-wrap'>
-					<button class='more-btn btn'>搜索</button>
-				</div>
-			</div>
+					class='form-control keywords-input'
+					ng-model='keywords'/>
+			</div><button class='btn btn-primary search-btn' type='submit'><i class='icon-search'></i></button>
 		</form>
 
-		<div class='toggle-btns'>
-			<button 
-				class='btn' 
-				ng-click='cutAllOrderTab()'
-				ng-class='{active: isAllOrderTab()}'>全部({{getAllOrderTotal()}})</button>
-			<button 
-				class='btn' 
-				ng-click='cutUnhandleOrderTab()'
-				ng-class='{active: isUnhandleOrderTab()}'>未处理({{getUnhandleOrderTotal()}})</button>
-			<button 
-				class='btn' 
-				ng-click='cutHandleOrderTab()'
-				ng-class='{active: isHandleOrderTab()}'>已处理({{getHandleOrderTotal()}})</button>
-		</div>
+
+		<ul class='nav nav-pills fr'>
+			<li ng-class='{active: isAllOrderTab()}'>
+				<a
+					href='javascript:;'
+					class='tab-btn'
+					ng-click='cutAllOrderTab()'>全部
+					<span class='badge'>{{getAllOrderTotal()}}</span></a>
+			</li>
+			<li ng-class='{active: isUnhandleOrderTab()}'>
+				<a
+					href='javascript:;'
+					class='tab-btn'
+					ng-click='cutUnhandleOrderTab()'>未处理
+					<span class='badge'>{{getUnhandleOrderTotal()}}</span></a>
+			</li>
+			<li ng-class='{active: isHandleOrderTab()}'>
+				<a
+					href='javascript:;'
+					class='tab-btn'
+					ng-click='cutHandleOrderTab()'>已处理
+					<span class='badge'>{{getHandleOrderTotal()}}</span></a>
+			</li>
+		</ul>
 
 	</div>
 
-	<div class='orders'>
-		<div class='table-wrapper'>
-			<table class='table'>
-				<thead>
-					<tr>
-						<th>报警类型</th>
-						<th>报警时间</th>
-						<th>报警车辆</th>
-						<th>状态</th>
-						<th>司机姓名</th>
-						<th>司机电话</th>
-						<th>终端电话</th>
-						<th>终端编号</th>
-						<th>结案备注</th>
-						<th>分公司</th>
-						<th>车辆位置</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr 
-						ng-repeat='item in orders'
-						handle-alarm-order='item'
-						operator='{{item.opName}}'
-						time-transfered='{{item.timeTransfered}}'
-						ng-class='{active: item.isActive, selfSelected: item.hasSelfSelected(), otherSelected: item.hasOtherSelected()}'>
-						<td class='first-field'>
-							<i ng-class='{"icon-warn": (item.status === 1)}'></i>
-							<span>{{item.rTypeLabel}}</span>
-						</td>
-						<td>{{item.timeCreated}}</td>
-						<td>{{item.vehicleNumber}}</td>
-						<td>{{item.oemStatus}}</td>
-						<td>{{item.driverName}}</td>
-						<td>{{item.driverMobile}}</td>
-						<td>{{item.terminalMobile}}</td>
-						<td>{{item.terminalCode}}</td>
-						<td class='ellipsis'>{{item.note}}</td>
-						<td class='ellipsis'>{{item.corpName}}</td>
-						<td class='ellipsis'>{{item.poi}}</td>
-					</tr>
-				</tbody>
-			</table>
+	<div class='orders-wrapper'>
+		<div class='orders-table'>
+			<div class='table-wrapper'>
+				<table class='table table-condensed table-hover'>
+					<thead>
+						<tr>
+							<th>报警类型</th>
+							<th>报警时间</th>
+							<th>报警车辆</th>
+							<th>状态</th>
+							<th>司机姓名</th>
+							<th>司机电话</th>
+							<th>终端电话</th>
+							<th>终端编号</th>
+							<th>结案备注</th>
+							<th>分公司</th>
+							<th>车辆位置</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr 
+							ng-repeat='item in orders'
+							handle-alarm-order='item'
+							operator='{{item.opName}}'
+							time-transfered='{{item.timeTransfered}}'
+							ng-class='{active: item.isActive, info: item.hasSelfSelected(), danger: item.hasOtherSelected()}'>
+							<td class='first-field'>
+								<i ng-class='{"icon-warn": (item.status === 1)}'></i>
+								<span>{{item.rTypeLabel}}</span>
+							</td>
+							<td class='ellipsis'>{{item.timeCreated}}</td>
+							<td class='ellipsis'>{{item.vehicleNumber}}</td>
+							<td class='ellipsis'>{{item.oemStatus}}</td>
+							<td class='ellipsis'>{{item.driverName}}</td>
+							<td class='ellipsis'>{{item.driverMobile}}</td>
+							<td class='ellipsis'>{{item.terminalMobile}}</td>
+							<td class='ellipsis'>{{item.terminalCode}}</td>
+							<td class='ellipsis'>{{item.note}}</td>
+							<td class='ellipsis'>{{item.corpName}}</td>
+							<td class='ellipsis'>{{item.poi}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class='paging' ng-show='currentOrderTotal > 10'>
-			<pagination 
-				num-items='currentOrderTotal' 
-				current-page='currentOrderPage'
-				on-select-page='onSelectPage(page)'></pagination>
-		</div>
+		<uib-pagination 
+			class='pagination'
+			total-items='orderItemCount' 
+			ng-model='currentOrderPage' 
+			ng-change='pageChanged()'
+			max-size='10'
+			previous-text='&lsaquo;' 
+			next-text='&rsaquo;' 
+			first-text='&laquo;' 
+			last-text='&raquo;'
+			></uib-pagination>
 	</div>
 </section>

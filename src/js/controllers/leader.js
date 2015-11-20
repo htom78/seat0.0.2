@@ -1,6 +1,6 @@
 'use strict';
 
-function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
+function LeaderCtrl($scope, $timeout, $location, security, leaderService, preparedOrderCount) {
 
 	$scope.orders = leaderService.orderss;
 	
@@ -16,141 +16,6 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 	$scope.toggleEmplyerTab = function(tabName) {
 		$scope.chartEmployer.currentTab = tabName;
 	};
-
-	//######################################################################################
-
-	let isSearch = false;
-	const searchData = {
-		keywords: '',	
-	};
-
-	const tabTextName = ['预', '即'];
-	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
-	const state = {
-		immediateOrReservation: {
-			RESERVATION: 0,
-			IMMEDIATE: 1,	
-		}, 
-		currentTab: {
-			EXCEPTION: 0,
-			PREPARED: 1,
-			RECEIVED: 2,
-			STARTED: 3,
-			DONE: 4,
-		}
-	};
-
-	$scope.currentOrderTab = state.currentTab.PREPARED;
-	$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
-	$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
-	$scope.preparedCount = 0;
-	$scope.receivedCount = 0;
-	$scope.startedCount = 0;
-	$scope.doneCount = 0;
-	$scope.exceptionCount = 0;
-
-	$scope.cutOrderTabPrepared = function() {
-		isSearch = false;
-		$scope.currentOrderTab = state.currentTab.PREPARED;
-		leaderService.getPreparedOrders($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope.preparedCount = total;
-			});	
-	};
-
-	$scope.cutOrderTabReceived = function() {
-		isSearch = false;
-		$scope.currentOrderTab = state.currentTab.RECEIVED;
-		leaderService.getReceivedOrders($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope.receivedCount = total;	
-			});	
-	};
-
-	$scope.cutOrderTabStarted = function() {
-		isSearch = false;
-		$scope.currentOrderTab = state.currentTab.STARTED;
-		leaderService.getStartedOrders($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope.startedCount = total;
-			});	
-	};
-
-	$scope.cutOrderTabDone = function() {
-		isSearch = false;
-		$scope.currentOrderTab = state.currentTab.DONE;
-		leaderService.getDoneOrders($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope.doneCount = total;
-			});
-	};
-
-	$scope.cutOrderTabException = function() {
-		isSearch = false;
-		$scope.currentOrderTab = state.currentTab.EXCEPTION;
-		leaderService.getExceptionOrders($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope.exceptionCount = total;
-			});	
-	};
-
-	$scope.isPreparedCurrentTab = function() {
-		return $scope.currentOrderTab === state.currentTab.PREPARED;	
-	};
-
-	$scope.isStartedCurrentTab = function() {
-		return $scope.currentOrderTab === state.currentTab.STARTED;	
-	};
-
-	$scope.isReceivedCurrentTab = function() {
-		return $scope.currentOrderTab === state.currentTab.RECEIVED;	
-	};
-
-	$scope.isDoneCurrentTab = function() {
-		return $scope.currentOrderTab === state.currentTab.DONE;	
-	};
-
-	$scope.isExceptionCurrentTab = function() {
-		return $scope.currentOrderTab === state.currentTab.EXCEPTION;	
-	};
-
-	$scope.toggleImmediateOrReservation = function() {
-		let isImmediate;
-		isSearch = false;
-		if ($scope.immediateOrReservationSelect === state.immediateOrReservation.IMMEDIATE) {
-			$scope.immediateOrReservationSelect = state.immediateOrReservation.RESERVATION;
-		} else {
-			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
-		}
-		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
-		leaderService['get' + tabsName[$scope.currentOrderTab] + 'Orders']($scope.immediateOrReservationSelect)
-			.then((total) => {
-				$scope[tabsName[$scope.currentOrderTab].toLowerCase() + 'Count'] = total;
-			});
-	};
-
-	$scope.$watch(() => leaderService.shouldUpdate, () => {
-		$scope.currentOrderPage = leaderService.currentPage;
-		$scope.orderItemCount = leaderService.total;
-	});
-
-	$scope.onSelectPage = function(page) {
-		if (isSearch) {
-			leaderService.getSelectPageOrder(page, $scope.immediateOrReservationSelect, $scope.currentOrderTab, searchData.keywords);
-		} else {
-			leaderService.getSelectPageOrder(page, $scope.immediateOrReservationSelect, $scope.currentOrderTab, '');
-		}
-	};
-
-	$scope.searchOrder = function() {
-		isSearch = true;
-		searchData.keywords = $scope.words;
-		leaderService.queryOrderByKeywords($scope.words, $scope.immediateOrReservationSelect, $scope.currentOrderTab)
-			.then((response) => {
-				$scope[tabsName[$scope.currentOrderTab].toLowerCase() + 'Count'] = response;
-			});
-	};
-
 
 	//图表数据
 	$scope.employChart = {
@@ -186,6 +51,118 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 	}, 4000);
 	/***************************************/
 
+	//######################################################################################
+
+	let isSearch = false;
+
+	$scope.currentOrderPage = 1;
+	$scope.orderItemCount = preparedOrderCount;
+	$scope.preparedCount = preparedOrderCount;
+
+	const searchData = {
+		keywords: '',	
+	};
+
+	const tabTextName = ['预', '即'];
+	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
+	const state = {
+		immediateOrReservation: {
+			RESERVATION: 0,
+			IMMEDIATE: 1,	
+		}, 
+		currentTab: {
+			EXCEPTION: 0,
+			PREPARED: 1,
+			RECEIVED: 2,
+			STARTED: 3,
+			DONE: 4,
+		}
+	};
+
+	$scope.currentOrderTab = state.currentTab.PREPARED;
+	$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
+	$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+	$scope.receivedCount = 0;
+	$scope.startedCount = 0;
+	$scope.doneCount = 0;
+	$scope.exceptionCount = 0;
+
+	$scope.cutOrderTabPrepared = function() {
+		isSearch = false;
+		$scope.currentOrderPage = 1;
+		$scope.currentOrderTab = state.currentTab.PREPARED;
+		$scope.getOrders();
+	};
+
+	$scope.cutOrderTabReceived = function() {
+		isSearch = false;
+		$scope.currentOrderPage = 1;
+		$scope.currentOrderTab = state.currentTab.RECEIVED;
+		$scope.getOrders();
+	};
+
+	$scope.cutOrderTabStarted = function() {
+		isSearch = false;
+		$scope.currentOrderPage = 1;
+		$scope.currentOrderTab = state.currentTab.STARTED;
+		$scope.getOrders();
+	};
+
+	$scope.cutOrderTabDone = function() {
+		isSearch = false;
+		$scope.currentOrderPage = 1;
+		$scope.currentOrderTab = state.currentTab.DONE;
+		$scope.getOrders();
+	};
+
+	$scope.cutOrderTabException = function() {
+		isSearch = false;
+		$scope.currentOrderPage = 1;
+		$scope.currentOrderTab = state.currentTab.EXCEPTION;
+		$scope.getOrders();
+	};
+
+	$scope.isPreparedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.PREPARED;	
+	};
+
+	$scope.isStartedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.STARTED;	
+	};
+
+	$scope.isReceivedCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.RECEIVED;	
+	};
+
+	$scope.isDoneCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.DONE;	
+	};
+
+	$scope.isExceptionCurrentTab = function() {
+		return $scope.currentOrderTab === state.currentTab.EXCEPTION;	
+	};
+
+	$scope.toggleImmediateOrReservation = function() {
+		let isImmediate;
+		isSearch = false;
+		if ($scope.immediateOrReservationSelect === state.immediateOrReservation.IMMEDIATE) {
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.RESERVATION;
+		} else {
+			$scope.immediateOrReservationSelect = state.immediateOrReservation.IMMEDIATE;
+		}
+		$scope.immediateOrReservation = tabTextName[$scope.immediateOrReservationSelect];
+		$scope.getOrders();
+	};
+
+
+	$scope.searchOrder = function() {
+		isSearch = true;
+		searchData.keywords = $scope.words;
+		$scope.getOrders();
+	};
+
+
+
 	$scope.$watch(function() {
 		return security.isLeader();	
 	}, function(isLeader) {
@@ -200,6 +177,24 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
 	$scope.hideMap = function() {
 		$scope.isMapShow = false;
 	};
+
+	$scope.pageChanged = function() {
+		$scope.getOrders();
+	};
+
+	$scope.getOrders = function() {
+		leaderService.getOrders({
+			isImmediate: $scope.immediateOrReservationSelect,
+			page: $scope.currentOrderPage,
+			status: $scope.currentOrderTab,
+			k: isSearch ? $scope.searchData.keywords : ''
+		})
+			.then((total) => {
+				$scope[tabsName[$scope.currentOrderTab].toLowerCase() + 'Count'] = total;
+				$scope.orderItemCount = total;
+			});
+	};
+
 }
 
 export default {

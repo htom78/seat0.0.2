@@ -1,83 +1,63 @@
 'use strict';
-function SearchCtrl($scope, searchService, initCount) {
+import angular from 'angular';
+
+function SearchCtrl($scope, searchService, startCount, orderStatuses) {
 	$scope.orders = searchService.orderss;
+	$scope.orderItemCount = startCount;		
+	$scope.orderStatuses = orderStatuses;
+	$scope.orderTypes = [{name: '即时', value: 1}, {name: '预约', value: 0}];
 
-	$scope.allOrderCount = initCount;
-	$scope.immediateOrderCount = 0;
-	$scope.reservationOrderCount = 0;
+	const searchData = {};
 
-	let isSearch = false;
-	let searchData = {
-		keywords: '',
-		beginTime: '',
-		endTime: ''	
-	};
 
-	$scope.$watch( () => searchService.shoudUpdate, () => {
-		$scope.currentOrderPage = searchService.currentPage;
-		$scope.orderItemCount = searchService.total;
-	});
-
-	$scope.currentOrderTab = 'all';
-	$scope.isCurrentTab = function(type) {
-		return $scope.currentOrderTab === type;
-	};
-
-	$scope.cutAllOrderTab = function() {
-		isSearch = false;
-		$scope.currentOrderTab = 'all';
-		searchService.getAllOrders()
-			.then((total) => {
-				$scope.allOrderCount = total;	
-			});
-	};
-
-	$scope.cutImmediateOrderTab = function() {
-		isSearch = false;
-		$scope.currentOrderTab = 'immediate';
-		searchService.getImmediatOrders()
-			.then((total) => {
-				$scope.immediateOrderCount = total;
-			});
-	};
-
-	$scope.cutReservationOrderTab = function() {
-		isSearch = false;
-		$scope.currentOrderTab = 'reservation';	
-		searchService.getReservationOrders()
-			.then((total) => {
-				$scope.reservationOrderCount = total;
-			});
-	};
-
-	//更多筛选条件
-	$scope.filterMoreOrderSearchBtn = function() {
-		$scope.isShowMore = !$scope.isShowMore;	
-	};
 
 	//点击搜索按钮
+	$scope.currentOrderPage = 1;
 	$scope.searchOrder = function() {
-		isSearch = true;
-		let [beginTime, endTime] = ['', ''];
-		if ($scope.isShowMore) {
-			beginTime = $scope.searchOrderBeginTime;
-			endTime =$scope.searchOrderEndTime;
-		}
 
-		searchData.beginTime = beginTime;
-		searchData.endTime = endTime;
-		searchData.keywords = $scope.words;
-		searchService.queryOrderByKeywords($scope.words, beginTime, endTime);
+		$scope.currentOrderPage = 1;
+		searchData.poi = $scope.order.startPosition;
+		searchData.targetPoi = $scope.order.destination;	
+		searchData.vehilceNumber = $scope.order.carPlate;
+		searchData.contactPhone = $scope.order.concatPhone;
+		searchData.sn = $scope.order.orderNumber;
+		searchData.opName = $scope.order.operatorName;
+		searchData.status = $scope.order.orderStatus.id;
+		searchData.isImmediate = $scope.order.orderType.value;
+		searchData.beginTime = $scope.order.beginTime;
+		searchData.endTime = $scope.order.endTime;
+		searchData.page = 1;
+		$scope.getOrders();
 	};
 
-	//点击分页按钮
-	$scope.onSelectPage = function(page) {
-		if (isSearch) {
-			searchService.getSelectPageOrder(page, searchData.keywords, searchData.beginTime, searchData.endTime);
-		} else {
-			searchService.getSelectPageOrder(page);
-		}
+	$scope.pageChanged = function() {
+		searchData.page = $scope.currentOrderPage;
+		$scope.getOrders();
 	};
+
+	$scope.getOrders = function() {
+		searchService.getOrders(searchData)
+			.then((total) => {
+				$scope.orderItemCount = total;		
+			}, () => {
+				$scope.orderItemCount = 0;	
+			});
+	};
+
+
+	$scope.status = {
+		beginTimeOpend: false,
+		endTimeOpend: false	
+	};
+
+	$scope.openBeginTime = function() {
+		$scope.status.beginTimeOpend = true;	
+	};
+
+	$scope.openEndTime = function() {
+		$scope.status.endTimeOpend = true;	
+	};
+
 }
 
 export default {

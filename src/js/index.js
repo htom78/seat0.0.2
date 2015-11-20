@@ -30,7 +30,8 @@ var requires = [
 	'app.map',
 	'ui.bootstrap.datepicker',
 	'ui.bootstrap.modal',
-	'ui.bootstrap.dropdown'
+	'ui.bootstrap.dropdown',
+	'ui.bootstrap.pagination'
 ];
 
 var app = angular.module('app', requires)

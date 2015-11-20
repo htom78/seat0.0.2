@@ -1,42 +1,54 @@
 <section class='represent-above flex'>
-	<div class='represent-form' listen-call>
-		<form name='newOrder' ng-submit='addOrderFromForm()'>
-			<ul>
-				<li class='field-li'>
-					<label class='icon-img-bg calling-label'></label>
+	<div class='represent-form-wrapper' listen-call>
+		<form name='newOrder' class='represent-form neworder-form' ng-submit='addOrderFromForm()'>
+
+			<div class='form-inline'>
+				<div class='form-group form-reduce'>
+					<label class='label-sm-icon'><i></i></label>
 					<input
 						type='text'
-						class='text-input input-sub-width'
+						class='form-control input-sm input-residue-width'
 						disabled='disabled'
 						placeholder='叫车人电话号码'
 						ng-required='true'
 						ng-model='orderData.callPhone'
 					/>
-					<label class='icon-img-bg username-label'></label>
+				</div>
+				<div class='form-group form-reduce'>
+					<label class='label-sm-icon'><i></i></label>
 					<input
 						type='text'
-						class='text-input input-sub-width'
+						class='form-control input-sm input-residue-width'
 						placeholder='叫车人姓名'
 						ng-model='orderData.callName'
 						ng-required='true'
 					/>
-				</li>
-				<li class='field-li'>
-					<label class='icon-img-bg actual-label'></label>
+				</div>
+			</div>
+
+			<div class='form-inline'>
+				<div class='form-group'>
+					<label class='label-sm-icon'><i></i></label>
 					<input
 						type='text'
-						class='text-input input-sub-width'
+						class='form-control input-sm'
 						placeholder='联系人电话号码'
 						ng-model='orderData.contactPhone'
 						ng-required='true'
 					/>
-					<label class='icon-img-bg username-label'></label>
+				</div>
+
+				<div class='form-group'>
+					<label class='label-sm-icon'><i></i></label>
 					<input
 						type='text'
-						class='text-input input-sub-width'
+						class='form-control input-sm'
 						placeholder='联系人姓名'
 						ng-model='orderData.contactName'
 					/>
+				</div>
+
+				<div class='form-group'>
 					<input 
 						type='radio' 
 						name='gender' 
@@ -53,100 +65,91 @@
 						ng-model='orderData.gender'
 						value='2'/>
 					<label class='male' for='maleSelect'></label>
-				</li>
-				<li class='field-li'>
-					<label class='icon-img-bg start-label'></label>
-					<input
-						type='text'
-						class='text-input input-normal-width'
-						placeholder='出发位置'
-						ng-model='orderData.startPoint'
-						words-place='orderData.startPoint'
-						start-list='orderData.poiList'
-						ng-required='true'
-					/>
-				</li>
-				<li class='field-li'>
-					<label class='icon-img-bg around-label'></label>
-					<input
-						type='text'
-						class='text-input input-normal-width'
-						placeholder='出发地描述'
-						ng-model='orderData.startPointDesc'
-					/>
-				</li>
-				<li class='field-li'>
-					<label class='icon-img-bg destination-label'></label>
-					<input
-						list='representDestination'
-						class='text-input input-normal-width'
-						placeholder='目的地'
-						ng-required='true'
-						ng-model='orderData.destination'
-						ng-required='true'
-					/>
-					<datalist id='representDestination'>
-						<option 
-						ng-repeat='item in orderData.targetpoiList' value='{{item}}' />
-						/>
-					</dataList>
-				</li>
-				<li class='field-li'>
-					<label class='icon-img-bg around-label'></label>
-					<input
-						type='text'
-						class='text-input input-normal-width'
-						placeholder='目的地描述'
-						ng-model='orderData.destinationDesc'
-					/>
-				</li>
-				<li class='field-li'>
+				</div>
+			</div>
+
+			<div class='form-inline'>
+				<label class='label-sm-icon'><i></i></label>
+				<input
+					type='text'
+					class='form-control input-sm input-residue-width'
+					placeholder='出发位置'
+					ng-model='orderData.startPoint'
+					words-place='orderData.startPoint'
+					start-list='orderData.poiList'
+					ng-required='true'
+				/>
+			</div>
+
+			<div class='form-inline'>
+				<label class='label-sm-icon'><i></i></label>
+				<input
+					type='text'
+					class='form-control input-sm input-residue-width'
+					placeholder='出发地描述'
+					ng-model='orderData.startPointDesc'
+				/>
+			</div>
+
+			<div class='form-inline'>
+				<label class='label-sm-icon'><i></i></label>
+				<input
+					list='representDestination'
+					class='form-control input-sm input-residue-width'
+					placeholder='目的地'
+					ng-required='true'
+					ng-model='orderData.destination'
+					ng-required='true'
+				/>
+			</div>
+
+			<div class='form-inline'>
+				<label class='label-sm-icon'><i></i></label>
+				<input
+					type='text'
+					class='form-control input-sm input-residue-width'
+					placeholder='目的地描述'
+					ng-model='orderData.destinationDesc'
+				/>
+			</div>
+
+			<div class='form-inline'>
+				<div class='form-group'>
 					<input 
 						type='checkbox' 
 						id='reservationBox' 
 						class='checkbox-in-label'
 						ng-model='orderData.isReserved'
 						/>
-					<label class='icon-img-bg reservation-label' for='reservationBox'></label>
-					<span class='date-pickup-wrap'>
-						<input 
-							type='text' 
-							class='text-input input-calendar'  
-							ng-disabled='!orderData.isReserved'
-							ng-model='orderData.reservedDate'
-							/>
-							<div calendar selected='orderData.reservedDate' class='calendar'></div>
+					<label class='label-sm-icon' for='reservationBox'></label>
+				</div>
 
-							<span 
-								class='time-select' 
-								ng-class='{disabled: !orderData.isReserved}'>
-							<em 
-								class='hour' 
-								time-select='24'
-								selected='orderData.hour'
-								reservation='orderData.isReserved'
-								>{{orderData.hour}}</em><i class='colon'>:</i><em 
-								class='minute' 
-								time-select='60'
-								number-mod='5'
-								reservation='orderData.isReserved'
-								selected='orderData.minute'>{{orderData.minute}}</em>
-							</span>
-						</span>
-						<label class='icon-img-bg around-label'></label>
+				<div class='form-group'>
+					<input 
+						type='text' 
+						class='form-control input-sm'
+						ng-disabled='!orderData.isReserved'
+						ng-model='orderData.reservedDate'
+						/>
+				</div>
+
+				<div class='form-group'>
+				</div>
+
+				<div class='form-group'>
+					<label class='label-sm-icon'><i></i></label>
 						<input 
 							type='text'	
-							class='text-input person-count-input'
+							class='form-control input-sm'
 							placeholder='人数'
 							ng-model='orderData.number'
 							/>
-				</li>
-			</ul>
-			<div class='btns text-center'>
-				<button 
-					class='btn'
-					ng-class='{sending: !shouldSubmitOrder}'>保存</button>
-				<a href='javascript:;' class='btn' ng-click='initOrderData()'>取消</a>
+				</div>
+			</div>
+
+			<div class='text-center'>
+				<button class='btn btn-primary' type='submit'>保存</button>
+				<button class='btn btn-warning' type='button' ng-click='initOrderData()'>取消</button>
 			</div>
 		</form>
 	</div>
@@ -170,37 +173,20 @@
 </section>
 
 <section class='represent-order-list'>
-	<div class='search-bar'>
-		<div class='search-wrapper'>
-			<form ng-submit='searchOrder()'>
+	<div class='search-bar clearfix'>
+		<form ng-submit='searchOrder()' class='form-inline fr'>
+			<div class='form-group'>
 				<input 
-					type='text'
-					class='search-input'
-					ng-model='searchKeywords'
-					/><button class='search-btn btn'>搜索</button>
-			</form>
-		</div>
+					type='text' 
+					class='form-control keywords-input'
+					ng-model='searchKeywords'/>
+			</div><button class='btn btn-primary search-btn' type='submit'><i class='icon-search'></i></button>
+		</form>
 	</div>
 	<div class='order-list'>
-		<table class='table'>
-			<colgroup>
-				<col class='col1'>
-				<col class='col2'>
-				<col class='col3'>
-				<col class='col4'>
-				<col class='col5'>
-				<col class='col6'>
-				<col class='col7'>
-				<col class='col8'>
-				<col class='col9'>
-				<col class='col10'>
-				<col class='col11'>
-				<col class='col12'>
-				<col class='col13'>
-			</colgroup>
+		<table class='table table-condensed table-hover'>
 			<thead>
 				<tr>
-					<th>NO</th>
 					<th>订单编号</th>
 					<th>用车时间</th>
 					<th>乘客</th>
@@ -218,7 +204,6 @@
 			<tbody>
 				<tr ng-repeat='item in orders'
 						ng-if='$index < 6'>
-					<td>{{item.id}}</td>
 					<td>{{item.sn}}</td>
 					<td class='ellipsis' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
 					<td>{{item.contactName}}</td>

@@ -18,34 +18,30 @@
 			<div class='graph' chart-user order-fuck='userData.fkTotal' order-total='userData.total'>
 			</div>
 		</div>
-		<form class='seat-top-form create-form' name='newOrder' ng-submit='addOrderFromForm()'>
+		<form class='seat-top-form neworder-form' name='newOrder' ng-submit='addOrderFromForm()'>
 			<ul class='seat-field1'>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper residue-width'>
-						<input 
-							type='text' 
-							class='form-control input-sm' 
-							disabled='disabled'
-							ng-model='orderData.callingTel'/>
-					</div>
+				<li class='form-inline'>
+					<label class='label-sm-icon'><i class='icon-phone-label'></i></label>
+					<input 
+						type='text' 
+						class='form-control input-sm input-residue-width' 
+						disabled='disabled'
+						ng-model='orderData.callingTel'/>
 				</li>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper'>
-						<input 
-							type='text' 
-							class='form-control input-sm' 
-							maxlength='11'
-							ng-required='true'
-							ng-model='orderData.actualTel'
-							ng-pattern='/1\d{10}/'/>
-					</div>
+				<li class='form-inline'>
+					<label class='label-sm-icon'><i class='icon-callback-label'></i></label>
+					<input 
+						type='text' 
+						class='form-control input-sm' 
+						maxlength='11'
+						ng-required='true'
+						ng-model='orderData.actualTel'
+						ng-pattern='/1\d{10}/'/>
 					<span class='mobile-position'>{{mobilePosition}}</span>
 				</li>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper'>
+				<li class='form-inline'>
+					<div class='form-group'>
+						<label class='label-sm-icon'><i class='icon-user-label'></i></label>
 						<input 
 							type='text' 
 							class='form-control input-sm'
@@ -54,7 +50,7 @@
 							ng-model='orderData.fullName'
 							placeholder='用户姓名'/>
 					</div>
-					<div class='genders-wrapper'>
+					<div class='form-group'>
 						<input 
 							type='radio' 
 							name='gender' 
@@ -73,63 +69,55 @@
 						<label class='male' for='maleRadio'></label>
 					</div>
 				</li>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper residue-width'>
-						<input 
-							type='text' 
-							class='form-control input-sm'
-							id='startInput'
-							maxlength='50'
-							ng-required='true'
-							ng-model='orderData.start'
-							placeholder='出发位置'
-							words-place='orderData.start'
-							start-list='orderData.poiList'/>
-					</div>
+				<li class='form-inline'>
+					<label class='label-sm-icon'><i class='icon-start-label'></i></label>
+					<input 
+						type='text' 
+						class='form-control input-sm input-residue-width'
+						id='startInput'
+						maxlength='50'
+						ng-required='true'
+						ng-model='orderData.start'
+						placeholder='出发位置'
+						words-place='orderData.start'
+						start-list='orderData.poiList'/>
 				</li>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper residue-width'>
-						<input 
-							type='text' 
-							class='form-control input-sm'
-							maxlength='50'
-							ng-model='orderData.aroundRoadName'
-							placeholder='周围道路名称'/>
-					</div>
+				<li class='form-inline'>
+					<label class='label-sm-icon'><i class='icon-around-label'></i></label>
+					<input 
+						type='text' 
+						class='form-control input-sm input-residue-width'
+						maxlength='50'
+						ng-model='orderData.aroundRoadName'
+						placeholder='周围道路名称'/>
 				</li>
 			</ul>
 			<ul>
-				<li class='form-group'>
-					<div class='car-type-wrapper'>
+				<li class='form-inline'>
+					<div class='form-group'>
 						<input
 							type='checkbox'
 							id='carTypeSelect'
 							class='checkbox-in-label'
 							ng-model='orderData.isCarType' />
-						<label class='label-sm-icon' for='carTypeSelect'></label>
+						<label class='label-sm-icon' for='carTypeSelect'><i class='icon-car-label'></i></label>
 					</div>
-					<div class='select-wrapper'>
+					<div class='form-group selects-group'>
 						<select class='form-control input-sm' ng-disabled='!orderData.isCarType'>
 							<option>汽车类型</option>
 						</select>
-					</div>
-					<div class='select-wrapper'>
 						<select class='form-control input-sm' ng-disabled='!orderData.isCarType'>
 							<option>价格</option>
 						</select>
-					</div>
-					<div class='select-wrapper car-count-select-wrapper'>
 						<select class='form-control input-sm' ng-disabled='!orderData.isCarType'>
 							<option>车数</option>
 						</select>
 					</div>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper inline-width'>
+					<div class='form-group'>
+						<label class='label-sm-icon'><i class='icon-around-label'></i></label>
 						<input 
 							list='orderDestination' 
-							class='form-control input-sm'
+							class='form-control input-sm destination-input'
 							ng-model='orderData.end'
 							ng-required='true'
 							placeholder='目的地'/>
@@ -138,20 +126,20 @@
 						</datalist>
 					</div>
 				</li>
-				<li class='form-group'>
-					<div class='reservation-checkbox-wrapper'>
+				<li class='form-inline'>
+					<div class='form-group'>
 						<input 
 							type='checkbox' 
 							id='reservationSelect' 
 							class='checkbox-in-label'
 							ng-model='orderData.isReservation'
 							/>
-						<label class='label-sm-icon' for='reservationSelect'></label>
+						<label class='label-sm-icon' for='reservationSelect'><i class='icon-reservation-label'></i></label>
 					</div>
-					<div class='input-wrapper'>
+					<div class='form-group'>
 						<input 
 							type='text' 
-							class='form-control input-sm'  
+							class='form-control input-sm calendar-input'  
 							ng-disabled='!orderData.isReservation'
 							ng-model='orderData.reservationCalendar'
 							uib-datepicker-popup='yyyy-MM-dd'
@@ -161,7 +149,7 @@
 							ng-click='openCalendar()'
 							/>
 					</div>
-					<div class='timer-picker-wrapper'>
+					<div class='form-group time-select-wrapper'>
 							<span 
 								class='time-select' 
 								ng-class='{disabled: !orderData.isReservation}'>
@@ -179,25 +167,23 @@
 							</span>
 					</div>
 
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper'>
+					<div class='form-group'>
+						<label class='label-sm-icon'><i class='icon-matrix-label'></i></label>
 						<input 
 							type='text'
-							class='form-control input-sm'
+							class='form-control input-sm car-count-input'
 							ng-model='orderData.count'
 							placeholder='叫车数'/>
 					</div>
 
 				</li>
-				<li class='form-group'>
-					<label class='label-sm-icon'><i></i></label>
-					<div class='input-wrapper residue-width'>
-						<input 
-							type='text' 
-							class='form-control input-sm'
-							ng-model='orderData.remark'
-							placeholder='附加信息'/>
-					</div>
+				<li class='form-inline'>
+					<label class='label-sm-icon'><i class='icon-remark-label'></i></label>
+					<input 
+						type='text' 
+						class='form-control input-sm input-residue-width'
+						ng-model='orderData.remark'
+						placeholder='附加信息'/>
 				</li>
 			</ul>
 			<div class='text-center'>
@@ -357,7 +343,7 @@
 							<th>乘客地址</th>
 							<th>目的地</th>
 							<th ng-if='isExceptionCurrentTab()'>状态</th>
-							<th ng-if='!isDoneCurrentTab()'>操作</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -373,12 +359,18 @@
 							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
 							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
 							<td class='ellipsis' title='{{item.statusName}}' ng-if='isExceptionCurrentTab()'>{{item.statusName}}</td>
-							<td class='seat-operate-td' ng-if='!isDoneCurrentTab()'>
+							<td class='seat-operate-td'>
 								<div class="btn-group" uib-dropdown>
 									<button id="single-button{{$index}}" type="button" class="btn btn-primary btn-xs" uib-dropdown-toggle ng-disabled="disabled">
 										operate<span class="caret"></span>
 									</button>
 									<ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button{{$index}}">
+										<li role='menuitem'>
+											<a 
+												href='javascript:;'
+												view-order
+												>查看订单</a>
+										</li>
 										<li role='menuitem' ng-show='isCancelBtnShow()'>
 											<a 
 												href='javascript:;'

@@ -1,81 +1,42 @@
 .list-page {
-	$tab-height: 40px;
-
-	@extend %font-family;
-	padding: $padding-large-vertical $padding-horizontal;
-	border-top: $border-main-size solid $border-main-color;
 	border-right: $border-main-size solid $border-main-color;
-	font-size: 14px;
-	.tabs {
-		padding-left: $tab-height + $padding-horizontal;
-	}
-	.search-input-text {
-		@extend %text-input;
-		border: 1px solid $input-border-color;
-		border-right: 0;
-		border-radius: $radius-small-size 0 0 $radius-small-size;
-		width: 350px;
-		&:focus {
-			border-color: $color-primary;
+	padding: 20px 10px 10px 20px;
+	.search-nav-bar {
+		padding: 8px 10px;
+		.keywords-input {
+			border-top-right-radius: 0;	
+			border-bottom-right-radius: 0;
+			border-right: 0;
 		}
-	}
-	.search-btn {
-		border-radius: 0 $radius-small-size $radius-small-size 0;
-		width: 70px; 
-	}
 
-	.more-link {
-		font-size: 14px;
-		color: $text-color;
-		text-decoration: none;
-	}
-
-	.select {
-		width: 180px;
-	}
-
-	.more-btn-wrap {
-		padding: $padding-vertical $padding-horizontal;
-	}
-
-	.more-btn {
-		width: 90px;
-		background: $color-primary;
-		&:hover {
-			background-color: darken($color-primary, 10%);	
+		.search-btn[type='submit'] {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			height: 34px;
+			.icon-search {
+				display: inline-block;	
+			}
 		}
-		&:active {
-			background-color: darken($color-primary, 20%);	
+
+		.tab-btn {
+			padding: 6px 15px;	
 		}
 	}
 
-	.simple {
-		padding:$padding-large-vertical $padding-horizontal $padding-vertical;
-		background-color: #fff;
+	.orders-wrapper {
+		background: #fff;	
+		padding: 10px;
 	}
-	.more {
-		background-color: #fff;
-		padding-left: $padding-horizontal * 2;
+
+	.orders-table {
+		height: 330px;	
 	}
-	.field-wraper {
-		display: inline-block;
-		margin-right: $margin-horizontal;
-	}
-	.search {
-		position: relative;
-	}
-	.toggle-btns {
-		position: absolute;
-		right: $padding-large-horizontal;
-		top: $padding-large-vertical;
-		.btn{
-			width: 96px;
-		}
-		.active {
-			background-color: $color-primary;
-		}
+	.table {
+		font-size: 12px;	
+		table-layout: fixed;
 	}
 }
+
 
 //#################
 .normal-tab {

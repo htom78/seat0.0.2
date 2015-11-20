@@ -3,113 +3,22 @@
 	border-right: $border-main-size solid $border-main-color;
 }
 
-.represent-form {
-	
-	$input-normal-width: $layout-left-width - $normal-size - 5px - $padding-horizontal - $border-main-size - ($input-padding-horizontal + 1px) * 2;
-
-	@extend %font-family;
-	position: relative;
-	margin-right: $margin-small-horizontal;
+.represent-form-wrapper {
+	margin-right: 4px;
 	border: $border-main-size solid $border-main-color;
 	border-left: 0;
-	width: $layout-left-width - $border-main-size;
-	padding: $padding-vertical 0 $padding-vertical ($padding-horizontal + $border-main-size);
+	width: 610px;
+	padding: 10px;
 
-	.input-normal-width {
-		width: $input-normal-width;	
-	}
-
-	.input-sub-width {
-		width: 170px;
-	}
-
-	.field-li {
-		margin-bottom: $margin-vertical;	
-	}
-
-	.icon-img-bg {
-		&:before {
-			font-size: $normal-size;	
-		}	
-		background-color: #ccc;
-	}
-
-	.calling-label {
-		@include icon-content('\e605');	
-	}
-
-	.actual-label {
-		@include icon-content('\e614');	
-	}
-
-	.username-label {
-		background-color: $color-primary;	
-		@include icon-content('\e618');
-	}
-
-	.start-label {
-		background-color: $color-forth;
-		@include icon-content('\e622');	
-	}
-
-	.around-label {
-		@include icon-content('\e626');	
-	}
-
-	.destination-label {
-		@include icon-content('\e623');	
-	}
-
-	.reservation-label {
-		@include icon-content('\e629');	
-	}
-
-	.time-select {		
-		display: inline-block;	
-		border: 1px solid $input-border-color;
-		height: $normal-size;
-		line-height: $normal-size;
-		box-sizing: border-box;
-		border-radius: $radius-small-size;
-		background-color: $select-bg;
-		vertical-align: bottom;
-		font-size: $input-text-font-size;
-		color: $input-text-color;
-
-		&.disabled {
-			background-color: $input-text-disabled-bg;	
-			color: $input-text-disabled-color;
-		}
-		.hour,
-		.minute {
-			display: inline-block;	
-			width: 28px;
-			text-align: center;
-			cursor: Default;
-		}
+	.form-reduce {
+		width: calc(50% - 4px);
 	}
 
 	.btn {
 		width: 140px;	
-		&.sending {
-			background-color: $color-disabled;	
-			text-indent: -9999px;
-			background-image: url(../assets/imgs/loading.gif);
-			background-repeat: no-repeat;
-			background-position: center;
-			pointer-events: none;
-		}
 	}
-
-	.person-count-input {
-		width: 160px;	
-	}
-	
-	.input-calendar {
-		width: 276px;	
-	}
-
 }
+
 
 .represent-map {
 	$nav-height: 30px;
@@ -144,106 +53,42 @@
 }
 
 .represent-order-list {
-	$search-bar-height: 46px;
 
-	@extend %font-family;
-	margin-top: $margin-vertical;
-	padding: $padding-vertical 0 0 $padding-horizontal;
+	margin-top: 10px;
+	padding: 10px 0 0 10px;
 	border: $border-main-size solid $border-main-color;
 	border-bottom: 0;
 	border-right: 0;
 
 	.search-bar {
-		height: $search-bar-height;	
-		.search-input {
-			@extend %text-input;	
-			border: 1px solid $input-border-color;
-			border-radius: $radius-small-size 0 0 $radius-small-size;
-			width: 320px;
-			&:focus {
-				border-color: $color-primary;	
+		overflow: hidden;
+		background-color: $color-third;
+		padding: 6px 10px;
+		margin-bottom: 10px;
+
+		.toggle-btn {
+			margin-right: 10px;	
+		}
+
+		.keywords-input {
+			border-top-right-radius: 0;	
+			border-bottom-right-radius: 0;
+			border-right: 0;
+		}
+
+		button[type='submit'] {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			height: 34px;
+			.icon-search {
+				display: inline-block;	
 			}
-		}
-		.search-btn {
-			border-radius: 0 $radius-small-size $radius-small-size 0;	
-			width: 70px;
-		}
-		.search-wrapper {
-			float: right;	
-			margin-right: $margin-horizontal;
 		}
 	}
 
 	.table {
-		.col1 {
-			width: 3%;
-		}
-		.col2 {
-			width:5%;	
-		}
-		.col3 {
-			width: 10%;	
-		}
-		.col4 {
-			width: 4%;	
-		}
-		.col5 {
-			width: 6.4%;	
-		}
-		.col6 {
-			width: 14.2%;	
-		}
-		.col7 {
-			width: 14.2%;	
-		}
-		.col8 {
-			width: 4%;	
-		}
-		.col9 {
-			width: 6.8%;	
-		}
-		.col10 {
-			width: 5%;	
-		}
-		.col11 {
-			width: 6.4%;	
-		}
-		.col12 {
-			width: 6.8%;	
-		}
-		.col13 {
-			width: 14.2%;	
-		}
-
-
-
-		.some-list-before {
-			border-right: 1px dashed $table-border-color;	
-		}	
-		.inner-table {
-			width: 100%;
-			tbody {
-				background-color: transparent;	
-			}
-			tr:last-child {
-				border-bottom: none;	
-			}
-			td {
-				overflow: hidden;	
-			}
-			.i-col1 {
-				width: 15.43%;	
-			}
-		 	.i-col2	{
-				width: 19.75%;
-			}
-			.i-col3 {
-				width: 21%;	
-			}
-			.i-col4 {
-				width: 43.82%;	
-			}
-		}
+		font-size: 12px;	
+		table-layout: fixed;
 	}
 }
 

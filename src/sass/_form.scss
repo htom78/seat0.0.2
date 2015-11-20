@@ -1,3 +1,29 @@
+.time-select {
+	display: inline-block;
+	border: 1px solid #ccc;
+	height: 30px;
+	line-height: 30px;
+	box-sizing: border-box;
+	border-radius: $radius-small-size;
+	background-color: $select-bg;
+	vertical-align: bottom;
+	font-size: 13px;
+	color: $input-text-color;
+	
+	&.disabled {
+		background-color: $input-text-disabled-bg;	
+		color: $input-text-disabled-color;
+	}
+
+	.hour,
+	.minute {
+		display: inline-block;
+		width: 28px;
+		text-align: center;	
+		cursor: Default;
+	}
+}
+
 .label-sm-icon {
 	display: inline-block;	
 	width: 30px;
@@ -7,8 +33,28 @@
 	vertical-align: bottom;
 }
 
+.neworder-form {
+	.form-inline {
+		margin-bottom: 8px;	
+	}	
 
+	.label-sm-icon {
+		background: #ccc;	
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+		> i {
+			display: inline-block;	
+			vertical-align: middle;
+		}
+	}
 
+	.input-residue-width {
+		width: calc(100% - 35px);	
+	}
+}
 
 
 

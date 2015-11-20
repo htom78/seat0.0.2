@@ -3,55 +3,34 @@ body {
 }
 
 .seat-top-left {
-	padding: 10px 10px 10px (10px + $border-main-size);
-	.create-form {
-
-		.form-group {
-			margin-bottom: 9px;	
-		}
-
-		.input-wrapper {
-			display: inline-block;
-		}	
-
-		.residue-width {
-			width: calc(100% - 35px);	
-		}
-
-		.inline-width {
-			width: 231px;	
-		}
-
-		.genders-wrapper,
-	 	.car-type-wrapper,
-		.timer-picker-wrapper	{
-			display: inline-block;	
-			vertical-align: bottom;	
-		}
-
-		.car-type-wrapper {
-			vertical-align: bottom;	
-		}
-
-		.car-count-select-wrapper {
-			margin-right: 8px;	
-		}
-
-		.reservation-checkbox-wrapper {
-			display: inline-block;	
-			vertical-align: bottom;
-		}
-
-		.select-wrapper {
-			display: inline-block;	
-			width: 82px;
-		}
-
+	.neworder-form {
 		.btn {
 			width: 140px;	
 		}
 
+		.selects-group {
+			margin-right: 8px;
+			select {
+				width: 82px;	
+			}
+		}
+
+		.calendar-input {
+			width: 189px;	
+		}
+		.destination-input,
+	 	.car-count-input	{
+			width: 231px;	
+		}
+
+		.time-select-wrapper {
+			margin-right: 8px;	
+		}
 	}	
+}
+
+.seat-top-left {
+	padding: 10px 10px 10px (10px + $border-main-size);
 
 	.chart {
 		$info-height: 24px;
@@ -153,31 +132,6 @@ body {
 	    pointer-events: none;
 	}
 
-	.time-select {
-		display: inline-block;
-		border: 1px solid $input-border-color;
-		height: $normal-size;
-		line-height: $normal-size;
-		box-sizing: border-box;
-		border-radius: $radius-small-size;
-		background-color: $select-bg;
-		vertical-align: bottom;
-		font-size: $input-text-font-size;
-		color: $input-text-color;
-		
-		&.disabled {
-			background-color: $input-text-disabled-bg;	
-			color: $input-text-disabled-color;
-		}
-
-		.hour,
-		.minute {
-			display: inline-block;
-			width: 28px;
-			text-align: center;	
-			cursor: Default;
-		}
-	}
 	
 	$wrap-width: $seat-chart-width - $normal-size - 5px;
 

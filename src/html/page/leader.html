@@ -98,138 +98,122 @@
 	</div>
 </section>
 
-<section class='leader-orders'>
-	<div class='nav-bar'>
-		<nav class='tabs'>
-			<div class='fr search-wrap'>
-				<form class='flex' ng-submit='searchOrder()'>
-					<div class='input-wrap'></div>
-					<input 
-						type='text' 
-						class='search-input' 
-						ng-required='true'
-						ng-model='words'/>
-					<div><button class='icon-btn-bg search-btn'></button></div>
-				</form>
-			</div>
-			<a 
-				href='javascript:;' 
-				class='immediate-reservation-btn' 
-				ng-click='toggleImmediateOrReservation()'>
-				<span class='btn-word'>{{immediateOrReservation}}</span>
-			</a>
-			<ul class='flex'>
-				<li>
-					<a 
+<section class='leader-orders list-page'>
+	<div class='leader-nav-bar clearfix search-nav-bar'>
+
+		<form class='form-inline fr' ng-submit='searchOrder()'>
+			<div class='form-group'>
+				<input 
+					type='text' 
+					class='form-control keywords-input'
+					ng-required='true'
+					ng-model='words'
+					pause-emit='pause'/>
+			</div><button class='btn btn-primary search-btn' type='submit'><i class='icon-search'></i></button>
+		</form>
+
+		<button
+			class='btn btn-default fl immediate-reservation-toggle-btn'
+			ng-click='toggleImmediateOrReservation()'
+			type='button'
+			>{{immediateOrReservation}}</button>
+
+		<ul class='nav nav-pills fl'>
+			<li class='presentation'	ng-class='{active: isPreparedCurrentTab()}'>
+				<a 
 					href='javascript:;' 
-					class='tab'
-					ng-class='{active: isPreparedCurrentTab()}'
+					class='tab-btn'
 					ng-click='cutOrderTabPrepared()'>
-						<i class='icon-img-bg prepared-icon'></i>
-						<tab-count count='preparedCount'></tab-count>
+					调派中<span class='badge'>{{preparedCount}}</span>
+			</a>
+			</li>
+			<li class='presentation' ng-class='{active: isReceivedCurrentTab()}'>
+				<a 
+					href='javascript:;' 
+					class='tab-btn'
+					ng-click='cutOrderTabReceived()'>
+					已接单<span class='badge'>{{receivedCount}}</span>
+					</a>
+			</li>
+			<li class='presentation' ng-class='{active: isStartedCurrentTab()}'>
+				<a 
+					href='javascript:;' 
+					class='tab-btn'
+					ng-click='cutOrderTabStarted()'>
+					以出发<span class='badge'>{{startedCount}}</span>
 				</a>
-				</li>
-				<li>
-					<a 
-						href='javascript:;' 
-						class='tab'
-						ng-class='{active: isReceivedCurrentTab()}'
-						ng-click='cutOrderTabReceived()'>
-							<i class='icon-img-bg received-icon'></i>
-							<tab-count count='receivedCount'></tab-count>
-						</a>
-				</li>
-				<li>
-					<a 
-						href='javascript:;' 
-						class='tab'
-						ng-class='{active: isStartedCurrentTab()}'
-						ng-click='cutOrderTabStarted()'>
-							<i class='icon-img-bg started-icon'></i>
-							<tab-count count='startedCount'></tab-count>
+			</li>
+			<li class='presentation' ng-class='{active: isDoneCurrentTab()}'>
+				<a 
+					href='javascript:;' 
+					class='tab-btn'
+					ng-click='cutOrderTabDone()'>
+					已完成<span class='badge'>{{doneCount}}</span>
 					</a>
-				</li>
-				<li>
-					<a 
-						href='javascript:;' 
-						class='tab'
-						ng-class='{active: isDoneCurrentTab()}'
-						ng-click='cutOrderTabDone()'>
-							<i class='icon-img-bg done-icon'></i>
-							<tab-count count='doneCount'></tab-count>
-						</a>
-				</li>
-				<li>
-					<a 
-						href='javascript:;' 
-						class='tab'
-						ng-class='{active: isExceptionCurrentTab()}'
-						ng-click='cutOrderTabException()'>
-						<i class='icon-img-bg exception-icon'></i>
-						<tab-count count='exceptionCount'></tab-count>
-					</a>
-				</li>
-			</ul>
-		</nav>
+			</li>
+			<li class='presentation' ng-class='{active: isExceptionCurrentTab()}'>
+				<a 
+					href='javascript:;' 
+					class='tab-btn'
+					ng-click='cutOrderTabException()'>
+					异常单<span class='badge'>{{exceptionCount}}</span>
+				</a>
+			</li>
+		</ul>
 	</div>
-	<div class='orders flex'>
-		<div class='table-wrapper'>
-			<table class='table'>
-				<colgroup>
-					<col class='col1'>
-					<col class='col2'>
-					<col class='col3'>
-					<col class='col4'>
-					<col class='col5'>
-					<col class='col6'>
-					<col class='col7'>
-					<col class='col8'>
-					<col class='col9'>
-					<col class='col10'>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>NO</th>
-						<th>订单编号</th>
-						<th>用车时间</th>
-						<th>乘客</th>
-						<th>乘客号码</th>
-						<th>车牌号</th>
-						<th>乘客地址</th>
-						<th>目的地</th>
-						<th>类型</th>
-						<th>状态</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr 
-						ng-repeat='item in orders' 
-						leader-order-info='item'
-						show-map='showMap()'
-						hide-map='hideMap()'
-						ng-class='{active: item.isActive}'>
-						<td>{{$index + 1}}</td>
-						<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
-						<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
-						<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
-						<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
-						<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
-						<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
-						<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
-						<td class='ellipsis'>{{item.uType}}</td>
-						<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>
-					</tr>
-				</tbody>
-			</table>
+
+
+	<div class='orders-wrapper'>
+		<div class='orders-table flex'>
+			<div class='table-wrapper'>
+				<table class='table table-condensed table-hover'>
+					<thead>
+						<tr>
+							<th>订单编号</th>
+							<th>用车时间</th>
+							<th>乘客</th>
+							<th>乘客号码</th>
+							<th>车牌号</th>
+							<th>乘客地址</th>
+							<th>目的地</th>
+							<th>类型</th>
+							<th>状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr 
+							ng-repeat='item in orders' 
+							leader-order-info='item'
+							show-map='showMap()'
+							hide-map='hideMap()'
+							ng-class='{active: item.isActive}'>
+							<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
+							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+							<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
+							<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
+							<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
+							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
+							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+							<td class='ellipsis'>{{item.uType}}</td>
+							<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class='map-wrapper' ng-show='isMapShow'>
+				<div class='leader-map' leader-map></div>	
+			</div>
 		</div>
-		<div class='map-wrapper' ng-show='isMapShow'>
-			<div class='leader-map' leader-map></div>	
-		</div>
-		<div class='paging' ng-show='orderItemCount > 10'>
-			<pagination 
-				num-items='orderItemCount' 
-				current-page='currentOrderPage'
-				on-select-page='onSelectPage(page)'></pagination>
-		</div>
+		<uib-pagination 
+			class='pagination'
+			total-items='orderItemCount' 
+			ng-model='currentOrderPage' 
+			ng-change='pageChanged()'
+			max-size='10'
+			previous-text='&lsaquo;' 
+			next-text='&rsaquo;' 
+			first-text='&laquo;' 
+			last-text='&raquo;'
+			></uib-pagination>
 	</div>
 </section>
