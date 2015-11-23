@@ -1,69 +1,79 @@
 'use strict';
 function HeaderCtrl ($scope, $timeout, $filter, signService, security, socket) {
-	$scope.toggleSignState = function() {
-		$scope.currentState = 'free';
-		if (!$scope.isSignIn()) {
-			signService.signIn()
-				.then(function() {
-					$scope.currentSignState = 'signIn';	
-				});	
-		} else {
-			signService.signOut()
-				.then(function() {
-					$scope.currentSignState = 'signOut';	
-				});	
-		}
+
+	const status = {
+		signState: {
+			IN: 0,
+			OUT: 1,	
+		},
+		operateState: {
+			FREE: 0,
+			BUSY: 1,
+			REST: 2,	
+		}	
 	};
 
+	$scope.currentSignState = status.signState.OUT;
+
 	$scope.isSignIn = function() {
-		return $scope.currentSignState === 'signIn';
+		return $scope.currentSignState === status.signState.IN;
 	};
 
 	$scope.isFreeState = function() {
-		return $scope.currentState === 'free';	
+		return $scope.currentOperateState === status.operateState.FREE;	
 	};
 
 	$scope.isRestState = function() {
-		return $scope.currentState === 'rest';	
+		return $scope.currentOperateState === status.operateState.REST;	
 	};
 
 	$scope.isBusyState = function() {
-		return $scope.currentState === 'busy';	
+		return $scope.currentOperateState === status.operateState.BUSY;	
 	};
 
-	$scope.firstBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isRestState());
-	};
-	$scope.secondBtnCanClick = function() {
-		return $scope.isSignIn() && ($scope.isFreeState() || $scope.isBusyState());
-	};
-
-
-	//切换第一个按钮(小休、接电话)
-	$scope.toggleFirstCallingStateBtn = function() {
-		if ($scope.isSignIn()) {
-			if ($scope.isFreeState()) {
-				$scope.currentState = 'rest';	
-				signService.rest();
-			} else if($scope.isRestState()) {
-				$scope.currentState = 'free';
-				signService.unrest();
-			}
+	$scope.toggleSignState = function() {
+		$scope.currentOperateState = status.operateState.FREE;
+		if (!$scope.isSignIn()) {
+			signService.signIn()
+				.then(() => {
+					$scope.currentSignState = status.signState.IN;	
+				});	
+		} else {
+			signService.signOut()
+				.then(() => {
+					$scope.currentSignState = status.signState.out;	
+				});	
 		}
 	};
 
-	//切换第二个按钮(示忙、接电话)
-	$scope.toggleSecondCallingStateBtn = function() {
-		if ($scope.isSignIn()) {
-			if ($scope.isFreeState()) {
-				$scope.currentState = 'busy';	
-				signService.busy();
-			} else if ($scope.isBusyState()) {
-				$scope.currentState = 'free';	
-				signService.unbusy();
-			}
+	$scope.selectRest = function() {
+		if ($scope.isSignIn() && !$scope.isRestState()) {
+			signService.rest()
+				.then(() => {
+					$scope.currentOperateState = status.operateState.REST;
+				});	
 		}
 	};
+
+	$scope.selectBusy = function() {
+		if ($scope.isSignIn() && !$scope.isBusyState()) {
+			signService.busy()
+				.then(() => {
+					$scope.currentOperateState = status.operateState.BUSY;		
+				});
+		}
+	};
+
+	$scope.selectFree = function() {
+		if ($scope.isSignIn() && !$scope.isFreeState()) {
+			signService.free()
+				.then(() => {
+					$scope.currentOperateState = status.operateState.FREE;	
+				});	
+		}
+	
+	};
+
 
 	//security
 	//###############################################################
@@ -109,6 +119,7 @@ function HeaderCtrl ($scope, $timeout, $filter, signService, security, socket) {
 		$scope.currentTimer = $filter('date')(new Date(), 'HH:mm');
 		$timeout(tickTimer, 30000);
 	})();
+
 }
 
 export default {

@@ -221,6 +221,7 @@ body {
 		}
 
 	}
+
 }
 
 //# bottom right
@@ -306,6 +307,15 @@ body {
 		th,
 		td {
 			text-align: center;	
+		}
+	}
+
+	.relative {
+		position: relative;	
+		.popover {
+			width: 200px;	
+			left: auto;
+			right: 0;
 		}
 	}
 }

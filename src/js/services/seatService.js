@@ -217,4 +217,11 @@ export default class Seat {
 	assignOrderByCarPlate(order, number) {
 		return this.$http.post('assign.htm', {sn: order.sn, number});	
 	}
+
+	getOrderDetail(id) {
+		return this.$http.get('dispatch/' + id)
+			.then((response) => {
+				return response.data;	
+			});	
+	}
 }

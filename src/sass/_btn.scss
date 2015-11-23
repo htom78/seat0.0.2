@@ -13,36 +13,3 @@
 	}
 }
 
-.icon-btn{
-	@extend %icon-font;
-	border: 0;
-	text-decoration: none;
-	outline: 0;
-	background-color: transparent;
-	color: $btn-bg;
-	&:hover {
-		color: $btn-hover-bg;	
-	}
-	&:active {
-		color: $btn-active-bg;	
-	}
-}
-
-.icon-btn-bg {
-	@extend %icon-font;
-	@extend %btn-normal;
-	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-/*
-.btn {
-	@extend %btn-normal;
-	@extend %font-family;
-	font-size: $btn-font-size;
-	text-align: center;
-	vertical-align: bottom;
-	display: inline-block;
-	height: $btn-height;
-	line-height: $btn-height;
-}
-*/

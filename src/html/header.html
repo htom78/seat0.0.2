@@ -1,75 +1,79 @@
 <div ng-if='hasHeader()'>
-<section class='flex'>
-	<nav class='nav'>
-		<ul class='flex'>
-			<li><a ng-href='index.htm' class='icon-btn file-btn' title='坐席'></a></li>
-			<li ng-show='hasLeaderBtn()'><a ng-href='leader.htm' class='icon-btn search-btn' title='班长'></a></li>
-			<li><a ng-href='searchMore.htm' class='icon-btn police-btn' title='订单查询'></a></li>
-			<li><a ng-href='special.htm' class='icon-btn track-btn' title='专车'></a></li>
-			<li><a ng-href='police.htm' class='icon-btn listen-btn' title='报警'></a></li>
-			<li><a ng-href='sinbad.htm' class='icon-btn represent-btn' title='代驾'></a></li>
-		</ul>
+
+<section class='header-bar'>
+
+	<nav class='header-nav-bar'>
+		<a ng-href='index.htm' class='icon-btn icon-header-seat' title='坐席'></a>
+		<a ng-show='hasLeaderBtn()' ng-href='leader.htm' class='icon-btn icon-header-leader' title='班长'></a>
+		<a ng-href='searchMore.htm' class='icon-btn icon-header-order-search' title='订单查询'></a>
+		<a ng-href='special.htm' class='icon-btn icon-header-special' title='专车'></a>
+		<a ng-href='police.htm' class='icon-btn icon-header-alarm-search' title='报警查询'></a>
+		<a ng-href='sinbad.htm' class='icon-btn icon-header-represent' title='代驾'></a>
 	</nav>
 
-	<div class='call-operate'>
-		<ul class='flex'>
-			<li><span class='call-count'>24</span></li>
-			<li>
-				<button 
-					class='icon-btn-bg call-btn'
-					call-number title='拨号'></button>
-			</li>
-			<li>
-				<button 
-					class='icon-btn-bg transform-btn'
-					call-transform title='转接'></button>
-			</li>
-			<li>
-				<button 
-					class='icon-btn-bg list-btn'
-					tripartite-conference title='三方通话会议'></button>
-			</li>
-		</ul>
+	<div class='header-call'>
+		<span class='call-count'>24</span>
+
+		<button
+			title='拨号'	
+			class='icon-btn-bg'
+			type='button'
+			><i class='icon-header-call-btn'></i></button>
+
+		<button
+			title='转接'	
+			class='icon-btn-bg'
+			type='button'
+			><i class='icon-header-call-transform-btn'></i></button>
+
+		<button
+			title='三方通话会议'
+			class='icon-btn-bg'
+			type='button'
+			><i class='icon-header-call-tertiary-btn'></i></button>
+
 	</div>
 
-	<div class='status flex'>
-
-		<div class='status-icon' ng-class='{signIn: isSignIn()}'>
-			<i
-				class='current-state icon-img'
-				ng-class='{
-					free: isFreeState(), 
-					busy: isBusyState(), 
-					rest: isRestState(), 
-					signOut:!isSignIn()}'></i>
-		</div>
-
-		<div class='user-info-timer'>
-			<div class='username'><i class='icon-img'></i><span>{{username}}</span></div>
-			<div class='timer'><i class='icon-img'></i><span>{{currentTimer}}</span></div>
-		</div>
-
-		<div class='status-btns'>
-			<button
-				class='icon-btn'
-				ng-class='{disabled:!firstBtnCanClick(),rest:!isRestState(),calling:isRestState()}'
-				ng-click='toggleFirstCallingStateBtn()' title='小休'></button>
+	<div class='header-operate'>
+		<div class='btn-group'>
 			<button 
-				class='icon-btn'
-				ng-class='{disabled:!secondBtnCanClick(),busy:!isBusyState(),calling:isBusyState()}'
-				ng-click='toggleSecondCallingStateBtn()' title='示忙'></button>
+				class='btn btn-default' 
+				ng-class='{active: isRestState()}'
+				ng-disabled='!isSignIn()'
+				ng-click='selectRest()'>小休</button>
+			<button 
+				class='btn btn-default' 
+				ng-class='{active: isBusyState()}'
+				ng-disabled='!isSignIn()'
+				ng-click='selectBusy()'>示忙</button>
+			<button 
+				class='btn btn-default' 
+				ng-class='{active: isFreeState()}'
+				ng-disabled='!isSignIn()'
+				ng-click='selectFree()'>接线</button>
 		</div>
-
-		<ul class='flex'>
-			<li><a href='javascript:;' 
-				class='sign-state'
-				ng-class='{"icon-sign-in": isSignIn(), "icon-sign-out": !isSignIn()}' 
-				ng-click='toggleSignState()' title='签入/签出'></a></li>
-			<li><a href='javascript:;' class='exit-btn icon-btn' ng-click='logout()' title='退出登录'></a></li>
-		</ul>
-
+		<button 
+			class='sign-state-btn'
+			title='签入/签出'
+			type='button'
+			ng-click='toggleSignState()'
+			ng-class='{"icon-sign-in": isSignIn(), "icon-sign-out": !isSignIn()}'
+			></button>
+		<div class='header-state-info'>
+			<div class='above'>
+				<i class='icon-header-user'></i>
+				<span>{{username}}</span>	
+			</div>
+			<div class='below'>
+				<i class='icon-header-timer'></i>
+				<span>{{currentTimer}}</span>
+			</div>
+		</div>
+		<button 
+			class='exit-btn icon-exit-btn' 
+			ng-click='logout()' 
+			title='退出登录'></button>
 	</div>
-
 </section>
 
 <section class='flex info-bar'>

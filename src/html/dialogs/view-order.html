@@ -1,0 +1,20 @@
+<div class="modal-header">
+	<h3 class="modal-title">订单详情</h3>
+</div>
+<div class="modal-body">
+	订单编号: {{order.sn}}<br/> 
+	召车数量: {{order.amount}}<br/> 
+	联系人: {{order.contactName}}<br/>
+	联系电话: {{order.contactPhone}}<br/>
+	起点: {{order.poi}}<br/>
+	起点描述: {{order.snippet}}<br/>
+	终点: {{order.targetPoi}}<br/>
+	终点描述: {{order.targetSnippet}}<br/>
+	接单时间: {{order.timeCreated}}<br/>
+	接单操作员名称: {{order.opName}}<br/>
+	抢单时间: {{order.assignedTime}}<br/>
+	司机姓名: {{order.driverName}}<br/>
+	司机电话: {{order.driverPhone}}<br/>
+	上车时间: {{order.actualPickupTime}}<br/>
+	业务状态: {{order.status}}
+</div>

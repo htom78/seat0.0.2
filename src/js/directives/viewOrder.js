@@ -1,12 +1,25 @@
 'use strict';
 
-function View($uibModal) {
+function View($uibModal, seatService) {
 	return {
-		scope: {},
+		scope: {
+			order: '=viewOrder'	
+		},
 
 		link(scope, elem) {
 			elem.bind('click', () => {
-			
+				$uibModal.open({
+					animation: true,
+					templateUrl: 'dialogs/view-order.html',
+					controller: 'viewOrderCtrl',
+					resolve: {
+						orderInfo() {
+							return seatService.getOrderDetail(scope.order.sn);	
+						}	
+					}	
+				});
+
+				
 			});
 		}	
 	};

@@ -29,11 +29,15 @@
 	}
 
 	.orders-table {
-		height: 330px;	
+		height: 360px;	
 	}
 	.table {
 		font-size: 12px;	
 		table-layout: fixed;
+		th,
+		td {
+			text-align: center;	
+		}
 	}
 }
 

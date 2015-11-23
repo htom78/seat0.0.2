@@ -1,192 +1,97 @@
 .header {
-
-	@extend %font-family;
-	padding: 0 $padding-horizontal $padding-large-vertical;
+	padding: 0 10px 20px;
 	border-left: $border-main-size solid $border-main-color;
 	border-right: $border-main-size solid $border-main-color;
+}
 
-	.nav,
-	.status, 
-	.call-operate {
-		padding: 6px $padding-horizontal;
-	}
+.header-bar {
+	padding: 8px 0;
+	display: flex;
+	border: 4px solid #fff;
+	border-top: 0;
+}
 
-	.nav {
-		.icon-btn {
-			&:before {
-				font-size: $icon-btn-large-size;	
-			}	
-		}
-		width: $layout-left-width; 
-		box-sizing: border-box;
-		border: $border-small-size solid #fff;
-		border-top: 0px;
-		border-right: 0px;
-		border-bottom-left-radius: $radius-small-size;
-		.file-btn {
-			@include icon-content('\e604');
-		}
-
-		.search-btn {
-			@include icon-content('\e603');
-		}
-		.police-btn {
-			@include icon-content('\e601');
-		}
-		.track-btn {
-			@include icon-content('\e602');
-		}
-		.listen-btn {
-			@include icon-content('\e61e');
-		}
-		.represent-btn {
-			@include icon-content('\e62c');
-		}
-	}
-
-	.call-operate {
-		flex:2 1;
-		border: $border-small-size solid #fff;
-		border-top: 0;
-		border-right: 0;
-		.call-count {
-			font-size: 20px;
-			font-weight: bold;
-			background: $color-primary;
-			color: #fff;
-			border-radius: $radius-small-size;
-			@include box-in-middle($icon-btn-large-size, $icon-btn-large-size);
-		}
-
-		.icon-btn-bg {
-			margin-left: $margin-horizontal;
-			&:before {
-				font-size: $icon-btn-large-size;	
-			}	
-		}
-
-		.call-btn {
-			@include icon-content('\e605');
-		}
-
-		.transform-btn {
-			@include icon-content('\e606');
-		}
-
-		.list-btn{
-			@include icon-content('\e607');
-		}
-	}
-
-	.status {
-		flex:2 1;
-		border: $border-small-size solid #fff;
-		border-top: 0px;
-		border-bottom-right-radius: $radius-small-size;
-
-		.sign-state{
-			display: inline-block;
-			margin: 4px 6px 0;
-		}
-
-		.exit-btn {
-			&:before {
-				font-size: $icon-btn-large-size;
-				color: $color-forth;
-			}
-			@include icon-content('\e610');
-		}
-
-		.user-info-timer {
-			font-size: 12px;
-			margin-left: 20px;
-			line-height: 20px;			  
-		}
-
-		.username {
-			color: $color-primary;
-			.icon-img {
-				@include icon-content('\e627');
-				&:before {
-					font-size: 16px;
-				}	
-			}
-		}
-
-		.timer {
-			color: #ccc;
-			.icon-img {
-				@include icon-content('\e612');
-				&:before {
-					font-size: 16px;	
-				}
-			}
-		}
-
-	}
-
-	.status-icon {
-
-		@include box-in-middle($icon-btn-large-size, $icon-btn-large-size);
-		background-color: #eee;
-		color: #ccc;
-		border-radius: $radius-small-size;
-		margin-left: $margin-horizontal;
-
-		.current-state {
-			vertical-align: middle;	
-			&:before {
-				font-size: 32px;	
-			}
-			&.rest {
-				@include icon-content('\e60f');
-			}
-			&.busy {
-				@include icon-content('\e60e');
-			}
-			
-			&.free {
-				@include icon-content('\e60d');
-			}
-
-			&.calling {
-				@include icon-content('\e60c');
-			}
-
-			&.signOut {
-				@include icon-content('\e60d');
-			}
-		}
-
-		&.signIn {
-			background-color: #f95059;	
-			color: #fff;
-		}
-	}
-
-	.status-btns {
-		margin-left: $margin-horizontal;
-		.icon-btn {
-			color: $color-primary;
-			&.disabled {
-				cursor: Default;	
-				color: $color-disabled;
-			}
-			&:before {
-				font-size: $icon-btn-large-size;	
-			}		
-		}
-		.rest {
-			@include icon-content('\e60f');
-		}
-		.busy {
-			@include icon-content('\e60e');
-		}
-		.calling {
-			@include icon-content('\e60d');
-		}
+.header-nav-bar {
+	padding-left: 10px;
+	width: 40%;
+	.icon-btn {
+		display: inline-block;	
 	}
 }
+
+.header-call {
+	padding-left: 10px;
+	width: 40%;
+	width: 30%;
+	border-left: 4px solid #fff;
+	border-right: 4px solid #fff;
+	.call-count {
+		display: inline-block;	
+		width: 42px;
+		height: 42px;
+		border-radius: 4px;
+		background: $color-primary;
+		color: #fff;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+		line-height: 42px;
+		vertical-align: bottom;
+	}
+	.icon-btn-bg {
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #ccc;
+		border-radius: 4px;
+		border: 0;
+		width: 42px;
+		height: 42px;
+		i {
+			display: inline-block;	
+			vertical-align: middle;
+		}	
+	}
+}
+
+.header-operate {
+	padding-left: 10px;
+	width: 30%;
+	display: flex;
+	line-height: 20px;
+
+	.btn-group {
+		margin-right: 10px;	
+	}
+
+	.sign-state-btn {
+		margin-right: 10px;
+		border: 0;
+		background-color: transparent;
+	}
+
+	.header-state-info {
+		margin-right: 10px;
+		font-size: 12px;
+		.above {
+			color: #ff9a69;	
+			i {
+				display: inline-block;	
+			}
+		}
+
+		.below {
+			color: #aaa;	
+			i {
+				display: inline-block;	
+			}
+		}
+	}
+
+	.exit-btn {
+		border: 0;
+		background-color: transparent;	
+	}
+}
+
 
 // info bar
 .header {

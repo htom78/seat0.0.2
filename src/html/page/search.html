@@ -116,6 +116,7 @@
 							<th>接线员</th>
 							<th>作业员</th>
 							<th>订单形式</th>
+							<th>订单详情</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -134,6 +135,12 @@
 							<td ng-switch='item.isReserved'>
 								<span ng-switch-when='0'>即时</span>
 								<span ng-switch-when='1'>预约</span>
+							</td>
+							<td>
+								<button
+									class='btn btn-primary btn-xs'
+									view-order='item'
+									>查看</button>
 							</td>
 						</tr>
 					</tbody>

@@ -6,7 +6,7 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 
 	$scope.orders = seatService.orderss;
 
-	const tabTextName = ['预约', '即时'];
+	const tabTextName = ['预', '即'];
 	const tabsName = ['Exception', 'Prepared', 'Received', 'Started', 'Done'];	
 	const state = {
 		immediateOrReservation: {
@@ -337,9 +337,6 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 				$scope.averageTimer = response.average;
 			});
 	};
-
-
-
 }
 
 export default {

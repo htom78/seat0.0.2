@@ -4,12 +4,14 @@ import representMap from './representMap';
 import seatMap from './seatMap';
 import ensureBtn from './ensureBtn';
 import leaderOrderInfo from './leaderOrderInfo';
+import viewOrder from './viewOrder';
 
 module.exports = angular.module('app.dirctives', [])
 	.directive('representMap', representMap)
 	.directive('seatMap', seatMap)
 	.directive(leaderOrderInfo.name, leaderOrderInfo.fn)
-	.directive(ensureBtn.name, ensureBtn.fn);
+	.directive(ensureBtn.name, ensureBtn.fn)
+	.directive(viewOrder.name, viewOrder.fn);
 
 require('./chartUser');
 require('./callStatus');

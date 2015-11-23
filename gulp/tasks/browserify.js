@@ -55,9 +55,11 @@ function buildScript(file) {
 			.pipe(source(file))
 			.pipe(gulpif(createSourcemap, buffer()))
 			.pipe(gulpif(createSourcemap, sourcemaps.init()))
+			/*
 			.pipe(gulpif(global.isProd, streamify(uglify({
 				compress: {drop_console: true}	
 			}))))
+			*/
 			.pipe(gulpif(createSourcemap, sourcemaps.write('./')))
 			.pipe(rename(`${config.outputName}.js`))
 			.pipe(gulp.dest(config.scripts.dest))
