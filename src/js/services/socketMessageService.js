@@ -19,6 +19,9 @@ var socketMessageService = function($rootScope, alarmMessageService, orderStateC
 				case 3:
 					alarmMessageService.itemSelected(data.msg);
 					break;
+				case 4: 
+					$rootScope.$broadcast('headerMessage', data.msg);
+					break;
 				default: 
 					break;
 			}

@@ -162,22 +162,6 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService, prepar
 	};
 
 
-
-	$scope.$watch(function() {
-		return security.isLeader();	
-	}, function(isLeader) {
-		if (security.isAuthenticated() && !isLeader) {
-			$location.path('/index.htm');	
-		}	
-	});
-
-	$scope.showMap = function() {
-		$scope.isMapShow = true;
-	};
-	$scope.hideMap = function() {
-		$scope.isMapShow = false;
-	};
-
 	$scope.pageChanged = function() {
 		$scope.getOrders();
 	};
@@ -194,6 +178,30 @@ function LeaderCtrl($scope, $timeout, $location, security, leaderService, prepar
 				$scope.orderItemCount = total;
 			});
 	};
+
+	$scope.hasCancelOrderBtn = function() {
+		return 	!$scope.isDoneCurrentTab() && !$scope.isStartedCurrentTab();
+	};
+
+	$scope.hasAssignOrderBtn = function() {
+		return !$scope.isDoneCurrentTab() && !$scope.isReceivedCurrentTab();	
+	};
+
+	$scope.hasDriverFuckOrderBtn = function() {
+		return !$scope.isDoneCurrentTab() && !$scope.isPreparedCurrentTab();	
+	};
+
+	$scope.hasPassengerFuckOrderBtn = function() {
+		return $scope.isReceivedCurrentTab() || $scope.isExceptionCurrentTab() ;	
+	};
+
+	$scope.$on('showMap', () => {
+			$scope.isMapShow = true;	
+	});
+
+	$scope.$on('hideMap', () => {
+			$scope.isMapShow = false;	
+	});
 
 }
 

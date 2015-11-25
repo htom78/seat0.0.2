@@ -178,6 +178,7 @@
 							<th>目的地</th>
 							<th>类型</th>
 							<th>状态</th>
+							<th>订单详情</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -186,9 +187,9 @@
 							leader-order-info='item'
 							show-map='showMap()'
 							hide-map='hideMap()'
-							ng-class='{active: item.isActive}'>
+							ng-class='{info: item.isActive}'>
 							<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
-							<td class='ellipsis'>{{item.timeCreated | cmdate: 'MM/dd HH:mm'}}</td>
+							<td class='ellipsis'>{{item.timeCreated}}</td>
 							<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
 							<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
 							<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
@@ -196,6 +197,9 @@
 							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
 							<td class='ellipsis'>{{item.uType}}</td>
 							<td class='ellipsis' title='{{item.statusName}}'>{{item.statusName}}</td>
+							<td><button 
+									class='btn btn-primary btn-xs'
+									view-order='item'>查看</button></td>
 						</tr>
 					</tbody>
 				</table>

@@ -171,17 +171,14 @@
 
 .leader-orders {
 
-
-
 	.table-wrapper {
 		flex: 2 1;
 	}
 
-
 	.map-wrapper {
 		position: relative;
 		width: 670px;
-		height: 318px;
+		min-height: 360px;
 		background: $chart-bg;
 		margin-left: 10px;
 	}
@@ -194,72 +191,36 @@
 		bottom: 0;
 	}
 
+	.insert-td {
+		padding: 0;	
+	}
 
-}
+	.insert-info {
+		text-align: left;	
+		background-color: $brand-info; 
+		padding: 10px 20px;
+	}
 
-//order step
-.order-step {
-	
-	$dot-size: 8px;
-
-	@extend %font-family;
-	position: absolute;
-	font-size: 14px;
-	color: $text-color;
-	.step {
-		padding: $padding-vertical 70px;
-		background-color: $handle-bar-bg;
-
-		.step-ul {
-			position: relative;
-			&:before {
-				content: '';
-				position: absolute;
-				top: 50%;
-				width: 100%;
-				left: 0;
-				border-bottom: 1px dashed  #ccc;
-			}
+	.order-info {
+		display: flex;	
+		margin-bottom: 10px;
+		> li {
+			width: 25%;	
 		}
 
-		.step-li {
-			flex: 2 1;
-			position: relative;
+		.info-above {
+			border-bottom: 1px dashed #ccc;	
+		}
+
+		.info-above,
+	 	.info-below	{
 			text-align: center;
-			line-height: $normal-size;
-			&:before {
-				content: '';
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				width: $dot-size;
-				height: $dot-size;
-				margin-left: -$dot-size;
-				margin-top: -$dot-size;
-				background: #ccc;
-				border: $border-small-size solid $handle-bar-bg;
-				border-radius: 50%;
-				z-index: 10;
-			}
+			height: 24px;	
+			line-height: 24px;
 		}
 
 	}
 
-	.btns-wrap {
-		padding: $padding-vertical 0;
-		background-color: lighten($handle-bar-bg, 5%);
-		text-align: center;
-		.btn {
-			width: 80px;
-			background-color:  $color-primary;
-			&:hover {
-				background-color: darken($color-primary, 10%);	
-			}
-			&:active {
-				background-color: darken($color-primary, 20%);
-			}
-		}
-	}
 }
 
 .leader-nav-bar {

@@ -9,7 +9,7 @@ export default class Leader{
 	}
 
 	getOrdersFromService({
-		all = 0,
+		all = 1, // 0 个人 1 全部
 		callType = 1,
 		isImmediate = 1,
 		k = '',
@@ -49,27 +49,7 @@ export default class Leader{
 	removeOrder(order) {
 		var index = this.orderss.indexOf(order);	
 		if (index !== -1) {
-			this.orderss.splice(index, 1);	
+			return this.orderss.splice(index, 1);	
 		}
-	}
-
-	getOrderInfo(sn) {
-		return this.$http.get('search/route.htm', { params: { sn: sn	}	});
-	}
-
-	handleCancelOrder(sn) {
-		return this.$http.post('cancel/1.htm', {sn: sn});
-	}
-
-	handlePassengerFuckOrder(sn) {
-		return this.$http.post('cancel/6.htm', {sn: sn});
-	}
-
-	handleDriverFuckOrder(sn) {
-		return this.$http.post('cancel/7.htm', {sn: sn});
-	}
-
-	assignOrderByCarPlate(sn, number) {
-		return this.$http.post('assign.htm', {sn, number});	
 	}
 }

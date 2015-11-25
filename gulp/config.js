@@ -14,6 +14,8 @@ module.exports = {
 
 	outputName: 'app',
 
+	bootstrapDir: './bower_components/bootstrap-sass',
+
 	styles: {
 		src: 'src/sass/index.scss',
 		srcdir: 'src/sass',
@@ -84,6 +86,10 @@ module.exports = {
 	iconfont: {
 		src: 'src/iconfont/*.woff',
 		dest: buildDir + '/iconfont'	
+	},
+
+	fonts: {
+		dest: buildDir + '/fonts'	
 	},
 
 	copy: {

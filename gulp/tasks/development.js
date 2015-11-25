@@ -6,5 +6,5 @@ var runSequence = require('run-sequence');
 gulp.task('dev', ['clean'], cb => {
 	cb = cb || function() {};
 	global.isProd = false;
-	runSequence(['sprite', 'images', 'iconfont', 'styles', 'views', 'browserify'], 'watch', cb);
+	runSequence(['sprite', 'images', 'fonts', 'styles', 'views', 'browserify'], 'watch', cb);
 });

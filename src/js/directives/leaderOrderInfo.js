@@ -1,23 +1,74 @@
 'use strict';
 
-function Info($uibModal) {
+import angular from 'angular';
+
+
+function Info($uibModal, $document) {
 	return {
 		scope: {
 			order: '=leaderOrderInfo'	
 		},
 
 		link(scope, elem) {
+
+			let isDialogOpened = false;
+
+			var modalInstance;
+			var tr;
+
 			elem.bind('dblclick', (ev) => {
-				console.log(scope.order);	
-				/*
-				var modalInstance = $uibModal.open({
-					animation: false,
-					backdrop: false,
-					appendTo: elem.closest('.table-wrapper');
-					templateUrl: ''	
-				});
-				*/
+				if (!isDialogOpened) {
+					isDialogOpened = true;	
+					let len = elem.children().length;
+					tr = angular.element('<tr></tr>');
+					tr.insertAfter(elem);
+					scope.order.isActive = true;
+					scope.$emit('showMap');
+					modalInstance = $uibModal.open({
+						animation: false,
+						backdrop: false,
+						appendTo: angular.element(`<td class='insert-td' colspan='${len}'></td>`).appendTo(tr),
+						templateUrl: 'dialogs/order-info.html',
+						controller: 'dialogOrderInfoCtrl',
+						windowTemplateUrl: 'bootstrap/modal/div.html',
+						controllerAs: 'leaderCtrl',
+						openedClass: 'dddd',
+						resolve: {
+							btnShows() {
+								return {
+									hasCancelOrderBtn: scope.$parent.hasCancelOrderBtn(),
+									hasAssignOrderBtn: scope.$parent.hasAssignOrderBtn(),
+									hasDriverFuckOrderBtn: scope.$parent.hasDriverFuckOrderBtn(),
+									hasPassengerFuckOrderBtn: scope.$parent.hasPassengerFuckOrderBtn(),		
+								};	
+							},
+
+							order() {
+								return scope.order; 	
+							}
+						}
+					});
+
+					modalInstance.result.then(() => {})
+						.finally(() => {
+							scope.$emit('hideMap');
+							scope.order.isActive = false;
+							isDialogOpened = false;
+							modalInstance = null;
+							tr.remove();
+						});
+				}
+
 			});		
+
+			$document.bind('click', (ev) => {
+				if (isDialogOpened 
+						&& tr.has($(ev.target)).length === 0
+						&& !$document.find('body').hasClass('modal-open')) {
+					modalInstance.dismiss();	
+				}	
+			});
+
 		}	
 	};
 }
@@ -27,119 +78,3 @@ export default {
 	fn: Info
 };
 
-/*
-
-var leaderOrderInfo = function(leaderOrderInfoDialog, leaderService, leaderMap) {
-	return {
-
-		scope: {
-			order: '=leaderOrderInfo',
-		},	
-
-		link: function(scope, elem) {
-
-
-			const $parent = scope.$parent;
-
-			elem.on('dblclick', function(ev) {
-				scope.order.isActive = true;
-				$parent.showMap();
-				leaderService.getOrderInfo(scope.order.sn)
-					.then((response) => {
-						scope.orderInfo = response.data;	
-						if ($parent.isDoneCurrentTab()) {
-							leaderMap.setPath(scope.orderInfo);
-						}
-					});
-				leaderOrderInfoDialog.open(scope)
-					.then(function() {
-						$parent.hideMap();
-						scope.order.isActive = false;	
-						leaderMap.clearPath();
-					});	
-				var pos = elem.offset();
-				leaderOrderInfoDialog.setDialogStyle(pos.top + elem.height(), pos.left, elem.width() - 680);
-			});	
-
-
-			//双击表单出来的，控制按钮，权限控制
-			scope.isAssignBtnShow = function() {
-				if ($parent.isDoneCurrentTab() ||
-					$parent.isReceivedCurrentTab()) {
-					return false;
-				} else {
-					return true;
-				}
-			};
-
-			scope.isCancelBtnShow = function() {
-				if ($parent.isDoneCurrentTab() ||
-					$parent.isStartedCurrentTab()) {
-					return false;
-				} else {
-					return true;
-				}
-			};
-
-			scope.isPassengerFuckBtnShow = function() {
-				if ($parent.isExceptionCurrentTab() ||
-					$parent.isReceivedCurrentTab()) {
-					return true;
-				} else {
-					return false;
-				}
-			};
-
-			scope.isDriverFuckBtnShow = function() {
-				if ($parent.isExceptionCurrentTab() ||
-					$parent.isStartedCurrentTab() ||
-					$parent.isReceivedCurrentTab()) {
-					return true;
-				} else {
-					return false;
-				}
-			};
-
-			scope.cancelOrder = function() {
-				leaderService.handleCancelOrder(scope.order.sn)
-					.then(() => {
-						leaderService.removeOrder(scope.order);
-						leaderOrderInfoDialog.close();
-					});
-			};
-
-			scope.passengerFuck = function() {
-				leaderService.handlePassengerFuckOrder(scope.order.sn)
-					.then(() => {
-						if (!$parent.isExceptionCurrentTab()) {
-							leaderService.removeOrder(scope.order);
-						}
-						scope.order.statusName = '乘客违约';
-						leaderOrderInfoDialog.close();
-					});
-			};
-
-			scope.driverFuck = function() {
-				leaderService.handleDriverFuckOrder(scope.order.sn)
-					.then(() => {
-						if (!$parent.isExceptionCurrentTab()) {
-							leaderService.removeOrder(scope.order);
-						}
-						scope.order.statusName = '司机违约';
-						leaderOrderInfoDialog.close();
-					});
-			};
-
-			scope.assignCar = function(carPlate) {
-				leaderService.assignOrderByCarPlate(scope.order.sn, carPlate)
-					.then(() => {
-						leaderService.removeOrder(scope.order);
-						leaderOrderInfoDialog.close();
-					});
-			};
-
-		}
-	};
-};
-
-*/

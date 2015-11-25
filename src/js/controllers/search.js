@@ -22,7 +22,7 @@ function SearchCtrl($scope, searchService, startCount, orderStatuses) {
 		searchData.contactPhone = $scope.order.concatPhone;
 		searchData.sn = $scope.order.orderNumber;
 		searchData.opName = $scope.order.operatorName;
-		searchData.status = $scope.order.orderStatus.id;
+		searchData.status = $scope.order.orderStatus ? $scope.order.orderStatus.id : -1;
 		searchData.isImmediate = $scope.order.orderType.value;
 		searchData.beginTime = $scope.order.beginTime;
 		searchData.endTime = $scope.order.endTime;

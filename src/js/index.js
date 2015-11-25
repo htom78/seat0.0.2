@@ -5,6 +5,7 @@ import router from './router';
 import config from './config';
 import './map';
 import './bootstrap';
+import './security';
 
 require('./controllers');
 require('./directives');
@@ -28,6 +29,7 @@ var requires = [
 	'app.dialogs',
 	'app.ocx',
 	'app.map',
+	'app.security',
 	'ui.bootstrap.datepicker',
 	'ui.bootstrap.modal',
 	'ui.bootstrap.dropdown',
@@ -37,12 +39,13 @@ var requires = [
 var app = angular.module('app', requires)
 	.config(router)
 	.config(config)
-	.run(['$rootScope', 'ocxSocket', function($rootScope, ocxSocket) {
-		ocxSocket.connection();	
+	.run(function($rootScope, ocxSocket, security) {
+		security.requestCurrentUser();
+		//ocxSocket.connection();	
 		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
 			$rootScope.title = current.$$route.title;	
 		});
-	}]);
+	});
 
 
 module.exports = app;

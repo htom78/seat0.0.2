@@ -4,12 +4,16 @@ import represent from './represent';
 import searchService from './searchService';
 import seatService from './seatService';
 import leaderService from './leaderService';
+import headerService from './headerService';
+import orderService from './orderService';
 
 module.exports = angular.module('app.services', [])
 	.service('representService', represent)
 	.service('searchService', searchService)
 	.service('seatService', seatService)
-	.service('leaderService', leaderService);
+	.service('leaderService', leaderService)
+	.service('headerService', headerService)
+	.factory(orderService.name, orderService.fn);
 
 require('./statistics');
 require('./mapService');
@@ -20,7 +24,7 @@ require('./leaderMap');
 require('./socket');
 require('./sign');
 require('./policeService');
-require('./security');
+//require('./security');
 require('./user');
 require('./handleAlarmDialog');
 require('./messageBoxService');

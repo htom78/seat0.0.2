@@ -1,0 +1,57 @@
+<div class='insert-info'>
+	<ul class='order-info'>
+		<li>
+			<p class='info-above'>{{createTime}}</p>
+			<p class='info-below'>乘客电话召车</p>
+		</li>
+		<li>
+			<p class='info-above'>司机抢单成功</p>
+			<p class='info-below'>{{orderTime}}</p>
+		</li>
+		<li>
+			<p class='info-above'>{{pickupTime}}</p>
+			<p class='info-below'>司机接到乘客</p>
+		</li>
+		<li>
+			<p class='info-above'>超时未到达目的</p>
+			<p class='info-below'>{{endTime}}</p>
+		</li>
+	</ul>
+	<div class='text-center btn-wrapper'>
+		<button 
+			class='btn btn-sm btn-primary'
+			type='button'
+			ng-show='hasCancelOrderBtn'
+			ensure-btn
+			message-title='取消订单'
+			message-content='确认取消?'
+			ensure-fn='handleCancelOrder()'
+			>取消订单</button>
+		<button 
+			class='btn btn-sm btn-info'
+			type='button'
+			ng-show='hasAssignOrderBtn'
+			ensure-btn
+			message-title='指派车辆'
+			has-input='true'
+			message-content='车牌号码:'
+			ensure-fn='assignOrderByCarPlate(input)'
+			>指派订单</button>
+		<button 
+			class='btn btn-sm btn-warning'
+			ng-show='hasPassengerFuckOrderBtn'
+			ensure-btn
+			message-title='乘客放空'
+			message-content='确认操作?'
+			ensure-fn='handlePassengerFuckOrder()'
+			>乘客放空</button>
+		<button 
+			class='btn btn-sm btn-danger'
+			ng-show='hasDriverFuckOrderBtn'
+			ensure-btn
+			message-title='司机放空'
+			message-content='确认操作?'
+			ensure-fn='handleDriverFuckOrder()'
+			>司机放空</button>
+	</div>
+</div>

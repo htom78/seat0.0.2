@@ -265,7 +265,7 @@
 						href='javascript:;' 
 						class='tab-btn'
 						ng-click='cutOrderTabPrepared()'>
-							Normal
+						<i class='glyphicon glyphicon-ok'></i>
 							<span class='badge'>{{normalOrderCount}}</span>
 						</a>
 				</li>
@@ -276,7 +276,7 @@
 						href='javascript:;' 
 						class='tab-btn'
 						ng-click='cutOrderTabException()'>
-						Error
+						<i class='glyphicon glyphicon-remove'></i>
 						<span class='badge'>{{exceptionOrderCount}}</span>
 					</a>
 				</li>
@@ -371,7 +371,7 @@
 												view-order='item'
 												>查看订单</a>
 										</li>
-										<li role='menuitem' ng-show='isCancelBtnShow()'>
+										<li role='menuitem' ng-show='hasCancelOrderBtn()'>
 											<a 
 												href='javascript:;'
 												ensure-btn
@@ -379,7 +379,7 @@
 												message-content='确认取消?'
 												ensure-fn='handleCancelOrder(item)'>取消订单</a>
 										</li>
-										<li role='menuitem' ng-show='isAssignBtnShow()'>
+										<li role='menuitem' ng-show='hasAssignOrderBtn()'>
 											<a 
 												href='javascript:;'
 												ensure-btn
@@ -388,7 +388,7 @@
 												message-content='车牌号码:'
 												ensure-fn='assignOrderByCarPlate(item, input)'>指派车辆</a>
 										</li>
-										<li role='menuitem' ng-show='isPassengerFuckBtnShow()'>
+										<li role='menuitem' ng-show='hasPassengerFuckOrderBtn()'>
 											<a 
 												href='javascript:;'
 												ensure-btn
@@ -397,7 +397,7 @@
 												ensure-fn='handlePassengerFuckOrder(item)'
 												>乘客放空</a>
 										</li>
-										<li role='menuitem' ng-show='isDriverFuckBtnShow()'>
+										<li role='menuitem' ng-show='hasDriverFuckOrderBtn()'>
 											<a 
 												href='javascript:;'
 												ensure-btn

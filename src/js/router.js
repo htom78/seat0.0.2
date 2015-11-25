@@ -27,9 +27,12 @@ export default function router($locationProvider, $routeProvider) {
 		controller: 'leaderCtrl',
 		title: '班长',
 		resolve: {
-			preparedOrderCount: ['leaderService', function(leaderService) {
+			preparedOrderCount($q, security, leaderService) {
+				if (!security.isLeader()) {
+					return $q.reject();
+				}
 				return leaderService.getOrders();
-			}]	
+			}	
 		}	
 	};
 

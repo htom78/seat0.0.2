@@ -1,10 +1,9 @@
-<div ng-if='hasHeader()'>
 
 <section class='header-bar'>
 
 	<nav class='header-nav-bar'>
 		<a ng-href='index.htm' class='icon-btn icon-header-seat' title='坐席'></a>
-		<a ng-show='hasLeaderBtn()' ng-href='leader.htm' class='icon-btn icon-header-leader' title='班长'></a>
+		<a ng-show='isLeader()' ng-href='leader.htm' class='icon-btn icon-header-leader' title='班长'></a>
 		<a ng-href='searchMore.htm' class='icon-btn icon-header-order-search' title='订单查询'></a>
 		<a ng-href='special.htm' class='icon-btn icon-header-special' title='专车'></a>
 		<a ng-href='police.htm' class='icon-btn icon-header-alarm-search' title='报警查询'></a>
@@ -78,6 +77,5 @@
 
 <section class='flex info-bar'>
 	<div class='info-left'><span class='scroll-info'>1.一切正常.</span></div>
-	<div class='info-right'><span class='scroll-info'>每天一笔，立减3元；司机满3笔奖8元，满6笔再奖8元，满10笔再奖30元，可累计</span></div>
+	<div class='info-right' header-info></div>
 </section>
-</div>

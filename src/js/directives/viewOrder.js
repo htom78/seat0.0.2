@@ -1,6 +1,6 @@
 'use strict';
 
-function View($uibModal, seatService) {
+function View($uibModal, orderService) {
 	return {
 		scope: {
 			order: '=viewOrder'	
@@ -14,7 +14,7 @@ function View($uibModal, seatService) {
 					controller: 'viewOrderCtrl',
 					resolve: {
 						orderInfo() {
-							return seatService.getOrderDetail(scope.order.sn);	
+							return orderService.getOrderDetail(scope.order.sn);	
 						}	
 					}	
 				});

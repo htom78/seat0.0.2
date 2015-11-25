@@ -2,7 +2,7 @@
 
 import angular from 'angular';
 
-function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, mapService, initCount) {
+function SeatCtrl($scope,  userService, seatMap, seatService, orderService, utils, $location, mapService, initCount) {
 
 	$scope.orders = seatService.orderss;
 
@@ -248,64 +248,42 @@ function SeatCtrl($scope,  userService, seatMap, seatService, utils, $location, 
 		}
 	});
 
-
-	$scope.isCancelBtnShow = function() {
-		if ($scope.isDoneCurrentTab() ||
-				$scope.isStartedCurrentTab()) {
-					return false;
-				} else {
-					return true;
-				}
+	$scope.hasCancelOrderBtn = function() {
+		return 	!$scope.isDoneCurrentTab() && !$scope.isStartedCurrentTab();
 	};
 
-	$scope.isDriverFuckBtnShow = function() {
-		if ($scope.isExceptionCurrentTab() ||
-				$scope.isStartedCurrentTab() ||
-				$scope.isReceivedCurrentTab()) {
-					return true;
-				} else {
-					return false;
-				}	
+	$scope.hasAssignOrderBtn = function() {
+		return !$scope.isDoneCurrentTab() && !$scope.isReceivedCurrentTab();	
 	};
 
-	$scope.isPassengerFuckBtnShow = function() {
-		if ($scope.isExceptionCurrentTab() ||
-				$scope.isReceivedCurrentTab()) {
-					return true;
-				} else {
-					return false;
-				}	
+	$scope.hasDriverFuckOrderBtn = function() {
+		return !$scope.isDoneCurrentTab() && !$scope.isPreparedCurrentTab();	
 	};
 
-	$scope.isAssignBtnShow = function() {
-		if ($scope.isDoneCurrentTab() || 
-				$scope.isReceivedCurrentTab()) {
-					return false;
-				} else {
-					return true;
-				}	
+	$scope.hasPassengerFuckOrderBtn = function() {
+		return $scope.isReceivedCurrentTab() || $scope.isExceptionCurrentTab() ;	
 	};
 
 	$scope.handleCancelOrder = function(item) {
-		seatService.handleCancelOrder(item);
+		orderService.handleCancelOrder(item.sn);
 	};
 
 	$scope.handleDriverFuckOrder = function(item) {
-		seatService.handleDriverFuckOrder(item)
+		orderService.handleDriverFuckOrder(item.sn)
 			.then((response) => {
 				item.statusName = '司机放空';	
 			});	
 	};
 
 	$scope.handlePassengerFuckOrder = function(item) {
-		seatService.handleCancelOrder(item)
+		orderService.handleCancelOrder(item.sn)
 			.then((response) => {
 				item.statusName = '乘客放空';	
 			});	
 	};
 
 	$scope.assignOrderByCarPlate = function(item, input) {
-		seatService.assignOrderByCarPlate(item, input);
+		orderService.assignOrderByCarPlate(item.sn, input);
 	};
 
 

@@ -1,5 +1,14 @@
 'use strict';
-function HeaderCtrl ($scope, $timeout, $filter, signService, security, socket) {
+function HeaderCtrl ($scope, $timeout, $filter, $location, signService, security, socket, headerService) {
+
+	$scope.isAuthenticated = security.isAuthenticated;
+	$scope.isLeader = security.isLeader;
+
+	security.requestCurrentUser()
+		.then((username) => {
+			$scope.username = username; 	
+			socket.connection();
+		});
 
 	const status = {
 		signState: {
@@ -74,44 +83,12 @@ function HeaderCtrl ($scope, $timeout, $filter, signService, security, socket) {
 	
 	};
 
-
 	//security
 	//###############################################################
 	$scope.logout = function() {
 		socket.close();
 		signService.logout();
 		security.logout();
-	};
-
-	$scope.$watch(function() {
-		return security.isAuthenticated();	
-	}, function(isAuthenticated) {
-		if (isAuthenticated) {
-			security.requestCurrentUser()
-				.then(function(response) {
-					socket.connection();
-					$scope.isHeaderShow = true;	
-					$scope.username = response; 	
-					$scope.isLeader = security.isLeader();
-					return signService.getCurrentState();
-				})
-				.then(function(response) {
-					if (response.isSignIn) {
-						$scope.currentSignState = 'signIn';	
-						$scope.currentState = response.currentState;
-					}	
-				});
-		} else {
-			$scope.isHeaderShow = false;	
-		}	
-	});
-
-	$scope.hasHeader = function() {
-		return $scope.isHeaderShow;	
-	};
-
-	$scope.hasLeaderBtn = function() {
-		return $scope.isLeader;	
 	};
 
 	//左上角时间
