@@ -16,7 +16,7 @@ function Security($q, $http, $location, ocxSign) {
 		},
 
 		isLeader() {
-			return service.isAuthenticated() && window.isLeader;
+			return service.isAuthenticated() && window.isLeader === 'true';
 		},
 
 		login(username, password) {
