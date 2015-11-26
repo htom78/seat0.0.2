@@ -143,14 +143,15 @@
 							ng-disabled='!orderData.isReservation'
 							ng-model='orderData.reservationCalendar'
 							uib-datepicker-popup='yyyy-MM-dd'
-							is-open='status.calendarOpened'
+							is-open='isCalendarOpened'
 							min-date='minDate'
 							show-weeks='false'
 							ng-click='openCalendar()'
 							/>
 					</div>
+
 					<div class='form-group time-select-wrapper'>
-							<span 
+							<div
 								class='time-select' 
 								ng-class='{disabled: !orderData.isReservation}'>
 							<em 
@@ -164,7 +165,7 @@
 								number-mod='5'
 								reservation='orderData.isReservation'
 								selected='orderData.minute'>{{orderData.minute}}</em>
-							</span>
+							</div>
 					</div>
 
 					<div class='form-group'>
@@ -187,7 +188,7 @@
 				</li>
 			</ul>
 			<div class='text-center'>
-				<button class='btn btn-primary' type='submit' ng-class='{clickable: newOrder.$valid, sending: sendingOrderData}'>保存</button>
+				<button class='btn btn-primary' type='submit' ng-disabled='isAddNewOrdering'>保存</button>
 				<button type='button' class='btn btn-warning' ng-click='clearOrderForm()'>取消</button>
 				<button type='button' class='btn btn-danger'>转咨询投诉</button>
 			</div>
@@ -282,21 +283,20 @@
 				</li>
 			</ul>
 			<div class='fr'>
-				<form ng-submit='searchCurrentOrderByKeywords()' class='form-inline'>
+				<form ng-submit='searchOrder()' class='form-inline'>
 					<div class='form-group'>
 						<input 
 							type='text' 
 							class='form-control keywords-input'
 							ng-required='true'
-							ng-model='inputOrderWords'
-							pause-emit='pause'/>
+							ng-model='keywords'
+							/>
 					</div><button class='btn btn-primary' type='submit'><i class='icon-search'></i></button>
 					<div class='form-group'>
 						<select 
 							class='form-control' 
 							ng-model='orderType' 
 							ng-change='handleOrderTypeChange()'
-							ng-init='orderType = orderTypes[0]'
 							ng-options='option.name for option in orderTypes'>
 						</select>
 					</div>
@@ -332,7 +332,7 @@
 				</ul>
 			</div>
 			<div class='order-table'>
-				<table class='table table-condensed table-hover'>
+				<table class='table table-condensed'>
 					<thead>
 						<tr>
 							<th>订单编号</th>
@@ -350,7 +350,7 @@
 						<tr 
 							ng-repeat='item in orders' 
 							ng-if='$index < 6' 
-							ng-class='{"add-new": item.isNewAdd, active: item.isBtnShow}'>
+							ng-class='{"add-new": item.isNewAdd}'>
 							<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
 							<td class='ellipsis' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
 							<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
@@ -362,7 +362,7 @@
 							<td class='seat-operate-td'>
 								<div class="btn-group" uib-dropdown>
 									<button id="single-button{{$index}}" type="button" class="btn btn-primary btn-xs" uib-dropdown-toggle ng-disabled="disabled">
-										operate<span class="caret"></span>
+										<i class='glyphicon glyphicon-pencil'></i>
 									</button>
 									<ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button{{$index}}">
 										<li role='menuitem'>

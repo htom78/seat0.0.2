@@ -7,9 +7,9 @@ var csso = require('gulp-csso');
 gulp.task('postcss', () => {
 	return gulp.src(config.src)
 		.pipe(urlAdjuster({
-			prepend: '..',
+			//prepend: '..',
 			append: '?v=' + (Date.now() + Math.floor(Math.random(999999)))
 		}))
 		.pipe(csso())
-		.pipe(gulp.dest(config.dest))
+		.pipe(gulp.dest(config.dest));
 });

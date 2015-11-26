@@ -1,7 +1,3 @@
-body {
-	font-family: $font-family;
-}
-
 .seat-top-left {
 	.neworder-form {
 		.btn {
@@ -86,8 +82,6 @@ body {
 	}
 
 }
-
-
 
 
 
@@ -310,6 +304,10 @@ body {
 		}
 	}
 
+	tr.add-new {
+		animation: newItem 5s;	
+	}
+
 	.relative {
 		position: relative;	
 		.popover {
@@ -318,5 +316,10 @@ body {
 			right: 0;
 		}
 	}
+}
+
+@keyframes newItem{
+	from {background: $brand-info;}
+	to {background: transparent;}
 }
 

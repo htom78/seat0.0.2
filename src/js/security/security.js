@@ -75,7 +75,6 @@ function Security($q, $http, $location, ocxSign) {
 			}	
 		}
 
-			
 	};
 
 	return service;

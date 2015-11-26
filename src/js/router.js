@@ -11,13 +11,12 @@ export default function router($locationProvider, $routeProvider) {
 		controller: 'seatCtrl',
 		title: '坐席',
 		resolve: {
-			initCount: ['seatService', '$location', function(seatService, $location) {
+			init: ['seatService', '$location', function(seatService, $location) {
 				if ($location.url() === '/special.htm') {
 					seatService.selectSpecialCar();
 				} else {
 					seatService.selectNormalCar();
 				}
-				return seatService.getPreparedOrders();
 			}]	
 		}
 	};

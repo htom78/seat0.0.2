@@ -28,4 +28,3 @@ require('./confirmDialog');
 require('./timeSelect');
 require('./callNumber');
 require('./callTransform');
-require('./tripartiteConference');

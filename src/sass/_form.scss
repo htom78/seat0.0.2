@@ -1,26 +1,25 @@
 .time-select {
-	display: inline-block;
-	border: 1px solid #ccc;
+	border: 1px solid $input-border;
 	height: 30px;
-	line-height: 30px;
+	line-height: 28px;
 	box-sizing: border-box;
-	border-radius: $radius-small-size;
-	background-color: $select-bg;
+	border-radius: $input-border-radius;
+	background-color: $input-bg;
 	vertical-align: bottom;
-	font-size: 13px;
-	color: $input-text-color;
+	color: $input-color;
 	
 	&.disabled {
-		background-color: $input-text-disabled-bg;	
-		color: $input-text-disabled-color;
+		background-color: $input-bg-disabled;	
+		cursor: $cursor-disabled;
 	}
 
 	.hour,
 	.minute {
+		font-size: 12px;
 		display: inline-block;
 		width: 28px;
 		text-align: center;	
-		cursor: Default;
+		vertical-align: top;
 	}
 }
 
@@ -45,6 +44,7 @@
 		height: 30px;
 		text-align: center;
 		line-height: 30px;
+		margin-bottom: 0;
 		> i {
 			display: inline-block;	
 			vertical-align: middle;

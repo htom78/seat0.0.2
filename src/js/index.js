@@ -13,7 +13,6 @@ require('./services');
 require('./components');
 require('./filters');
 require('./utils');
-require('./dialogs');	
 require('./ocx');
 require('./templates');
 
@@ -26,7 +25,6 @@ var requires = [
 	'app.components',
 	'app.filters',
 	'app.utils',
-	'app.dialogs',
 	'app.ocx',
 	'app.map',
 	'app.security',

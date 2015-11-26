@@ -27,7 +27,7 @@ export default class Leader{
 			status
 		}})
 		.then((response) => {
-			let orders = response.data.list;	
+			var orders = response.data.list;	
 			if (!angular.isArray(orders)) {
 				return this.$q.reject();	
 			}
@@ -38,7 +38,7 @@ export default class Leader{
 	getOrders(params) {
 		return this.getOrdersFromService(params)
 			.then((response) => {
-				let orders = response.list;		
+				var orders = response.list;		
 				angular.copy(orders, this.orderss);
 				return response.total;
 			}, () => {

@@ -24,7 +24,6 @@ require('./leaderMap');
 require('./socket');
 require('./sign');
 require('./policeService');
-//require('./security');
 require('./user');
 require('./handleAlarmDialog');
 require('./messageBoxService');

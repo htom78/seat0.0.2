@@ -9,17 +9,15 @@ export default class Seat {
 		this.$filter = $filter;
 		this.orderss = [];
 		this.orderUtils = orderUtils;
-		this.isPauseSearch = false;
-		this.all = 0;
 	}
 
 	getOrdersFromService({
-		all = 0,
+		all = 0, // 0 个人 1 全部
 		page = 1,
 		pagesize = 6,
-		isImmediate = 1,
+		isImmediate = 1, // 0 预约 1即时
 		k = '',
-		status = 1,	
+		status = 1,	// 0 异常单 1调派中 2已接单 3已出发 4已完成
 	} = {}) {
 		return this.$http.get('search.htm', {params: {
 			page,
@@ -27,9 +25,32 @@ export default class Seat {
 			isImmediate,
 			k,
 			status,			
-			all: this.all,
-			callType: this.callType,
-		}});
+			all,		 
+			callType: this.callType, //1专车召车 2普通招车
+		}})
+		.then((response) => {
+			var orders = response.data.list;	
+			if (!angular.isArray(orders)) {
+				return this.$q.reject();	
+			}
+			return response.data;
+		});
+	}
+
+	getOrders(params) {
+		return this.getOrdersFromService(params)
+			.then((response) => {
+				var orders = response.list;
+				angular.copy(orders, this.orderss);
+				return response;
+			}, (error) => {
+				angular.copy([], this.orderss);	
+				return this.$q.reject();
+			})
+			.finally(() => {
+				setTimeout(() => {
+				}, 3000);	
+			});	
 	}
 
 	selectSpecialCar() {
@@ -38,77 +59,6 @@ export default class Seat {
 
 	selectNormalCar() {
 		this.callType = 1;	
-	}
-
-	setOrderType(type) {
-		this.all = type;	
-	}
-
-	getOrders(params) {
-		this.isPauseSearch = true;
-		return this.getOrdersFromService(params)
-			.then((response) => {
-				let orders = response.data.list;	
-				let total = 0;
-				if (angular.isArray(orders)) {
-					angular.copy(orders, this.orderss);	
-					total = response.data.total;
-				} else {
-					angular.copy([], this.orderss);		
-				}
-				return {
-					total: total,
-					average: response.data.sec,	
-				};
-			})
-			.finally(() => {
-				setTimeout(() => {
-					this.isPauseSearch = false;	
-				}, 3000);	
-			});	
-	}
-
-	getPreparedOrders(isImmediate = 1) {
-		return this.getOrders({
-			isImmediate,
-			status: 1	
-		});	
-	}
-
-	getReceivedOrders(isImmediate) {
-		return this.getOrders({
-			isImmediate,
-			status: 2	
-		});	
-	}
-
-	getStartedOrders(isImmediate) {
-		return this.getOrders({
-			isImmediate,
-			status: 3	
-		});	
-	}
-
-	getDoneOrders(isImmediate) {
-		return this.getOrders({
-			isImmediate,
-			status: 4		
-		});	
-	}
-
-	getExceptionOrders(isImmediate) {
-		return this.getOrders({
-			isImmediate,
-			status: 0	
-		});
-	}
-
-	queryOrderByKeywords(k, isImmediate, status) {
-		return this.getOrders({
-			k,
-			isImmediate,
-			status	
-		});
 	}
 
 	addNewOrder(orderData) {
@@ -126,7 +76,7 @@ export default class Seat {
 			})
 			.then((sn) => {
 				return {
-					sn: sn,
+					sn,
 					contactPhone: orderData.actualTel,
 					timeCreated: orderData.reservationTime || this.$filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss'),
 					user: orderData.fullName,
@@ -137,7 +87,12 @@ export default class Seat {
 			})
 			.then((d) => {
 				let hasOrder = false;
-				return this.getPreparedOrders(orderData.isReservation ? 0 : 1)
+
+				return this.getOrdersFromService({
+					isImmediate: orderData.isReservation ? 0 : 1,
+					status: 1,
+					all: 0, 
+				})
 					.then((orderInfo) => {
 						this.orderss.forEach( (order) => {
 							if (d.sn === order.sn) {
@@ -155,19 +110,16 @@ export default class Seat {
 	}
 
 	shouldUpdateOrderItemList(status, isImmediate, sn) {
-		if (this.isPauseSearch) {
-			return this.$q.reject();	
-		}
 		return this.getOrdersFromService({
 			isImmediate,
 			status,			
 		})
 			.then((response) => {
-				let orders = response.data.list;	
-				if (!angular.isArray(orders) || orders.lenght < 1) {
+				var orders = response.list;	
+				var shouldUpdate = false;
+				if (orders.lenght < 1) {
 					return this.$q.reject();	
 				}
-				let shouldUpdate = false;
 				for (let i = 0, ii = orders.length; i < ii; i++) {
 					if (orders[i].sn === sn) {
 						orders[i].isNewAdd = true;	
@@ -180,8 +132,8 @@ export default class Seat {
 				}
 				angular.copy(orders, this.orderss);
 				return {
-					total: response.data.total,
-					average: response.data.sec,	
+					total: response.total,
+					average: response.sec,	
 				};
 			});
 	}
@@ -193,8 +145,8 @@ export default class Seat {
 			status: -1,	
 		})
 		.then((response) => {
-			var orders = response.data.list;	
-			if (!angular.isArray(orders) && orders.length === 0) {
+			var orders = response.list;	
+			if (orders.length === 0) {
 				return this.$q.reject();	
 			}
 			angular.copy(orders, this.orderss);

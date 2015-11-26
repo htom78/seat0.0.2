@@ -22,7 +22,7 @@ gulp.task('sprite', () => {
 				}	
 			},
 			imgName: 'icon-sprite.png',
-			imgPath: '/imgs/icon-sprite.png'
+			imgPath: '../imgs/icon-sprite.png'
 		}));
 
 	spriteData.img

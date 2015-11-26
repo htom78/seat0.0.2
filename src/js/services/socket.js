@@ -66,7 +66,6 @@ var socket = function() {
 								}
 							});
 						}, 6000);
-
 						setTimeout(function() {
 								console.log(333);
 							socketMessageService.message({
@@ -75,7 +74,7 @@ var socket = function() {
 									clientSn: "2",
 									driverName: "",
 									refDistance: 0,
-									sn: "I4C1E6D642",
+									sn: "I4C4F10903",
 									status: 9,
 									statusDesc: "系统异常",
 									tag: "DISP",
@@ -85,7 +84,7 @@ var socket = function() {
 									vehiclePhone: "18667870255"	
 								}
 							});
-						}, 10000);
+						}, 4000);
 						*/
 					}
 				},
