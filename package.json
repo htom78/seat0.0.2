@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "angular": "^1.4.5",
-    "angular-route": "^1.4.5"
+    "angular-route": "^1.4.5",
+    "angular-ui-router": "^0.2.15"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

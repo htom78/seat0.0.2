@@ -1,15 +1,13 @@
 'use strict';
 import angular from 'angular';
 
-function SearchCtrl($scope, searchService, startCount, orderStatuses) {
+function SearchCtrl($scope, searchService, orderStatuses) {
 	$scope.orders = searchService.orderss;
-	$scope.orderItemCount = startCount;		
+	$scope.orderItemCount = 0;		
 	$scope.orderStatuses = orderStatuses;
 	$scope.orderTypes = [{name: '即时', value: 1}, {name: '预约', value: 0}];
 
 	const searchData = {};
-
-
 
 	//点击搜索按钮
 	$scope.currentOrderPage = 1;
@@ -44,7 +42,6 @@ function SearchCtrl($scope, searchService, startCount, orderStatuses) {
 			});
 	};
 
-
 	$scope.status = {
 		beginTimeOpend: false,
 		endTimeOpend: false	
@@ -57,6 +54,8 @@ function SearchCtrl($scope, searchService, startCount, orderStatuses) {
 	$scope.openEndTime = function() {
 		$scope.status.endTimeOpend = true;	
 	};
+
+	$scope.getOrders();
 
 }
 

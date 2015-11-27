@@ -26,10 +26,7 @@ function Security($q, $http, $location, ocxSign) {
 				password: password	
 			})
 				.then((response) => {
-					if (response.data.isSuccess) {
-						//ocxSign.login({username: username, password: password});
-						redirect('index.htm');
-					} else {
+					if (!response.data.isSuccess) {
 						var errorInfo;
 						switch (parseInt(response.data.code)) {
 							case 20:
@@ -46,7 +43,6 @@ function Security($q, $http, $location, ocxSign) {
 					}
 				});
 		},
-
 
 		logout() {
 			return $http.post('logout.htm')

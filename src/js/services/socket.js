@@ -27,7 +27,6 @@ var socket = function() {
 							socketMessageService.message(data);
 						};
 
-
 						/*
 						setTimeout(function() {
 							socketMessageService.message({

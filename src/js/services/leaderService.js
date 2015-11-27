@@ -43,6 +43,7 @@ export default class Leader{
 				return response.total;
 			}, () => {
 				angular.copy([], this.orderss);	
+				return this.$q.reject();
 			});	
 	}
 

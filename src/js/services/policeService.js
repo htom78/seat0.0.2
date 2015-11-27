@@ -1,4 +1,81 @@
+'use strict';
 import angular from 'angular';
+
+export default class Police {
+		constructor($http, $q) {
+			this.$http = $http;	
+			this.$q = $q;
+			this.orderss = [];
+			this.id = -1;
+		}
+
+	getOrdersFromService({
+		k = '',
+		page = 1,
+		status = 1, //0全部 1未处理 2已处理
+	} = {}) {
+		return this.$http.get('alarm/list.htm', {params: {
+			k,
+			page,
+			status,
+			pagesize:10			 	
+		}})
+		.then((response) => {
+			var orders = response.data.list;	
+			if (!angular.isArray(orders)) {
+				return this.$q.reject();	
+			}
+			return response.data;	
+		});	
+	}
+
+	getOrderSelectState() {
+		return this.$http.get('alarm/getSelected.htm')
+			.then((response) => {
+				return response.data.msg;	
+			});	
+	}
+
+	getOrders(params) {
+		return this.$q.all([this.getOrdersFromService(params), this.getOrderSelectState()])
+			.then((response) => {
+				var orders = response[0].list;	
+				var selects = response[1];
+				var selectsLength = selects.length;
+				orders.forEach((order) => {
+					if (order.status !== 2) {
+						for (let i = 0; i < selectsLength; i ++) {
+							if (selects[i].isOwner) { 
+								if (parseInt(selects[i].id) === order.id) {
+									order.isSelfSelected = true;	
+								}
+							} else {
+								if (parseInt(selects[i].id) === order.id) {
+									order.isOtherSelected = true;	
+								}
+							}	
+						}
+					}
+				});
+				angular.copy(orders, this.orderss);
+				return response[0].count;
+			}, (error) => {
+				angular.copy([], this.orderss);	
+				return this.$q.reject();
+			});
+	}
+
+	selectItem(id) {
+		return this.$http.get('alarm/select.htm', { params: {id}});	
+	}
+}
+
+
+
+
+//_____________________________________
+
+/*
 var services = require('./index');
 
 var PAGE_SIZE = 10;
@@ -208,3 +285,4 @@ policeService.$inject = ['$http', '$q'];
 
 
 services.factory('policeService', policeService);
+*/

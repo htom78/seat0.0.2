@@ -1,0 +1,110 @@
+<header class='header'>
+	<section class='header-bar'>
+
+		<nav class='header-nav-bar'>
+			<a 
+				ui-sref-active='icon-header-seat-active' 
+				ng-class='{"icon-header-seat": $state.current.name !== "Seat.seat"}' 
+				ui-sref='.seat' 
+				class='icon-btn' 
+				title='坐席'></a>
+			<a 
+				ui-sref-active='icon-header-leader-active' 
+				ng-show='isLeader()' 
+				ui-sref='.leader' 
+				class='icon-btn' 
+				ng-class='{"icon-header-leader": $state.current.name !== "Seat.leader"}'
+				title='班长'></a>
+			<a 
+				ui-sref-active='icon-header-order-search-active' 
+				ui-sref='.search' 
+				class='icon-btn' 
+				ng-class='{"icon-header-order-search": $state.current.name !== "Seat.search"}'
+				title='订单查询'></a>
+			<a 
+				ui-sref-active='icon-header-special-active' 
+				ng-class='{"icon-header-special": $state.current.name !== "Seat.special"}'
+				ui-sref='.special' 
+				class='icon-btn' 
+				title='专车'></a>
+			<a 
+				ui-sref-active='icon-header-alarm-search-active' 
+				ng-class='{"icon-header-alarm-search": $state.current.name !== "Seat.police"}'
+				ui-sref='.police' 
+				class='icon-btn' 
+				title='报警查询'></a>
+			<a 
+				ui-sref-active='icon-header-represent-active' 
+				ng-class='{"icon-header-represent": $state.current.name !== "Seat.sinbad"}'
+				ui-sref='.sinbad' 
+				class='icon-btn' 
+				title='代驾'></a>
+		</nav>
+
+		<div class='header-call'>
+			<span class='call-count'>24</span>
+
+			<button
+				title='拨号'	
+				class='icon-btn-bg'
+				type='button'
+				><i class='icon-header-call-btn'></i></button>
+
+			<button
+				title='转接'	
+				class='icon-btn-bg'
+				type='button'
+				><i class='icon-header-call-transform-btn'></i></button>
+
+			<button
+				title='三方通话会议'
+				class='icon-btn-bg'
+				type='button'
+				><i class='icon-header-call-tertiary-btn'></i></button>
+
+		</div>
+
+		<div class='header-operate'>
+			<div class='btn-group'>
+				<button 
+					class='btn btn-default' 
+					ng-class='{active: isRestState()}'
+					ng-disabled='!isSignIn()'
+					ng-click='selectRest()'>小休</button>
+				<button 
+					class='btn btn-default' 
+					ng-class='{active: isBusyState()}'
+					ng-disabled='!isSignIn()'
+					ng-click='selectBusy()'>示忙</button>
+			</div>
+			<button 
+				class='sign-state-btn'
+				title='签入/签出'
+				type='button'
+				ng-click='toggleSignState()'
+				ng-class='{"icon-sign-in": isSignIn(), "icon-sign-out": !isSignIn()}'
+				></button>
+			<div class='header-state-info'>
+				<div class='above'>
+					<i class='icon-header-user'></i>
+					<span>{{username}}</span>	
+				</div>
+				<div class='below'>
+					<i class='icon-header-timer'></i>
+					<span>{{currentTimer}}</span>
+				</div>
+			</div>
+			<button 
+				class='exit-btn icon-exit-btn' 
+				ng-click='logout()' 
+				title='退出登录'></button>
+		</div>
+	</section>
+
+	<section class='flex info-bar'>
+		<div class='info-left'><span class='scroll-info'>1.一切正常.</span></div>
+		<div class='info-right' header-info></div>
+	</section>
+</header>
+
+<div ui-view></div>

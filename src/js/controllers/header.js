@@ -1,6 +1,7 @@
 'use strict';
-function HeaderCtrl ($scope, $timeout, $filter, $location, signService, security, socket, headerService) {
+function HeaderCtrl ($scope, $state, $timeout, $filter, $location, signService, security, socket, headerService) {
 
+	$scope.$state = $state;
 	$scope.isAuthenticated = security.isAuthenticated;
 	$scope.isLeader = security.isLeader;
 
@@ -56,38 +57,43 @@ function HeaderCtrl ($scope, $timeout, $filter, $location, signService, security
 	};
 
 	$scope.selectRest = function() {
-		if ($scope.isSignIn() && !$scope.isRestState()) {
+		if (!$scope.isSignIn()) {
+			return;	
+		}
+		if (!$scope.isRestState()) {
 			signService.rest()
 				.then(() => {
 					$scope.currentOperateState = status.operateState.REST;
 				});	
+		} else {
+			signService.unrest()
+				.then(() => {
+					$scope.currentOperateState = status.operateState.FREE;
+				});		
 		}
 	};
 
 	$scope.selectBusy = function() {
-		if ($scope.isSignIn() && !$scope.isBusyState()) {
+		if (!$scope.isSignIn()) {
+			return;	
+		}
+		if (!$scope.isBusyState()) {
 			signService.busy()
 				.then(() => {
 					$scope.currentOperateState = status.operateState.BUSY;		
 				});
-		}
-	};
-
-	$scope.selectFree = function() {
-		if ($scope.isSignIn() && !$scope.isFreeState()) {
-			signService.free()
+		} else {
+			signService.unbusy()
 				.then(() => {
-					$scope.currentOperateState = status.operateState.FREE;	
-				});	
+					$scope.currentOperateState = status.operateState.FREE;		
+				});
 		}
-	
 	};
 
 	//security
 	//###############################################################
 	$scope.logout = function() {
 		socket.close();
-		signService.logout();
 		security.logout();
 	};
 

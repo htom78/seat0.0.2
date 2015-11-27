@@ -205,11 +205,11 @@
 				<tr ng-repeat='item in orders'
 						ng-if='$index < 6'>
 					<td>{{item.sn}}</td>
-					<td class='ellipsis' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
+					<td class='text-over-hide' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
 					<td>{{item.contactName}}</td>
 					<td>{{item.contactPhone}}</td>
-					<td class='ellipsis' title='{{item.startPoint}}'>{{item.startPoint}}</td>
-					<td class='ellipsis' title='{{item.destination}}'>{{item.destination}}</td>
+					<td class='text-over-hide' title='{{item.startPoint}}'>{{item.startPoint}}</td>
+					<td class='text-over-hide' title='{{item.destination}}'>{{item.destination}}</td>
 					<td>{{item.immediateOrReservation}}</td>
 					<td class='some-list-before'>{{item.statusLabel}}</td>
 					<td colspan='4'>

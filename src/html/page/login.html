@@ -2,30 +2,24 @@
 	<div class='login-box'>
 		<div class='login-form-wrapper'>
 			<form class='login-form' ng-submit='login()'>
-				<div class='input-wrapper'>
-					<input 
-						type='text' 
-						class='login-input username-input'
-						placeholder='工号'
-						ng-required='true'
-						ng-model='username'/>
-						<i class='icon-input-username'></i>
+				<input 
+					type='text' 
+					class='form-control username-input'
+					placeholder='工号'
+					autofocus
+					ng-required='true'
+					ng-model='username'/>
+				<input 
+					type='password'
+					class='form-control password-input'
+					placeholder='密码'
+					ng-required='true'
+					ng-model='password'/>
+				<div class='alert alert-danger' ng-show='hasErrorMessage'>
+					{{errorInfo}}
 				</div>
-				<div class='input-wrapper'>
-					<input 
-						type='password'
-						class='login-input password-input'
-						placeholder='密码'
-						ng-required='true'
-						ng-model='password'/>
-						<i class='icon-input-password'></i>
-				</div>
-				<div class='some-error'><span>{{errorInfo}}</span></div>
-				<div class='btn-wrapper'>
-					<button class='login-btn'>登录</button>
-				</div>
+				<button class='btn btn-primary btn-block'>登录</button>
 			</form>
 		</div>
-		<div class='shadow'></div>
 	</div>
 </div>

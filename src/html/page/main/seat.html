@@ -351,14 +351,14 @@
 							ng-repeat='item in orders' 
 							ng-if='$index < 6' 
 							ng-class='{"add-new": item.isNewAdd}'>
-							<td class='ellipsis' title='{{item.sn}}'>{{item.sn}}</td>
-							<td class='ellipsis' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
-							<td class='ellipsis' title='{{item.user}}'>{{item.user}}</td>
-							<td class='ellipsis' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
-							<td class='ellipsis' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
-							<td class='ellipsis' title='{{item.poi}}'>{{item.poi}}</td>
-							<td class='ellipsis' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
-							<td class='ellipsis' title='{{item.statusName}}' ng-if='isExceptionCurrentTab()'>{{item.statusName}}</td>
+							<td class='text-over-hide' title='{{item.sn}}'>{{item.sn}}</td>
+							<td class='text-over-hide' title='{{item.timeCreated}}'>{{item.timeCreated}}</td>
+							<td class='text-over-hide' title='{{item.user}}'>{{item.user}}</td>
+							<td class='text-over-hide' title='{{item.contactPhone}}'>{{item.contactPhone}}</td>
+							<td class='text-over-hide' title='{{item.vehicleNumber}}'>{{item.vehicleNumber}}</td>
+							<td class='text-over-hide' title='{{item.poi}}'>{{item.poi}}</td>
+							<td class='text-over-hide' title='{{item.destination_poi}}'>{{item.destination_poi}}</td>
+							<td class='text-over-hide' title='{{item.statusName}}' ng-if='isExceptionCurrentTab()'>{{item.statusName}}</td>
 							<td class='seat-operate-td'>
 								<div class="btn-group" uib-dropdown>
 									<button id="single-button{{$index}}" type="button" class="btn btn-primary btn-xs" uib-dropdown-toggle ng-disabled="disabled">

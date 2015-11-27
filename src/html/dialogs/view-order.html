@@ -1,20 +1,36 @@
 <div class="modal-header">
 	<h3 class="modal-title">订单详情</h3>
 </div>
-<div class="modal-body">
-	订单编号: {{order.sn}}<br/> 
-	召车数量: {{order.amount}}<br/> 
-	联系人: {{order.contactName}}<br/>
-	联系电话: {{order.contactPhone}}<br/>
-	起点: {{order.poi}}<br/>
-	起点描述: {{order.snippet}}<br/>
-	终点: {{order.targetPoi}}<br/>
-	终点描述: {{order.targetSnippet}}<br/>
-	接单时间: {{order.timeCreated}}<br/>
-	接单操作员名称: {{order.opName}}<br/>
-	抢单时间: {{order.assignedTime}}<br/>
-	司机姓名: {{order.driverName}}<br/>
-	司机电话: {{order.driverPhone}}<br/>
-	上车时间: {{order.actualPickupTime}}<br/>
-	业务状态: {{order.status}}
+<div class="modal-body order-info">
+	<div class='info-line'>
+		<div class='order-info-left'>订单编号: {{order.sn}}</div>
+		<div class='order-info-right'>召车数量: {{order.amount}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>联系人: {{order.contactName}}</div>
+		<div class='order-info-right'>联系电话: {{order.contactPhone}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>起点: {{order.poi}}</div>
+		<div class='order-info-right'>起点描述: {{order.snippet}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>终点: {{order.targetPoi}}</div>
+		<div class='order-info-right'>终点描述: {{order.targetSnippet}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>接单时间: {{order.timeCreated}}</div>
+		<div class='order-info-right'>接单操作员名称: {{order.opName}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>抢单时间: {{order.assignedTime}}</div>
+		<div class='order-info-right'>司机姓名: {{order.driverName}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>司机电话: {{order.driverPhone}}</div>
+		<div class='order-info-right'>上车时间: {{order.actualPickupTime}}</div>
+	</div>
+	<div class='info-line'>
+		<div class='order-info-left'>业务状态: {{order.status}}</div>
+	</div>
 </div>

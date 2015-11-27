@@ -6,6 +6,7 @@ import ensureBtn from './ensureBtn';
 import leaderOrderInfo from './leaderOrderInfo';
 import viewOrder from './viewOrder';
 import headerInfo from './headerInfo';
+import handleAlarmOrder from './handleAlarmOrder';
 
 module.exports = angular.module('app.dirctives', [])
 	.directive('representMap', representMap)
@@ -13,7 +14,8 @@ module.exports = angular.module('app.dirctives', [])
 	.directive(leaderOrderInfo.name, leaderOrderInfo.fn)
 	.directive(ensureBtn.name, ensureBtn.fn)
 	.directive(viewOrder.name, viewOrder.fn)
-	.directive(headerInfo.name, headerInfo.fn);
+	.directive(headerInfo.name, headerInfo.fn)
+	.directive(handleAlarmOrder.name, handleAlarmOrder.fn);
 
 require('./chartUser');
 require('./callStatus');
@@ -23,7 +25,6 @@ require('./chartEmploy');
 require('./chartCar');
 require('./listenCall');
 require('./pauseEmit');
-require('./handleAlarmOrder');
 require('./confirmDialog');
 require('./timeSelect');
 require('./callNumber');

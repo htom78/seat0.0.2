@@ -1,28 +1,22 @@
 'use strict';
 
 function LoginCtrl($scope, $location, security) {
-	/*
-	$rootScope.isLoginPage = true;
-	$scope.$on('$destroy', function() {
-		$rootScope.isLoginPage = false;
-	});
-	*/
 
 	$scope.login = function() {
 		security.login($scope.username, $scope.password)
 			.then(function() {
 				location.reload();	
 			}, function(errorInfo) {
-				$scope.hasError = true;	
+				$scope.hasErrorMessage = true;	
 				$scope.errorInfo = errorInfo;
 			});
 	};
 
-	$scope.$watch(function() {
+	$scope.$watch(() => {
 		return security.isAuthenticated();	
-	}, function(isAuthenticated) {
+	}, (isAuthenticated) => {
 		if (isAuthenticated) {
-			$location.path('/');	
+			$location.path('/main/seat.htm');	
 		}	
 	});
 }

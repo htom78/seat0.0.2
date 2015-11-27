@@ -17,21 +17,21 @@
 					href='javascript:;'
 					class='tab-btn'
 					ng-click='cutAllOrderTab()'>全部
-					<span class='badge'>{{getAllOrderTotal()}}</span></a>
+					<span class='badge'>{{allOrderTotal}}</span></a>
 			</li>
 			<li ng-class='{active: isUnhandleOrderTab()}'>
 				<a
 					href='javascript:;'
 					class='tab-btn'
 					ng-click='cutUnhandleOrderTab()'>未处理
-					<span class='badge'>{{getUnhandleOrderTotal()}}</span></a>
+					<span class='badge'>{{unhandleOrderTotal}}</span></a>
 			</li>
 			<li ng-class='{active: isHandleOrderTab()}'>
 				<a
 					href='javascript:;'
 					class='tab-btn'
 					ng-click='cutHandleOrderTab()'>已处理
-					<span class='badge'>{{getHandleOrderTotal()}}</span></a>
+					<span class='badge'>{{handleOrderTotal}}</span></a>
 			</li>
 		</ul>
 
@@ -60,23 +60,21 @@
 						<tr 
 							ng-repeat='item in orders'
 							handle-alarm-order='item'
-							operator='{{item.opName}}'
-							time-transfered='{{item.timeTransfered}}'
-							ng-class='{active: item.isActive, info: item.hasSelfSelected(), danger: item.hasOtherSelected()}'>
+							ng-class='{info: item.isActive || item.isSelfSelected, danger: item.isOtherSelected}'>
 							<td class='first-field'>
 								<i ng-class='{"icon-warn": (item.status === 1)}'></i>
 								<span>{{item.rTypeLabel}}</span>
 							</td>
-							<td class='ellipsis'>{{item.timeCreated}}</td>
-							<td class='ellipsis'>{{item.vehicleNumber}}</td>
-							<td class='ellipsis'>{{item.oemStatus}}</td>
-							<td class='ellipsis'>{{item.driverName}}</td>
-							<td class='ellipsis'>{{item.driverMobile}}</td>
-							<td class='ellipsis'>{{item.terminalMobile}}</td>
-							<td class='ellipsis'>{{item.terminalCode}}</td>
-							<td class='ellipsis'>{{item.note}}</td>
-							<td class='ellipsis'>{{item.corpName}}</td>
-							<td class='ellipsis'>{{item.poi}}</td>
+							<td class='text-over-hide'>{{item.timeCreated}}</td>
+							<td class='text-over-hide'>{{item.vehicleNumber}}</td>
+							<td class='text-over-hide'>{{item.oemStatus}}</td>
+							<td class='text-over-hide'>{{item.driverName}}</td>
+							<td class='text-over-hide'>{{item.driverMobile}}</td>
+							<td class='text-over-hide'>{{item.terminalMobile}}</td>
+							<td class='text-over-hide'>{{item.terminalCode}}</td>
+							<td class='text-over-hide'>{{item.note}}</td>
+							<td class='text-over-hide'>{{item.corpName}}</td>
+							<td class='text-over-hide'>{{item.poi}}</td>
 						</tr>
 					</tbody>
 				</table>

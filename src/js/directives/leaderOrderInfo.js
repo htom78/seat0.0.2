@@ -31,7 +31,6 @@ function Info($uibModal, $document) {
 						templateUrl: 'dialogs/order-info.html',
 						controller: 'dialogOrderInfoCtrl',
 						windowTemplateUrl: 'bootstrap/modal/div.html',
-						controllerAs: 'leaderCtrl',
 						openedClass: 'dddd',
 						resolve: {
 							btnShows() {

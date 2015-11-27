@@ -1,3 +1,4 @@
+'use strict';
 var services = require('./index');
 
 var socketMessageService = function($rootScope, alarmMessageService, orderStateChangeMessage) {
@@ -17,7 +18,8 @@ var socketMessageService = function($rootScope, alarmMessageService, orderStateC
 					break;	
 
 				case 3:
-					alarmMessageService.itemSelected(data.msg);
+					//有人处理报警
+					$rootScope.$broadcast('alarmItemSelect', parseInt(data.msg));
 					break;
 				case 4: 
 					$rootScope.$broadcast('headerMessage', data.msg);

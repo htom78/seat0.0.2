@@ -2,6 +2,21 @@
 	font-family: $font-family;
 }
 
+.table {
+	tr {
+		.insert-td {
+			padding: 0;	
+		}
+	}
+
+	.text-over-hide {
+		word-wrap: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: hide;	
+	}
+}
+
 .list-page {
 	border-right: $border-main-size solid $border-main-color;
 	padding: 20px 10px 10px 20px;
@@ -42,6 +57,18 @@
 		td {
 			text-align: center;	
 		}
+	}
+}
+
+.order-info {
+	.info-line {
+		display: flex;	
+	}
+	.order-info-left,
+	.order-info-right {
+		font-size: 13px;
+		width: 50%;
+		display: inline-block;	
 	}
 }
 
@@ -95,23 +122,11 @@
 	}
 }
 
-
-
 .add-tab {
 	animation: addTab 5s;
-	-webkit-animation: addTab 5s;
 }
 
 @keyframes addTab
-{
-	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
-	25% {box-shadow: inset 0px 0px 6px rgba(255, 186, 88, 1);}
-	50% {box-shadow: inset 0px 0px 5px rgba(255, 186, 88, 1);}
-	80% {box-shadow: inset 0px 0px 4px rgba(255, 186, 88, 1);}
-	100% {box-shadow: inset 0px 0px 0px rgba(255, 186, 88, .8);}
-}
-
-@-webkit-keyframes addTab
 {
 	0% {box-shadow: inset 0px 0px 8px rgba(255, 186, 88, 1);}
 	25% {box-shadow: inset 0px 0px 6px rgba(255, 186, 88, 1);}

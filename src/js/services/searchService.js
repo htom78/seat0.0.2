@@ -7,13 +7,6 @@ export default class Search {
 		this.$filter = $filter;
 		this.$q = $q;
 		this.orderss = [];
-		this.allOrderCount = 0;
-		this.immediateOrderCount = 0;
-		this.reservationOrderCount = 0;
-		this.state = Search.state.ALL_TAB;
-		this.currentPage = 1;
-		this.total = 0;
-		this.shoudUpdate = 0;
 	}
 
 	getOrdersFromService({
@@ -31,7 +24,6 @@ export default class Search {
 			page = 1, 
 			pagesize = 10 
 	} = {}) {
-		this.currentPage = page;
 		return this.$http.get('search/more.htm', {
 			params: {
 				poi,
@@ -76,6 +68,7 @@ export default class Search {
 				return response.total;
 			}, () => {
 				angular.copy([], this.orderss);	
+				return this.$q.reject();
 			}); 	
 	}
 
@@ -85,44 +78,5 @@ export default class Search {
 				return response.data;	
 			});	
 	}
-
-	getAllOrders() {
-		this.state = Search.state.ALL_TAB;
-		return this.getOrdersFromService();
-	}
-
-	getImmediatOrders() {
-		this.state = Search.state.IMMEDIATE_TAB;
-		return this.getOrdersFromService({isImmediate: 1});	
-	}	
-
-	getReservationOrders() {
-		this.state = Search.state.RESERVATION_TAB;
-		return this.getOrdersFromService({isImmediate: 2});	
-	}
-
-	queryOrderByKeywords(k = '', beginTime = '', endTime = '') {
-		return this.getOrdersFromService({
-			k,
-			beginTime,
-			endTime,
-			isImmediate: this.state	
-		});	
-	}
-
-	getSelectPageOrder(page, k = '', beginTime = '', endTime = '') {
-		return this.getOrdersFromService({
-			page,
-			k,
-			beginTime,
-			endTime,
-			isImmediate: this.state,
-		});	
-	}
 }
 
-Search.state = {
-	ALL_TAB: 0,
-	IMMEDIATE_TAB: 1,
-	RESERVATION_TAB: 2
-};

@@ -1,11 +1,83 @@
 'use strict';
 
-router.$inject = ['$locationProvider', '$routeProvider'];
-
-export default function router($locationProvider, $routeProvider) {
+function Router($locationProvider, $stateProvider, $routeProvider) {
 
 	$locationProvider.html5Mode(true);
 
+	$stateProvider
+		.state('Login', {
+			url: '/login.htm',	
+			controller: 'loginCtrl',
+			templateUrl: 'page/login.html',
+			title: '登录'
+		})
+		.state('Seat', {
+			url: '/main',
+			templateUrl: 'page/main/index.html',
+			title: 'xxxx',
+			controller: 'headerCtrl'
+		})
+		.state('Seat.seat', {
+			url: '/seat.htm',
+			templateUrl: 'page/main/seat.html',
+			controller: 'seatCtrl',
+			title: '坐席',
+			resolve: {
+				init(seatService) {
+					seatService.selectNormalCar();
+				}	
+			}
+		})
+		.state('Seat.special', {
+			url: '/special.htm',
+			templateUrl: 'page/main/seat.html',
+			title: '专车',	
+			controller: 'seatCtrl',
+			resolve: {
+				init(seatService) {
+					seatService.selectSpecialCar();
+				}	
+			}
+		})
+		.state('Seat.leader', {
+			url: '/leader.htm',
+			templateUrl: 'page/main/leader.html',	
+			controller: 'leaderCtrl',
+			title: '班长',
+			resolve: {
+			
+			}
+		})
+		.state('Seat.search', {
+			url: '/searchMore.htm',
+			templateUrl: 'page/main/search.html',	
+			controller: 'searchCtrl',
+			title: '搜索',
+			resolve: {
+				orderStatuses(searchService) {
+					return 	searchService.getOrderStatuses();
+				}
+			}
+		})
+		.state('Seat.police', {
+			url: '/police.htm',
+			templateUrl: 'page/main/police.html',
+			controller: 'policeCtrl',
+			title: '报警',
+			resolve: {
+			}
+		})
+		.state('Seat.sinbad', {
+			url: '/sinbad.htm',
+			templateUrl: 'page/main/represent.html',
+			controller: 'representCtrl',
+			title: '代驾',
+			resolve: {
+			
+			}	
+		});
+
+	/*
 	var seatRouteConfig = {
 		templateUrl: 'page/seat.html',
 		controller: 'seatCtrl',
@@ -93,4 +165,8 @@ export default function router($locationProvider, $routeProvider) {
 		.when('/police.htm', policeRouteConfig)
 		.when('/special.htm', seatRouteConfig)
 		.when('/sinbad.htm', representConfig);
+		*/
 }
+
+
+export default Router;

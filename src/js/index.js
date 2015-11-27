@@ -1,11 +1,10 @@
 'use strict';
 import angular from 'angular';
 import 'angular-route';
-import router from './router';
-import config from './config';
 import './map';
 import './bootstrap';
 import './security';
+import 'angular-ui-router';
 
 require('./controllers');
 require('./directives');
@@ -18,6 +17,7 @@ require('./templates');
 
 var requires = [
 	'ngRoute',
+	'ui.router',
 	'templates',
 	'app.controllers',
 	'app.dirctives',
@@ -35,15 +35,9 @@ var requires = [
 ];
 
 var app = angular.module('app', requires)
-	.config(router)
-	.config(config)
-	.run(function($rootScope, ocxSocket, security) {
-		security.requestCurrentUser();
-		//ocxSocket.connection();	
-		$rootScope.$on('$routeChangeSuccess', function(ev, current, previous) {
-			$rootScope.title = current.$$route.title;	
-		});
-	});
+	.config(require('./router'))
+	.config(require('./config'))
+	.run(require('./run'));
 
 
 module.exports = app;

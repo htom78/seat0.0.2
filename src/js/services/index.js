@@ -6,6 +6,8 @@ import seatService from './seatService';
 import leaderService from './leaderService';
 import headerService from './headerService';
 import orderService from './orderService';
+import policeService from './policeService';
+import signService from './sign';
 
 module.exports = angular.module('app.services', [])
 	.service('representService', represent)
@@ -13,7 +15,9 @@ module.exports = angular.module('app.services', [])
 	.service('seatService', seatService)
 	.service('leaderService', leaderService)
 	.service('headerService', headerService)
-	.factory(orderService.name, orderService.fn);
+	.service('policeService', policeService)
+	.factory(orderService.name, orderService.fn)
+	.factory(signService.name, signService.fn);
 
 require('./statistics');
 require('./mapService');
@@ -22,8 +26,6 @@ require('./chartEmploy');
 require('./chartCar');
 require('./leaderMap');
 require('./socket');
-require('./sign');
-require('./policeService');
 require('./user');
 require('./handleAlarmDialog');
 require('./messageBoxService');
