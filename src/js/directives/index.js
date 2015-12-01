@@ -8,6 +8,7 @@ import viewOrder from './viewOrder';
 import headerInfo from './headerInfo';
 import handleAlarmOrder from './handleAlarmOrder';
 import employeeStatus from './employeeStatus';
+import callShowInfo from './callShowInfo';
 
 module.exports = angular.module('app.dirctives', [])
 	.directive('representMap', representMap)
@@ -17,7 +18,8 @@ module.exports = angular.module('app.dirctives', [])
 	.directive(viewOrder.name, viewOrder.fn)
 	.directive(headerInfo.name, headerInfo.fn)
 	.directive(handleAlarmOrder.name, handleAlarmOrder.fn)
-	.directive(employeeStatus.name , employeeStatus.fn);
+	.directive(employeeStatus.name , employeeStatus.fn)
+	.directive(callShowInfo.name, callShowInfo.fn);
 
 require('./chartUser');
 require('./callStatus');

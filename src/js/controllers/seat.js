@@ -181,12 +181,12 @@ function SeatCtrl($scope,  userService, seatMap, seatService, orderService, util
 		$scope.orderData.callingTel = mobile;
 		$scope.orderData.actualTel = mobile;
 		userService.getUserInfoByMobile(mobile)
-		.then((response) => {
-			$scope.userData = response;
-			$scope.orderData.fullName = response.contactName;
-			$scope.orderData.targetpoiList = response.targetpoiList;
-			$scope.orderData.poiList = response.poiList;
-		});
+			.then((response) => {
+				$scope.userData = response;
+				$scope.orderData.fullName = response.contactName;
+				$scope.orderData.targetpoiList = response.targetpoiList;
+				$scope.orderData.poiList = response.poiList;
+			});
 	});
 
 	//电话号码归属地

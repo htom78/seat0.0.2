@@ -2,23 +2,7 @@
 
 	<div class='seat-top-left' listen-call>
 
-		<div class='chart' call-show-info>
-			<div class='user-info'>
-				<div class='justify'>
-					<span  class='info-item'><i class='icon-img custom-type'></i>{{userData.rank}}</span>
-					<span class='info-item'><i class='icon-img timer'></i>{{userData.timeCreated}}</span>
-				</div>
-				<div class='justify'>
-					<span class='info-item' ng-click='queryOrderBySn()'><i class='icon-img serial-number'></i>{{userData.sn}}</span>
-					<span class='info-item'>
-						<span><b class='legend-dot dot-order-count'></b>订单次数</span>
-						<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
-					</span>
-				</div>
-			</div>
-			<div class='graph' chart-user order-fuck='userData.fkTotal' order-total='userData.total'>
-			</div>
-		</div>
+		<div class='chart' call-show-info='userData' click-number='queryOrderBySn()'></div>
 
 		<form class='seat-top-form neworder-form' name='newOrder' ng-submit='addOrderFromForm()'>
 			<ul class='seat-field1'>

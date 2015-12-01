@@ -1,0 +1,15 @@
+<div class='user-info'>
+	<div class='justify'>
+		<span  class='info-item'><i class='icon-img custom-type'></i>{{rank}}</span>
+		<span class='info-item'><i class='icon-img timer'></i>{{timeCreated}}</span>
+	</div>
+	<div class='justify'>
+		<span class='info-item' ng-click='queryOrderBySn(sn)'><i class='icon-img serial-number'></i>{{sn}}</span>
+		<span class='info-item'>
+			<span><b class='legend-dot dot-order-count'></b>订单次数</span>
+			<span><b class='legend-dot dot-fuck-count'></b>放空次数</span>
+		</span>
+	</div>
+</div>
+<div class='graph' id='callGraph'>
+</div>

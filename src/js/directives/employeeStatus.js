@@ -1,7 +1,7 @@
 'use strict';
 import angular from 'angular';
 
-function Status($timeout, leaderService, calculateAngleUtils, iChart) {
+function Status($timeout, leaderService, iChart) {
 	return {
 
 		scope: {},
