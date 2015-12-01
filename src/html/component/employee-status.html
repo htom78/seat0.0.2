@@ -1,0 +1,58 @@
+<div class='employ-chart flex'>
+	<div id='employeeGraph' class='graph' employ-data='employChart'>
+	</div>
+	<div class='employ-legend-wrap'>
+		<ul class='dots-ul'>
+			<li	class='dot-li' ng-class='{active: isBusyTab()}'>
+				<a 
+					class='tab-btn'
+					href='javascript:;' 
+					ng-click='cutBusyTab()'>
+					<i class='legend-dot dot-busy'></i>
+					<span>示忙</span>
+				</a>
+			</li>
+			<li	class='dot-li' ng-class='{active: isRestTab()}'>
+				<a 
+					class='tab-btn'
+					href='javascript:;' 
+					ng-click='cutRestTab()'>
+					<i class='legend-dot dot-rest'></i>
+					<span>小休</span>
+				</a>
+			</li>
+			<li	class='dot-li' ng-class='{active: isRespondTab()}'>
+				<a 
+					class='tab-btn'
+					href='javascript:;' 
+					ng-click='cutRespondTab()'>
+					<i class='legend-dot dot-respond'></i>
+					<span>应答</span>
+				</a>
+			<li	class='dot-li' ng-class='{active: isFreeTab()}'>
+				<a 
+					class='tab-btn'
+					href='javascript:;' 
+					ng-click='cutFreeTab()'>
+					<i class='legend-dot dot-free'></i>
+					<span>空闲</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class='employ-info'>
+	<ul class='employ-info-ul flex'>
+		<li class='item' ng-repeat='item in statusItems'>
+			<div>
+				<i class='glyphicon glyphicon-user'></i>
+				<span>{{item.username}}</span>
+			</div>
+			<div>
+				<i class='glyphicon glyphicon-time'></i>
+				<span>{{item.minutes}}</span>
+			</div>
+		</li>
+	</ul>
+</div>

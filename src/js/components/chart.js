@@ -1,3 +1,5 @@
+'use strict';
+import angular from 'angular';
 var components = require('./index');
 
 function createCanvas() {
@@ -168,8 +170,6 @@ var chatComponent = function() {
 	};
 
 };
-
-chatComponent.$inject = [];
 
 
 components.factory('chart', chatComponent);

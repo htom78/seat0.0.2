@@ -1,3 +1,100 @@
-<div class='insert-info'>
-	内容没有确定
+<div class='insert-info clearfix'>
+	<div ng-show='!isHandle()'>
+		<div class='fl'>
+			<button 
+				class='btn btn-default btn-sm'
+				ensure-btn
+				message-title='监听'
+				message-content='确认操作?'
+				ensure-fn='listen()'
+				>监听</button>	
+			<button 
+				class='btn btn-default btn-sm'
+				ensure-btn
+				message-title='拍照'
+				message-content='确认操作?'
+				ensure-fn='photograph()'
+				>拍照</button>	
+			<button 
+				class='btn btn-default btn-sm'
+				ensure-btn
+				message-title='跟踪'
+				message-content='确认操作?'
+				ensure-fn='trail()'
+				>跟踪</button>	
+			<button 
+				class='btn btn-default btn-sm'
+				ensure-btn
+				message-title='解除'
+				message-content='确认操作?'
+				ensure-fn='relieve()'
+				>解除</button>	
+			<button 
+				class='btn btn-warning btn-sm'
+				ensure-btn
+				message-title='转警'
+				message-content='确认操作?'
+				ensure-fn='transfer()'
+				>转警</button>	
+		</div>
+
+		<div class='form-inline fr' ng-show='isAlarmReasonShow()'>
+			<label class='radio-inline'>
+				<input type='radio'
+					name='alarmReason'
+					ng-model='alarmMark'
+					ng-value='1'/>	
+					设备误报
+			</label>
+			<label class='radio-inline'>
+				<input type='radio'
+					name='alarmReason'
+					ng-model='alarmMark'
+					ng-value='2'/>	
+					测试
+			</label>
+			<label class='radio-inline'>
+				<input type='radio'
+					name='alarmReason'
+					ng-model='alarmMark'
+					ng-value='3'/>	
+					实警
+			</label>
+			<label class='radio-inline'>
+				<input type='radio'
+					name='alarmReason'
+					ng-model='alarmMark'
+					ng-value='4' />	
+					设备故障
+			</label>
+			<input 
+				type='text' 
+				placeholder='详细说明'
+				class='form-control input-sm'
+				ng-model='alarmMarkNote'/>
+			<button 
+				class='btn btn-primary btn-sm'
+				type='button'
+				ensure-btn
+				message-title='备注'
+				message-content='确认提交?'
+				ensure-fn='mark()'
+				>确定</button>
+		</div>
+	</div>
+
+	<div ng-show='isHandle()'>
+		<div class='fl'>
+			<span class=''>转警时间:{{transferTimer}}</span>
+			<span>接警员:{{}}</span>
+		</div>
+		<div class='fr'>
+			<button 
+				class='btn btn-default btn-sm'>播放监听</button>
+			<button         
+				class='btn btn-default btn-sm'>查看拍照</button>
+			<button         
+				class='btn btn-default btn-sm'>跟踪回放</button>
+		</div>
+	</div>
 </div>

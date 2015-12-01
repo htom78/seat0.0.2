@@ -53,4 +53,11 @@ export default class Leader{
 			return this.orderss.splice(index, 1);	
 		}
 	}
+
+	getEmployeeStatus() {
+		return this.$http.get('statis/sign.htm')
+			.then((response) => {
+				return response.data;	
+			});	
+	}
 }

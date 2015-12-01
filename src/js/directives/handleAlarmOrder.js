@@ -15,7 +15,7 @@ function Handle($uibModal, $document, policeService) {
 			var tr;
 
 			elem.on('dblclick', function(ev) {
-				if (scope.order.isOtherSelected || scope.order.status === 2) {
+				if (scope.order.isOtherSelected) {
 					return false;
 				}
 				scope.$apply(() => {
@@ -37,7 +37,16 @@ function Handle($uibModal, $document, policeService) {
 							templateUrl: 'dialogs/alarm-info.html',
 							controller: 'dialogAlarmInfoCtrl',
 							windowTemplateUrl: 'bootstrap/modal/div.html',
-							openedClass: 'dddd'
+							openedClass: 'dddd',
+							resolve: {
+								order() {
+									return scope.order;	
+								},
+
+								hasHandle() {
+								 return scope.order.status === 2;
+								}
+							}
 						});
 					}
 
@@ -59,7 +68,6 @@ function Handle($uibModal, $document, policeService) {
 				}	
 			});
 
-			var operateInfo = ['设备误报', '测试', '实警', '设备故障'];
 
 		}	
 

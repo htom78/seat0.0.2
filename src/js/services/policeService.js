@@ -68,6 +68,33 @@ export default class Police {
 	selectItem(id) {
 		return this.$http.get('alarm/select.htm', { params: {id}});	
 	}
+
+	listen(id) {
+		return this.$http.post('alarm/listen.htm', {id});	
+	}
+
+	photograph(carPlate) {
+		return this.$http.post('alarm/snap.htm', {number: carPlate});	
+	}
+
+	trail(carPlate) {
+		return this.$http.post('alarm/once.htm', {number: carPlate});	
+	}
+
+	relieve(id) {
+		return this.$http.post('alarm/remove.htm', {id});	
+	}
+
+	transfer(id) {
+		return this.$http.post('alarm/transfered.htm', {id});	
+	}
+
+	mark(data) {
+		return this.$http.post('alarm/do.htm', data)
+			.then((response) => {
+				return response.data;	
+			});	
+	}
 }
 
 

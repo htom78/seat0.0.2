@@ -1,6 +1,6 @@
 'use strict';
 
-function LeaderCtrl($scope, $timeout, $location, security, leaderService) {
+function LeaderCtrl($scope, $timeout, leaderService) {
 
 	let isSearch = false;
 	$scope.orders = leaderService.orderss;

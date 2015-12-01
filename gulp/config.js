@@ -94,7 +94,7 @@ module.exports = {
 
 	copy: {
 		src: buildDir + '/**/*',
-		outputFile: 'E:\\work\\aladdin-seat\\src\\main\\webapp\\static\\'	
+		outputFile: 'D:\\eclipse\\aladdin-seat\\src\\main\\webapp\\static\\'	
 	}
 
 };
