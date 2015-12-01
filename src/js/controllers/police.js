@@ -110,6 +110,14 @@ function PoliceCtrl ($scope, policeService) {
 		});
 	});
 
+	$scope.$on('showMap', () => {
+			$scope.isMapShow = true;	
+	});
+
+	$scope.$on('hideMap', () => {
+			$scope.isMapShow = false;	
+	});
+
 	$scope.getOrders();
 }
 

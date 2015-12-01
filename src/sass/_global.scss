@@ -58,6 +58,26 @@
 			text-align: center;	
 		}
 	}
+
+	.table-wrapper {
+		flex: 2 1;
+	}
+
+	.map-wrapper {
+		position: relative;
+		width: 670px;
+		min-height: 360px;
+		background: $chart-bg;
+		margin-left: 10px;
+	}
+
+	.map-view {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
 }
 
 .order-info {

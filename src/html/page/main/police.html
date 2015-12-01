@@ -38,7 +38,7 @@
 	</div>
 
 	<div class='orders-wrapper'>
-		<div class='orders-table'>
+		<div class='orders-table flex'>
 			<div class='table-wrapper'>
 				<table class='table table-condensed table-hover'>
 					<thead>
@@ -78,6 +78,9 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class='map-wrapper' ng-show='isMapShow'>
+				<div class='map-view' leader-map></div>	
 			</div>
 		</div>
 		<uib-pagination 

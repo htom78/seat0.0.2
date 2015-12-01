@@ -30,6 +30,7 @@ function Handle($uibModal, $document, policeService) {
 						tr = angular.element('<tr></tr>');
 						tr.insertAfter(elem);
 						scope.order.isActive = true;
+						scope.$emit('showMap');
 						modalInstance = $uibModal.open({
 							animation: false,
 							backdrop: false,
@@ -52,7 +53,9 @@ function Handle($uibModal, $document, policeService) {
 
 					modalInstance.result.then(() => {})
 						.finally(() => {
+							scope.$emit('hideMap');
 							isDialogOpened = false;	
+							scope.order.isActive = false;
 							modalInstance = null;
 							tr.remove();
 						});

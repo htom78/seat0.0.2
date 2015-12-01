@@ -171,25 +171,6 @@
 
 .leader-orders {
 
-	.table-wrapper {
-		flex: 2 1;
-	}
-
-	.map-wrapper {
-		position: relative;
-		width: 670px;
-		min-height: 360px;
-		background: $chart-bg;
-		margin-left: 10px;
-	}
-
-	.leader-map {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-	}
 
 	.insert-info {
 		text-align: left;	
